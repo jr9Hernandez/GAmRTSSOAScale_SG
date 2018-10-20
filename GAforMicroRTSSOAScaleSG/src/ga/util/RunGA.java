@@ -4,6 +4,8 @@ package ga.util;
 import java.time.Duration;
 import java.time.Instant;
 
+import ga.ScriptTableGenerator.ScriptsTable;
+import ga.ScriptTableGenerator.ScriptsTableConfiguration;
 import ga.config.ConfigurationsGA;
 import ga.model.Population;
 import ga.util.Evaluation.RatePopulation;
@@ -13,12 +15,17 @@ public class RunGA {
 	private Population population;
 	private Instant timeInicial;
 	private int generations=0;
+	private ScriptsTable scriptsTable;
 	
 	/**
 	 * Este metodo aplicará todas as fases do processo de um algoritmo Genético
 	 * @param evalFunction Será a função de avaliação que desejamos utilizar
 	 */
 	public Population run(RatePopulation evalFunction){
+		
+		// Creating the table of scripts
+		scriptsTable = ScriptsTable.generateScriptsTable(ScriptsTableConfiguration.SIZE_TABLE_SCRIPTS);
+		
 		//Fase 1 = gerar a população inicial 
 		population = Population.getInitialPopulation(ConfigurationsGA.SIZE_POPULATION);
 		

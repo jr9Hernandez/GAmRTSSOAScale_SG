@@ -15,7 +15,7 @@ public class RunGA {
 	private Population population;
 	private Instant timeInicial;
 	private int generations=0;
-	private ScriptsTable scriptsTable;
+	private ScriptsTable scrTable;
 	
 	/**
 	 * Este metodo aplicará todas as fases do processo de um algoritmo Genético
@@ -24,13 +24,15 @@ public class RunGA {
 	public Population run(RatePopulation evalFunction){
 		
 		// Creating the table of scripts
-		scriptsTable = ScriptsTable.generateScriptsTable(ScriptsTableConfiguration.SIZE_TABLE_SCRIPTS);
+		scrTable=new ScriptsTable();
+		scrTable.generateScriptsTable(ScriptsTableConfiguration.SIZE_TABLE_SCRIPTS);
+		scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
 		
 		//Fase 1 = gerar a população inicial 
-		population = Population.getInitialPopulation(ConfigurationsGA.SIZE_POPULATION);
+		population = Population.getInitialPopulation(ConfigurationsGA.SIZE_POPULATION, scrTable);
 		
 		//Fase 2 = avalia a população
-		population = evalFunction.evalPopulation(population,this.generations); 
+		//population = evalFunction.evalPopulation(population,this.generations); 
 		System.out.println("Log - Generation = "+ this.generations);
 		population.printWithValue();
 		
@@ -40,10 +42,10 @@ public class RunGA {
 			
 			//Fase 4 = Seleção (Aplicar Cruzamento e Mutação)
 			Selection selecao = new Selection();
-			population = selecao.applySelection(population);
+			population = selecao.applySelection(population,scrTable);
 			
 			//Repete-se Fase 2 = Avaliação da população
-			population = evalFunction.evalPopulation(population,this.generations);
+			//population = evalFunction.evalPopulation(population,this.generations);
 			
 			//atualiza a geração
 			updateGeneration();

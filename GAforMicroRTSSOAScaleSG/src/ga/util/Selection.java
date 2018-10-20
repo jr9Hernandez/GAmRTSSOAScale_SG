@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
 import ga.model.Chromosome;
 import ga.model.Population;
@@ -21,7 +22,7 @@ public class Selection {
 	
 	static Random rand = new Random();
 	
-	public Population applySelection(Population populacaoInicial){
+	public Population applySelection(Population populacaoInicial,ScriptsTable scrTable){
 
 
 		//System.out.println("printing the initial population");
@@ -35,7 +36,7 @@ public class Selection {
 
 		//Class Reproduction have the methods for getting new population according the parents obtained before
 		//using crossover and mutation
-		Reproduction rp=new Reproduction(parents);
+		Reproduction rp=new Reproduction(parents,scrTable);
 		//Population newPopulation=rp.UniformCrossover();
 		Population newPopulation=rp.Crossover();
 		//System.out.println("printing the new population after crossover");
@@ -64,7 +65,7 @@ public class Selection {
 		newPopulation.setChromosomes(chromosomesNewPopulation);
 		
 		//if the number of the new pop is less than the initial pop, fill with random elements
-		newPopulation=fillWithRandom(newPopulation);
+		newPopulation=fillWithRandom(newPopulation,scrTable);
 		//System.out.println("printing complete new population with new random elements If that's the case");
 		//printMap(chromosomesNewPopulation);
 
@@ -94,14 +95,14 @@ public class Selection {
 
 		} 
 	}
-	public Population fillWithRandom(Population p)
+	public Population fillWithRandom(Population p,ScriptsTable scrTable)
 	{
 		while(p.getChromosomes().size()<ConfigurationsGA.SIZE_POPULATION)
 		{
 			Chromosome tChom = new Chromosome();
 			int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;
 			for (int j = 0; j < sizeCh; j++) {
-				tChom.addGene(rand.nextInt(ConfigurationsGA.QTD_SCRIPTS));
+				tChom.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));
 			}
 			p.getChromosomes().put(tChom, BigDecimal.ZERO);			
 		}

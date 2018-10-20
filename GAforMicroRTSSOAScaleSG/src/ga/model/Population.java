@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Random;
 
+import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
 
 public class Population {
@@ -74,7 +75,7 @@ public class Population {
 	 * @param size Tamanho limite da população
 	 * @return uma população com Key = Chromosome e Values = 0
 	 */
-	public static Population getInitialPopulation(int size){
+	public static Population getInitialPopulation(int size, ScriptsTable scrTable){
 		HashMap<Chromosome, BigDecimal> newChromosomes = new HashMap<>();
 		
 		Chromosome tChom;
@@ -83,7 +84,7 @@ public class Population {
 			tChom = new Chromosome();
 			int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;
 			for (int j = 0; j < sizeCh; j++) {
-				tChom.addGene(rand.nextInt(ConfigurationsGA.QTD_SCRIPTS));
+				tChom.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));
 			}
 			newChromosomes.put(tChom, BigDecimal.ZERO);
 		}

@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
 import ga.model.Chromosome;
 import ga.model.Population;
@@ -20,9 +21,11 @@ public class Reproduction {
 	static Random rand = new Random();
 
 	List<Map.Entry<Chromosome, BigDecimal>> parents;
-	public Reproduction(List<Map.Entry<Chromosome, BigDecimal>> parents)
+	ScriptsTable scrTable;
+	public Reproduction(List<Map.Entry<Chromosome, BigDecimal>> parents,  ScriptsTable scrTable)
 	{
 		this.parents=parents;
+		this.scrTable=scrTable;
 	}
 	public Population UniformCrossover()
 	{
@@ -65,7 +68,7 @@ public class Reproduction {
 				Chromosome tChom = new Chromosome();
 				int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;
 				for (int j = 0; j < sizeCh; j++) {
-					tChom.addGene(rand.nextInt(ConfigurationsGA.QTD_SCRIPTS));
+					tChom.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));
 				}
 				newChromosomes.put(tChom, BigDecimal.ZERO);
 			}
@@ -148,29 +151,32 @@ public class Reproduction {
 			//The next method is just for avoiding infinite loops, adding a random element if
 			//one with the same key was already added (this can happen because sometimes the resulting
 			//element has the same KEY, and produce that the size of the map be always the same) 
-			if(newChromosomes.containsKey(child1) || child1.getGenes().size()==0)
+			if(newChromosomes.containsKey(child1))
 			{
 				Chromosome tChom = new Chromosome();
 				int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;
 				for (int j = 0; j < sizeCh; j++) {
-					tChom.addGene(rand.nextInt(ConfigurationsGA.QTD_SCRIPTS));
+					tChom.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));
 				}
 				newChromosomes.put(tChom, BigDecimal.ZERO);
 			}
 			
-			if(newChromosomes.containsKey(child2) || child2.getGenes().size()==0)
+			if(newChromosomes.containsKey(child2))
 			{
 				Chromosome tChom = new Chromosome();
 				int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;
 				for (int j = 0; j < sizeCh; j++) {
-					tChom.addGene(rand.nextInt(ConfigurationsGA.QTD_SCRIPTS));
+					tChom.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));
 				}
 				newChromosomes.put(tChom, BigDecimal.ZERO);
 			}
 
 			//here is added the child!
-			newChromosomes.put(child1, BigDecimal.ZERO);
-			newChromosomes.put(child2, BigDecimal.ZERO);
+			if(child1.getGenes().size()!=0)
+				newChromosomes.put(child1, BigDecimal.ZERO);
+			
+			if(child2.getGenes().size()!=0)
+				newChromosomes.put(child2, BigDecimal.ZERO);
 		}
 		newGeneration=new Population(newChromosomes);
 		return newGeneration;
@@ -192,7 +198,7 @@ public class Reproduction {
 
 				if(m)
 				{
-					newCh.getGenes().set(i, rand.nextInt(ConfigurationsGA.QTD_SCRIPTS));
+					newCh.getGenes().set(i, rand.nextInt(scrTable.getCurrentSizeTable()));
 				}
 			}
 			chromosomesMutated.put(newCh, BigDecimal.ZERO);
@@ -201,7 +207,7 @@ public class Reproduction {
 		return p;
 	}
 	
-	public static Population IncreasePopulation(Population pop){
+	public Population IncreasePopulation(Population pop){
 
 		HashMap<Chromosome, BigDecimal> chromosomesMutated = new HashMap<>();
 		for(Chromosome c : pop.getChromosomes().keySet()){
@@ -217,7 +223,7 @@ public class Reproduction {
 			if(m)
 			{
 				//newCh.getGenes().set(i, rand.nextInt(ConfigurationsGA.QTD_SCRIPTS));
-				newCh.getGenes().add(rand.nextInt(ConfigurationsGA.QTD_SCRIPTS));
+				newCh.getGenes().add(rand.nextInt(scrTable.getCurrentSizeTable()));
 				chromosomesMutated.put(newCh, BigDecimal.ZERO);
 			}
 			
@@ -228,7 +234,7 @@ public class Reproduction {
 		
 	}
 	
-	public static Population DecreasePopulation(Population pop){
+	public Population DecreasePopulation(Population pop){
 
 		HashMap<Chromosome, BigDecimal> chromosomesMutated = new HashMap<>();
 		for(Chromosome c : pop.getChromosomes().keySet()){
@@ -255,7 +261,7 @@ public class Reproduction {
 		
 	}
 	
-	public static Population RemoveCopies(Population p){ 
+	public Population RemoveCopies(Population p){ 
 		
 		//This method replace each gene with a random script with a probability of 10%
 		HashMap<Chromosome, BigDecimal> chromosomesMutated = new HashMap<>();
@@ -281,7 +287,7 @@ public class Reproduction {
 				Chromosome tChom = new Chromosome();
 				int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;
 				for (int j = 0; j < sizeCh; j++) {
-					tChom.addGene(rand.nextInt(ConfigurationsGA.QTD_SCRIPTS));
+					tChom.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));
 				}
 				chromosomesMutated.put(tChom, BigDecimal.ZERO);
 			}

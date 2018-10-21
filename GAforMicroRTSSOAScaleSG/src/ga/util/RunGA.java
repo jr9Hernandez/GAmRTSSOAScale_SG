@@ -31,7 +31,7 @@ public class RunGA {
 		population = Population.getInitialPopulation(ConfigurationsGA.SIZE_POPULATION, scrTable);
 		
 		//Fase 2 = avalia a população
-		//population = evalFunction.evalPopulation(population,this.generations); 
+		population = evalFunction.evalPopulation(population,this.generations); 
 		System.out.println("Log - Generation = "+ this.generations);
 		population.printWithValue();
 		
@@ -44,7 +44,7 @@ public class RunGA {
 			population = selecao.applySelection(population,scrTable);
 			
 			//Repete-se Fase 2 = Avaliação da população
-			//population = evalFunction.evalPopulation(population,this.generations);
+			population = evalFunction.evalPopulation(population,this.generations);
 			
 			//atualiza a geração
 			updateGeneration();

@@ -5,7 +5,6 @@ import java.time.Duration;
 import java.time.Instant;
 
 import ga.ScriptTableGenerator.ScriptsTable;
-import ga.ScriptTableGenerator.ScriptsTableConfiguration;
 import ga.config.ConfigurationsGA;
 import ga.model.Population;
 import ga.util.Evaluation.RatePopulation;
@@ -25,7 +24,7 @@ public class RunGA {
 		
 		// Creating the table of scripts
 		scrTable=new ScriptsTable();
-		scrTable=scrTable.generateScriptsTable(ScriptsTableConfiguration.SIZE_TABLE_SCRIPTS);
+		scrTable=scrTable.generateScriptsTable(ConfigurationsGA.SIZE_TABLE_SCRIPTS);
 		scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
 		
 		//Fase 1 = gerar a população inicial 

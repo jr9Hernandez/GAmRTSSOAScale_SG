@@ -233,17 +233,17 @@ public class Reproduction {
 				newChScript.getGenes().set(i, rand.nextInt(ConfigurationsGA.QTD_RULES));
 			}
 		}
-		if(!scrTable.getScriptTable().containsKey(newChScript))
+		if(scrTable.getScriptTable().containsKey(newChScript))
+		{
+			return scrTable.getScriptTable().get(newChScript).intValue();			
+		}
+		else
 		{
 			int newId=scrTable.getScriptTable().size();
 			scrTable.getScriptTable().put(newChScript, BigDecimal.valueOf(newId));
 			scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
 			addLineFile(newId+newChScript.print());
 			return newId;
-		}
-		else
-		{
-			return scrTable.getScriptTable().get(newChScript).intValue();
 		}
 		
 	}

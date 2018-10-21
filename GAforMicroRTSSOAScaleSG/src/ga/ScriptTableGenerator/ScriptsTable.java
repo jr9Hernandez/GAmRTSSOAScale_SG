@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Random;
 
+import ga.config.ConfigurationsGA;
+
 
 public class ScriptsTable {
 	
@@ -74,9 +76,9 @@ public class ScriptsTable {
 			for(int i=0;i<size;i++)
 			{
 				tChom = new ChromosomeScript();
-				int sizeCh=rand.nextInt(ScriptsTableConfiguration.SIZE_CHROMOSOME_SCRIPT)+1;
+				int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME_SCRIPT)+1;
 				for (int j = 0; j < sizeCh; j++) {
-					tChom.addGene(rand.nextInt(ScriptsTableConfiguration.QTD_RULES));
+					tChom.addGene(rand.nextInt(ConfigurationsGA.QTD_RULES));
 				}
 				newChromosomes.put(tChom, BigDecimal.valueOf(i));
 			    f0.println(i+tChom.print());

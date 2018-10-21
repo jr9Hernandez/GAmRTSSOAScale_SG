@@ -27,10 +27,13 @@ public class Reproduction {
 
 	List<Map.Entry<Chromosome, BigDecimal>> parents;
 	ScriptsTable scrTable;
-	public Reproduction(List<Map.Entry<Chromosome, BigDecimal>> parents,  ScriptsTable scrTable)
+	
+	private String pathTableScripts;
+	public Reproduction(List<Map.Entry<Chromosome, BigDecimal>> parents,  ScriptsTable scrTable, String pathTableScripts)
 	{
 		this.parents=parents;
 		this.scrTable=scrTable;
+		this.pathTableScripts=pathTableScripts;
 	}
 	public Population UniformCrossover()
 	{
@@ -357,7 +360,7 @@ public class Reproduction {
 	public void addLineFile(String data) {
     try{    
 
-        File file =new File("ScriptsTable.txt");    
+        File file =new File(pathTableScripts+"/ScriptsTable.txt");    
 
         //if file doesnt exists, then create it    
         if(!file.exists()){    

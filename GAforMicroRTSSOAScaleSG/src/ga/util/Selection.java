@@ -22,7 +22,7 @@ public class Selection {
 	
 	static Random rand = new Random();
 	
-	public Population applySelection(Population populacaoInicial,ScriptsTable scrTable){
+	public Population applySelection(Population populacaoInicial,ScriptsTable scrTable, String pathTableScripts){
 
 
 		//System.out.println("printing the initial population");
@@ -36,7 +36,7 @@ public class Selection {
 
 		//Class Reproduction have the methods for getting new population according the parents obtained before
 		//using crossover and mutation
-		Reproduction rp=new Reproduction(parents,scrTable);
+		Reproduction rp=new Reproduction(parents,scrTable,pathTableScripts);
 		//Population newPopulation=rp.UniformCrossover();
 		Population newPopulation=rp.Crossover();
 		//System.out.println("printing the new population after crossover");

@@ -28,6 +28,7 @@ public class RoundRobinEval implements RatePopulation {
 	// private static final String pathCentral =
 	// "/home/rubens/cluster/ExecAIGASOA/centralSOA";
 	private static final String pathCentral = System.getProperty("user.dir").concat("/centralSOA");
+	
 
 	// Classes de informação
 	private int atualGeneration = 0;

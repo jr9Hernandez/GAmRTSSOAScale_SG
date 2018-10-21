@@ -2,7 +2,7 @@ package ga.config;
 
 public final class ConfigurationsGA {
 	public final static int SIZE_CHROMOSOME = 10;
-	public final static int SIZE_POPULATION = 20;
+	public final static int SIZE_POPULATION = 5;
 	public final static int NUMBER_JOBS = 49;
 	public final static int SIZE_ELITE = 5;
 	public final static int K_TOURNMENT = 5;

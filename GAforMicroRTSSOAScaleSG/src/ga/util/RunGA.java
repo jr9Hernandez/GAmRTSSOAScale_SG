@@ -16,6 +16,7 @@ public class RunGA {
 	private int generations=0;
 	private ScriptsTable scrTable;
 	
+	private static final String pathTableScripts = System.getProperty("user.dir");
 	/**
 	 * Este metodo aplicará todas as fases do processo de um algoritmo Genético
 	 * @param evalFunction Será a função de avaliação que desejamos utilizar
@@ -23,7 +24,7 @@ public class RunGA {
 	public Population run(RatePopulation evalFunction){
 		
 		// Creating the table of scripts
-		scrTable=new ScriptsTable();
+		scrTable=new ScriptsTable(pathTableScripts);
 		scrTable=scrTable.generateScriptsTable(ConfigurationsGA.SIZE_TABLE_SCRIPTS);
 		scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
 		
@@ -41,7 +42,7 @@ public class RunGA {
 			
 			//Fase 4 = Seleção (Aplicar Cruzamento e Mutação)
 			Selection selecao = new Selection();
-			population = selecao.applySelection(population,scrTable);
+			population = selecao.applySelection(population,scrTable,pathTableScripts);
 			
 			//Repete-se Fase 2 = Avaliação da população
 			population = evalFunction.evalPopulation(population,this.generations);

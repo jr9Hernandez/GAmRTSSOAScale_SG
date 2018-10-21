@@ -22,10 +22,11 @@ public class ScriptsTable {
 
 	private HashMap<ChromosomeScript, BigDecimal> scriptsTable ;
 
+	private String pathTableScripts;
 	
-	
-	public ScriptsTable(){
+	public ScriptsTable(String pathTableScripts){
 		this.scriptsTable = new HashMap<>();
+		this.pathTableScripts=pathTableScripts;
 	}
 	
 
@@ -71,7 +72,7 @@ public class ScriptsTable {
 		ChromosomeScript tChom;
 		PrintWriter f0;
 		try {
-			f0 = new PrintWriter(new FileWriter("ScriptsTable.txt"));
+			f0 = new PrintWriter(new FileWriter(pathTableScripts+"/ScriptsTable.txt"));
 			
 			for(int i=0;i<size;i++)
 			{
@@ -103,7 +104,7 @@ public class ScriptsTable {
 		currentSizeTable = currentSizeTabler;
 		PrintWriter f0;
 		try {
-			f0 = new PrintWriter(new FileWriter("SizeTable.txt"));
+			f0 = new PrintWriter(new FileWriter(pathTableScripts+"/SizeTable.txt"));
 			f0.println(currentSizeTable);
 			f0.close();
 		} catch (IOException e) {

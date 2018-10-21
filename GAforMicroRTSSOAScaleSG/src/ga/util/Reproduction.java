@@ -1,5 +1,8 @@
 package ga.util;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,9 +11,11 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
+import ga.ScriptTableGenerator.ChromosomeScript;
 import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
 import ga.model.Chromosome;
@@ -198,13 +203,60 @@ public class Reproduction {
 
 				if(m)
 				{
-					newCh.getGenes().set(i, rand.nextInt(scrTable.getCurrentSizeTable()));
+					//newCh.getGenes().set(i, rand.nextInt(scrTable.getCurrentSizeTable()));
+					
+					//The next line is added in order to keep mutation of rules
+					newCh.getGenes().set(i, mutationScript(p, newCh.getGenes().get(i)));
 				}
 			}
 			chromosomesMutated.put(newCh, BigDecimal.ZERO);
 		}
 		p.setChromosomes(chromosomesMutated);
 		return p;
+	}
+	
+	//This method will return the new id script for mutate the porfolio o fscripts
+	public int mutationScript(Population p, int genidScript)
+	{
+		ChromosomeScript cromScript=cromosomeById(genidScript);
+		ChromosomeScript newChScript=new ChromosomeScript();
+
+		newChScript.setGenes((ArrayList<Integer>) cromScript.getGenes().clone());
+		
+		for(int i=0; i<newChScript.getGenes().size();i++)
+		{
+			double mutatePercent = ConfigurationsGA.MUTATION_RATE_RULE;
+			boolean m = rand.nextFloat() <= mutatePercent;
+
+			if(m)
+			{
+				newChScript.getGenes().set(i, rand.nextInt(ConfigurationsGA.QTD_RULES));
+			}
+		}
+		if(!scrTable.getScriptTable().containsKey(newChScript))
+		{
+			int newId=scrTable.getScriptTable().size();
+			scrTable.getScriptTable().put(newChScript, BigDecimal.valueOf(newId));
+			scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
+			addLineFile(newId+newChScript.print());
+			return newId;
+		}
+		else
+		{
+			return scrTable.getScriptTable().get(newChScript).intValue();
+		}
+		
+	}
+	
+	//This method will be expensive if the hashmap its too big
+	public ChromosomeScript cromosomeById(int genidScript)
+	{
+        for (Entry<ChromosomeScript, BigDecimal> entry : scrTable.getScriptTable().entrySet()) {
+            if (entry.getValue().equals(BigDecimal.valueOf(genidScript))) {
+                return entry.getKey();
+            }
+        }
+        return null;
 	}
 	
 	public Population IncreasePopulation(Population pop){
@@ -301,6 +353,28 @@ public class Reproduction {
 		return p;
 		
 	}
+	
+	public void addLineFile(String data) {
+    try{    
 
+        File file =new File("ScriptsTable.txt");    
+
+        //if file doesnt exists, then create it    
+        if(!file.exists()){    
+            file.createNewFile();      
+        }    
+
+        //true = append file    
+            FileWriter fileWritter = new FileWriter(file,true);        
+            BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+            bufferWritter.write(data);
+            bufferWritter.newLine();
+            bufferWritter.close();
+            fileWritter.close();  
+
+    }catch(Exception e){    
+        e.printStackTrace();    
+    } 
+	}
 
 }

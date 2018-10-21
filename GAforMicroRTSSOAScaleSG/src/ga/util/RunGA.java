@@ -25,7 +25,7 @@ public class RunGA {
 		
 		// Creating the table of scripts
 		scrTable=new ScriptsTable();
-		scrTable.generateScriptsTable(ScriptsTableConfiguration.SIZE_TABLE_SCRIPTS);
+		scrTable=scrTable.generateScriptsTable(ScriptsTableConfiguration.SIZE_TABLE_SCRIPTS);
 		scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
 		
 		//Fase 1 = gerar a população inicial 

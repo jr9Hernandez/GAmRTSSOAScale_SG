@@ -360,7 +360,7 @@ public class Reproduction {
 	public void addLineFile(String data) {
     try{    
 
-        File file =new File(pathTableScripts+"/ScriptsTable.txt");    
+        File file =new File(pathTableScripts+"ScriptsTable.txt");    
 
         //if file doesnt exists, then create it    
         if(!file.exists()){    

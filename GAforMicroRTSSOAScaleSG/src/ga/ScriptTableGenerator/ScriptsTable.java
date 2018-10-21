@@ -30,9 +30,10 @@ public class ScriptsTable {
 	}
 	
 
-	public ScriptsTable(HashMap<ChromosomeScript, BigDecimal> scriptsTable) {
+	public ScriptsTable(HashMap<ChromosomeScript, BigDecimal> scriptsTable,String pathTableScripts) {
 		super();
 		this.scriptsTable = scriptsTable;
+		this.pathTableScripts=pathTableScripts;
 	}
 
 
@@ -92,7 +93,7 @@ public class ScriptsTable {
 		for (int i = 0; i < size; i++) {
 
 		}
-		ScriptsTable st = new ScriptsTable(newChromosomes);
+		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts);
 		return st;
 	}
 	

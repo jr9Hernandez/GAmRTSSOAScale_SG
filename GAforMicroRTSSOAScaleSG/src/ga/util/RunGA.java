@@ -16,7 +16,7 @@ public class RunGA {
 	private int generations=0;
 	private ScriptsTable scrTable;
 	
-	private static final String pathTableScripts = System.getProperty("user.dir");
+	private static final String pathTableScripts = System.getProperty("user.dir").concat("/Table/");
 	/**
 	 * Este metodo aplicará todas as fases do processo de um algoritmo Genético
 	 * @param evalFunction Será a função de avaliação que desejamos utilizar

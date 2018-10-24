@@ -4,6 +4,8 @@ import ga.model.Population;
 import ga.util.RunGA;
 import ga.util.Evaluation.RatePopulation;
 import ga.util.Evaluation.RoundRobinEval;
+import ga.util.Evaluation.RoundRobinSampleEval;
+import ga.util.Evaluation.FixedScriptedEval;
 
 public class RunTests {
 
@@ -38,7 +40,8 @@ public class RunTests {
 		RunGA ga = new RunGA();
 		
 		//escolhemos uma função de avaliação
-		RatePopulation fEval = new RoundRobinEval();
+		//RatePopulation fEval = new RoundRobinEval();
+		RatePopulation fEval = new RoundRobinSampleEval();
 		
 		//rodamos o GA
 		Population popFinal = ga.run(fEval);

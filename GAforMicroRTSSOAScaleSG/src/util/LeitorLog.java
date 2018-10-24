@@ -13,7 +13,7 @@ public class LeitorLog {
 	
 	public LeitorLog(){
 		pathStruture = System.getProperty("user.dir").concat("/logs");
-		//pathStruture = "/home/rubens/cluster/ExecAIGASOA/logs";
+		//pathStruture = "/home/rubens/cluster/TesteNewGASG/logs";
 	}
 	
 

@@ -26,7 +26,7 @@ public class RoundRobinSampleEval implements RatePopulation {
 	private static final int QTD_ENEMIES_SAMPLE = 2;
 
 	//private static final String pathSOA = "/home/rubens/cluster/TesteNewGASG/configSOA/";
-	 private static final String pathSOA = System.getProperty("user.dir").concat("/configSOA/");
+	private static final String pathSOA = System.getProperty("user.dir").concat("/configSOA/");
 
 	//private static final String pathCentral = "/home/rubens/cluster/TesteNewGASG/centralSOA";
 	private static final String pathCentral = System.getProperty("user.dir").concat("/centralSOA");

@@ -17,19 +17,17 @@ import ga.model.Population;
 import model.EvalResult;
 import util.LeitorLog;
 
-public class ScriptedEval implements RatePopulation {
+public class FixedScriptedEval implements RatePopulation {
 
 	// CONSTANTES
 	private static final int TOTAL_PARTIDAS_ROUND = 1;
 	private static final int BATCH_SIZE = 2;
 
-	 private static final String pathSOA =
-	 "/home/rubens/cluster/TesteNewGASG/configSOA/";
-	//private static final String pathSOA = System.getProperty("user.dir").concat("/configSOA/");
+	 //private static final String pathSOA = "/home/rubens/cluster/TesteNewGASG/configSOA/";
+	private static final String pathSOA = System.getProperty("user.dir").concat("/configSOA/");
 
-	 private static final String pathCentral =
-	 "/home/rubens/cluster/TesteNewGASG/centralSOA";
-	//private static final String pathCentral = System.getProperty("user.dir").concat("/centralSOA");
+	 //private static final String pathCentral = "/home/rubens/cluster/TesteNewGASG/centralSOA";
+	private static final String pathCentral = System.getProperty("user.dir").concat("/centralSOA");
 
 	// Classes de informação
 	private int atualGeneration = 0;
@@ -38,7 +36,7 @@ public class ScriptedEval implements RatePopulation {
 	ArrayList<String> SOA_Folders = new ArrayList<>();
 	ArrayList<String> SOA_arqs = new ArrayList<>();
 
-	public ScriptedEval() {
+	public FixedScriptedEval() {
 		super();
 	}
 

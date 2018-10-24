@@ -2,6 +2,7 @@ package ga.model;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
 
 import ga.ScriptTableGenerator.ScriptsTable;
@@ -115,5 +116,13 @@ public class Population {
 		return pop;
 	}
 	
-	
+	public boolean isPopulationValueZero(){
+		
+		for (BigDecimal value : Chromosomes.values()) {
+			if(value.compareTo(BigDecimal.ZERO) == 1 ){
+				return false;
+			}
+		}
+		return true;
+	}
 }

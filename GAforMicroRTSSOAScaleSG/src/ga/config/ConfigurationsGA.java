@@ -3,7 +3,7 @@ package ga.config;
 public final class ConfigurationsGA {
 	public final static int SIZE_CHROMOSOME = 10;
 	public final static int SIZE_POPULATION = 5;
-	public final static int NUMBER_JOBS = 49;
+	public final static int NUMBER_JOBS = 39;
 	public final static int SIZE_ELITE = 5;
 	public final static int K_TOURNMENT = 5;
 	public final static int SIZE_PARENTSFORCROSSOVER = 8;
@@ -27,5 +27,6 @@ public final class ConfigurationsGA {
 	//número de gerações que serão executadas
 	public final static int QTD_GENERATIONS = 30;
 	//---------------------------------------------------------------------------------
+	public final static boolean RESET_ENABLED = true;
 	
 }

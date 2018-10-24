@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 
 import ga.model.Chromosome;
@@ -22,15 +23,13 @@ public class RoundRobinSampleEval implements RatePopulation {
 	// CONSTANTES
 	private static final int TOTAL_PARTIDAS_ROUND = 1;
 	private static final int BATCH_SIZE = 2;
+	private static final int QTD_ENEMIES_SAMPLE = 2;
 
-	// private static final String pathSOA =
-	// "/home/rubens/cluster/ExecAIGASOA/configSOA/";
-	private static final String pathSOA = System.getProperty("user.dir").concat("/configSOA/");
+	//private static final String pathSOA = "/home/rubens/cluster/TesteNewGASG/configSOA/";
+	 private static final String pathSOA = System.getProperty("user.dir").concat("/configSOA/");
 
-	// private static final String pathCentral =
-	// "/home/rubens/cluster/ExecAIGASOA/centralSOA";
+	//private static final String pathCentral = "/home/rubens/cluster/TesteNewGASG/centralSOA";
 	private static final String pathCentral = System.getProperty("user.dir").concat("/centralSOA");
-	
 
 	// Classes de informação
 	private int atualGeneration = 0;
@@ -38,7 +37,7 @@ public class RoundRobinSampleEval implements RatePopulation {
 	// Atributos locais
 	ArrayList<String> SOA_Folders = new ArrayList<>();
 	ArrayList<String> SOA_arqs = new ArrayList<>();
-	
+
 	ArrayList<Chromosome> ChromosomeSample = new ArrayList<>();
 
 	public RoundRobinSampleEval() {
@@ -49,8 +48,6 @@ public class RoundRobinSampleEval implements RatePopulation {
 	public Population evalPopulation(Population population, int generation) {
 		this.atualGeneration = generation;
 		SOA_Folders.clear();
-		defineChromosomeSample(population);
-		
 		// limpa os valores existentes na population
 		population.clearValueChromosomes();
 
@@ -69,13 +66,6 @@ public class RoundRobinSampleEval implements RatePopulation {
 		updatePopulationValue(resultados, population);
 
 		return population;
-	}
-
-	private void defineChromosomeSample(Population population) {
-		this.ChromosomeSample.clear();
-		int totalPop = population.getChromosomes().size();
-		Random rand = new Random();
-		
 	}
 
 	private void removeLogsEmpty() {
@@ -115,14 +105,14 @@ public class RoundRobinSampleEval implements RatePopulation {
 				chrUpdate = ch;
 			}
 		}
-		// atualizar valores.
-		BigDecimal toUpdate = pop.getChromosomes().get(chrUpdate);
-		if (toUpdate != null) {
-			toUpdate = toUpdate.add(BigDecimal.ONE);
-			HashMap<Chromosome, BigDecimal> chrTemp = pop.getChromosomes();
-			chrTemp.put(chrUpdate, toUpdate);
-		} else {
-			System.out.println("Problem to find " + chrUpdate.toString());
+		if (chrUpdate != null) {
+			// atualizar valores.
+			BigDecimal toUpdate = pop.getChromosomes().get(chrUpdate);
+			if (toUpdate != null) {
+				toUpdate = toUpdate.add(BigDecimal.ONE);
+				HashMap<Chromosome, BigDecimal> chrTemp = pop.getChromosomes();
+				chrTemp.put(chrUpdate, toUpdate);
+			}
 		}
 	}
 
@@ -280,15 +270,17 @@ public class RoundRobinSampleEval implements RatePopulation {
 		for (int i = 0; i < TOTAL_PARTIDAS_ROUND; i++) {
 
 			for (Chromosome cIA1 : population.getChromosomes().keySet()) {
+				defineChromosomeSample(population, cIA1);
 
-				for (Chromosome cIA2 : population.getChromosomes().keySet()) {
+				for (Chromosome cIA2 : this.ChromosomeSample) {
+
 					if (!cIA1.equals(cIA2)) {
 						// System.out.println("IA1 = "+ convertTuple(cIA1)+ "
 						// IA2 = "+ convertTuple(cIA2));
 
-						// salvar arquivo na pasta log
-						String strConfig = pathCentral + "/" + convertBasicTuple(cIA1) + "#" + convertBasicTuple(cIA2)
-								+ "#" + i + "#" + atualGeneration + ".txt";
+						// first position
+						String strConfig = pathCentral + "/" + convertBasicTuple(cIA1) + "#(" + convertBasicTuple(cIA2)
+								+ ")#" + i + "#" + atualGeneration + ".txt";
 						File arqConfig = new File(strConfig);
 						if (!arqConfig.exists()) {
 							try {
@@ -303,7 +295,7 @@ public class RoundRobinSampleEval implements RatePopulation {
 							FileWriter arq = new FileWriter(arqConfig, false);
 							PrintWriter gravarArq = new PrintWriter(arq);
 
-							gravarArq.println(convertBasicTuple(cIA1) + "#" + convertBasicTuple(cIA2) + "#" + i + "#"
+							gravarArq.println(convertBasicTuple(cIA1) + "#(" + convertBasicTuple(cIA2) + ")#" + i + "#"
 									+ atualGeneration);
 
 							gravarArq.flush();
@@ -313,15 +305,52 @@ public class RoundRobinSampleEval implements RatePopulation {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						/*
-						 * try { Thread.sleep(300); } catch
-						 * (InterruptedException e) { e.printStackTrace(); }
-						 */
+
+						// second position
+						strConfig = pathCentral + "/(" + convertBasicTuple(cIA2) + ")#" + convertBasicTuple(cIA1) + "#"
+								+ i + "#" + atualGeneration + ".txt";
+						arqConfig = new File(strConfig);
+						if (!arqConfig.exists()) {
+							try {
+								arqConfig.createNewFile();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+						try {
+							FileWriter arq = new FileWriter(arqConfig, false);
+							PrintWriter gravarArq = new PrintWriter(arq);
+
+							gravarArq.println("(" + convertBasicTuple(cIA2) + ")#" + convertBasicTuple(cIA1) + "#" + i
+									+ "#" + atualGeneration);
+
+							gravarArq.flush();
+							gravarArq.close();
+							arq.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+
 					}
 
 				}
 			}
 		}
+	}
+
+	private void defineChromosomeSample(Population population, Chromosome cIA1) {
+		this.ChromosomeSample.clear();
+		int totalPop = population.getChromosomes().size();
+		Random rand = new Random();
+		HashSet<Chromosome> samples = new HashSet<>();
+		while (samples.size() < QTD_ENEMIES_SAMPLE) {
+			ArrayList<Chromosome> temp = new ArrayList<>(population.getChromosomes().keySet());
+			Chromosome cTemp = temp.get(rand.nextInt(totalPop));
+			if (!cTemp.equals(cIA1)) {
+				samples.add(cTemp);
+			}
+		}
+		this.ChromosomeSample.addAll(samples);
 	}
 
 	private String convertTuple(Chromosome cromo) {
@@ -368,7 +397,7 @@ public class RoundRobinSampleEval implements RatePopulation {
 	public void finishProcess() {
 		for (String soaFolder : this.SOA_Folders) {
 			String strConfig = soaFolder;
-			File f = new File(strConfig+"/exit");
+			File f = new File(strConfig + "/exit");
 			try {
 				f.createNewFile();
 			} catch (IOException e) {

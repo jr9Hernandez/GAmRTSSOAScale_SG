@@ -7,14 +7,15 @@ public final class ConfigurationsGA {
 	public final static int SIZE_ELITE = 25;
 	public final static int K_TOURNMENT = 25;
 	public final static int SIZE_PARENTSFORCROSSOVER = 40;
-	public final static double MUTATION_RATE = 0.05;
-	public final static double MUTATION_RATE_RULE = 0.1;
+	public final static double MUTATION_RATE = 0.2;
+	public final static double MUTATION_RATE_RULE = 0.2;
 	public final static boolean INCREASING_INDEX=false;
 	public final static double INCREASING_RATE = 0.2;
 	public final static double DECREASING_RATE = 0.2;
 	//---------------------------------------------------------------------------------
 	//Parameters for the script table
-	public final static int QTD_RULES = 2363793;
+	//public final static int QTD_RULES = 2363793;
+	public final static int QTD_RULES = 60088;	
 	public final static int SIZE_CHROMOSOME_SCRIPT = 10;
 	public final static int SIZE_TABLE_SCRIPTS = 1000;
 	
@@ -25,7 +26,7 @@ public final class ConfigurationsGA {
 	//tempo, em horas, que o GA será executado
 	public final static int TIME_GA_EXEC = 13;
 	//número de gerações que serão executadas
-	public final static int QTD_GENERATIONS = 100;
+	public final static int QTD_GENERATIONS = 500;
 	//---------------------------------------------------------------------------------
 	public final static boolean RESET_ENABLED = true;
 	

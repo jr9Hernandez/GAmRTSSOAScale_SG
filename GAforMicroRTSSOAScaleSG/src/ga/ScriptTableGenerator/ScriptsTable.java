@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 
+import ai.ScriptsGenerator.TableGenerator.TableCommandsGenerator;
 import ga.config.ConfigurationsGA;
+import rts.units.UnitTypeTable;
 
 
 public class ScriptsTable {
@@ -21,6 +24,7 @@ public class ScriptsTable {
 
 
 	private HashMap<ChromosomeScript, BigDecimal> scriptsTable ;
+	private int numberOfTypes;
 
 	private String pathTableScripts;
 	
@@ -69,6 +73,9 @@ public class ScriptsTable {
 	
 	public ScriptsTable generateScriptsTable(int size){
 		
+		TableCommandsGenerator tcg=TableCommandsGenerator.getInstance(new UnitTypeTable());
+		numberOfTypes=tcg.getNumberTypes();
+		
 		HashMap<ChromosomeScript, BigDecimal> newChromosomes = new HashMap<>();
 		ChromosomeScript tChom;
 		PrintWriter f0;
@@ -80,6 +87,9 @@ public class ScriptsTable {
 				tChom = new ChromosomeScript();
 				int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME_SCRIPT)+1;
 				for (int j = 0; j < sizeCh; j++) {
+					int typeSelected=rand.nextInt(numberOfTypes);
+					int sizeRulesofType=tcg.getBagofTypes().get(typeSelected).size();
+					int idRuleSelected=tcg.getBagofTypes().get(typeSelected).get(rand.nextInt(sizeRulesofType));
 					tChom.addGene(rand.nextInt(ConfigurationsGA.QTD_RULES));
 				}
 				newChromosomes.put(tChom, BigDecimal.valueOf(i));
@@ -112,6 +122,19 @@ public class ScriptsTable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
+	}
+	
+	public boolean checkDiversityofTypes() {
+		HashSet diferentTypes =  new HashSet<Integer>();
+		for(ChromosomeScript c : scriptsTable.keySet()){
+			diferentTypes.add(this.scriptsTable.get(c));
+		}
+		if(diferentTypes.size()==numberOfTypes) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 	
 }

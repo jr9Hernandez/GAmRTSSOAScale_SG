@@ -236,6 +236,23 @@ public class Reproduction {
 				newChScript.getGenes().set(i, rand.nextInt(ConfigurationsGA.QTD_RULES));
 			}
 		}
+		if(ConfigurationsGA.MUTATION_ORDER_ENABLED)
+		{
+			for(int i=0; i<newChScript.getGenes().size();i++)
+			{
+				double mutatePercent = ConfigurationsGA.MUTATION_ORDER_RATE;
+				boolean m = rand.nextFloat() <= mutatePercent;
+
+				if(m)
+				{
+					int ruleBase=newChScript.getGenes().get(i);
+					int idRuletoSwitch=rand.nextInt(newChScript.getGenes().size());
+					int ruleToSwitch=newChScript.getGenes().get(idRuletoSwitch);
+					newChScript.getGenes().set(i, ruleToSwitch);
+					newChScript.getGenes().set(idRuletoSwitch, ruleBase);
+				}
+			}			
+		}
 		if(scrTable.getScriptTable().containsKey(newChScript))
 		{
 			return scrTable.getScriptTable().get(newChScript).intValue();			

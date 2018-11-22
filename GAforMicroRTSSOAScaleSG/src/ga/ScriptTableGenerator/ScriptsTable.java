@@ -25,6 +25,7 @@ public class ScriptsTable {
 
 	private HashMap<ChromosomeScript, BigDecimal> scriptsTable ;
 	private int numberOfTypes;
+	private TableCommandsGenerator tcg;
 
 	private String pathTableScripts;
 	
@@ -73,7 +74,7 @@ public class ScriptsTable {
 	
 	public ScriptsTable generateScriptsTable(int size){
 		
-		TableCommandsGenerator tcg=TableCommandsGenerator.getInstance(new UnitTypeTable());
+		tcg=TableCommandsGenerator.getInstance(new UnitTypeTable());
 		numberOfTypes=tcg.getNumberTypes();
 		
 		HashMap<ChromosomeScript, BigDecimal> newChromosomes = new HashMap<>();
@@ -90,7 +91,7 @@ public class ScriptsTable {
 					int typeSelected=rand.nextInt(numberOfTypes);
 					int sizeRulesofType=tcg.getBagofTypes().get(typeSelected).size();
 					int idRuleSelected=tcg.getBagofTypes().get(typeSelected).get(rand.nextInt(sizeRulesofType));
-					tChom.addGene(rand.nextInt(ConfigurationsGA.QTD_RULES));
+					tChom.addGene(idRuleSelected);
 				}
 				newChromosomes.put(tChom, BigDecimal.valueOf(i));
 			    f0.println(i+tChom.print());
@@ -125,9 +126,13 @@ public class ScriptsTable {
 	}
 	
 	public boolean checkDiversityofTypes() {
-		HashSet diferentTypes =  new HashSet<Integer>();
+		HashSet<Integer> diferentTypes =  new HashSet<Integer>();
 		for(ChromosomeScript c : scriptsTable.keySet()){
-			diferentTypes.add(this.scriptsTable.get(c));
+
+			for (Integer gene : c.getGenes()) {
+				
+				diferentTypes.add(tcg.getCorrespondenceofTypes().get(gene));
+			}
 		}
 		if(diferentTypes.size()==numberOfTypes) {
 			return false;

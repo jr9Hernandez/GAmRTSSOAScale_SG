@@ -32,6 +32,8 @@ public class ScriptsTable {
 	public ScriptsTable(String pathTableScripts){
 		this.scriptsTable = new HashMap<>();
 		this.pathTableScripts=pathTableScripts;
+		this.tcg=TableCommandsGenerator.getInstance(new UnitTypeTable());
+		this.numberOfTypes=tcg.getNumberTypes();
 	}
 	
 
@@ -39,6 +41,8 @@ public class ScriptsTable {
 		super();
 		this.scriptsTable = scriptsTable;
 		this.pathTableScripts=pathTableScripts;
+		this.tcg=TableCommandsGenerator.getInstance(new UnitTypeTable());
+		this.numberOfTypes=tcg.getNumberTypes();
 	}
 
 
@@ -73,9 +77,6 @@ public class ScriptsTable {
 	//static methods
 	
 	public ScriptsTable generateScriptsTable(int size){
-		
-		tcg=TableCommandsGenerator.getInstance(new UnitTypeTable());
-		numberOfTypes=tcg.getNumberTypes();
 		
 		HashMap<ChromosomeScript, BigDecimal> newChromosomes = new HashMap<>();
 		ChromosomeScript tChom;
@@ -126,6 +127,7 @@ public class ScriptsTable {
 	}
 	
 	public boolean checkDiversityofTypes() {
+		
 		HashSet<Integer> diferentTypes =  new HashSet<Integer>();
 		for(ChromosomeScript c : scriptsTable.keySet()){
 

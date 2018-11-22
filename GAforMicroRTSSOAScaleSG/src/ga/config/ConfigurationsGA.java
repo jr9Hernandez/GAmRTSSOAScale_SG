@@ -9,7 +9,7 @@ public final class ConfigurationsGA {
 	public final static int SIZE_PARENTSFORCROSSOVER = 40;
 	public final static double MUTATION_RATE = 0.2;
 	public final static double MUTATION_RATE_RULE = 0.2;
-	public final static double MUTATION_ORDER_RATE= 0.05;
+	public final static double MUTATION_ORDER_RATE= 0.1;
 	public final static boolean INCREASING_INDEX=false;
 	public final static double INCREASING_RATE = 0.2;
 	public final static double DECREASING_RATE = 0.2;

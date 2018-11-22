@@ -130,7 +130,6 @@ public class ScriptsTable {
 		
 		HashSet<Integer> diferentTypes =  new HashSet<Integer>();
 		for(ChromosomeScript c : scriptsTable.keySet()){
-
 			for (Integer gene : c.getGenes()) {
 				
 				diferentTypes.add(tcg.getCorrespondenceofTypes().get(gene));

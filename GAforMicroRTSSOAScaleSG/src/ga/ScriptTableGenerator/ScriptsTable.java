@@ -84,7 +84,8 @@ public class ScriptsTable {
 		try {
 			f0 = new PrintWriter(new FileWriter(pathTableScripts+"ScriptsTable.txt"));
 			
-			for(int i=0;i<size;i++)
+			int i=0;
+			while(i<size)
 			{
 				tChom = new ChromosomeScript();
 				int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME_SCRIPT)+1;
@@ -94,7 +95,11 @@ public class ScriptsTable {
 					int idRuleSelected=tcg.getBagofTypes().get(typeSelected).get(rand.nextInt(sizeRulesofType));
 					tChom.addGene(idRuleSelected);
 				}
+				if(!newChromosomes.containsKey(tChom))
+				{
 				newChromosomes.put(tChom, BigDecimal.valueOf(i));
+				i++;
+				}
 			    f0.println(i+tChom.print());
 			}
 			f0.close();

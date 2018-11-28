@@ -1,5 +1,8 @@
 package ga.util;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.Duration;
 import java.time.Instant;
 
@@ -16,6 +19,7 @@ public class RunGA {
 	private ScriptsTable scrTable;
 
 	private final String pathTableScripts = System.getProperty("user.dir").concat("/Table/");
+	private final String pathLogs = System.getProperty("user.dir");
 	//private final String pathTableScripts = "/home/rubens/cluster/TesteNewGASG/Table/";
 
 	/**
@@ -33,6 +37,10 @@ public class RunGA {
 		   }while(scrTable.checkDiversityofTypes());
 		scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
 
+		PrintWriter f0;
+		try {
+			f0 = new PrintWriter(new FileWriter(pathTableScripts+"Tracking.txt"));
+
 		do {
 			// Fase 1 = gerar a população inicial
 			population = Population.getInitialPopulation(ConfigurationsGA.SIZE_POPULATION, scrTable);
@@ -40,7 +48,8 @@ public class RunGA {
 			// Fase 2 = avalia a população
 			population = evalFunction.evalPopulation(population, this.generations);
 			System.out.println("Log - Generation = " + this.generations);
-			population.printWithValue();
+			f0.println("Log - Generation = " + this.generations);
+			population.printWithValue(f0);
 		} while (resetPopulation(population));
 
 		resetControls();
@@ -58,7 +67,14 @@ public class RunGA {
 			updateGeneration();
 
 			System.out.println("Log - Generation = " + this.generations);
-			population.printWithValue();
+			f0.println("Log - Generation = " + this.generations);
+			population.printWithValue(f0);
+		}
+		
+		f0.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		return population;

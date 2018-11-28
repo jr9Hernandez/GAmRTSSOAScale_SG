@@ -1,5 +1,6 @@
 package ga.model;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -28,12 +29,15 @@ public class Chromosome {
 		this.Genes.add(gene);
 	}
 	
-	public void print(){
+	public void print(PrintWriter f0){
 		System.out.print("Chromosome ");
+		f0.println("Chromosome ");
 		for (Integer gene : Genes) {
 			System.out.print(gene+" ");
+			f0.print(gene+" ");
 		}
 		System.out.println("");
+		f0.println("");
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package ga.model;
 
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -43,19 +44,20 @@ public class Population {
 		this.Chromosomes.put(chromosome, BigDecimal.ZERO);
 	}	
 	
-	public void print(){
-		System.out.println("-- Population --");
-		for(Chromosome c : Chromosomes.keySet()){
-			c.print();
-		}
-		System.out.println("-- Population --");
-	}
+//	public void print(){
+//		System.out.println("-- Population --");
+//		for(Chromosome c : Chromosomes.keySet()){
+//			c.print();
+//		}
+//		System.out.println("-- Population --");
+//	}
 	
-	public void printWithValue(){
+	public void printWithValue(PrintWriter f0){
 		System.out.println("-- Population --");
 		for(Chromosome c : Chromosomes.keySet()){
-			c.print();
+			c.print(f0);
 			System.out.println("Value = "+ this.Chromosomes.get(c));
+			f0.println("Value = "+ this.Chromosomes.get(c));
 		}
 		System.out.println("-- Population --");
 	}

@@ -54,12 +54,14 @@ public class Population {
 	
 	public void printWithValue(PrintWriter f0){
 		System.out.println("-- Population --");
+		f0.println("-- Population --");
 		for(Chromosome c : Chromosomes.keySet()){
 			c.print(f0);
 			System.out.println("Value = "+ this.Chromosomes.get(c));
 			f0.println("Value = "+ this.Chromosomes.get(c));
 		}
 		System.out.println("-- Population --");
+		f0.println("-- Population --");
 	}
 	
 	/**

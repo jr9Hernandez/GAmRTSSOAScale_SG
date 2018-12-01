@@ -19,7 +19,7 @@ public class RunGA {
 	private ScriptsTable scrTable;
 
 	private final String pathTableScripts = System.getProperty("user.dir").concat("/Table/");
-	private final String pathLogs = System.getProperty("user.dir");
+	private final String pathLogs = System.getProperty("user.dir").concat("/Tracking/");
 	//private final String pathTableScripts = "/home/rubens/cluster/TesteNewGASG/Table/";
 
 	/**
@@ -39,7 +39,7 @@ public class RunGA {
 
 		PrintWriter f0;
 		try {
-			f0 = new PrintWriter(new FileWriter(pathTableScripts+"Tracking.txt"));
+			f0 = new PrintWriter(new FileWriter(pathLogs+"Tracking.txt"));
 
 		do {
 			// Fase 1 = gerar a população inicial

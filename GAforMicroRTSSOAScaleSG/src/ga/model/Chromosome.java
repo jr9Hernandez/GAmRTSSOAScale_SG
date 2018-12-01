@@ -31,7 +31,7 @@ public class Chromosome {
 	
 	public void print(PrintWriter f0){
 		System.out.print("Chromosome ");
-		f0.println("Chromosome ");
+		f0.print("Chromosome ");
 		for (Integer gene : Genes) {
 			System.out.print(gene+" ");
 			f0.print(gene+" ");

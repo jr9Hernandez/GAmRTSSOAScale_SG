@@ -76,7 +76,8 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 	}
 
 	public Population updatePopulationValue(ArrayList<EvalResult> results, Population pop) {
-		ArrayList<EvalResult> resultsNoDraw = removeDraw(results);
+		//ArrayList<EvalResult> resultsNoDraw = removeDraw(results);
+		ArrayList<EvalResult> resultsNoDraw = results;
 
 		/*
 		 * System.out.println("Avaliações sem Draw"); for (EvalResult evalResult
@@ -274,12 +275,12 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		int numberSOA = 1;
 		// montar a lista de batalhas que irão ocorrer
 		
-		HashSet<Chromosome> constantSamples = defineRandomSet(population);
+		defineRandomSet(population);
 
 		for (int i = 0; i < TOTAL_PARTIDAS_ROUND; i++) {
 
 			for (Chromosome cIA1 : population.getChromosomes().keySet()) {
-				defineChromosomeSample(population, cIA1,constantSamples);
+				defineChromosomeSample(population, cIA1);
 
 				for (Chromosome cIA2 : this.ChromosomeSample) {
 
@@ -347,36 +348,38 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		}
 	}
 	
-	private HashSet<Chromosome> defineRandomSet(Population population) {
+	private void defineRandomSet(Population population) {
 		
 
 		int totalPop = population.getChromosomes().size();
 		Random rand = new Random();
 		HashSet<Chromosome> samples = new HashSet<>();
-		while (samples.size() < ConfigurationsGA.QTD_ENEMIES_SAMPLE/2) {
+		while (samples.size() < ConfigurationsGA.QTD_ENEMIES_SAMPLE_RANDOM) {
 			ArrayList<Chromosome> temp = new ArrayList<>(population.getChromosomes().keySet());
+			Chromosome cTemp = temp.get(rand.nextInt(totalPop));
+			//if (!cTemp.equals(cIA1)) {
+				samples.add(cTemp);
+			//}
 		}
 		
-		return samples;
+		this.ChromosomeSample.addAll(samples);
 
 	}
 
-	private void defineChromosomeSample(Population population, Chromosome cIA1, HashSet<Chromosome> samples) {
+	private void defineChromosomeSample(Population population, Chromosome cIA1) {
 		PreSelection ps=new PreSelection(population);	
-		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)ps.sortByValue(population.getChromosomes());
+		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)ps.sortByValueEliteFItnessFunction(population.getChromosomes());
 		ArrayList<Entry<Chromosome, BigDecimal>> arrayElite = new ArrayList<>();
 		arrayElite.addAll(elite.entrySet());
 		
 		this.ChromosomeSample.clear();
 		HashSet<Chromosome> eliteH = new HashSet<>();
-		for(int i=0;i<ConfigurationsGA.QTD_ENEMIES_SAMPLE;i++)
+		for(int i=0;i<ConfigurationsGA.QTD_ENEMIES_SAMPLE_ELITE;i++)
 		{
 			eliteH.add(arrayElite.get(i).getKey());
-			
-			ArrayList<Chromosome> temp = new ArrayList<>(population.getChromosomes().keySet());
 
 		}
-		this.ChromosomeSample.addAll(samples);
+		
 		this.ChromosomeSample.addAll(eliteH);
 	}
 

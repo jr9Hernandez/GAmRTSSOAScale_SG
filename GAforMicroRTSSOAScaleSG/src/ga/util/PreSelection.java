@@ -85,7 +85,7 @@ public class PreSelection {
 		for (Iterator it = list.iterator(); it.hasNext();) {
 			Map.Entry entry = (Map.Entry) it.next();
 			sortedHashMap.put(entry.getKey(), entry.getValue());
-			if(sortedHashMap.size()==(ConfigurationsGA.QTD_ENEMIES_SAMPLE-(ConfigurationsGA.QTD_ENEMIES_SAMPLE/2)))
+			if(sortedHashMap.size()==ConfigurationsGA.QTD_ENEMIES_SAMPLE_ELITE)
 			{
 				break;
 			}

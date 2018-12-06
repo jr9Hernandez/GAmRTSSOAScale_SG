@@ -285,7 +285,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 
 				for (Chromosome cIA2 : this.ChromosomeSample) {
 
-					if (!cIA1.equals(cIA2)) {
+					//if (!cIA1.equals(cIA2)) {
 						// System.out.println("IA1 = "+ convertTuple(cIA1)+ "
 						// IA2 = "+ convertTuple(cIA2));
 
@@ -342,7 +342,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 							e.printStackTrace();
 						}
 
-					}
+					//}
 
 				}
 			}

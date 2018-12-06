@@ -13,8 +13,8 @@ public final class ConfigurationsGA {
 	public final static boolean INCREASING_INDEX=false;
 	public final static double INCREASING_RATE = 0.2;
 	public final static double DECREASING_RATE = 0.2;
-	public final static int QTD_ENEMIES_SAMPLE_RANDOM=10;
-	public final static int QTD_ENEMIES_SAMPLE_ELITE=10;
+	public final static int QTD_ENEMIES_SAMPLE_RANDOM=5;
+	public final static int QTD_ENEMIES_SAMPLE_ELITE=5;
 	//---------------------------------------------------------------------------------
 	//Parameters for the script table
 	//public final static int QTD_RULES = 2363793;

@@ -71,7 +71,7 @@ public class PreSelection {
 
 	}
 	
-	public static <K, V extends Comparable<? super V>> Map<K, V> sortByValueEliteFItnessFunction(Map<K, V> map) {
+	public  <K, V extends Comparable<? super V>> Map<K, V> sortByValueEliteFItnessFunction(Map<K, V> map) {
 		List list = new LinkedList(map.entrySet());
 
 		Collections.sort(list, new Comparator() {

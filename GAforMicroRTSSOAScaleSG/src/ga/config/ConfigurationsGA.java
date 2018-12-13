@@ -4,7 +4,7 @@ public final class ConfigurationsGA {
 	public final static int SIZE_CHROMOSOME = 10;
 	public final static int SIZE_POPULATION = 100;
 	public final static int NUMBER_JOBS = 39;
-	public final static int SIZE_ELITE = 25;
+	public final static int SIZE_ELITE = 10;
 	public final static int K_TOURNMENT = 25;
 	public final static int SIZE_PARENTSFORCROSSOVER = 40;
 	public final static double MUTATION_RATE = 0.1;
@@ -14,7 +14,7 @@ public final class ConfigurationsGA {
 	public final static double INCREASING_RATE = 0.2;
 	public final static double DECREASING_RATE = 0.2;
 	public final static int QTD_ENEMIES_SAMPLE_RANDOM=5;
-	public final static int QTD_ENEMIES_SAMPLE_ELITE=5;
+	public final static int QTD_ENEMIES_SAMPLE_ELITE=10;
 	//---------------------------------------------------------------------------------
 	//Parameters for the script table
 	//public final static int QTD_RULES = 2363793;

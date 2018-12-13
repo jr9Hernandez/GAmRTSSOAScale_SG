@@ -372,12 +372,12 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 	private void defineChromosomeSample(Population population) {
 		
 		PreSelection ps=new PreSelection(population);	
-		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)ps.sortByValueEliteFItnessFunction(population.getChromosomes());
+		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)ps.sortByValue(population.getChromosomes());
 		ArrayList<Entry<Chromosome, BigDecimal>> arrayElite = new ArrayList<>();
 		arrayElite.addAll(elite.entrySet());
 		
 		HashSet<Chromosome> eliteH = new HashSet<>();
-		for(int i=0;i<ConfigurationsGA.QTD_ENEMIES_SAMPLE_ELITE;i++)
+		for(int i=0;i<arrayElite.size();i++)
 		{
 			eliteH.add(arrayElite.get(i).getKey());
 

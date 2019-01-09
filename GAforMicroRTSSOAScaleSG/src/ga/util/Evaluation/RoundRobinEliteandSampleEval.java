@@ -275,8 +275,9 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		int numberSOA = 1;
 		// montar a lista de batalhas que irão ocorrer
 		
-		defineRandomSet(population);
+		
 		defineChromosomeSample(population);
+		defineRandomSet(population);
 
 		for (int i = 0; i < TOTAL_PARTIDAS_ROUND; i++) {
 
@@ -351,7 +352,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 	
 	private void defineRandomSet(Population population) {
 		
-		this.ChromosomeSample.clear();
+		
 		int totalPop = population.getChromosomes().size();
 		Random rand = new Random();
 		HashSet<Chromosome> samples = new HashSet<>();
@@ -359,10 +360,12 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		
 		while (samples.size() < ConfigurationsGA.QTD_ENEMIES_SAMPLE_RANDOM) {
 			
-			Chromosome cTemp = temp.get(rand.nextInt(totalPop));
-			//if (!cTemp.equals(cIA1)) {
-				samples.add(cTemp);
-			//}
+			Chromosome cTemp;
+			do {
+				cTemp = temp.get(rand.nextInt(totalPop));
+			}while(ChromosomeSample.contains(cTemp));
+			
+			samples.add(cTemp);
 		}
 		
 		this.ChromosomeSample.addAll(samples);
@@ -371,6 +374,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 
 	private void defineChromosomeSample(Population population) {
 		
+		this.ChromosomeSample.clear();
 		PreSelection ps=new PreSelection(population);	
 		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)ps.sortByValue(population.getChromosomes());
 		ArrayList<Entry<Chromosome, BigDecimal>> arrayElite = new ArrayList<>();

@@ -44,7 +44,7 @@ public class RunGA {
 
 		do {
 			// Fase 1 = gerar a população inicial
-			if(ConfigurationsGA.curriculum)
+			if(!ConfigurationsGA.curriculum)
 			{
 				population = Population.getInitialPopulation(ConfigurationsGA.SIZE_POPULATION, scrTable);
 			}

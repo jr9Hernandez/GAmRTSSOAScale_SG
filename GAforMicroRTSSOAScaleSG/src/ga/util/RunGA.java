@@ -20,6 +20,7 @@ public class RunGA {
 
 	private final String pathTableScripts = System.getProperty("user.dir").concat("/Table/");
 	private final String pathLogs = System.getProperty("user.dir").concat("/Tracking/");
+	private final String pathInitialPopulation = System.getProperty("user.dir").concat("/InitialPopulation/");
 	//private final String pathTableScripts = "/home/rubens/cluster/TesteNewGASG/Table/";
 
 	/**
@@ -43,7 +44,14 @@ public class RunGA {
 
 		do {
 			// Fase 1 = gerar a população inicial
-			population = Population.getInitialPopulation(ConfigurationsGA.SIZE_POPULATION, scrTable);
+			if(ConfigurationsGA.curriculum)
+			{
+				population = Population.getInitialPopulation(ConfigurationsGA.SIZE_POPULATION, scrTable);
+			}
+			else
+			{
+				population = Population.getInitialPopulationCurriculum(ConfigurationsGA.SIZE_POPULATION, scrTable, pathInitialPopulation);
+			}
 
 			// Fase 2 = avalia a população
 			population = evalFunction.evalPopulation(population, this.generations);

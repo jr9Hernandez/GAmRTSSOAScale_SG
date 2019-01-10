@@ -1,7 +1,13 @@
 package ga.model;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
@@ -95,6 +101,42 @@ public class Population {
 		}
 		Population pop = new Population(newChromosomes);
 		return pop;
+	}
+	
+	public static Population getInitialPopulationCurriculum(int size, ScriptsTable scrTable, String pathInitialPopulation){
+		HashMap<Chromosome, BigDecimal> newChromosomes = new HashMap<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(pathInitialPopulation + "/population.txt"))) {
+            String line;
+            Chromosome tChom;
+            while ((line = br.readLine()) != null) {
+            	if(line.startsWith("Value"))
+            	{
+            		continue;
+            	}
+                String[] strArray = line.split(" ");
+                int[] intArray = new int[strArray.length];
+                for (int i = 0; i < strArray.length; i++) {
+                    intArray[i] = Integer.parseInt(strArray[i]);
+                }
+                int[] idsScripts = Arrays.copyOfRange(intArray, 1, intArray.length);
+
+                tChom = new Chromosome();
+                for (int i : idsScripts) {
+                	tChom.addGene(i);
+                }
+
+                newChromosomes.put(tChom, BigDecimal.ZERO);
+            }
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Population pop = new Population(newChromosomes);
+        return pop;
 	}
 	
 	

@@ -33,6 +33,6 @@ public final class ConfigurationsGA {
 	//---------------------------------------------------------------------------------
 	public final static boolean RESET_ENABLED = true;
 	public final static boolean MUTATION_ORDER_ENABLED = true;
-	public final static boolean curriculum=false;
+	public final static boolean curriculum=true;
 	
 }

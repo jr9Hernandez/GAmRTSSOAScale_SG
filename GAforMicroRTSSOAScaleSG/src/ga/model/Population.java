@@ -115,10 +115,10 @@ public class Population {
             	}
                 String[] strArray = line.split(" ");
                 int[] intArray = new int[strArray.length];
-                for (int i = 0; i < strArray.length; i++) {
+                for (int i = 1; i < strArray.length; i++) {
                     intArray[i] = Integer.parseInt(strArray[i]);
                 }
-                int[] idsScripts = Arrays.copyOfRange(intArray, 1, intArray.length);
+                int[] idsScripts = Arrays.copyOfRange(intArray, 0, intArray.length);
 
                 tChom = new Chromosome();
                 for (int i : idsScripts) {

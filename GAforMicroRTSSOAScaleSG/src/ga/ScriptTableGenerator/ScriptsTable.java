@@ -1,15 +1,21 @@
 package ga.ScriptTableGenerator;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 
 import ai.ScriptsGenerator.TableGenerator.TableCommandsGenerator;
 import ga.config.ConfigurationsGA;
+import ga.model.Chromosome;
 import rts.units.UnitTypeTable;
 
 
@@ -99,8 +105,9 @@ public class ScriptsTable {
 				{
 				newChromosomes.put(tChom, BigDecimal.valueOf(i));
 				i++;
+				f0.println(i+tChom.print());
 				}
-			    f0.println(i+tChom.print());
+			    
 			}
 			f0.close();
 		} catch (IOException e) {
@@ -111,6 +118,40 @@ public class ScriptsTable {
 
 		}
 		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts);
+		return st;
+	}
+	
+	//THis method uses a preexistent table of scripts instead of create a new one
+	public ScriptsTable generateScriptsTableCurriculumVersion(){
+		
+		HashMap<ChromosomeScript, BigDecimal> newChromosomes = new HashMap<>();
+		ChromosomeScript tChom;
+        try (BufferedReader br = new BufferedReader(new FileReader(pathTableScripts + "/ScriptsTable.txt"))) {
+            String line;            
+            while ((line = br.readLine()) != null) {
+                String[] strArray = line.split(" ");
+                int[] intArray = new int[strArray.length];
+                for (int i = 0; i < strArray.length; i++) {
+                    intArray[i] = Integer.parseInt(strArray[i]);
+                }
+                int idScript = intArray[0];
+                int[] rules = Arrays.copyOfRange(intArray, 1, intArray.length);
+
+                tChom = new ChromosomeScript();
+                for (int i : rules) {
+                	tChom.addGene(i);
+                }
+                newChromosomes.put(tChom, BigDecimal.valueOf(idScript));;
+            }
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts);
+        //st.print();
 		return st;
 	}
 	

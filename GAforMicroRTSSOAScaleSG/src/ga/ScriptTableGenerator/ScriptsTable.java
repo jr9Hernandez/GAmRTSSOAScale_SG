@@ -104,8 +104,9 @@ public class ScriptsTable {
 				if(!newChromosomes.containsKey(tChom))
 				{
 				newChromosomes.put(tChom, BigDecimal.valueOf(i));
-				i++;
 				f0.println(i+tChom.print());
+				i++;
+				
 				}
 			    
 			}

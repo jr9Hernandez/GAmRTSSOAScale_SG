@@ -114,14 +114,14 @@ public class Population {
             		continue;
             	}
                 String[] strArray = line.split(" ");
-                int[] intArray = new int[strArray.length];
-                for (int i = 1; i < strArray.length; i++) {
-                    intArray[i] = Integer.parseInt(strArray[i]);
+                int[] intArray = new int[strArray.length-1];
+                for (int i = 0; i < strArray.length-1; i++) {
+                    intArray[i] = Integer.parseInt(strArray[i+1]);
                 }
-                int[] idsScripts = Arrays.copyOfRange(intArray, 0, intArray.length);
+                //int[] idsScripts = Arrays.copyOfRange(intArray, 0, intArray.length);
 
                 tChom = new Chromosome();
-                for (int i : idsScripts) {
+                for (int i : intArray) {
                 	tChom.addGene(i);
                 }
 

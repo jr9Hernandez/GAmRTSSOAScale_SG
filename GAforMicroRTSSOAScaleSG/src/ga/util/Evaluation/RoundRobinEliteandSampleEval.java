@@ -277,7 +277,9 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		
 		
 		defineChromosomeSample(population);
+		System.out.println("sizebeforerandom "+ChromosomeSample.size());
 		defineRandomSet(population);
+		System.out.println("sizetotal "+ChromosomeSample.size());
 
 		for (int i = 0; i < TOTAL_PARTIDAS_ROUND; i++) {
 
@@ -383,9 +385,11 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		HashSet<Chromosome> eliteH = new HashSet<>();
 		for(int i=0;i<arrayElite.size();i++)
 		{
+			System.out.println("here elite "+arrayElite.get(i).getKey());
 			eliteH.add(arrayElite.get(i).getKey());
 
 		}
+		System.out.println(eliteH.size());
 		
 		this.ChromosomeSample.addAll(eliteH);
 	}

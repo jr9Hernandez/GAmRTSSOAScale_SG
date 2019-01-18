@@ -22,7 +22,7 @@ public class Selection {
 	
 	static Random rand = new Random();
 	
-	public Population applySelection(Population populacaoInicial,ScriptsTable scrTable, String pathTableScripts, int [] frequencyIdsRulesForUCB1, int numberCallsUCB1){
+	public Population applySelection(Population populacaoInicial,ScriptsTable scrTable, String pathTableScripts){
 
 
 		//System.out.println("printing the initial population");
@@ -41,7 +41,7 @@ public class Selection {
 		Population newPopulation=rp.Crossover();
 		//System.out.println("printing the new population after crossover");
 		//printMap(newPopulation.getChromosomes());
-		newPopulation=rp.mutation(newPopulation,frequencyIdsRulesForUCB1,numberCallsUCB1);
+		newPopulation=rp.mutation(newPopulation,RunGA.frequencyIdsRulesForUCB,RunGA.numberCallsUCB11);
 		if(ConfigurationsGA.INCREASING_INDEX==true)
 		{
 		newPopulation=rp.IncreasePopulation(newPopulation);

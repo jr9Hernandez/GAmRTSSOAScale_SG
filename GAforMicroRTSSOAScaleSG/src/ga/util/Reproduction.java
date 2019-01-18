@@ -30,15 +30,11 @@ public class Reproduction {
 	ScriptsTable scrTable;
 	
 	private String pathTableScripts;
-	private int [] frequencyIdsRulesForUCB1;
-	private int numberCallsUCB1;
-	public Reproduction(List<Map.Entry<Chromosome, BigDecimal>> parents,  ScriptsTable scrTable, String pathTableScripts)
+	public Reproduction(List<Map.Entry<Chromosome, BigDecimal>> parents, ScriptsTable scrTable, String pathTableScripts)
 	{
 		this.parents=parents;
 		this.scrTable=scrTable;
 		this.pathTableScripts=pathTableScripts;
-		this.frequencyIdsRulesForUCB1=frequencyIdsRulesForUCB1;
-		this.numberCallsUCB1=numberCallsUCB1;
 	}
 	public Population UniformCrossover()
 	{
@@ -214,7 +210,7 @@ public class Reproduction {
 					//newCh.getGenes().set(i, rand.nextInt(scrTable.getCurrentSizeTable()));
 					
 					//The next line is added in order to keep mutation of rules
-					newCh.getGenes().set(i, mutationScript(p, newCh.getGenes().get(i)));
+					newCh.getGenes().set(i, mutationScript(p, newCh.getGenes().get(i), frequencyIdsRulesForUCB1,numberCallsUCB1));
 				}
 			}
 			chromosomesMutated.put(newCh, BigDecimal.ZERO);
@@ -224,7 +220,7 @@ public class Reproduction {
 	}
 	
 	//This method will return the new id script for mutate the porfolio o fscripts
-	public int mutationScript(Population p, int genidScript)
+	public int mutationScript(Population p, int genidScript,  int [] frequencyIdsRulesForUCB1, int numberCallsUCB1)
 	{
 		ChromosomeScript cromScript=cromosomeById(genidScript);
 		ChromosomeScript newChScript=new ChromosomeScript();
@@ -244,7 +240,7 @@ public class Reproduction {
 				}
 				else 
 				{
-					newChScript.getGenes().set(i, UCB1());
+					newChScript.getGenes().set(i, UCB1(frequencyIdsRulesForUCB1,numberCallsUCB1));
 				}
 				
 			}
@@ -319,7 +315,7 @@ public class Reproduction {
 		
 	}
 	
-	public int UCB1(){	
+	public int UCB1( int [] frequencyIdsRulesForUCB1, int numberCallsUCB1){	
 		
 		double bestUCB1=Double.NEGATIVE_INFINITY;
 		int bestidRule=0;

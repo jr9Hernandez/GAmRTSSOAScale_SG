@@ -32,7 +32,7 @@ public class Reproduction {
 	private String pathTableScripts;
 	private int [] frequencyIdsRulesForUCB1;
 	private int numberCallsUCB1;
-	public Reproduction(List<Map.Entry<Chromosome, BigDecimal>> parents,  ScriptsTable scrTable, String pathTableScripts, int [] frequencyIdsRulesForUCB1, int numberCallsUCB1)
+	public Reproduction(List<Map.Entry<Chromosome, BigDecimal>> parents,  ScriptsTable scrTable, String pathTableScripts)
 	{
 		this.parents=parents;
 		this.scrTable=scrTable;
@@ -196,7 +196,7 @@ public class Reproduction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Population mutation(Population p)
+	public Population mutation(Population p, int [] frequencyIdsRulesForUCB1, int numberCallsUCB1)
 	{
 		//This method replace each gene with a random script with a probability of 10%
 		HashMap<Chromosome, BigDecimal> chromosomesMutated = new HashMap<>();

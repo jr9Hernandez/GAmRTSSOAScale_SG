@@ -36,12 +36,12 @@ public class Selection {
 
 		//Class Reproduction have the methods for getting new population according the parents obtained before
 		//using crossover and mutation
-		Reproduction rp=new Reproduction(parents,scrTable,pathTableScripts,frequencyIdsRulesForUCB1,numberCallsUCB1);
+		Reproduction rp=new Reproduction(parents,scrTable,pathTableScripts);
 		//Population newPopulation=rp.UniformCrossover();
 		Population newPopulation=rp.Crossover();
 		//System.out.println("printing the new population after crossover");
 		//printMap(newPopulation.getChromosomes());
-		newPopulation=rp.mutation(newPopulation);
+		newPopulation=rp.mutation(newPopulation,frequencyIdsRulesForUCB1,numberCallsUCB1);
 		if(ConfigurationsGA.INCREASING_INDEX==true)
 		{
 		newPopulation=rp.IncreasePopulation(newPopulation);

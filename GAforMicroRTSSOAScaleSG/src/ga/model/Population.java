@@ -104,7 +104,6 @@ public class Population {
 	}
 	
 	public static Population getInitialPopulationCurriculum(int size, ScriptsTable scrTable, String pathInitialPopulation){
-		System.out.println("Getting initial population curriculum");
 		HashMap<Chromosome, BigDecimal> newChromosomes = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new FileReader(pathInitialPopulation + "/population.txt"))) {
             String line;
@@ -126,7 +125,6 @@ public class Population {
                 	tChom.addGene(i);
                 }
                 
-                System.out.println("prim "+tChom.getGenes().get(0)+" "+tChom.getGenes().get(tChom.getGenes().size()-1));
                 newChromosomes.put(tChom, BigDecimal.ZERO);
             }
 

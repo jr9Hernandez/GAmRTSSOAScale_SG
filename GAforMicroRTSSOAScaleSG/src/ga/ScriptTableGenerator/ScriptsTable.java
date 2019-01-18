@@ -152,7 +152,7 @@ public class ScriptsTable {
             e.printStackTrace();
         }
         ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts);
-        st.printWithValue();;
+        //st.print();
 		return st;
 	}
 	

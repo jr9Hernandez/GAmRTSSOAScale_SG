@@ -30,10 +30,9 @@ public class ChromosomeScript {
 
 		String crom="";
 		for (Integer gene : Genes) {
-			System.out.print(gene+" ");
+			//System.out.print(gene+" ");
 			crom+=" "+gene;
 		}
-		System.out.println("");
 		return crom;
 	}
 

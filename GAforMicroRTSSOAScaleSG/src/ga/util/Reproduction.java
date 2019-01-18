@@ -341,6 +341,7 @@ public class Reproduction {
 			}
 		}
 		frequencyIdsRulesForUCB1[bestidRule]=frequencyIdsRulesForUCB1[bestidRule]+1;
+		numberCallsUCB1++;
 		return bestidRule;
 		
 	}

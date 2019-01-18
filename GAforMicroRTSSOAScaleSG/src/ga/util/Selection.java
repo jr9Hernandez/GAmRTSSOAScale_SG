@@ -41,7 +41,7 @@ public class Selection {
 		Population newPopulation=rp.Crossover();
 		//System.out.println("printing the new population after crossover");
 		//printMap(newPopulation.getChromosomes());
-		newPopulation=rp.mutation(newPopulation,RunGA.frequencyIdsRulesForUCB,RunGA.numberCallsUCB11);
+		newPopulation=rp.mutation(newPopulation);
 		if(ConfigurationsGA.INCREASING_INDEX==true)
 		{
 		newPopulation=rp.IncreasePopulation(newPopulation);

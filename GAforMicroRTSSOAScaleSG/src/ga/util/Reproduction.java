@@ -192,7 +192,7 @@ public class Reproduction {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Population mutation(Population p, int [] frequencyIdsRulesForUCB1, int numberCallsUCB1)
+	public Population mutation(Population p)
 	{
 		//This method replace each gene with a random script with a probability of 10%
 		HashMap<Chromosome, BigDecimal> chromosomesMutated = new HashMap<>();

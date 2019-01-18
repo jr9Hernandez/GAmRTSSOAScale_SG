@@ -20,6 +20,7 @@ import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
 import ga.model.Chromosome;
 import ga.model.Population;
+import util.sqlLite.UCB_Facade;
 
 public class Reproduction {
 
@@ -29,11 +30,15 @@ public class Reproduction {
 	ScriptsTable scrTable;
 	
 	private String pathTableScripts;
-	public Reproduction(List<Map.Entry<Chromosome, BigDecimal>> parents,  ScriptsTable scrTable, String pathTableScripts)
+	private int [] frequencyIdsRulesForUCB1;
+	private int numberCallsUCB1;
+	public Reproduction(List<Map.Entry<Chromosome, BigDecimal>> parents,  ScriptsTable scrTable, String pathTableScripts, int [] frequencyIdsRulesForUCB1, int numberCallsUCB1)
 	{
 		this.parents=parents;
 		this.scrTable=scrTable;
 		this.pathTableScripts=pathTableScripts;
+		this.frequencyIdsRulesForUCB1=frequencyIdsRulesForUCB1;
+		this.numberCallsUCB1=numberCallsUCB1;
 	}
 	public Population UniformCrossover()
 	{
@@ -233,7 +238,15 @@ public class Reproduction {
 
 			if(m)
 			{
-				newChScript.getGenes().set(i, rand.nextInt(ConfigurationsGA.QTD_RULES));
+				if(!ConfigurationsGA.UCB1)
+				{
+					newChScript.getGenes().set(i, rand.nextInt(ConfigurationsGA.QTD_RULES));
+				}
+				else 
+				{
+					newChScript.getGenes().set(i, UCB1());
+				}
+				
 			}
 		}
 		if(ConfigurationsGA.MUTATION_ORDER_ENABLED)
@@ -303,6 +316,32 @@ public class Reproduction {
 		}
 		pop.setChromosomes(chromosomesMutated);
 		return pop;
+		
+	}
+	
+	public int UCB1(){	
+		
+		double bestUCB1=Double.NEGATIVE_INFINITY;
+		int bestidRule=0;
+		for(int i=0;i<ConfigurationsGA.QTD_RULES;i++)
+		{
+			//weight/reward
+			double reward=UCB_Facade.getAverageValueFromRule(i);
+			//total of matches
+			double ntotalMatches=numberCallsUCB1;
+			//Number of calls
+			double numberCallsRule=frequencyIdsRulesForUCB1[i];
+			
+			double UCB1Rule=reward+Math.sqrt((2*Math.log(ntotalMatches))/numberCallsRule);
+
+			if(UCB1Rule>bestUCB1)
+			{
+				bestUCB1=UCB1Rule;
+				bestidRule=i;
+			}
+		}
+		frequencyIdsRulesForUCB1[bestidRule]=frequencyIdsRulesForUCB1[bestidRule]+1;
+		return bestidRule;
 		
 	}
 	

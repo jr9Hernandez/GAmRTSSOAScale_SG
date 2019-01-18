@@ -21,6 +21,9 @@ public class RunGA {
 	private final String pathTableScripts = System.getProperty("user.dir").concat("/Table/");
 	private final String pathLogs = System.getProperty("user.dir").concat("/Tracking/");
 	private final String pathInitialPopulation = System.getProperty("user.dir").concat("/InitialPopulation/");
+	
+	int [] frequencyIdsRulesForUCB= new int[ConfigurationsGA.QTD_RULES];
+	int numberCallsUCB11=0;
 	//private final String pathTableScripts = "/home/rubens/cluster/TesteNewGASG/Table/";
 
 	/**
@@ -73,7 +76,7 @@ public class RunGA {
 
 			// Fase 4 = Seleção (Aplicar Cruzamento e Mutação)
 			Selection selecao = new Selection();
-			population = selecao.applySelection(population, scrTable, pathTableScripts);
+			population = selecao.applySelection(population, scrTable, pathTableScripts, frequencyIdsRulesForUCB,numberCallsUCB11);
 
 			// Repete-se Fase 2 = Avaliação da população
 			population = evalFunction.evalPopulation(population, this.generations);

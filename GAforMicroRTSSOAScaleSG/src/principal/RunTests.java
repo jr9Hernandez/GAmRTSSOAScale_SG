@@ -5,6 +5,7 @@ import ga.util.RunGA;
 import ga.util.Evaluation.RatePopulation;
 import ga.util.Evaluation.RoundRobinEliteandSampleEval;
 import ga.util.Evaluation.RoundRobinEval;
+import ga.util.Evaluation.RoundRobinIterativeEval;
 import ga.util.Evaluation.RoundRobinSampleEval;
 import ga.util.Evaluation.FixedScriptedEval;
 
@@ -43,7 +44,8 @@ public class RunTests {
 		//escolhemos uma função de avaliação
 		//RatePopulation fEval = new RoundRobinEval();
 		//RatePopulation fEval = new RoundRobinSampleEval();
-		RatePopulation fEval = new RoundRobinEliteandSampleEval();
+		//RatePopulation fEval = new RoundRobinEliteandSampleEval();
+		RatePopulation fEval = new RoundRobinIterativeEval();
 		
 		//rodamos o GA
 		Population popFinal = ga.run(fEval);

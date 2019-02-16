@@ -38,6 +38,35 @@ public class LeitorLog {
 		
 	}
 	
+	public ArrayList<EvalResult> processarIterative() {
+		ArrayList<String> tempCaminhos = new ArrayList<String>();
+		File diretorio = new File(pathStruture);
+		buscarParcial(diretorio, ".txt", tempCaminhos);
+		
+		/*
+		System.out.println("Arquivos encontrados:");
+		for (String string : tempCaminhos) {
+			System.out.println(string);
+		}
+		*/
+		
+		//remove files without winner
+		ArrayList<String> matchsToProcessPath = new ArrayList<String>();
+		for (String path : tempCaminhos) {
+			if(hasResult(path)){
+				matchsToProcessPath.add(path);
+			}
+		}
+		
+		ArrayList<EvalResult> choices = lerArquivos(matchsToProcessPath); 
+		
+		//remover arquivos
+		removerArquivos(matchsToProcessPath);
+		
+		return choices;
+		
+	}
+	
 	private void removerArquivos(ArrayList<String> tempCaminhos){
 		File file;
 		for (String string : tempCaminhos) {

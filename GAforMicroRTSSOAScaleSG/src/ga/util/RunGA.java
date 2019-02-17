@@ -10,6 +10,7 @@ import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
 import ga.model.Population;
 import ga.util.Evaluation.RatePopulation;
+import util.sqlLite.Log_Facade;
 
 public class RunGA {
 
@@ -87,6 +88,12 @@ public class RunGA {
 			System.out.println("Log - Generation = " + this.generations);
 			f0.println("Log - Generation = " + this.generations);
 			population.printWithValue(f0);
+			
+			if(ConfigurationsGA.UCB1==true)
+			{
+				Log_Facade.shrinkRewardTable();
+				System.out.println("call shrink");
+			}
 		}
 		
 		f0.close();

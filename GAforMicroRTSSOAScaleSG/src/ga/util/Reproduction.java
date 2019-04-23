@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Set;
 
 import ga.ScriptTableGenerator.ChromosomeScript;
@@ -210,7 +211,7 @@ public class Reproduction {
 					//newCh.getGenes().set(i, rand.nextInt(scrTable.getCurrentSizeTable()));
 					
 					//The next line is added in order to keep mutation of rules
-					newCh.getGenes().set(i, mutationScript(p, newCh.getGenes().get(i)));
+					//newCh.getGenes().set(i, mutationScript(p, newCh.getGenes().get(i)));
 				}
 			}
 			chromosomesMutated.put(newCh, BigDecimal.ZERO);
@@ -220,67 +221,75 @@ public class Reproduction {
 	}
 	
 	//This method will return the new id script for mutate the porfolio o fscripts
-	public int mutationScript(Population p, int genidScript)
-	{
-		ChromosomeScript cromScript=cromosomeById(genidScript);
-		ChromosomeScript newChScript=new ChromosomeScript();
-
-		newChScript.setGenes((ArrayList<Integer>) cromScript.getGenes().clone());
-		
-		for(int i=0; i<newChScript.getGenes().size();i++)
-		{
-			double mutatePercent = ConfigurationsGA.MUTATION_RATE_RULE;
-			boolean m = rand.nextFloat() <= mutatePercent;
-
-			if(m)
-			{
-				if(!ConfigurationsGA.UCB1)
-				{
-					newChScript.getGenes().set(i, rand.nextInt(ConfigurationsGA.QTD_RULES));
-				}
-				else 
-				{
-					newChScript.getGenes().set(i, UCB1());
-				}
-				
-			}
-		}
-		if(ConfigurationsGA.MUTATION_ORDER_ENABLED)
-		{
-			for(int i=0; i<newChScript.getGenes().size();i++)
-			{
-				double mutatePercent = ConfigurationsGA.MUTATION_ORDER_RATE;
-				boolean m = rand.nextFloat() <= mutatePercent;
-
-				if(m)
-				{
-					int ruleBase=newChScript.getGenes().get(i);
-					int idRuletoSwitch=rand.nextInt(newChScript.getGenes().size());
-					int ruleToSwitch=newChScript.getGenes().get(idRuletoSwitch);
-					newChScript.getGenes().set(i, ruleToSwitch);
-					newChScript.getGenes().set(idRuletoSwitch, ruleBase);
-				}
-			}			
-		}
-		if(scrTable.getScriptTable().containsKey(newChScript))
-		{
-			return scrTable.getScriptTable().get(newChScript).intValue();			
-		}
-		else
-		{
-			int newId=scrTable.getScriptTable().size();
-			scrTable.getScriptTable().put(newChScript, BigDecimal.valueOf(newId));
-			scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
-			addLineFile(newId+newChScript.print());
-			return newId;
-		}
-		
-	}
+//	public int mutationScript(Population p, int genidScript)
+//	{
+//		String cromScript=cromosomeById(genidScript);
+//		String newChScript;
+//
+//		//newChScript.setGenes((ArrayList<Integer>) cromScript.getGenes().clone());
+//		newChScript=cromScript;
+//		
+//		Scanner in = new Scanner(newChScript).useDelimiter("[^0-9]+");
+//		while(in.hasNext())
+//		{
+//			int integer = in.nextInt();
+//		}
+//		
+//		
+//		for(int i=0; i<newChScript.getGenes().size();i++)
+//		{
+//			double mutatePercent = ConfigurationsGA.MUTATION_RATE_RULE;
+//			boolean m = rand.nextFloat() <= mutatePercent;
+//
+//			if(m)
+//			{
+//				if(!ConfigurationsGA.UCB1)
+//				{
+//					newChScript.getGenes().set(i, rand.nextInt(ConfigurationsGA.QTD_RULES));
+//				}
+//				else 
+//				{
+//					newChScript.getGenes().set(i, UCB1());
+//				}
+//				
+//			}
+//		}
+//		if(ConfigurationsGA.MUTATION_ORDER_ENABLED)
+//		{
+//			for(int i=0; i<newChScript.getGenes().size();i++)
+//			{
+//				double mutatePercent = ConfigurationsGA.MUTATION_ORDER_RATE;
+//				boolean m = rand.nextFloat() <= mutatePercent;
+//
+//				if(m)
+//				{
+//					int ruleBase=newChScript.getGenes().get(i);
+//					int idRuletoSwitch=rand.nextInt(newChScript.getGenes().size());
+//					int ruleToSwitch=newChScript.getGenes().get(idRuletoSwitch);
+//					newChScript.getGenes().set(i, ruleToSwitch);
+//					newChScript.getGenes().set(idRuletoSwitch, ruleBase);
+//				}
+//			}			
+//		}
+//		if(scrTable.getScriptTable().containsKey(newChScript))
+//		{
+//			return scrTable.getScriptTable().get(newChScript).intValue();			
+//		}
+//		else
+//		{
+//			int newId=scrTable.getScriptTable().size();
+//			scrTable.getScriptTable().put(newChScript, BigDecimal.valueOf(newId));
+//			scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
+//			addLineFile(newId+newChScript.print());
+//			return newId;
+//		}
+//		
+//	}
 	
 	//This method will be expensive if the hashmap its too big
-	public ChromosomeScript cromosomeById(int genidScript)
+	public String cromosomeById(int genidScript)
 	{
-        for (Entry<ChromosomeScript, BigDecimal> entry : scrTable.getScriptTable().entrySet()) {
+        for (Entry<String, BigDecimal> entry : scrTable.getScriptTable().entrySet()) {
             if (entry.getValue().equals(BigDecimal.valueOf(genidScript))) {
                 return entry.getKey();
             }

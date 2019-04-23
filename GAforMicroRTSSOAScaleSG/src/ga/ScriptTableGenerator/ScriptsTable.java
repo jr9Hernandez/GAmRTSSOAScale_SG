@@ -29,7 +29,7 @@ public class ScriptsTable {
 	 */
 
 
-	private HashMap<ChromosomeScript, BigDecimal> scriptsTable ;
+	private HashMap<String, BigDecimal> scriptsTable ;
 	private int numberOfTypes;
 	private TableCommandsGenerator tcg;
 
@@ -43,7 +43,7 @@ public class ScriptsTable {
 	}
 	
 
-	public ScriptsTable(HashMap<ChromosomeScript, BigDecimal> scriptsTable,String pathTableScripts) {
+	public ScriptsTable(HashMap<String, BigDecimal> scriptsTable,String pathTableScripts) {
 		super();
 		this.scriptsTable = scriptsTable;
 		this.pathTableScripts=pathTableScripts;
@@ -53,27 +53,28 @@ public class ScriptsTable {
 
 
 
-	public HashMap<ChromosomeScript, BigDecimal> getScriptTable() {
+	public HashMap<String, BigDecimal> getScriptTable() {
 		return scriptsTable;
 	}
 
 
-	public void addScript(ChromosomeScript chromosomeScript){
+	public void addScript(String chromosomeScript){
 		this.scriptsTable.put(chromosomeScript, BigDecimal.ZERO);
 	}	
 	
 	public void print(){
 		System.out.println("-- Table Scripts --");
-		for(ChromosomeScript c : scriptsTable.keySet()){
-			c.print();
+		for(String c : scriptsTable.keySet()){
+			//c.print();
+			System.out.print(c);
 		}
 		System.out.println("-- Table Scripts --");
 	}
 	
 	public void printWithValue(){
 		System.out.println("-- Table Script --");
-		for(ChromosomeScript c : scriptsTable.keySet()){
-			c.print();
+		for(String c : scriptsTable.keySet()){
+			System.out.println(c);
 			System.out.println("Value = "+ this.scriptsTable.get(c));
 		}
 		System.out.println("-- Table Scripts --");
@@ -84,8 +85,8 @@ public class ScriptsTable {
 	
 	public ScriptsTable generateScriptsTable(int size){
 		
-		HashMap<ChromosomeScript, BigDecimal> newChromosomes = new HashMap<>();
-		ChromosomeScript tChom;
+		HashMap<String, BigDecimal> newChromosomes = new HashMap<>();
+		String tChom;
 		PrintWriter f0;
 		try {
 			f0 = new PrintWriter(new FileWriter(pathTableScripts+"ScriptsTable.txt"));
@@ -93,18 +94,22 @@ public class ScriptsTable {
 			int i=0;
 			while(i<size)
 			{
-				tChom = new ChromosomeScript();
-				int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME_SCRIPT)+1;
-				for (int j = 0; j < sizeCh; j++) {
-					int typeSelected=rand.nextInt(numberOfTypes);
-					int sizeRulesofType=tcg.getBagofTypes().get(typeSelected).size();
-					int idRuleSelected=tcg.getBagofTypes().get(typeSelected).get(rand.nextInt(sizeRulesofType));
-					tChom.addGene(idRuleSelected);
-				}
+				//tChom = new ChromosomeScript();				
+				//int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME_SCRIPT)+1;
+				int sizeCh=rand.nextInt(ConfigurationsGA.MAX_QTD_COMPONENTS)+1;
+				tChom=buildScriptGenotype(sizeCh);
+				
+//				for (int j = 0; j < sizeCh; j++) {
+//					int typeSelected=rand.nextInt(numberOfTypes);
+//					int sizeRulesofType=tcg.getBagofTypes().get(typeSelected).size();
+//					int idRuleSelected=tcg.getBagofTypes().get(typeSelected).get(rand.nextInt(sizeRulesofType));
+//					tChom.addGene(idRuleSelected);
+//				}
+				
 				if(!newChromosomes.containsKey(tChom))
 				{
 				newChromosomes.put(tChom, BigDecimal.valueOf(i));
-				f0.println(i+tChom.print());
+				f0.println(i+" "+tChom);
 				i++;
 				
 				}
@@ -122,10 +127,100 @@ public class ScriptsTable {
 		return st;
 	}
 	
+	public String buildScriptGenotype(int sizeGenotypeScript )
+	{
+		String genotypeScript = "";
+		int numberComponentsAdded=0;
+		int openParenthesis=0;
+		boolean canCloseParenthesis=false;
+		boolean isOpen=false;
+		int canOpenParenthesis=0;
+
+		while(numberComponentsAdded<sizeGenotypeScript)
+		{
+			int typeComponent = rand.nextInt(2);
+
+			//basic function
+			if(typeComponent==0)
+			{
+				genotypeScript=genotypeScript+returnBasicFunction();
+				numberComponentsAdded++;
+				canCloseParenthesis=true;
+				if(isOpen==false)
+				{
+					canOpenParenthesis=0;
+				}
+			}
+			//conditional
+			else if(typeComponent==1 && numberComponentsAdded<sizeGenotypeScript-1)
+			{
+				genotypeScript=genotypeScript+returnConditional();
+				genotypeScript=genotypeScript+"(";
+				numberComponentsAdded++;
+				openParenthesis++;
+				canOpenParenthesis=1;
+				canCloseParenthesis=false;
+				isOpen=true;
+
+			}
+
+			//close parenthesis
+			if(rand.nextInt(2)>0 && openParenthesis>0 && canCloseParenthesis==true)
+			{
+				genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+				genotypeScript=genotypeScript+") ";
+				openParenthesis--;
+				isOpen=false;
+			}
+
+			//open parenthesis
+			if(rand.nextInt(2)>0 && canOpenParenthesis>0 && isOpen==false && numberComponentsAdded<sizeGenotypeScript)
+			{
+				genotypeScript=genotypeScript+"(";
+				openParenthesis++;
+				canOpenParenthesis--;
+				isOpen=true;
+				canCloseParenthesis=false;
+			}
+			
+			//ensure close open parenthesis
+			if(numberComponentsAdded==sizeGenotypeScript && openParenthesis>0)
+			{
+				while(openParenthesis>0)
+				{
+					genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+					genotypeScript=genotypeScript+") ";
+					openParenthesis--;	
+				}
+			
+			}
+		}
+		//
+
+		return genotypeScript;
+
+	}
+	
+	public String returnBasicFunction()
+	{
+		String basicFunction="";
+		int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
+		basicFunction=id+"! ";
+		return basicFunction;
+	}
+	
+	public String returnConditional()
+	{
+		String conditional="";
+		int id=rand.nextInt(ConfigurationsGA.QTD_RULES_CONDITIONAL);
+		conditional="if("+id+") ";
+		return conditional;
+	}
+	
 	//THis method uses a preexistent table of scripts instead of create a new one
 	public ScriptsTable generateScriptsTableCurriculumVersion(){
 		
-		HashMap<ChromosomeScript, BigDecimal> newChromosomes = new HashMap<>();
+		HashMap<String, BigDecimal> newChromosomes = new HashMap<>();
 		ChromosomeScript tChom;
         try (BufferedReader br = new BufferedReader(new FileReader(pathTableScripts + "/ScriptsTable.txt"))) {
             String line;            
@@ -142,7 +237,7 @@ public class ScriptsTable {
                 for (int i : rules) {
                 	tChom.addGene(i);
                 }
-                newChromosomes.put(tChom, BigDecimal.valueOf(idScript));;
+                newChromosomes.put("", BigDecimal.valueOf(idScript));;
             }
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
@@ -173,21 +268,21 @@ public class ScriptsTable {
 		}	
 	}
 	
-	public boolean checkDiversityofTypes() {
-		
-		HashSet<Integer> diferentTypes =  new HashSet<Integer>();
-		for(ChromosomeScript c : scriptsTable.keySet()){
-			for (Integer gene : c.getGenes()) {
-				
-				diferentTypes.add(tcg.getCorrespondenceofTypes().get(gene));
-			}
-		}
-		if(diferentTypes.size()==numberOfTypes) {
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
+//	public boolean checkDiversityofTypes() {
+//		
+//		HashSet<Integer> diferentTypes =  new HashSet<Integer>();
+//		for(String c : scriptsTable.keySet()){
+//			for (Integer gene : c.getGenes()) {
+//				
+//				diferentTypes.add(tcg.getCorrespondenceofTypes().get(gene));
+//			}
+//		}
+//		if(diferentTypes.size()==numberOfTypes) {
+//			return false;
+//		}
+//		else {
+//			return true;
+//		}		
+//	}
 	
 }

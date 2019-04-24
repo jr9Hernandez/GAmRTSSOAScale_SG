@@ -234,7 +234,7 @@ public class Reproduction {
 	    	if(parts[i].substring(parts[i].length() - 1).equals("!"))
 			{
 				int newGen=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
-				cromScript=cromScript.replaceFirst(parts[i], String.valueOf(newGen));
+				cromScript=cromScript.replaceFirst(parts[i], String.valueOf(newGen)+"!");
 			}
 	    	else
 	    	{

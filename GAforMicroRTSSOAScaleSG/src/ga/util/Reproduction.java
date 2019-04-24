@@ -227,7 +227,7 @@ public class Reproduction {
 		String cromScriptAux=cromScript;
 		
 		cromScriptAux=cromScriptAux.replaceAll("[^0-9!]", " ");
-	    String[] parts = cromScriptAux.split("\\s+");
+	    String[] parts = cromScriptAux.trim().split("\\s+");
 	       
 	    for(int i=0;i<parts.length;i++)
 	    {

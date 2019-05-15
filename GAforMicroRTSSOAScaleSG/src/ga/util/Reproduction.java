@@ -16,6 +16,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
+import ai.ScriptsGenerator.TableGenerator.FunctionsforGrammar;
 import ga.ScriptTableGenerator.ChromosomeScript;
 import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
@@ -29,6 +30,7 @@ public class Reproduction {
 
 	List<Map.Entry<Chromosome, BigDecimal>> parents;
 	ScriptsTable scrTable;
+	FunctionsforGrammar functions;
 	
 	private String pathTableScripts;
 	public Reproduction(List<Map.Entry<Chromosome, BigDecimal>> parents,ScriptsTable scrTable, String pathTableScripts)
@@ -223,26 +225,43 @@ public class Reproduction {
 	//This method will return the new id script for mutate the porfolio o fscripts
 	public int mutationScript(Population p, int genidScript)
 	{
+		functions=new FunctionsforGrammar();
+		List<FunctionsforGrammar> basicFunctions=functions.getBasicFunctionsForGrammar();
+		List<FunctionsforGrammar> conditionalFunctions=functions.getConditionalsForGrammar();
+		
+		
 		String cromScript=cromosomeById(genidScript);
 		String cromScriptAux=cromScript;
 		
-		cromScriptAux=cromScriptAux.replaceAll("[^0-9!]", " ");
+		
+		//cromScriptAux=cromScriptAux.replaceAll("[^0-9!]", " ");
 	    String[] parts = cromScriptAux.trim().split("\\s+");
+	    String[] news = new String[parts.length];
 	       
 	    for(int i=0;i<parts.length;i++)
 	    {
-	    	if(parts[i].substring(parts[i].length() - 1).equals("!"))
-			{
-				int newGen=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
-				cromScript=cromScript.replaceFirst(parts[i], String.valueOf(newGen)+"!");
-			}
-	    	else
-	    	{
-	    		int newGen=rand.nextInt(ConfigurationsGA.QTD_RULES_CONDITIONAL);
-				cromScript=cromScript.replaceFirst(parts[i], String.valueOf(newGen));
-	    	}
-
+		    parts[i]=removeFromBeggining(parts[i]);
+		    parts[i]=removeFromLast(parts[i]);
 	    }
+		   
+//	    for(int i=0;i<parts.length;i++)
+//	    {
+//	    	System.out.println(parts[i]);
+//	    }
+	    
+	    news=chossingFromBag(news,parts,basicFunctions,conditionalFunctions);
+	    
+	    for(int i=0;i<parts.length;i++)
+	    {
+	    	double mutatePercent = ConfigurationsGA.MUTATION_RATE_RULE;
+	    	boolean m = rand.nextFloat() <= mutatePercent;
+	    	
+	    	if(m)
+	    		cromScript=replaceFromCompleteGrammar(parts[i], news[i], cromScript );
+		
+	    }
+	    
+	    //cromScript=removingTrashFromGrammar(cromScript);
 	    
 		if(scrTable.getScriptTable().containsKey(cromScript))
 		{
@@ -257,6 +276,87 @@ public class Reproduction {
 			return newId;
 		}
 		
+	}
+	
+	public static String removeFromBeggining(String s)
+	{
+		String cloneS = s;
+		  
+		while (cloneS.charAt(0)=='(' )
+		{
+			cloneS=cloneS.replaceFirst("\\(", "");
+		}
+		
+		if(cloneS.startsWith("if"))
+		{
+			cloneS=cloneS.replaceFirst("if", "");
+			if(cloneS.charAt(0)=='(')
+			{
+				cloneS=cloneS.replaceFirst("\\(", "");
+			}
+		}		
+
+		return cloneS;
+	}
+	
+	public String removeFromLast(String s)
+	{
+		String cloneS = s;
+		while (cloneS.endsWith("))")) 
+		{
+			cloneS=cloneS.replaceFirst("\\)", "");
+		}
+		return cloneS;
+	}
+	
+	public String removingTrashFromGrammar(String originalGrammar)
+	{
+		originalGrammar=originalGrammar.replace("NEW", "");		
+		return originalGrammar;
+	}
+	
+	public String replaceFromCompleteGrammar(String oldFunction, String newFunction, String originalGrammar)
+	{
+		originalGrammar=originalGrammar.replace(oldFunction, newFunction+"NEW");
+		return originalGrammar;
+	}
+	
+	public String[]  chossingFromBag(String[]  candidates,String[] originals, List<FunctionsforGrammar>basicFunctions, List<FunctionsforGrammar>conditionalFunctions)
+	{
+		ScriptsTable objScriptTable=new ScriptsTable("");
+		boolean found=false;
+		for (int i=0; i<originals.length;i++)
+		{
+			found=false;
+			for (FunctionsforGrammar function:basicFunctions)
+			{
+				
+				if(originals[i].startsWith(function.getNameFunction()))
+				{
+					
+					//change with other basicFunction
+					candidates[i]=objScriptTable.returnBasicFunctionClean();
+					found=true;
+					break;
+				}
+			}
+			if(found==false)
+			{
+				for (FunctionsforGrammar function:conditionalFunctions)
+				{
+					if(originals[i].startsWith(function.getNameFunction()))
+					{
+						//change with other basicFunction
+						candidates[i]=objScriptTable.returnConditionalClean();
+						break;
+					}
+				}
+				
+			}
+			
+		}
+		
+		return candidates;
 	}
 	
 	//This method will be expensive if the hashmap its too big

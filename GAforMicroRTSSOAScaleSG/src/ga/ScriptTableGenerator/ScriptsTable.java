@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 
+import ai.ScriptsGenerator.TableGenerator.FunctionsforGrammar;
+import ai.ScriptsGenerator.TableGenerator.Parameter;
 import ai.ScriptsGenerator.TableGenerator.TableCommandsGenerator;
 import ga.config.ConfigurationsGA;
 import ga.model.Chromosome;
@@ -32,6 +34,7 @@ public class ScriptsTable {
 	private HashMap<String, BigDecimal> scriptsTable ;
 	private int numberOfTypes;
 	private TableCommandsGenerator tcg;
+	private FunctionsforGrammar functions;
 
 	private String pathTableScripts;
 	
@@ -40,6 +43,7 @@ public class ScriptsTable {
 		this.pathTableScripts=pathTableScripts;
 		this.tcg=TableCommandsGenerator.getInstance(new UnitTypeTable());
 		this.numberOfTypes=tcg.getNumberTypes();
+		functions=new FunctionsforGrammar();
 	}
 	
 
@@ -49,6 +53,7 @@ public class ScriptsTable {
 		this.pathTableScripts=pathTableScripts;
 		this.tcg=TableCommandsGenerator.getInstance(new UnitTypeTable());
 		this.numberOfTypes=tcg.getNumberTypes();
+		functions=new FunctionsforGrammar();
 	}
 
 
@@ -204,17 +209,129 @@ public class ScriptsTable {
 	public String returnBasicFunction()
 	{
 		String basicFunction="";
-		int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
-		basicFunction=id+"! ";
+		int limitInferior;
+		int limitSuperior;
+		String discreteValue;
+		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
+		int idBasicActionSelected=rand.nextInt(functions.getBasicFunctionsForGrammar().size());
+		FunctionsforGrammar functionChosen=functions.getBasicFunctionsForGrammar().get(idBasicActionSelected);
+		basicFunction=basicFunction+functionChosen.getNameFunction()+"(";
+		for(Parameter parameter:functionChosen.getParameters())
+		{
+			if(parameter.getDiscreteSpecificValues()==null)
+			{
+				limitInferior=(int)parameter.getInferiorLimit();
+				limitSuperior=(int)parameter.getSuperiorLimit();
+				int parametherValueChosen = rand.nextInt(limitSuperior-limitInferior) + limitInferior;
+				basicFunction=basicFunction+parametherValueChosen+",";
+			}
+			else
+			{
+				int idChosen=rand.nextInt(parameter.getDiscreteSpecificValues().size());
+				discreteValue=parameter.getDiscreteSpecificValues().get(idChosen);
+				basicFunction=basicFunction+discreteValue+",";
+			}
+		}
+		basicFunction=basicFunction.substring(0, basicFunction.length() - 1);
+		basicFunction=basicFunction+") ";
 		return basicFunction;
 	}
 	
 	public String returnConditional()
 	{
+		
 		String conditional="";
-		int id=rand.nextInt(ConfigurationsGA.QTD_RULES_CONDITIONAL);
-		conditional="if("+id+") ";
+		int limitInferior;
+		int limitSuperior;
+		String discreteValue;
+		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
+		int idconditionalSelected=rand.nextInt(functions.getConditionalsForGrammar().size());
+		FunctionsforGrammar functionChosen=functions.getConditionalsForGrammar().get(idconditionalSelected);
+		conditional=conditional+functionChosen.getNameFunction()+"(";
+		for(Parameter parameter:functionChosen.getParameters())
+		{
+			if(parameter.getDiscreteSpecificValues()==null)
+			{
+				
+				limitInferior=(int)parameter.getInferiorLimit();
+				limitSuperior=(int)parameter.getSuperiorLimit();
+				int parametherValueChosen = rand.nextInt(limitSuperior-limitInferior) + limitInferior;
+				conditional=conditional+parametherValueChosen+",";
+			}
+			else
+			{
+				int idChosen=rand.nextInt(parameter.getDiscreteSpecificValues().size());
+				discreteValue=parameter.getDiscreteSpecificValues().get(idChosen);
+				conditional=conditional+discreteValue+",";
+			}
+		}
+		conditional=conditional.substring(0, conditional.length() - 1);
+		conditional="if("+conditional+")) ";
 		return conditional;
+	}
+	
+	public String returnBasicFunctionClean()
+	{
+		String basicFunction="";
+		int limitInferior;
+		int limitSuperior;
+		String discreteValue;
+		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
+		int idBasicActionSelected=rand.nextInt(functions.getBasicFunctionsForGrammar().size());
+		FunctionsforGrammar functionChosen=functions.getBasicFunctionsForGrammar().get(idBasicActionSelected);
+		basicFunction=basicFunction+functionChosen.getNameFunction()+"(";
+		for(Parameter parameter:functionChosen.getParameters())
+		{
+			if(parameter.getDiscreteSpecificValues()==null)
+			{
+				limitInferior=(int)parameter.getInferiorLimit();
+				limitSuperior=(int)parameter.getSuperiorLimit();
+				int parametherValueChosen = rand.nextInt(limitSuperior-limitInferior) + limitInferior;
+				basicFunction=basicFunction+parametherValueChosen+",";
+			}
+			else
+			{
+				int idChosen=rand.nextInt(parameter.getDiscreteSpecificValues().size());
+				discreteValue=parameter.getDiscreteSpecificValues().get(idChosen);
+				basicFunction=basicFunction+discreteValue+",";
+			}
+		}
+		basicFunction=basicFunction.substring(0, basicFunction.length() - 1);
+		//basicFunction=basicFunction+") ";
+		return basicFunction+")";
+	}
+	
+	public String returnConditionalClean()
+	{
+		
+		String conditional="";
+		int limitInferior;
+		int limitSuperior;
+		String discreteValue;
+		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
+		int idconditionalSelected=rand.nextInt(functions.getConditionalsForGrammar().size());
+		FunctionsforGrammar functionChosen=functions.getConditionalsForGrammar().get(idconditionalSelected);
+		conditional=conditional+functionChosen.getNameFunction()+"(";
+		for(Parameter parameter:functionChosen.getParameters())
+		{
+			if(parameter.getDiscreteSpecificValues()==null)
+			{
+				
+				limitInferior=(int)parameter.getInferiorLimit();
+				limitSuperior=(int)parameter.getSuperiorLimit();
+				int parametherValueChosen = rand.nextInt(limitSuperior-limitInferior) + limitInferior;
+				conditional=conditional+parametherValueChosen+",";
+			}
+			else
+			{
+				int idChosen=rand.nextInt(parameter.getDiscreteSpecificValues().size());
+				discreteValue=parameter.getDiscreteSpecificValues().get(idChosen);
+				conditional=conditional+discreteValue+",";
+			}
+		}
+		conditional=conditional.substring(0, conditional.length() - 1);
+		//conditional="if("+conditional+")) ";
+		return conditional+")";
 	}
 	
 	//THis method uses a preexistent table of scripts instead of create a new one

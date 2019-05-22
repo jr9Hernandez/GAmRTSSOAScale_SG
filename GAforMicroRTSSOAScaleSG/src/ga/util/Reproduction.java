@@ -261,7 +261,7 @@ public class Reproduction {
 		
 	    }
 	    
-	    //cromScript=removingTrashFromGrammar(cromScript);
+	    cromScript=removingTrashFromGrammar(cromScript);
 	    
 		if(scrTable.getScriptTable().containsKey(cromScript))
 		{

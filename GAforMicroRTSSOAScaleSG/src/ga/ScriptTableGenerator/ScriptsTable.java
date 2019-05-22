@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 
 import ai.ScriptsGenerator.TableGenerator.FunctionsforGrammar;
@@ -134,71 +135,173 @@ public class ScriptsTable {
 	
 	public String buildScriptGenotype(int sizeGenotypeScript )
 	{
+		System.out.println("chumi ");
 		String genotypeScript = "";
 		int numberComponentsAdded=0;
-		int openParenthesis=0;
-		boolean canCloseParenthesis=false;
-		boolean isOpen=false;
-		int canOpenParenthesis=0;
+		
+		boolean canCloseParenthesisIf=false;
+		boolean canOpenParenthesisIf=false;
+		
+		boolean lastRemove=false;
+		
+		boolean isOpenFor=false;
+
+		
+		
+		List<itemIf> collectionofIfs= new ArrayList<itemIf>();
 
 		while(numberComponentsAdded<sizeGenotypeScript)
 		{
-			int typeComponent = rand.nextInt(2);
-
-			//basic function
-			if(typeComponent==0)
+			
+			int typeComponentFor=rand.nextInt(3);
+			
+			//for
+			if(typeComponentFor==-1 && isOpenFor==false && numberComponentsAdded<sizeGenotypeScript-1)
 			{
-				genotypeScript=genotypeScript+returnBasicFunction();
+				genotypeScript=genotypeScript+returnForFunction();
+				isOpenFor=true;
 				numberComponentsAdded++;
-				canCloseParenthesis=true;
-				if(isOpen==false)
+			}
+			else
+			{
+				int typeComponent = rand.nextInt(2);
+				
+				//basic function
+				if(rand.nextInt(2)>0)
 				{
-					canOpenParenthesis=0;
+					genotypeScript=genotypeScript+returnBasicFunction(isOpenFor);
+					numberComponentsAdded++;
+					canCloseParenthesisIf=true;
+					canOpenParenthesisIf=false;
+					
+					if(collectionofIfs.size()>0)
+					{
+						for (int i = collectionofIfs.size()-1; i == 0; i-- ) {
+							
+							if(collectionofIfs.get(i).isLastOpen()==false)
+							{
+								collectionofIfs.remove(i);
+									
+							}
+							else
+							{
+								break;
+							}
+						}
+					}
+					
+
 				}
-			}
-			//conditional
-			else if(typeComponent==1 && numberComponentsAdded<sizeGenotypeScript-1)
-			{
-				genotypeScript=genotypeScript+returnConditional();
-				genotypeScript=genotypeScript+"(";
-				numberComponentsAdded++;
-				openParenthesis++;
-				canOpenParenthesis=1;
-				canCloseParenthesis=false;
-				isOpen=true;
+				//conditional
+				else if(rand.nextInt(2)>0 && numberComponentsAdded<sizeGenotypeScript-1)
+				{
+					
+					collectionofIfs.add(new itemIf(1,true));
+					
+					genotypeScript=genotypeScript+returnConditional(isOpenFor);
+					genotypeScript=genotypeScript+"(";
+					
+					numberComponentsAdded++;
+					canCloseParenthesisIf=false;
+					canOpenParenthesisIf=false;
+					
+					if(collectionofIfs.size()>0)
+					{
+						for (int i = collectionofIfs.size()-1; i == 0; i-- ) {
+							
+							if(collectionofIfs.get(i).isLastOpen()==false)
+							{
+								collectionofIfs.remove(i);
+									
+							}
+							else
+							{
+								break;
+							}
+						}
+					}
 
-			}
-
-			//close parenthesis
-			if(rand.nextInt(2)>0 && openParenthesis>0 && canCloseParenthesis==true)
-			{
-				genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
-				genotypeScript=genotypeScript+") ";
-				openParenthesis--;
-				isOpen=false;
-			}
-
-			//open parenthesis
-			if(rand.nextInt(2)>0 && canOpenParenthesis>0 && isOpen==false && numberComponentsAdded<sizeGenotypeScript)
-			{
-				genotypeScript=genotypeScript+"(";
-				openParenthesis++;
-				canOpenParenthesis--;
-				isOpen=true;
-				canCloseParenthesis=false;
+				}
+				
+				
 			}
 			
-			//ensure close open parenthesis
-			if(numberComponentsAdded==sizeGenotypeScript && openParenthesis>0)
+			//open parenthesis if
+			if(collectionofIfs.size()>0)
 			{
-				while(openParenthesis>0)
+				if(rand.nextInt(2)>0 && canOpenParenthesisIf==true && collectionofIfs.get(collectionofIfs.size()-1).getMaxOpens()>0 && !collectionofIfs.get(collectionofIfs.size()-1).isLastOpen() && numberComponentsAdded<sizeGenotypeScript)
+				{
+					genotypeScript=genotypeScript+"(";
+
+					int counterLastIf=collectionofIfs.get(collectionofIfs.size()-1).getMaxOpens();
+					counterLastIf--;
+					collectionofIfs.get(collectionofIfs.size()-1).setMaxOpens(counterLastIf);
+					collectionofIfs.get(collectionofIfs.size()-1).setLastOpen(true);
+
+					canOpenParenthesisIf=false;
+					canCloseParenthesisIf=false;
+					
+					collectionofIfs.get(collectionofIfs.size()-1).setLastOpen(true);
+
+				}
+
+				//close parenthesis if
+				if(rand.nextInt(2)>0  && canCloseParenthesisIf && collectionofIfs.get(collectionofIfs.size()-1).isLastOpen())
 				{
 					genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
 					genotypeScript=genotypeScript+") ";
-					openParenthesis--;	
+					collectionofIfs.get(collectionofIfs.size()-1).setLastOpen(false);
+					if(collectionofIfs.get(collectionofIfs.size()-1).getMaxOpens()==0)
+					{
+						for (int i = collectionofIfs.size()-1; i == 0; i-- ) {
+						
+							if(collectionofIfs.get(i).isLastOpen()==false)
+							{
+								collectionofIfs.remove(i);
+								
+							}
+							else
+							{
+								break;
+							}
+						}
+					}
+					canOpenParenthesisIf=true;
+				
 				}
 			
 			}
+			
+			//ensure close open parenthesis if
+			//ensure close open parenthesis
+			if(numberComponentsAdded==sizeGenotypeScript)
+			{
+				while(collectionofIfs.size()>0)
+				{
+					genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+					genotypeScript=genotypeScript+") ";
+					collectionofIfs.remove(collectionofIfs.size()-1);
+
+				}
+			
+			}
+			
+//			//close parenthesis for
+//			if(rand.nextInt(2)>0 && isOpenFor  && canCloseParenthesisFor==true && isOpenIf==false)
+//			{
+//				genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+//				genotypeScript=genotypeScript+") ";
+//				isOpenFor=false;
+//			}
+
+			
+//			if(numberComponentsAdded==sizeGenotypeScript && isOpenFor)
+//			{			
+//				genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+//				genotypeScript=genotypeScript+") ";		
+//			
+//			}
+			System.out.println("actual "+genotypeScript+ "collec "+collectionofIfs.size());
 		}
 		//
 
@@ -206,19 +309,33 @@ public class ScriptsTable {
 
 	}
 	
-	public String returnBasicFunction()
+	public String returnBasicFunction(Boolean forclausule)
 	{
 		String basicFunction="";
 		int limitInferior;
 		int limitSuperior;
 		String discreteValue;
+		FunctionsforGrammar functionChosen;
 		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
-		int idBasicActionSelected=rand.nextInt(functions.getBasicFunctionsForGrammar().size());
-		FunctionsforGrammar functionChosen=functions.getBasicFunctionsForGrammar().get(idBasicActionSelected);
+		if(forclausule==false)
+		{
+			int idBasicActionSelected=rand.nextInt(functions.getBasicFunctionsForGrammar().size());
+			functionChosen=functions.getBasicFunctionsForGrammar().get(idBasicActionSelected);
+		}
+		else
+		{
+			int idBasicActionSelected=rand.nextInt(functions.getBasicFunctionsForGrammarUnit().size());
+			functionChosen=functions.getBasicFunctionsForGrammarUnit().get(idBasicActionSelected);
+		}
+		
 		basicFunction=basicFunction+functionChosen.getNameFunction()+"(";
 		for(Parameter parameter:functionChosen.getParameters())
 		{
-			if(parameter.getDiscreteSpecificValues()==null)
+			if(parameter.getParameterName()=="u")
+			{				
+				basicFunction=basicFunction+"u,";
+			}
+			else if(parameter.getDiscreteSpecificValues()==null)
 			{
 				limitInferior=(int)parameter.getInferiorLimit();
 				limitSuperior=(int)parameter.getSuperiorLimit();
@@ -237,7 +354,7 @@ public class ScriptsTable {
 		return basicFunction;
 	}
 	
-	public String returnConditional()
+	public String returnConditional(boolean forClausule)
 	{
 		
 		String conditional="";
@@ -245,12 +362,27 @@ public class ScriptsTable {
 		int limitSuperior;
 		String discreteValue;
 		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
-		int idconditionalSelected=rand.nextInt(functions.getConditionalsForGrammar().size());
-		FunctionsforGrammar functionChosen=functions.getConditionalsForGrammar().get(idconditionalSelected);
+		FunctionsforGrammar functionChosen;
+		if(forClausule==false)		
+		{
+			int idconditionalSelected=rand.nextInt(functions.getConditionalsForGrammar().size());
+			functionChosen=functions.getConditionalsForGrammar().get(idconditionalSelected);
+		}
+		else
+		{
+			int idconditionalSelected=rand.nextInt(functions.getConditionalsForGrammarUnit().size());
+			functionChosen=functions.getConditionalsForGrammarUnit().get(idconditionalSelected);
+		}
+		
 		conditional=conditional+functionChosen.getNameFunction()+"(";
 		for(Parameter parameter:functionChosen.getParameters())
 		{
-			if(parameter.getDiscreteSpecificValues()==null)
+			if(parameter.getParameterName()=="u")
+			{
+				
+				conditional=conditional+"u,";
+			}
+			else if(parameter.getDiscreteSpecificValues()==null)
 			{
 				
 				limitInferior=(int)parameter.getInferiorLimit();
@@ -268,6 +400,13 @@ public class ScriptsTable {
 		conditional=conditional.substring(0, conditional.length() - 1);
 		conditional="if("+conditional+")) ";
 		return conditional;
+	}
+	
+	public String returnForFunction()
+	{
+		String forClausule="";
+		forClausule="for(u) (";
+		return forClausule;
 	}
 	
 	public String returnBasicFunctionClean()

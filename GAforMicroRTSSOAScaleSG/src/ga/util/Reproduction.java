@@ -232,6 +232,8 @@ public class Reproduction {
 		
 		String cromScript=cromosomeById(genidScript);
 		String cromScriptAux=cromScript;
+		cromScriptAux=cromScriptAux.replace("(for(u)", "");
+		cromScriptAux=cromScriptAux.replace("for(u)", "");
 		
 		
 		//cromScriptAux=cromScriptAux.replaceAll("[^0-9!]", " ");
@@ -335,7 +337,14 @@ public class Reproduction {
 				{
 					
 					//change with other basicFunction
-					candidates[i]=objScriptTable.returnBasicFunctionClean();
+					if(originals[i].contains(",u,") || originals[i].contains(",u)") || originals[i].contains("(u,"))
+					{
+						candidates[i]=objScriptTable.returnBasicFunctionClean(true);
+					}
+					else
+					{
+						candidates[i]=objScriptTable.returnBasicFunctionClean(false);
+					}
 					found=true;
 					break;
 				}
@@ -347,7 +356,14 @@ public class Reproduction {
 					if(originals[i].startsWith(function.getNameFunction()))
 					{
 						//change with other basicFunction
-						candidates[i]=objScriptTable.returnConditionalClean();
+						if(originals[i].contains(",u,") || originals[i].contains(",u)") || originals[i].contains("(u,"))
+						{
+							candidates[i]=objScriptTable.returnConditionalClean(true);
+						}
+						else
+						{
+							candidates[i]=objScriptTable.returnConditionalClean(false);
+						}
 						break;
 					}
 				}

@@ -135,14 +135,12 @@ public class ScriptsTable {
 
 	public String buildScriptGenotype(int sizeGenotypeScript )
 	{
-		System.out.println("chumi ");
 		String genotypeScript = "";
 		int numberComponentsAdded=0;
 
 		boolean canCloseParenthesisIf=false;
 		boolean canOpenParenthesisIf=false;
 
-		boolean lastRemove=false;
 
 		boolean isOpenFor=false;
 
@@ -153,7 +151,6 @@ public class ScriptsTable {
 		while(numberComponentsAdded<sizeGenotypeScript)
 		{
 
-			int typeComponentFor=rand.nextInt(3);
 
 			//for
 			if(rand.nextInt(2)>0 && numberComponentsAdded<sizeGenotypeScript-1 && isOpenFor==false)
@@ -246,22 +243,6 @@ public class ScriptsTable {
 			//open parenthesis if
 			if(collectionofIfs.size()>0)
 			{
-				if(rand.nextInt(2)>0 && canOpenParenthesisIf==true && collectionofIfs.get(collectionofIfs.size()-1).getMaxOpens()>0 && !collectionofIfs.get(collectionofIfs.size()-1).isLastOpen() && numberComponentsAdded<sizeGenotypeScript)
-				{
-					genotypeScript=genotypeScript+"(";
-
-					int counterLastIf=collectionofIfs.get(collectionofIfs.size()-1).getMaxOpens();
-					counterLastIf--;
-					collectionofIfs.get(collectionofIfs.size()-1).setMaxOpens(counterLastIf);
-					collectionofIfs.get(collectionofIfs.size()-1).setLastOpen(true);
-
-					canOpenParenthesisIf=false;
-					canCloseParenthesisIf=false;
-
-					collectionofIfs.get(collectionofIfs.size()-1).setLastOpen(true);
-
-				}
-
 				//close parenthesis if
 				if(rand.nextInt(2)>0  && canCloseParenthesisIf && collectionofIfs.get(collectionofIfs.size()-1).isLastOpen())
 				{
@@ -293,8 +274,29 @@ public class ScriptsTable {
 					canOpenParenthesisIf=true;
 
 				}
-
+				
 			}
+				
+			if(collectionofIfs.size()>0)
+			{
+				if(rand.nextInt(2)>0 && canOpenParenthesisIf==true && collectionofIfs.get(collectionofIfs.size()-1).getMaxOpens()>0 && !collectionofIfs.get(collectionofIfs.size()-1).isLastOpen() && numberComponentsAdded<sizeGenotypeScript)
+				{
+					genotypeScript=genotypeScript+"(";
+
+					int counterLastIf=collectionofIfs.get(collectionofIfs.size()-1).getMaxOpens();
+					counterLastIf--;
+					collectionofIfs.get(collectionofIfs.size()-1).setMaxOpens(counterLastIf);
+					collectionofIfs.get(collectionofIfs.size()-1).setLastOpen(true);
+
+					canOpenParenthesisIf=false;
+					canCloseParenthesisIf=false;
+
+					collectionofIfs.get(collectionofIfs.size()-1).setLastOpen(true);
+
+				}
+			}
+
+			
 
 			//ensure close open parenthesis if
 			//ensure close open parenthesis
@@ -325,7 +327,7 @@ public class ScriptsTable {
 			//				genotypeScript=genotypeScript+") ";		
 			//			
 			//			}
-			System.out.println("actual "+genotypeScript+ "collec "+collectionofIfs.size());
+			//System.out.println("actual "+genotypeScript+ "collec "+collectionofIfs.size());
 		}
 		//
 
@@ -433,19 +435,33 @@ public class ScriptsTable {
 		return forClausule;
 	}
 
-	public String returnBasicFunctionClean()
+	public String returnBasicFunctionClean(Boolean forclausule)
 	{
 		String basicFunction="";
 		int limitInferior;
 		int limitSuperior;
 		String discreteValue;
+		FunctionsforGrammar functionChosen;
 		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
-		int idBasicActionSelected=rand.nextInt(functions.getBasicFunctionsForGrammar().size());
-		FunctionsforGrammar functionChosen=functions.getBasicFunctionsForGrammar().get(idBasicActionSelected);
+		if(forclausule==false)
+		{
+			int idBasicActionSelected=rand.nextInt(functions.getBasicFunctionsForGrammar().size());
+			functionChosen=functions.getBasicFunctionsForGrammar().get(idBasicActionSelected);
+		}
+		else
+		{
+			int idBasicActionSelected=rand.nextInt(functions.getBasicFunctionsForGrammarUnit().size());
+			functionChosen=functions.getBasicFunctionsForGrammarUnit().get(idBasicActionSelected);
+		}
+
 		basicFunction=basicFunction+functionChosen.getNameFunction()+"(";
 		for(Parameter parameter:functionChosen.getParameters())
 		{
-			if(parameter.getDiscreteSpecificValues()==null)
+			if(parameter.getParameterName()=="u")
+			{				
+				basicFunction=basicFunction+"u,";
+			}
+			else if(parameter.getDiscreteSpecificValues()==null)
 			{
 				limitInferior=(int)parameter.getInferiorLimit();
 				limitSuperior=(int)parameter.getSuperiorLimit();
@@ -464,7 +480,7 @@ public class ScriptsTable {
 		return basicFunction+")";
 	}
 
-	public String returnConditionalClean()
+	public String returnConditionalClean(boolean forClausule)
 	{
 
 		String conditional="";
@@ -472,12 +488,27 @@ public class ScriptsTable {
 		int limitSuperior;
 		String discreteValue;
 		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
-		int idconditionalSelected=rand.nextInt(functions.getConditionalsForGrammar().size());
-		FunctionsforGrammar functionChosen=functions.getConditionalsForGrammar().get(idconditionalSelected);
+		FunctionsforGrammar functionChosen;
+		if(forClausule==false)		
+		{
+			int idconditionalSelected=rand.nextInt(functions.getConditionalsForGrammar().size());
+			functionChosen=functions.getConditionalsForGrammar().get(idconditionalSelected);
+		}
+		else
+		{
+			int idconditionalSelected=rand.nextInt(functions.getConditionalsForGrammarUnit().size());
+			functionChosen=functions.getConditionalsForGrammarUnit().get(idconditionalSelected);
+		}
+
 		conditional=conditional+functionChosen.getNameFunction()+"(";
 		for(Parameter parameter:functionChosen.getParameters())
 		{
-			if(parameter.getDiscreteSpecificValues()==null)
+			if(parameter.getParameterName()=="u")
+			{
+
+				conditional=conditional+"u,";
+			}
+			else if(parameter.getDiscreteSpecificValues()==null)
 			{
 
 				limitInferior=(int)parameter.getInferiorLimit();

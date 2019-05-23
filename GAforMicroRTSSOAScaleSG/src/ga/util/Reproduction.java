@@ -96,7 +96,7 @@ public class Reproduction {
 	{
 		Population newGeneration;
 		HashMap<Chromosome, BigDecimal> newChromosomes =new HashMap<Chromosome, BigDecimal>();		
-		while(newChromosomes.size()<ConfigurationsGA.SIZE_POPULATION-ConfigurationsGA.SIZE_ELITE)
+		while(newChromosomes.size()<(ConfigurationsGA.SIZE_POPULATION-ConfigurationsGA.SIZE_ELITE-ConfigurationsGA.SIZE_INVADERS))
 		{
 			//here we shuffle the list of parents in order to select always two different parents to reproduce
 			Collections.shuffle(parents);
@@ -220,6 +220,24 @@ public class Reproduction {
 		}
 		p.setChromosomes(chromosomesMutated);
 		return p;
+	}
+	
+	public Population invaders(Population p)
+	{
+		HashMap<Chromosome, BigDecimal> newChromosomes = p.getChromosomes();
+		
+		Chromosome tChom;
+		while (newChromosomes.size()< ConfigurationsGA.SIZE_POPULATION-ConfigurationsGA.SIZE_ELITE) {
+			//gerar o novo cromossomo com base no tamanho
+			tChom = new Chromosome();
+			int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;
+			for (int j = 0; j < sizeCh; j++) {
+				tChom.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));
+			}
+			newChromosomes.put(tChom, BigDecimal.ZERO);
+		}
+		Population pop = new Population(newChromosomes);
+		return pop;
 	}
 	
 	//This method will return the new id script for mutate the porfolio o fscripts

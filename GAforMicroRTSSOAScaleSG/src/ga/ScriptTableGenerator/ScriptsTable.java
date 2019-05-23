@@ -23,7 +23,7 @@ import rts.units.UnitTypeTable;
 
 
 public class ScriptsTable {
-	
+
 	static Random rand = new Random();
 	private int currentSizeTable;
 
@@ -38,7 +38,7 @@ public class ScriptsTable {
 	private FunctionsforGrammar functions;
 
 	private String pathTableScripts;
-	
+
 	public ScriptsTable(String pathTableScripts){
 		this.scriptsTable = new HashMap<>();
 		this.pathTableScripts=pathTableScripts;
@@ -46,7 +46,7 @@ public class ScriptsTable {
 		this.numberOfTypes=tcg.getNumberTypes();
 		functions=new FunctionsforGrammar();
 	}
-	
+
 
 	public ScriptsTable(HashMap<String, BigDecimal> scriptsTable,String pathTableScripts) {
 		super();
@@ -67,7 +67,7 @@ public class ScriptsTable {
 	public void addScript(String chromosomeScript){
 		this.scriptsTable.put(chromosomeScript, BigDecimal.ZERO);
 	}	
-	
+
 	public void print(){
 		System.out.println("-- Table Scripts --");
 		for(String c : scriptsTable.keySet()){
@@ -76,7 +76,7 @@ public class ScriptsTable {
 		}
 		System.out.println("-- Table Scripts --");
 	}
-	
+
 	public void printWithValue(){
 		System.out.println("-- Table Script --");
 		for(String c : scriptsTable.keySet()){
@@ -86,17 +86,17 @@ public class ScriptsTable {
 		System.out.println("-- Table Scripts --");
 	}
 
-	
+
 	//static methods
-	
+
 	public ScriptsTable generateScriptsTable(int size){
-		
+
 		HashMap<String, BigDecimal> newChromosomes = new HashMap<>();
 		String tChom;
 		PrintWriter f0;
 		try {
 			f0 = new PrintWriter(new FileWriter(pathTableScripts+"ScriptsTable.txt"));
-			
+
 			int i=0;
 			while(i<size)
 			{
@@ -104,22 +104,22 @@ public class ScriptsTable {
 				//int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME_SCRIPT)+1;
 				int sizeCh=rand.nextInt(ConfigurationsGA.MAX_QTD_COMPONENTS)+1;
 				tChom=buildScriptGenotype(sizeCh);
-				
-//				for (int j = 0; j < sizeCh; j++) {
-//					int typeSelected=rand.nextInt(numberOfTypes);
-//					int sizeRulesofType=tcg.getBagofTypes().get(typeSelected).size();
-//					int idRuleSelected=tcg.getBagofTypes().get(typeSelected).get(rand.nextInt(sizeRulesofType));
-//					tChom.addGene(idRuleSelected);
-//				}
-				
+
+				//				for (int j = 0; j < sizeCh; j++) {
+				//					int typeSelected=rand.nextInt(numberOfTypes);
+				//					int sizeRulesofType=tcg.getBagofTypes().get(typeSelected).size();
+				//					int idRuleSelected=tcg.getBagofTypes().get(typeSelected).get(rand.nextInt(sizeRulesofType));
+				//					tChom.addGene(idRuleSelected);
+				//				}
+
 				if(!newChromosomes.containsKey(tChom))
 				{
-				newChromosomes.put(tChom, BigDecimal.valueOf(i));
-				f0.println(i+" "+tChom);
-				i++;
-				
+					newChromosomes.put(tChom, BigDecimal.valueOf(i));
+					f0.println(i+" "+tChom);
+					i++;
+
 				}
-			    
+
 			}
 			f0.close();
 		} catch (IOException e) {
@@ -132,100 +132,117 @@ public class ScriptsTable {
 		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts);
 		return st;
 	}
-	
+
 	public String buildScriptGenotype(int sizeGenotypeScript )
 	{
 		System.out.println("chumi ");
 		String genotypeScript = "";
 		int numberComponentsAdded=0;
-		
+
 		boolean canCloseParenthesisIf=false;
 		boolean canOpenParenthesisIf=false;
-		
+
 		boolean lastRemove=false;
-		
+
 		boolean isOpenFor=false;
 
-		
-		
+
+
 		List<itemIf> collectionofIfs= new ArrayList<itemIf>();
 
 		while(numberComponentsAdded<sizeGenotypeScript)
 		{
-			
+
 			int typeComponentFor=rand.nextInt(3);
-			
+
 			//for
-			if(typeComponentFor==-1 && isOpenFor==false && numberComponentsAdded<sizeGenotypeScript-1)
+			if(rand.nextInt(2)>0 && numberComponentsAdded<sizeGenotypeScript-1 && isOpenFor==false)
 			{
+				collectionofIfs.add(new itemIf(0,true,"for"));
 				genotypeScript=genotypeScript+returnForFunction();
 				isOpenFor=true;
 				numberComponentsAdded++;
+				canCloseParenthesisIf=false;
+				canOpenParenthesisIf=false;
+
+				if(collectionofIfs.size()>0)
+				{
+					for (int i = collectionofIfs.size()-1; i == 0; i-- ) {
+
+						if(collectionofIfs.get(i).isLastOpen()==false)
+						{
+							collectionofIfs.remove(i);
+
+						}
+						else
+						{
+							break;
+						}
+					}
+				}
+				
 			}
-			else
+
+
+			//basic function
+			if(rand.nextInt(2)>0)
 			{
-				int typeComponent = rand.nextInt(2);
-				
-				//basic function
-				if(rand.nextInt(2)>0)
+				genotypeScript=genotypeScript+returnBasicFunction(isOpenFor);
+				numberComponentsAdded++;
+				canCloseParenthesisIf=true;
+				canOpenParenthesisIf=false;
+
+				if(collectionofIfs.size()>0)
 				{
-					genotypeScript=genotypeScript+returnBasicFunction(isOpenFor);
-					numberComponentsAdded++;
-					canCloseParenthesisIf=true;
-					canOpenParenthesisIf=false;
-					
-					if(collectionofIfs.size()>0)
-					{
-						for (int i = collectionofIfs.size()-1; i == 0; i-- ) {
-							
-							if(collectionofIfs.get(i).isLastOpen()==false)
-							{
-								collectionofIfs.remove(i);
-									
-							}
-							else
-							{
-								break;
-							}
+					for (int i = collectionofIfs.size()-1; i == 0; i-- ) {
+
+						if(collectionofIfs.get(i).isLastOpen()==false)
+						{
+							collectionofIfs.remove(i);
+
+						}
+						else
+						{
+							break;
 						}
 					}
-					
-
 				}
-				//conditional
-				else if(rand.nextInt(2)>0 && numberComponentsAdded<sizeGenotypeScript-1)
-				{
-					
-					collectionofIfs.add(new itemIf(1,true));
-					
-					genotypeScript=genotypeScript+returnConditional(isOpenFor);
-					genotypeScript=genotypeScript+"(";
-					
-					numberComponentsAdded++;
-					canCloseParenthesisIf=false;
-					canOpenParenthesisIf=false;
-					
-					if(collectionofIfs.size()>0)
-					{
-						for (int i = collectionofIfs.size()-1; i == 0; i-- ) {
-							
-							if(collectionofIfs.get(i).isLastOpen()==false)
-							{
-								collectionofIfs.remove(i);
-									
-							}
-							else
-							{
-								break;
-							}
-						}
-					}
 
-				}
-				
-				
+
 			}
-			
+			//conditional
+			else if(rand.nextInt(2)>0 && numberComponentsAdded<sizeGenotypeScript-1)
+			{
+
+				collectionofIfs.add(new itemIf(1,true,"if"));
+
+				genotypeScript=genotypeScript+returnConditional(isOpenFor);
+				genotypeScript=genotypeScript+"(";
+
+				numberComponentsAdded++;
+				canCloseParenthesisIf=false;
+				canOpenParenthesisIf=false;
+
+				if(collectionofIfs.size()>0)
+				{
+					for (int i = collectionofIfs.size()-1; i == 0; i-- ) {
+
+						if(collectionofIfs.get(i).isLastOpen()==false)
+						{
+							collectionofIfs.remove(i);
+
+						}
+						else
+						{
+							break;
+						}
+					}
+				}
+
+			}
+
+
+
 			//open parenthesis if
 			if(collectionofIfs.size()>0)
 			{
@@ -240,7 +257,7 @@ public class ScriptsTable {
 
 					canOpenParenthesisIf=false;
 					canCloseParenthesisIf=false;
-					
+
 					collectionofIfs.get(collectionofIfs.size()-1).setLastOpen(true);
 
 				}
@@ -251,14 +268,21 @@ public class ScriptsTable {
 					genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
 					genotypeScript=genotypeScript+") ";
 					collectionofIfs.get(collectionofIfs.size()-1).setLastOpen(false);
+					
+					if(collectionofIfs.get(collectionofIfs.size()-1).getType()=="for")
+					{
+						isOpenFor=false;
+					}
+					
 					if(collectionofIfs.get(collectionofIfs.size()-1).getMaxOpens()==0)
 					{
 						for (int i = collectionofIfs.size()-1; i == 0; i-- ) {
-						
+
 							if(collectionofIfs.get(i).isLastOpen()==false)
 							{
+
 								collectionofIfs.remove(i);
-								
+
 							}
 							else
 							{
@@ -267,11 +291,11 @@ public class ScriptsTable {
 						}
 					}
 					canOpenParenthesisIf=true;
-				
+
 				}
-			
+
 			}
-			
+
 			//ensure close open parenthesis if
 			//ensure close open parenthesis
 			if(numberComponentsAdded==sizeGenotypeScript)
@@ -283,24 +307,24 @@ public class ScriptsTable {
 					collectionofIfs.remove(collectionofIfs.size()-1);
 
 				}
-			
-			}
-			
-//			//close parenthesis for
-//			if(rand.nextInt(2)>0 && isOpenFor  && canCloseParenthesisFor==true && isOpenIf==false)
-//			{
-//				genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
-//				genotypeScript=genotypeScript+") ";
-//				isOpenFor=false;
-//			}
 
-			
-//			if(numberComponentsAdded==sizeGenotypeScript && isOpenFor)
-//			{			
-//				genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
-//				genotypeScript=genotypeScript+") ";		
-//			
-//			}
+			}
+
+			//			//close parenthesis for
+			//			if(rand.nextInt(2)>0 && isOpenFor  && canCloseParenthesisFor==true && isOpenIf==false)
+			//			{
+			//				genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+			//				genotypeScript=genotypeScript+") ";
+			//				isOpenFor=false;
+			//			}
+
+
+			//			if(numberComponentsAdded==sizeGenotypeScript && isOpenFor)
+			//			{			
+			//				genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+			//				genotypeScript=genotypeScript+") ";		
+			//			
+			//			}
 			System.out.println("actual "+genotypeScript+ "collec "+collectionofIfs.size());
 		}
 		//
@@ -308,7 +332,7 @@ public class ScriptsTable {
 		return genotypeScript;
 
 	}
-	
+
 	public String returnBasicFunction(Boolean forclausule)
 	{
 		String basicFunction="";
@@ -327,7 +351,7 @@ public class ScriptsTable {
 			int idBasicActionSelected=rand.nextInt(functions.getBasicFunctionsForGrammarUnit().size());
 			functionChosen=functions.getBasicFunctionsForGrammarUnit().get(idBasicActionSelected);
 		}
-		
+
 		basicFunction=basicFunction+functionChosen.getNameFunction()+"(";
 		for(Parameter parameter:functionChosen.getParameters())
 		{
@@ -353,10 +377,10 @@ public class ScriptsTable {
 		basicFunction=basicFunction+") ";
 		return basicFunction;
 	}
-	
+
 	public String returnConditional(boolean forClausule)
 	{
-		
+
 		String conditional="";
 		int limitInferior;
 		int limitSuperior;
@@ -373,18 +397,18 @@ public class ScriptsTable {
 			int idconditionalSelected=rand.nextInt(functions.getConditionalsForGrammarUnit().size());
 			functionChosen=functions.getConditionalsForGrammarUnit().get(idconditionalSelected);
 		}
-		
+
 		conditional=conditional+functionChosen.getNameFunction()+"(";
 		for(Parameter parameter:functionChosen.getParameters())
 		{
 			if(parameter.getParameterName()=="u")
 			{
-				
+
 				conditional=conditional+"u,";
 			}
 			else if(parameter.getDiscreteSpecificValues()==null)
 			{
-				
+
 				limitInferior=(int)parameter.getInferiorLimit();
 				limitSuperior=(int)parameter.getSuperiorLimit();
 				int parametherValueChosen = rand.nextInt(limitSuperior-limitInferior) + limitInferior;
@@ -401,14 +425,14 @@ public class ScriptsTable {
 		conditional="if("+conditional+")) ";
 		return conditional;
 	}
-	
+
 	public String returnForFunction()
 	{
 		String forClausule="";
 		forClausule="for(u) (";
 		return forClausule;
 	}
-	
+
 	public String returnBasicFunctionClean()
 	{
 		String basicFunction="";
@@ -439,10 +463,10 @@ public class ScriptsTable {
 		//basicFunction=basicFunction+") ";
 		return basicFunction+")";
 	}
-	
+
 	public String returnConditionalClean()
 	{
-		
+
 		String conditional="";
 		int limitInferior;
 		int limitSuperior;
@@ -455,7 +479,7 @@ public class ScriptsTable {
 		{
 			if(parameter.getDiscreteSpecificValues()==null)
 			{
-				
+
 				limitInferior=(int)parameter.getInferiorLimit();
 				limitSuperior=(int)parameter.getSuperiorLimit();
 				int parametherValueChosen = rand.nextInt(limitSuperior-limitInferior) + limitInferior;
@@ -472,41 +496,41 @@ public class ScriptsTable {
 		//conditional="if("+conditional+")) ";
 		return conditional+")";
 	}
-	
+
 	//THis method uses a preexistent table of scripts instead of create a new one
 	public ScriptsTable generateScriptsTableCurriculumVersion(){
-		
+
 		HashMap<String, BigDecimal> newChromosomes = new HashMap<>();
 		ChromosomeScript tChom;
-        try (BufferedReader br = new BufferedReader(new FileReader(pathTableScripts + "/ScriptsTable.txt"))) {
-            String line;            
-            while ((line = br.readLine()) != null) {
-                String[] strArray = line.split(" ");
-                int[] intArray = new int[strArray.length];
-                for (int i = 0; i < strArray.length; i++) {
-                    intArray[i] = Integer.parseInt(strArray[i]);
-                }
-                int idScript = intArray[0];
-                int[] rules = Arrays.copyOfRange(intArray, 1, intArray.length);
+		try (BufferedReader br = new BufferedReader(new FileReader(pathTableScripts + "/ScriptsTable.txt"))) {
+			String line;            
+			while ((line = br.readLine()) != null) {
+				String[] strArray = line.split(" ");
+				int[] intArray = new int[strArray.length];
+				for (int i = 0; i < strArray.length; i++) {
+					intArray[i] = Integer.parseInt(strArray[i]);
+				}
+				int idScript = intArray[0];
+				int[] rules = Arrays.copyOfRange(intArray, 1, intArray.length);
 
-                tChom = new ChromosomeScript();
-                for (int i : rules) {
-                	tChom.addGene(i);
-                }
-                newChromosomes.put("", BigDecimal.valueOf(idScript));;
-            }
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts);
-        //st.print();
+				tChom = new ChromosomeScript();
+				for (int i : rules) {
+					tChom.addGene(i);
+				}
+				newChromosomes.put("", BigDecimal.valueOf(idScript));;
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts);
+		//st.print();
 		return st;
 	}
-	
+
 	public int getCurrentSizeTable() {
 		return currentSizeTable;
 	}
@@ -523,22 +547,22 @@ public class ScriptsTable {
 			e.printStackTrace();
 		}	
 	}
-	
-//	public boolean checkDiversityofTypes() {
-//		
-//		HashSet<Integer> diferentTypes =  new HashSet<Integer>();
-//		for(String c : scriptsTable.keySet()){
-//			for (Integer gene : c.getGenes()) {
-//				
-//				diferentTypes.add(tcg.getCorrespondenceofTypes().get(gene));
-//			}
-//		}
-//		if(diferentTypes.size()==numberOfTypes) {
-//			return false;
-//		}
-//		else {
-//			return true;
-//		}		
-//	}
-	
+
+	//	public boolean checkDiversityofTypes() {
+	//		
+	//		HashSet<Integer> diferentTypes =  new HashSet<Integer>();
+	//		for(String c : scriptsTable.keySet()){
+	//			for (Integer gene : c.getGenes()) {
+	//				
+	//				diferentTypes.add(tcg.getCorrespondenceofTypes().get(gene));
+	//			}
+	//		}
+	//		if(diferentTypes.size()==numberOfTypes) {
+	//			return false;
+	//		}
+	//		else {
+	//			return true;
+	//		}		
+	//	}
+
 }

@@ -28,7 +28,7 @@ public final class ConfigurationsGA {
 	
 	 public static final int QTD_RULES_CONDITIONAL=115;
 	 public static final int QTD_RULES_BASIC_FUNCTIONS=518;
-	 public static final int MAX_QTD_COMPONENTS=10;
+	 public static final int MAX_QTD_COMPONENTS=15;
 	
 	
 }

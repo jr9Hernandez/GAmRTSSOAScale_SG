@@ -7,11 +7,15 @@ public class itemIf {
 
 	private  int MaxOpens;
 	private boolean lastOpen;
+	private String type;
 	
-	public itemIf(int MaxOpens, boolean lastOpen)
+
+	public itemIf(int MaxOpens, boolean lastOpen, String type)
 	{
 		this.MaxOpens=MaxOpens;
 		this.lastOpen=lastOpen;
+		this.type=type;
+		
 	}
 
 	/**
@@ -40,5 +44,19 @@ public class itemIf {
 	 */
 	public void setLastOpen(boolean lastOpen) {
 		this.lastOpen = lastOpen;
+	}
+	
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
 	}
 }

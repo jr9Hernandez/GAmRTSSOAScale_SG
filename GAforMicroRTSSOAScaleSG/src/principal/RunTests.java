@@ -46,8 +46,8 @@ public class RunTests {
 		//RatePopulation fEval = new RoundRobinEval();
 		//RatePopulation fEval = new RoundRobinSampleEval();
 		//RatePopulation fEval = new RoundRobinEliteandSampleEval();
-		//RatePopulation fEval = new RoundRobinIterativeEval();
-		RatePopulation fEval = new RoundRobinEliteandSampleIterativeEval();
+		RatePopulation fEval = new RoundRobinIterativeEval();
+		//RatePopulation fEval = new RoundRobinEliteandSampleIterativeEval();
 		
 		//rodamos o GA
 		Population popFinal = ga.run(fEval);

@@ -90,7 +90,25 @@ public class Population {
 		HashMap<Chromosome, BigDecimal> newChromosomes = new HashMap<>();
 		
 		Chromosome tChom;
-		for (int i = 0; i < size; i++) {
+		int i = 0;
+		
+		tChom = new Chromosome();
+		tChom.addGene(0);
+		newChromosomes.put(tChom, BigDecimal.ZERO);
+		
+		tChom = new Chromosome();
+		tChom.addGene(1);
+		newChromosomes.put(tChom, BigDecimal.ZERO);
+		
+		tChom = new Chromosome();
+		tChom.addGene(2);
+		newChromosomes.put(tChom, BigDecimal.ZERO);
+		
+		tChom = new Chromosome();
+		tChom.addGene(3);
+		newChromosomes.put(tChom, BigDecimal.ZERO);
+		
+		while (newChromosomes.size()<size) {
 			//gerar o novo cromossomo com base no tamanho
 			tChom = new Chromosome();
 			int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;

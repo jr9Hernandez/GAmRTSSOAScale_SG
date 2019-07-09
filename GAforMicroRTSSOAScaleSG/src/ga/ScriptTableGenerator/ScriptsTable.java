@@ -99,38 +99,42 @@ public class ScriptsTable {
 
 			int i=0;
 			
-			int sizeCh=rand.nextInt(ConfigurationsGA.MAX_QTD_COMPONENTS)+1;
-			//tChom=buildScriptGenotype(sizeCh);
+			int sizeCh;
+			
+			if(ConfigurationsGA.curriculummAG)
+			{
+				sizeCh=rand.nextInt(ConfigurationsGA.MAX_QTD_COMPONENTS)+1;
+				//tChom=buildScriptGenotype(sizeCh);
 
-			//				for (int j = 0; j < sizeCh; j++) {
-			//					int typeSelected=rand.nextInt(numberOfTypes);
-			//					int sizeRulesofType=tcg.getBagofTypes().get(typeSelected).size();
-			//					int idRuleSelected=tcg.getBagofTypes().get(typeSelected).get(rand.nextInt(sizeRulesofType));
-			//					tChom.addGene(idRuleSelected);
-			//				}
+				//				for (int j = 0; j < sizeCh; j++) {
+				//					int typeSelected=rand.nextInt(numberOfTypes);
+				//					int sizeRulesofType=tcg.getBagofTypes().get(typeSelected).size();
+				//					int idRuleSelected=tcg.getBagofTypes().get(typeSelected).get(rand.nextInt(sizeRulesofType));
+				//					tChom.addGene(idRuleSelected);
+				//				}
 
-//			if(!newChromosomes.containsKey(tChom))
-//			{
-				tChom="train(Worker,100,EnemyDir) harvest(1) attack(All,closest)";
-				newChromosomes.put(tChom, BigDecimal.valueOf(i));
-				f0.println(i+" "+tChom);
-				i++;
+				//			if(!newChromosomes.containsKey(tChom))
+				//			{
+					tChom="train(Worker,100,EnemyDir) harvest(1) attack(All,closest)";
+					newChromosomes.put(tChom, BigDecimal.valueOf(i));
+					f0.println(i+" "+tChom);
+					i++;
 
-				tChom="train(Worker,1,EnemyDir) train(Light,100,EnemyDir) build(Barrack,1) harvest(1) attack(Light,closest) ";
-				newChromosomes.put(tChom, BigDecimal.valueOf(i));
-				f0.println(i+" "+tChom);
-				i++;
+					tChom="train(Worker,1,EnemyDir) train(Light,100,EnemyDir) build(Barrack,1) harvest(1) attack(Light,closest) ";
+					newChromosomes.put(tChom, BigDecimal.valueOf(i));
+					f0.println(i+" "+tChom);
+					i++;
 				
-				tChom="train(Worker,1,EnemyDir) train(Ranged,100,EnemyDir) build(Barrack,1) harvest(1) attack(Ranged,closest) ";
-				newChromosomes.put(tChom, BigDecimal.valueOf(i));
-				f0.println(i+" "+tChom);
-				i++;
+					tChom="train(Worker,1,EnemyDir) train(Ranged,100,EnemyDir) build(Barrack,1) harvest(1) attack(Ranged,closest) ";
+					newChromosomes.put(tChom, BigDecimal.valueOf(i));
+					f0.println(i+" "+tChom);
+					i++;
 				
-				tChom="train(Worker,1,EnemyDir) train(Heavy,100,EnemyDir) build(Barrack,1) harvest(1) attack(Heavy,closest) ";
-				newChromosomes.put(tChom, BigDecimal.valueOf(i));
-				f0.println(i+" "+tChom);
-				i++;
-					
+					tChom="train(Worker,1,EnemyDir) train(Heavy,100,EnemyDir) build(Barrack,1) harvest(1) attack(Heavy,closest) ";
+					newChromosomes.put(tChom, BigDecimal.valueOf(i));
+					f0.println(i+" "+tChom);
+					i++;
+			}
 			
 			while(i<size)
 			{

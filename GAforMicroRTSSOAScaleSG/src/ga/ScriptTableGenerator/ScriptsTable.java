@@ -365,7 +365,16 @@ public class ScriptsTable {
 			{
 				limitInferior=(int)parameter.getInferiorLimit();
 				limitSuperior=(int)parameter.getSuperiorLimit();
-				int parametherValueChosen = rand.nextInt(limitSuperior-limitInferior) + limitInferior;
+				System.out.println("sup "+limitSuperior+" "+"inf "+limitInferior);
+				int parametherValueChosen;
+				if(limitSuperior!=limitInferior)
+				{
+					parametherValueChosen = rand.nextInt(limitSuperior-limitInferior) + limitInferior;
+				}
+				else
+				{
+					parametherValueChosen=limitSuperior;
+				}
 				basicFunction=basicFunction+parametherValueChosen+",";
 			}
 			else
@@ -465,7 +474,15 @@ public class ScriptsTable {
 			{
 				limitInferior=(int)parameter.getInferiorLimit();
 				limitSuperior=(int)parameter.getSuperiorLimit();
-				int parametherValueChosen = rand.nextInt(limitSuperior-limitInferior) + limitInferior;
+				int parametherValueChosen;
+				if(limitSuperior!=limitInferior)
+				{
+					parametherValueChosen = rand.nextInt(limitSuperior-limitInferior) + limitInferior;
+				}
+				else
+				{
+					parametherValueChosen=limitSuperior;
+				}
 				basicFunction=basicFunction+parametherValueChosen+",";
 			}
 			else

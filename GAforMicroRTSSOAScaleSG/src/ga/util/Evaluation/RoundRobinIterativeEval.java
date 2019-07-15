@@ -18,7 +18,7 @@ import util.LeitorLog;
 
 public class RoundRobinIterativeEval implements RatePopulation {
 	// CONSTANTES
-	private static final int TOTAL_PARTIDAS_ROUND = 4;
+	private static final int TOTAL_PARTIDAS_ROUND = 1;
 	private static final int BATCH_SIZE = 1;
 
 	// private static final String pathSOA =

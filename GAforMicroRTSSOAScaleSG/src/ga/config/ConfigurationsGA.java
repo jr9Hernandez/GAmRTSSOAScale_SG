@@ -27,6 +27,7 @@ public final class ConfigurationsGA {
 	 public static final boolean curriculum = false;
 	 public final static boolean UCB1=false;
 	 public static final boolean curriculummAG = true;
+	 public static final boolean recoverTableAG = true;
 	
 	 public static final int QTD_RULES_CONDITIONAL=115;
 	 public static final int QTD_RULES_BASIC_FUNCTIONS=518;

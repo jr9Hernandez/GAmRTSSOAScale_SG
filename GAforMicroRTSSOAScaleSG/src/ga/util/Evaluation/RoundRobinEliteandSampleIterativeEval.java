@@ -24,7 +24,7 @@ import util.LeitorLog;
 
 public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
 	// CONSTANTES
-	private static final int TOTAL_PARTIDAS_ROUND = 2;
+	private static final int TOTAL_PARTIDAS_ROUND = 1;
 	private static final int BATCH_SIZE = 1;
 
 	//private static final String pathSOA = "/home/rubens/cluster/TesteNewGASG/configSOA/";

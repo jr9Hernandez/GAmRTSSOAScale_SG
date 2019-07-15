@@ -38,7 +38,7 @@ public class RunGA {
 		// Creating the table of scripts
 		scrTable = new ScriptsTable(pathTableScripts);
 		//do {
-			if(!ConfigurationsGA.curriculum)
+			if(!ConfigurationsGA.curriculum && !ConfigurationsGA.curriculummAG)
 			{
 				scrTable = scrTable.generateScriptsTable(ConfigurationsGA.SIZE_TABLE_SCRIPTS);
 			}

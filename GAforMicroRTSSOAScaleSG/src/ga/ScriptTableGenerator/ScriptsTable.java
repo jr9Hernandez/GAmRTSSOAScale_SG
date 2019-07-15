@@ -576,7 +576,7 @@ public class ScriptsTable {
 				int idChosen=rand.nextInt(parameter.getDiscreteSpecificValues().size());
 				discreteValue=parameter.getDiscreteSpecificValues().get(idChosen);
 				conditional=conditional+discreteValue+",";
-			}
+			}		
 		}
 		conditional=conditional.substring(0, conditional.length() - 1);
 		//conditional="if("+conditional+")) ";
@@ -592,18 +592,15 @@ public class ScriptsTable {
 			String line;            
 			while ((line = br.readLine()) != null) {
 				String[] strArray = line.split(" ");
-				int[] intArray = new int[strArray.length];
-				for (int i = 0; i < strArray.length; i++) {
-					intArray[i] = Integer.parseInt(strArray[i]);
-				}
-				int idScript = intArray[0];
-				int[] rules = Arrays.copyOfRange(intArray, 1, intArray.length);
+
+				int idScript = Integer.parseInt(strArray[0]);
+				String rules = line.replaceFirst(strArray[0]+" ", "");
 
 				tChom = new ChromosomeScript();
-				for (int i : rules) {
-					tChom.addGene(i);
-				}
-				newChromosomes.put("", BigDecimal.valueOf(idScript));;
+//				for (int i : rules) {
+//					tChom.addGene(i);
+//				}
+				newChromosomes.put(rules, BigDecimal.valueOf(idScript));;
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

@@ -95,19 +95,89 @@ public class Population {
 		if(ConfigurationsGA.curriculummAG==true)
 		{
 			tChom = new Chromosome();
-			tChom.addGene(0);
-			newChromosomes.put(tChom, BigDecimal.ZERO);
-		
-			tChom = new Chromosome();
-			tChom.addGene(1);
-			newChromosomes.put(tChom, BigDecimal.ZERO);
-		
-			tChom = new Chromosome();
 			tChom.addGene(2);
 			newChromosomes.put(tChom, BigDecimal.ZERO);
 		
 			tChom = new Chromosome();
-			tChom.addGene(3);
+			tChom.addGene(49);
+			tChom.addGene(41);
+			tChom.addGene(7);
+			tChom.addGene(53);
+			tChom.addGene(2);
+			newChromosomes.put(tChom, BigDecimal.ZERO);
+		
+			tChom = new Chromosome();
+			tChom.addGene(18);
+			tChom.addGene(37);
+			tChom.addGene(8);
+			tChom.addGene(40);
+			tChom.addGene(48);
+			tChom.addGene(36);
+			tChom.addGene(34);
+			newChromosomes.put(tChom, BigDecimal.ZERO);
+		
+			tChom = new Chromosome();
+			tChom.addGene(49);
+			tChom.addGene(41);
+			tChom.addGene(11);
+			tChom.addGene(18);
+			tChom.addGene(37);
+			tChom.addGene(8);
+			tChom.addGene(40);
+			tChom.addGene(48);
+			tChom.addGene(36);
+			tChom.addGene(50);
+			tChom.addGene(25);
+			tChom.addGene(45);
+			tChom.addGene(51);
+			newChromosomes.put(tChom, BigDecimal.ZERO);
+			
+			tChom = new Chromosome();
+			tChom.addGene(18);
+			tChom.addGene(37);
+			tChom.addGene(8);
+			tChom.addGene(40);
+			tChom.addGene(48);
+			tChom.addGene(36);
+			tChom.addGene(50);
+			tChom.addGene(25);
+			tChom.addGene(45);
+			tChom.addGene(51);
+			newChromosomes.put(tChom, BigDecimal.ZERO);
+			
+			tChom = new Chromosome();
+			tChom.addGene(2);
+			tChom.addGene(50);
+			tChom.addGene(25);
+			tChom.addGene(45);
+			tChom.addGene(51);
+			newChromosomes.put(tChom, BigDecimal.ZERO);
+			
+			tChom = new Chromosome();
+			tChom.addGene(49);
+			tChom.addGene(41);
+			tChom.addGene(11);
+			tChom.addGene(2);
+			tChom.addGene(7);
+			tChom.addGene(53);
+			newChromosomes.put(tChom, BigDecimal.ZERO);
+			
+			tChom = new Chromosome();
+			tChom.addGene(41);
+			tChom.addGene(43);
+			tChom.addGene(10);
+			newChromosomes.put(tChom, BigDecimal.ZERO);
+			
+			tChom = new Chromosome();
+			tChom.addGene(49);
+			tChom.addGene(41);
+			newChromosomes.put(tChom, BigDecimal.ZERO);
+			
+			tChom = new Chromosome();
+			tChom.addGene(49);
+			tChom.addGene(41);
+			tChom.addGene(11);
+			tChom.addGene(2);
 			newChromosomes.put(tChom, BigDecimal.ZERO);
 		}
 		

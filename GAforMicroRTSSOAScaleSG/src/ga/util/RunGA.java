@@ -44,7 +44,7 @@ public class RunGA {
 			}
 			else
 			{
-				scrTable = scrTable.generateScriptsTableCurriculumVersion();
+				scrTable = scrTable.generateScriptsTableRecover();
 			}
 		   //}while(scrTable.checkDiversityofTypes());
 		scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());

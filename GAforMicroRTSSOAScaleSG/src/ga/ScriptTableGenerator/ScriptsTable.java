@@ -584,7 +584,7 @@ public class ScriptsTable {
 	}
 
 	//THis method uses a preexistent table of scripts instead of create a new one
-	public ScriptsTable generateScriptsTableCurriculumVersion(){
+	public ScriptsTable generateScriptsTableRecover(){
 
 		HashMap<String, BigDecimal> newChromosomes = new HashMap<>();
 		ChromosomeScript tChom;

@@ -1,5 +1,6 @@
 package ga.util.Evaluation;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,14 +13,20 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map.Entry;
+
+import ai.core.AI;
+
 import java.util.Random;
 
+import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
 import ga.model.Chromosome;
 import ga.model.Population;
 import ga.util.PreSelection;
 import model.EvalResult;
+import rts.units.UnitTypeTable;
 import util.LeitorLog;
 
 public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
@@ -32,6 +39,8 @@ public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
 
 	//private static final String pathCentral = "/home/rubens/cluster/TesteNewGASG/centralSOA";
 	private static final String pathCentral = System.getProperty("user.dir").concat("/centralSOA");
+	
+	private static final String pathLogsGrammars = System.getProperty("user.dir").concat("/LogsGrammars/");
 
 	// Classes de informação
 	private int atualGeneration = 0;
@@ -41,13 +50,16 @@ public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
 	ArrayList<String> SOA_arqs = new ArrayList<>();
 
 	ArrayList<Chromosome> ChromosomeSample = new ArrayList<>();
+	
+	private HashMap<String, BigDecimal> scriptsTable;
 
 	public RoundRobinEliteandSampleIterativeEval() {
 		super();
 	}
 
 	@Override
-	public Population evalPopulation(Population population, int generation) {
+	public Population evalPopulation(Population population, int generation, ScriptsTable scriptsTable) {
+		this.scriptsTable=scriptsTable.getScriptTable();
 		this.atualGeneration = generation;
 		SOA_Folders.clear();
 		// limpa os valores existentes na population
@@ -104,7 +116,46 @@ public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
             updateChromo(pop, evalResult.getIA1(), new BigDecimal(0.5));
             updateChromo(pop, evalResult.getIA2(), new BigDecimal(0.5));
         }
+		
+		System.out.println("base0 "+evalResult.getIA1());
+		//System.out.println("portfolPure0 "+convertBasicTupleToInteger(evalResult.getIA1()));
+	     String portfolioGrammar0=buildCompleteGrammar(convertBasicTupleToInteger(evalResult.getIA1()));
+	     System.out.println("portfolio0 "+portfolioGrammar0);
+	     
+	     
+	     System.out.println("base1 "+evalResult.getIA2());
+	     //System.out.println("portfolPure1 "+convertBasicTupleToInteger(evalResult.getIA2()));
+	     String portfolioGrammar1=buildCompleteGrammar(convertBasicTupleToInteger(evalResult.getIA2()));
+	     System.out.println("portfolio1 "+portfolioGrammar1);
+	    
+     	recordGrammars(Integer.toString(evalResult.getEvaluation()), portfolioGrammar0, portfolioGrammar1);
         
+    }
+	
+    private void recordGrammars(String winner, String portfolioGrammar0, String portfolioGrammar1) {
+		
+    	try(FileWriter fw = new FileWriter(pathLogsGrammars+"LogsGrammars.txt", true);
+    		    BufferedWriter bw = new BufferedWriter(fw);
+    		    PrintWriter out = new PrintWriter(bw))
+    		{
+    		    out.println(portfolioGrammar0+"/"+portfolioGrammar1+"="+winner);
+    		} catch (IOException e) {
+    		    //exception handling left as an exercise for the reader
+    		}
+		
+	}
+	
+    public String buildCompleteGrammar(ArrayList<Integer> iScripts) {
+        List<AI> scriptsAI = new ArrayList<>();
+        String portfolioGrammar="";
+
+        for (Integer idSc : iScripts) {
+            //System.out.println("tam tab"+scriptsTable.size());
+            //System.out.println("id "+idSc+" Elems "+scriptsTable.get(BigDecimal.valueOf(idSc)));
+        	portfolioGrammar=portfolioGrammar+scriptsTable.get(BigDecimal.valueOf(idSc))+";";
+        }
+
+        return portfolioGrammar;
     }
 
     private void updateChromo(Population pop, String IAWinner, BigDecimal value) {
@@ -467,6 +518,21 @@ public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
 		}
 
 		return tuple;
+	}
+	
+	private ArrayList<Integer> convertBasicTupleToInteger(String cromo) {
+		ArrayList<Integer> gens = new ArrayList<>();;
+		
+		cromo=cromo.replace("(", "");
+		cromo=cromo.replace(")", "");
+		String[] arr = cromo.split(";");
+		
+
+		for (int i=0; i<arr.length;i++) {
+			gens.add(Integer.parseInt(arr[i]));
+		}
+
+		return gens;
 	}
 
 	private void copyFileUsingStream(File source, File dest) throws IOException {

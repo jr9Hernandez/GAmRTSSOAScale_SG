@@ -65,7 +65,7 @@ public class RunGA {
 			}
 
 			// Fase 2 = avalia a população
-			population = evalFunction.evalPopulation(population, this.generations);
+			population = evalFunction.evalPopulation(population, this.generations, scrTable);
 			System.out.println("Log - Generation = " + this.generations);
 			f0.println("Log - Generation = " + this.generations);
 			population.printWithValue(f0);
@@ -80,7 +80,7 @@ public class RunGA {
 			population = selecao.applySelection(population, scrTable, pathTableScripts);
 
 			// Repete-se Fase 2 = Avaliação da população
-			population = evalFunction.evalPopulation(population, this.generations);
+			population = evalFunction.evalPopulation(population, this.generations, scrTable);
 
 			// atualiza a geração
 			updateGeneration();

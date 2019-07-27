@@ -1,16 +1,16 @@
 package ga.config;
 
 public final class ConfigurationsGA {
-	public static final int SIZE_CHROMOSOME = 1;
+	public static final int SIZE_CHROMOSOME = 10;
 	 public static final int SIZE_POPULATION = 100;
 	 public static final int NUMBER_JOBS = 39;
 	 public static final int SIZE_ELITE = 10;
-	 public static final int SIZE_INVADERS = 10;
+	 public static final int SIZE_INVADERS = 20;
 	 public static final int K_TOURNMENT = 25;
 	 public static final int SIZE_PARENTSFORCROSSOVER = 40;
-	 public static final double MUTATION_RATE = 1;
-	 public static final double MUTATION_RATE_RULE = 0.1;
-	 public static final double MUTATION_ORDER_RATE = 0.1;
+	 public static final double MUTATION_RATE = 0.25;
+	 public static final double MUTATION_RATE_RULE = 0.25;
+	 public static final double MUTATION_ORDER_RATE = 0.25;
 	 public static final boolean INCREASING_INDEX = false;
 	 public static final double INCREASING_RATE = 0.2;
 	 public static final double DECREASING_RATE = 0.2;

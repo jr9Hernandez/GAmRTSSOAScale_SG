@@ -365,7 +365,6 @@ public class ScriptsTable {
 			{
 				limitInferior=(int)parameter.getInferiorLimit();
 				limitSuperior=(int)parameter.getSuperiorLimit();
-				System.out.println("sup "+limitSuperior+" "+"inf "+limitInferior);
 				int parametherValueChosen;
 				if(limitSuperior!=limitInferior)
 				{

@@ -57,6 +57,8 @@ public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
 	ArrayList<Chromosome> ChromosomeSample = new ArrayList<>();
 	
 	private HashMap<BigDecimal, String> scriptsTable;
+	int maxLinesLogsGrammar=100000;
+	int counterLinesLogsGrammar=0;
 
 	public RoundRobinEliteandSampleIterativeEval() {
 		super();
@@ -143,21 +145,21 @@ public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
             updateChromo(pop, evalResult.getIA2(), new BigDecimal(0.5));
         }
 		
-		//System.out.println("base0 "+evalResult.getIA1());
-		//System.out.println("portfolPure0 "+convertBasicTupleToInteger(evalResult.getIA1()));
-	     String portfolioGrammar0=buildCompleteGrammar(convertBasicTupleToInteger(evalResult.getIA1()));
-	     //System.out.println("portfolio0 "+portfolioGrammar0);
+		if(counterLinesLogsGrammar<maxLinesLogsGrammar)
+		{
+			String portfolioGrammar0=buildCompleteGrammar(convertBasicTupleToInteger(evalResult.getIA1()));
+			//System.out.println("portfolio0 "+portfolioGrammar0);
 	     
+			String portfolioGrammar1=buildCompleteGrammar(convertBasicTupleToInteger(evalResult.getIA2()));
+			//System.out.println("portfolio1 "+portfolioGrammar1);
 	     
-	     //System.out.println("base1 "+evalResult.getIA2());
-	     //System.out.println("portfolPure1 "+convertBasicTupleToInteger(evalResult.getIA2()));
-	     String portfolioGrammar1=buildCompleteGrammar(convertBasicTupleToInteger(evalResult.getIA2()));
-	     //System.out.println("portfolio1 "+portfolioGrammar1);
+			counterLinesLogsGrammar++;
 	     
-	     portfolioGrammar0=portfolioGrammar0.substring(0, portfolioGrammar0.length() - 1);
-	     portfolioGrammar1=portfolioGrammar1.substring(0, portfolioGrammar1.length() - 1);
+			portfolioGrammar0=portfolioGrammar0.substring(0, portfolioGrammar0.length() - 1);
+			portfolioGrammar1=portfolioGrammar1.substring(0, portfolioGrammar1.length() - 1);
 	    
-     	recordGrammars(Integer.toString(evalResult.getEvaluation()), portfolioGrammar0, portfolioGrammar1);
+			recordGrammars(Integer.toString(evalResult.getEvaluation()), portfolioGrammar0, portfolioGrammar1);
+		}
         
     }
 	
@@ -179,8 +181,6 @@ public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
         String portfolioGrammar="";
 
         for (Integer idSc : iScripts) {
-            System.out.println("tam tab"+scriptsTable.size());
-            System.out.println("id "+idSc+" Elems "+scriptsTable.get(BigDecimal.valueOf(idSc)));
         	portfolioGrammar=portfolioGrammar+scriptsTable.get(BigDecimal.valueOf(idSc))+";";
         }
 
@@ -558,7 +558,6 @@ public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
 		
 		
 		for (int i=0; i<arr.length;i++) {
-			System.out.println("moretime "+arr[i]);
 			gens.add(Integer.parseInt(arr[i]));
 		}
 

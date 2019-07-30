@@ -4,7 +4,7 @@ public final class ConfigurationsGA {
 	public static final int SIZE_CHROMOSOME = 10;
 	 public static final int SIZE_POPULATION = 50;
 	 public static final int NUMBER_JOBS = 39;
-	 public static final int SIZE_ELITE = 10;
+	 public static final int SIZE_ELITE = 10 ;
 	 public static final int SIZE_INVADERS = 10;
 	 public static final int K_TOURNMENT = 12;
 	 public static final int SIZE_PARENTSFORCROSSOVER = 20;

@@ -66,6 +66,7 @@ public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
 
 	@Override
 	public Population evalPopulation(Population population, int generation, ScriptsTable scriptsTable) {
+		//recordMarkNewGeneration();
 		buildScriptsTable();
 		this.atualGeneration = generation;
 		SOA_Folders.clear();
@@ -84,8 +85,10 @@ public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
 
 		// ler resultados
 		ArrayList<EvalResult> resultados = lerResultados();
+		
 		// atualizar valores das populacoes
 		if(resultados.size() > 0){
+			
 			updatePopulationValue(resultados, population);
 		}
 
@@ -121,12 +124,11 @@ public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
 	public Population updatePopulationValue(ArrayList<EvalResult> results, Population pop) {
 		//ArrayList<EvalResult> resultsNoDraw = removeDraw(results);
 		ArrayList<EvalResult> resultsNoDraw = results;
-
 		/*
 		 * System.out.println("Avaliações sem Draw"); for (EvalResult evalResult
 		 * : resultsNoDraw) { evalResult.print(); }
 		 */
-
+		
 		for (EvalResult evalResult : resultsNoDraw) {
 			updateChomoPopulation(evalResult, pop);
 		}
@@ -135,6 +137,7 @@ public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
 	}
 
 	private void updateChomoPopulation(EvalResult evalResult, Population pop) {
+		
 		if (evalResult.getEvaluation() == 0) {
             //IAWinner = evalResult.getIA1();
             updateChromo(pop, evalResult.getIA1(), BigDecimal.ONE);
@@ -170,6 +173,19 @@ public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
     		    PrintWriter out = new PrintWriter(bw))
     		{
     		    out.println(portfolioGrammar0+"/"+portfolioGrammar1+"="+winner);
+    		} catch (IOException e) {
+    		    //exception handling left as an exercise for the reader
+    		}
+		
+	}
+    
+    private void recordMarkNewGeneration() {
+		
+    	try(FileWriter fw = new FileWriter(pathLogsGrammars+"LogsGrammars.txt", true);
+    		    BufferedWriter bw = new BufferedWriter(fw);
+    		    PrintWriter out = new PrintWriter(bw))
+    		{
+    		    out.println("New Generation!");
     		} catch (IOException e) {
     		    //exception handling left as an exercise for the reader
     		}
@@ -267,6 +283,7 @@ public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
 	private Population iterativeEvaluation(Population population) {
 		// ler resultados
 		ArrayList<EvalResult> resultados = lerResultadosIterative();
+		
 		// atualizar valores das populacoes
 		if(resultados.size() > 0 ){
 			 population = updatePopulationValue(resultados, population);

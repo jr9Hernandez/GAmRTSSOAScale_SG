@@ -577,6 +577,38 @@ public class ScriptsTable {
 		//st.print();
 		return st;
 	}
+	
+	//THis method uses a preexistent table of scripts instead of create a new one
+	public ScriptsTable generateScriptsTableRecover(){
+
+		HashMap<String, BigDecimal> newChromosomes = new HashMap<>();
+		ChromosomeScript tChom;
+		try (BufferedReader br = new BufferedReader(new FileReader(pathTableScripts + "/ScriptsTable.txt"))) {
+			String line;            
+			while ((line = br.readLine()) != null) {
+				String[] strArray = line.split(" ");
+
+				int idScript = Integer.parseInt(strArray[0]);
+				String rules = line.replaceFirst(strArray[0]+" ", "");
+
+				tChom = new ChromosomeScript();
+//				for (int i : rules) {
+//					tChom.addGene(i);
+//				}
+				newChromosomes.put(rules, BigDecimal.valueOf(idScript));;
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts);
+		//st.print();
+		return st;
+	}
+
 
 	public int getCurrentSizeTable() {
 		return currentSizeTable;

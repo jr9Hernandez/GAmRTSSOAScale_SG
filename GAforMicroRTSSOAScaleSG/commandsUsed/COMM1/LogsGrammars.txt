@@ -1,0 +1,3 @@
+6 moveToCoord(Worker,3,0,u)))) 
+9 attack(Ranged,lessHealthy,u) (moveToCoord(Light,5,2,u)
+6 (moveToUnit(Heavy,Ally,closest,u)) attack(Ranged,lessHealthy,u)

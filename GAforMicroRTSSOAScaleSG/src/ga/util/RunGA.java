@@ -43,13 +43,13 @@ public class RunGA {
 		// Creating the table of scripts
 		scrTable = new ScriptsTable(pathTableScripts);
 		//do {
-			if(!ConfigurationsGA.curriculum)
+			if(!ConfigurationsGA.recoverTable)
 			{
 				scrTable = scrTable.generateScriptsTable(ConfigurationsGA.SIZE_TABLE_SCRIPTS);
 			}
 			else
 			{
-				scrTable = scrTable.generateScriptsTableCurriculumVersion();
+				scrTable = scrTable.generateScriptsTableRecover();
 			}
 		   //}while(scrTable.checkDiversityofTypes());
 		scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
@@ -73,6 +73,9 @@ public class RunGA {
 			// Fase 2 = avalia a população
 			//population = evalFunction.evalPopulation(population, this.generations, scrTable);
 			
+			population.printWithValue(f0);
+			System.out.println("sep");
+			
 			//Get all the used commands
 			population.fillAllCommands(pathTableScripts);
 //		    Iterator it = population.getAllCommandsperGeneration().entrySet().iterator();
@@ -94,7 +97,7 @@ public class RunGA {
 //		    }
 			
 			//Remove used commands from all commands
-		 population.removeCommands(scrTable);
+			population.removeCommands(scrTable);
 			
 			System.out.println("Log - Generation = " + this.generations);
 			f0.println("Log - Generation = " + this.generations);

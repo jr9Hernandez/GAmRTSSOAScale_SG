@@ -229,8 +229,12 @@ public class Population {
 			if(allCommandsperGeneration.containsKey(id))
 			{
 				List<String> allCommandsStored=allCommandsperGeneration.get(id);
-				allCommandsStored.add(s);
-				allCommandsperGeneration.put(id, allCommandsStored);
+				if(!allCommandsStored.contains(s))
+				{
+					allCommandsStored.add(s);
+					allCommandsperGeneration.put(id, allCommandsStored);
+				}
+				
 			}
 			else
 			{	List<String> allCommandsStored=new ArrayList<String>();
@@ -292,6 +296,7 @@ public class Population {
 		
 	    Iterator it = getUsedCommandsperGeneration().entrySet().iterator();
 	    while (it.hasNext()) {
+	    	
 	        Map.Entry pair = (Map.Entry)it.next();
 	        int id=(Integer)pair.getKey();
 	        
@@ -301,13 +306,12 @@ public class Population {
 	        {
 	        	List<String> commandsAll=getAllCommandsperGeneration().get(id);
 		        commandsAll.removeAll(commandsUsed);
-		        changeGrammars(scrTable);
+		        		        
 	        }
-	        
-	        
-	        
+	        	        
 	        //it.remove(); // avoids a ConcurrentModificationException
 	    }
+	    changeGrammars(scrTable);
 	}
 	
 	public void changeGrammars(ScriptsTable scrTable)
@@ -318,23 +322,44 @@ public class Population {
 	        Map.Entry pair = (Map.Entry)it.next();
 	        int id=((BigDecimal)pair.getValue()).intValue();
 	        ArrayList<Integer> scriptsId= ((Chromosome)pair.getKey()).getGenes();
+	        ArrayList<Integer> scriptsToDelete=new ArrayList<Integer>();
 	        String originalcompleteGrammars;
 	        for(int i=0;i<scriptsId.size();i++) 
 	        {
-	        	//System.out.println(scriptsAlternativeTable);
-	        	originalcompleteGrammars=scriptsAlternativeTable.get(BigDecimal.valueOf(scriptsId.get(i)));
-	        	String newGrammar=replaceCommandsinGrammar(originalcompleteGrammars,scriptsId.get(i));
-	        	
-	        	if(!originalcompleteGrammars.equals(newGrammar))
+	        	if(allCommandsperGeneration.containsKey(scriptsId.get(i)))
 	        	{
-	    			int newId=scrTable.getScriptTable().size();
-	    			scrTable.getScriptTable().put(newGrammar, BigDecimal.valueOf(newId));
-	    			scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
-	    			addLineFile(newId+" "+newGrammar);
-	    			scriptsId.set(i, newId);
+	        		//System.out.println(scriptsAlternativeTable);
+	        		originalcompleteGrammars=scriptsAlternativeTable.get(BigDecimal.valueOf(scriptsId.get(i)));
+	        		String newGrammar=replaceCommandsinGrammar(originalcompleteGrammars,scriptsId.get(i));
+	        		String newTempGrammar= newGrammar.replaceAll("\\s","");
+	        	
+	        		if(newTempGrammar.length()>0)
+	        		{
+	        			if(!originalcompleteGrammars.equals(newGrammar))
+	        			{
+	        				if(scrTable.getScriptTable().containsKey(newGrammar))
+	        				{
+	        					scriptsId.set(i, scrTable.getScriptTable().get(newGrammar).intValue());
+	        				}
+	        				else
+	        				{   
+	        					int newId=scrTable.getScriptTable().size();
+	        					scrTable.getScriptTable().put(newGrammar, BigDecimal.valueOf(newId));
+	        					scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
+	        					addLineFile(newId+" "+newGrammar);
+	        					scriptsId.set(i, newId);
+	        				}
+	        			}
+	        		}
+	        		else
+	        		{
+	        			scriptsToDelete.add(scriptsId.get(i));
+	        			
+	        		}
 	        	}
 
 	        }
+	        scriptsId.removeAll(scriptsToDelete);
 	        
 	        //it.remove(); // avoids a ConcurrentModificationException
 	    }
@@ -371,7 +396,7 @@ public class Population {
 		{
 			if(newGrammar.contains(command))
 			{
-				newGrammar.replaceAll(command, "");
+				newGrammar=newGrammar.replace(command, "");
 			}
 		}
 		return newGrammar;

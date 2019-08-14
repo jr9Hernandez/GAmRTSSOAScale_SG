@@ -17,6 +17,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
@@ -346,6 +348,7 @@ public class Population {
 	        					int newId=scrTable.getScriptTable().size();
 	        					scrTable.getScriptTable().put(newGrammar, BigDecimal.valueOf(newId));
 	        					scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
+	        					//addLineFile(newId+" old "+scriptsId.get(i)+" "+newGrammar);
 	        					addLineFile(newId+" "+newGrammar);
 	        					scriptsId.set(i, newId);
 	        				}
@@ -399,6 +402,183 @@ public class Population {
 				newGrammar=newGrammar.replace(command, "");
 			}
 		}
+		newGrammar=validateUnusefulIfsImproved(newGrammar);
+		newGrammar=removePaddings(newGrammar);
+		newGrammar=removeTrashBracketsFromString(newGrammar);
+		newGrammar=newGrammar.replaceFirst("\\s+", "");
+		newGrammar=removingRemainingElses(newGrammar);
+		return newGrammar;
+	}
+	
+	public String validateUnusefulIfsImproved(String newGrammar)
+	{
+		String parts[]=newGrammar.split("\\s+");
+
+		for(int i=parts.length-1; i>=0;i--)
+		{
+			
+			if(parts[i].contains("if") || parts[i].contains("for"))
+				{	
+				
+					boolean letter=false;
+					boolean closed=false;
+					boolean open=false;
+					int pointOpen=0;
+					int pointClosed=0;
+					int countOpen=0;
+					String removedExcess=removeExcessBrackets(parts[i]);
+					int pos=newGrammar.lastIndexOf(removedExcess)+removedExcess.length();
+					
+					for(int j=pos; j<newGrammar.length();j++)
+					{
+						if(newGrammar.charAt(j) =='(')
+						{	
+						    if(open==false)
+						    {
+						    	pointOpen=j;
+						    }
+						    open=true;
+							countOpen++;
+						}
+						else if(newGrammar.charAt(j) ==')')
+						{
+							pointClosed=j;
+							closed=true;
+							countOpen--;
+						}
+						else if(Character.isLetter(newGrammar.charAt(j)) && newGrammar.charAt(j) !='Z' && newGrammar.charAt(j) !='X')
+						{
+							letter=true;
+						}
+						
+						if(closed==true && letter==false && countOpen==0)
+						{
+							
+							newGrammar=changeCharInPosition(pointClosed,'Z',newGrammar);
+							newGrammar=changeCharInPosition(pointOpen,'Z',newGrammar);
+							//newGrammar=newGrammar.replace("Z", "");
+							
+							int start = newGrammar.lastIndexOf(removedExcess);
+							StringBuilder builder = new StringBuilder();
+							
+							builder.append(newGrammar.substring(0, start));
+							builder.append("X");
+							builder.append(newGrammar.substring(start + removedExcess.length()));
+							newGrammar=builder.toString();
+							
+							break;
+
+						}
+						else if(closed==false && letter==true)
+						{
+							int start = newGrammar.lastIndexOf(removedExcess);
+							if(removedExcess.contains("for"))
+							{
+							newGrammar=changeCharInPosition(start, '8', newGrammar);
+							}
+							else
+							{
+								newGrammar=changeCharInPosition(start, '7', newGrammar);	
+							}
+							break;
+						}
+					}
+					}
+		}
+		return newGrammar;
+	}
+	
+	public String [] validateUnusefulIfs(String newGrammar)
+	{
+		String parts[]=newGrammar.split("\\s+");
+		for(int i=parts.length-1; i>=0;i--)
+		{
+			if(parts[i].contains("if") || parts[i].contains("for"))
+				{	
+					boolean found=false;
+					
+					int k=i+1;
+					int t=i+2;
+					if(parts[i+1].equals(""))
+					{
+						String firstComparing=parts[k];
+						while(firstComparing.equals(""))
+						{
+							k++;
+							firstComparing=parts[k];
+						}
+						if(k+1<parts.length)
+						{
+							String secondComparing=parts[k+1];
+							t=k+1;
+							while(secondComparing.equals(""))
+							{
+								t++;
+								secondComparing=parts[t];
+							}
+						}
+					}
+					else {
+						
+						if(t<parts.length)
+						{
+							if(parts[t].equals(""))
+							{
+								String secondComparing=parts[t];
+								while(secondComparing.equals(""))
+								{
+									t++;
+									secondComparing=parts[t];
+								}	
+							}
+						}
+					}
+					if(!parts[k].matches(".*[a-zA-Z]+.*"))
+					{
+
+						for(int j=0; j<parts[k].length();j++)
+						{
+							if(parts[k].charAt(j) ==')')
+							{	
+								parts[i]=parts[i].replace(removeExcessBrackets(parts[i]), "");
+								found=true;
+								break;
+							}
+						}
+						if(found==false && !parts[t].matches(".*[a-zA-Z]+.*"))
+						{
+							for(int j=0; j<parts[t].length();j++)
+							{
+								if(parts[t].charAt(j) ==')')
+								{
+									parts[i]=parts[i].replace(removeExcessBrackets(parts[i]), "");
+									found=true;
+									break;
+								}
+							}
+						}
+						
+					}
+				
+				}
+		}
+		return parts;
+	}
+	
+	public String recoverStringFromArray(String [] parts)
+	{
+		String newGrammar="";
+		for(String part:parts)
+		{
+			newGrammar=newGrammar+" "+part;
+		}
+		
+		return newGrammar;
+	}
+	
+	public String validateUnusefulFor(String newGrammar)
+	{
+		
 		return newGrammar;
 	}
 	
@@ -478,4 +658,187 @@ public class Population {
 	public void setUsedCommandsperGeneration(Map<Integer, List<String>> usedCommandsperGeneration) {
 		this.usedCommandsperGeneration = usedCommandsperGeneration;
 	}
+	
+	public String removeExcessBrackets(String part)
+	{
+		
+		String tem=part;
+		while(tem.charAt(0)=='(')
+		{
+			tem=tem.replaceFirst("\\(", "");
+		}
+		while(tem.charAt(tem.length()-1)==')' && tem.charAt(tem.length()-2)==')' && tem.contains("for"))
+		{
+			tem=tem.substring(0, tem.length() - 1);
+		}
+		while(tem.charAt(tem.length()-1)==')' && tem.charAt(tem.length()-2)==')' && tem.charAt(tem.length()-3)==')' && tem.contains("if"))
+		{
+			tem=tem.substring(0, tem.length() - 1);
+		}
+		return tem;
+	}
+	
+	public String removePaddings(String part)
+	{
+		//For open brackets
+		for(int i=0; i<part.length();i++)
+		{
+			int j=i+1;
+			if(j<part.length())
+			{
+				
+				while(part.charAt(i) =='(' && part.charAt(j) ==' ')
+				{
+					part=changeCharInPosition(j,'9',part );
+					j++;
+					if(j==part.length())
+					{
+						break;
+					}
+				}				
+			}
+
+		}
+		//For closed brackets
+		for(int i=part.length()-1; i>0;i--)
+		{
+			int j=i-1;
+			if(j>=0)
+			{
+				while(part.charAt(i) ==')' && part.charAt(j) ==' ')
+				{
+					part=changeCharInPosition(j,'9',part );
+					j--;
+					if(j<0)
+					{
+						break;
+					}
+				}				
+			}
+
+		}		
+		
+		return part;
+	}
+	
+	public String changeCharInPosition(int position, char ch, String str){
+	    char[] charArray = str.toCharArray();
+	    charArray[position] = ch;
+	    return new String(charArray);
+	}
+	
+	public String removeTrashBracketsFromString(String str)
+	{
+
+		String grammar=str;
+		grammar=grammar.replace("Z", "");
+		grammar=grammar.replace("X", "");
+		grammar=removePaddings(grammar);
+		grammar=grammar.replace("9", "");
+		grammar=grammar.replace("7", "i");
+		grammar=grammar.replace("8", "f");
+		
+		String parts[]=grammar.split("\\s+");
+		for(int i=parts.length-1; i>=0;i--)
+		{
+			if(!parts[i].matches(".*[a-zA-Z]+.*"))
+			{
+				parts[i]="";
+			}
+		}
+		grammar=recoverStringFromArray(parts);
+		return grammar;
+	}
+	
+	public String removingRemainingElses(String str)
+	{
+		
+		String grammar=str;
+		String parts[]=grammar.split("\\s+");
+		for(int i=0; i<parts.length;i++)
+		{
+			if(parts[i].matches(".*[a-zA-Z]+.*") )
+			{
+				for(int j=0;j<parts[i].length();j++)
+				{
+					if(Character.isLetter(parts[i].charAt(j)))
+					{
+						if(j>0)
+						{
+							if(parts[i].charAt(j-1) =='(')
+							{
+								if(i>0)
+								{
+									int k=j-1;
+									while(k>0)
+										{
+											if(!(parts[i-1].charAt(parts[i-1].length()-1)==')') || k>0)
+											{
+												parts[i]=changeCharInPosition(k, 'V', parts[i]);
+												
+											}
+											k--;
+										}
+									break;
+								}
+								else {
+									int k=j-1;
+									while(k>=0)
+										{
+											if(k>=0)
+											{
+												parts[i]=changeCharInPosition(k, 'V', parts[i]);
+												
+											}
+											k--;
+										}
+									break;
+								}
+							}
+						}
+						break;
+					}
+				}
+			}
+		}
+		grammar=recoverStringFromArray(parts);
+		grammar=balancingParentes(grammar);
+		grammar=grammar.replace("5", "");
+		return grammar;
+	}
+	
+	public String balancingParentes(String grammar)
+	{
+		while(grammar.contains("V"))
+		{
+			System.out.println("gram "+grammar);
+		boolean open=false;
+		int countOpen=0;
+		for(int i=0; i<grammar.length();i++)
+		{
+			if(grammar.charAt(i) =='V' && open==false)
+			{	
+			    open=true;
+			    countOpen++;
+				grammar=changeCharInPosition(i, '5', grammar);
+			}
+			else if(grammar.charAt(i) =='(' && open)
+			{
+				countOpen++;
+			}
+			else if(grammar.charAt(i) ==')' && open)
+			{
+				countOpen--;
+				if(countOpen==0)
+				{
+					grammar=changeCharInPosition(i, '5', grammar);
+				}
+			}
+		}
+		}
+		return grammar;
+	}
+	
+	
+
 }

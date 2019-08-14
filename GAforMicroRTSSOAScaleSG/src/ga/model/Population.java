@@ -319,20 +319,26 @@ public class Population {
 	public void changeGrammars(ScriptsTable scrTable)
 	{
 
+		HashMap<Chromosome, BigDecimal> ChromosomesNew=new HashMap<>();
 	    Iterator it = Chromosomes.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry pair = (Map.Entry)it.next();
-	        int id=((BigDecimal)pair.getValue()).intValue();
+	        int value=((BigDecimal)pair.getValue()).intValue();
+	        Chromosome chOriginal=(Chromosome)pair.getKey();
 	        ArrayList<Integer> scriptsId= ((Chromosome)pair.getKey()).getGenes();
+	        
+	        Chromosome newCh=new Chromosome();
+			newCh.setGenes((ArrayList<Integer>) scriptsId.clone());
+			
 	        ArrayList<Integer> scriptsToDelete=new ArrayList<Integer>();
 	        String originalcompleteGrammars;
-	        for(int i=0;i<scriptsId.size();i++) 
+	        for(int i=0;i<newCh.getGenes().size();i++) 
 	        {
-	        	if(allCommandsperGeneration.containsKey(scriptsId.get(i)))
+	        	if(allCommandsperGeneration.containsKey(newCh.getGenes().get(i)))
 	        	{
 	        		//System.out.println(scriptsAlternativeTable);
-	        		originalcompleteGrammars=scriptsAlternativeTable.get(BigDecimal.valueOf(scriptsId.get(i)));
-	        		String newGrammar=replaceCommandsinGrammar(originalcompleteGrammars,scriptsId.get(i));
+	        		originalcompleteGrammars=scriptsAlternativeTable.get(BigDecimal.valueOf(newCh.getGenes().get(i)));
+	        		String newGrammar=replaceCommandsinGrammar(originalcompleteGrammars,newCh.getGenes().get(i));
 	        		String newTempGrammar= newGrammar.replaceAll("\\s","");
 	        	
 	        		if(newTempGrammar.length()>0)
@@ -341,7 +347,7 @@ public class Population {
 	        			{
 	        				if(scrTable.getScriptTable().containsKey(newGrammar))
 	        				{
-	        					scriptsId.set(i, scrTable.getScriptTable().get(newGrammar).intValue());
+	        					newCh.getGenes().set(i, scrTable.getScriptTable().get(newGrammar).intValue());
 	        				}
 	        				else
 	        				{   
@@ -350,22 +356,39 @@ public class Population {
 	        					scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
 	        					//addLineFile(newId+" old "+scriptsId.get(i)+" "+newGrammar);
 	        					addLineFile(newId+" "+newGrammar);
-	        					scriptsId.set(i, newId);
+	        					newCh.getGenes().set(i, newId);
 	        				}
 	        			}
 	        		}
 	        		else
 	        		{
-	        			scriptsToDelete.add(scriptsId.get(i));
+	        			scriptsToDelete.add(newCh.getGenes().get(i));
 	        			
 	        		}
 	        	}
 
 	        }
-	        scriptsId.removeAll(scriptsToDelete);
+	        newCh.getGenes().removeAll(scriptsToDelete);
 	        
+	        if(newCh.getGenes().size()>0) 
+	        {
+	        	ChromosomesNew.put(newCh, BigDecimal.valueOf(value));
+	        }	        
+	        
+	    	        
 	        //it.remove(); // avoids a ConcurrentModificationException
 	    }
+	    
+	    while(ChromosomesNew.size()<ConfigurationsGA.SIZE_PARENTSFORCROSSOVER)
+	    {
+        	Chromosome newCh = new Chromosome();
+			int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;
+			for (int j = 0; j < sizeCh; j++) {
+				newCh.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));
+			}
+			ChromosomesNew.put(newCh, BigDecimal.valueOf(0));
+	    }
+	    setChromosomes(ChromosomesNew);;
 	}
 	
 	public void addLineFile(String data) {

@@ -56,7 +56,7 @@ public class RunGA {
 
 		PrintWriter f0;
 		try {
-			f0 = new PrintWriter(new FileWriter("Tracking.txt"));
+			f0 = new PrintWriter(new FileWriter(pathLogs+"Tracking.txt"));
 
 		do {
 			// Fase 1 = gerar a população inicial
@@ -71,10 +71,10 @@ public class RunGA {
 			
 
 			// Fase 2 = avalia a população
-			//population = evalFunction.evalPopulation(population, this.generations, scrTable);
+			population = evalFunction.evalPopulation(population, this.generations, scrTable);
 			
-			population.printWithValue(f0);
-			System.out.println("sep");
+			//population.printWithValue(f0);
+			//System.out.println("sep");
 			
 			//Get all the used commands
 			population.fillAllCommands(pathTableScripts);
@@ -113,7 +113,7 @@ public class RunGA {
 			population = selecao.applySelection(population, scrTable, pathTableScripts);
 
 			// Repete-se Fase 2 = Avaliação da população
-			//population = evalFunction.evalPopulation(population, this.generations, scrTable);
+			population = evalFunction.evalPopulation(population, this.generations, scrTable);
 			
 			//Get all the used commands
 			population.fillAllCommands(pathTableScripts);
@@ -128,6 +128,8 @@ public class RunGA {
 //		        System.out.println("key "+id+" "+scripts);
 //		        //it.remove(); // avoids a ConcurrentModificationException
 //		    }
+			//Remove used commands from all commands
+			population.removeCommands(scrTable);
 
 			// atualiza a geração
 			updateGeneration();

@@ -497,11 +497,11 @@ public class Population {
 							int start = newGrammar.lastIndexOf(removedExcess);
 							if(removedExcess.contains("for"))
 							{
-							newGrammar=changeCharInPosition(start, '8', newGrammar);
+							newGrammar=changeCharInPosition(start, '@', newGrammar);
 							}
 							else
 							{
-								newGrammar=changeCharInPosition(start, '7', newGrammar);	
+								newGrammar=changeCharInPosition(start, '$', newGrammar);	
 							}
 							break;
 						}
@@ -614,7 +614,7 @@ public class Population {
 		if (COMMFolder != null) {
 			
 			for (File folder : COMMFolder.listFiles()) {
-				try (BufferedReader br = new BufferedReader(new FileReader(folder+"\\logsGrammars.txt"))) {
+				try (BufferedReader br = new BufferedReader(new FileReader(folder+"/LogsGrammars.txt"))) {
 				    String line;
 				    while ((line = br.readLine()) != null) {
 				    	String parts[]=line.split(" ");
@@ -635,7 +635,8 @@ public class Population {
 				    	}				    	
 				       
 				    }
-				    //folder.delete();
+				    File toDelete=new File(folder+"/LogsGrammars.txt");
+					toDelete.delete();
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -710,9 +711,9 @@ public class Population {
 			if(j<part.length())
 			{
 				
-				while(part.charAt(i) =='(' && part.charAt(j) ==' ')
+				while(part.charAt(i) =='(' && (part.charAt(j) ==' ' || part.charAt(j) =='#'))
 				{
-					part=changeCharInPosition(j,'9',part );
+					part=changeCharInPosition(j,'#',part );
 					j++;
 					if(j==part.length())
 					{
@@ -728,9 +729,9 @@ public class Population {
 			int j=i-1;
 			if(j>=0)
 			{
-				while(part.charAt(i) ==')' && part.charAt(j) ==' ')
+				while(part.charAt(i) ==')' && (part.charAt(j) ==' ' || part.charAt(j) =='#'))
 				{
-					part=changeCharInPosition(j,'9',part );
+					part=changeCharInPosition(j,'#',part );
 					j--;
 					if(j<0)
 					{
@@ -757,9 +758,9 @@ public class Population {
 		grammar=grammar.replace("Z", "");
 		grammar=grammar.replace("X", "");
 		grammar=removePaddings(grammar);
-		grammar=grammar.replace("9", "");
-		grammar=grammar.replace("7", "i");
-		grammar=grammar.replace("8", "f");
+		grammar=grammar.replace("#", "");
+		grammar=grammar.replace("$", "i");
+		grammar=grammar.replace("@", "f");
 		
 		String parts[]=grammar.split("\\s+");
 		for(int i=parts.length-1; i>=0;i--)
@@ -826,7 +827,7 @@ public class Population {
 		}
 		grammar=recoverStringFromArray(parts);
 		grammar=balancingParentes(grammar);
-		grammar=grammar.replace("5", "");
+		grammar=grammar.replace("#", "");
 		return grammar;
 	}
 	
@@ -843,7 +844,7 @@ public class Population {
 			{	
 			    open=true;
 			    countOpen++;
-				grammar=changeCharInPosition(i, '5', grammar);
+				grammar=changeCharInPosition(i, '#', grammar);
 			}
 			else if(grammar.charAt(i) =='(' && open)
 			{
@@ -854,7 +855,7 @@ public class Population {
 				countOpen--;
 				if(countOpen==0)
 				{
-					grammar=changeCharInPosition(i, '5', grammar);
+					grammar=changeCharInPosition(i, '#', grammar);
 				}
 			}
 		}

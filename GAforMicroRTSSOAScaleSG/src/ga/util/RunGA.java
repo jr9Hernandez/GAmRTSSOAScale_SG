@@ -77,7 +77,8 @@ public class RunGA {
 			//System.out.println("sep");
 			
 			//Get all the used commands
-			population.fillAllCommands(pathTableScripts);
+			if(ConfigurationsGA.removeRules==true)
+				population.fillAllCommands(pathTableScripts);
 //		    Iterator it = population.getAllCommandsperGeneration().entrySet().iterator();
 //		    while (it.hasNext()) {
 //		        Map.Entry pair = (Map.Entry)it.next();
@@ -86,7 +87,8 @@ public class RunGA {
 //		        System.out.println("key "+id+" "+scripts);
 //		    }
 			//Choose the used commands
-			population.chooseusedCommands(pathUsedCommands);
+			if(ConfigurationsGA.removeRules==true)
+				population.chooseusedCommands(pathUsedCommands);
 //		    Iterator it = population.getUsedCommandsperGeneration().entrySet().iterator();
 //		    while (it.hasNext()) {
 //		        Map.Entry pair = (Map.Entry)it.next();
@@ -97,7 +99,8 @@ public class RunGA {
 //		    }
 			
 			//Remove used commands from all commands
-			population.removeCommands(scrTable);
+			if(ConfigurationsGA.removeRules==true)
+				population.removeCommands(scrTable);
 			
 			System.out.println("Log - Generation = " + this.generations);
 			f0.println("Log - Generation = " + this.generations);
@@ -116,10 +119,12 @@ public class RunGA {
 			population = evalFunction.evalPopulation(population, this.generations, scrTable);
 			
 			//Get all the used commands
-			population.fillAllCommands(pathTableScripts);
+			if(ConfigurationsGA.removeRules==true)
+				population.fillAllCommands(pathTableScripts);
 			
 			//Remove the unused commands
-			population.chooseusedCommands(pathUsedCommands);
+			if(ConfigurationsGA.removeRules==true)
+				population.chooseusedCommands(pathUsedCommands);
 //		    Iterator it = population.getUsedCommandsperGeneration().entrySet().iterator();
 //		    while (it.hasNext()) {
 //		        Map.Entry pair = (Map.Entry)it.next();
@@ -129,7 +134,8 @@ public class RunGA {
 //		        //it.remove(); // avoids a ConcurrentModificationException
 //		    }
 			//Remove used commands from all commands
-			population.removeCommands(scrTable);
+			if(ConfigurationsGA.removeRules==true)
+				population.removeCommands(scrTable);
 
 			// atualiza a geração
 			updateGeneration();

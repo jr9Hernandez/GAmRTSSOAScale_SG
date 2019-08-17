@@ -609,45 +609,46 @@ public class Population {
 	{
 		usedCommandsperGeneration.clear();
 		List <String> usedCommands;
-		
+
 		File COMMFolder = new File(pathUsedCommands);
 		if (COMMFolder != null) {
-			
+
 			for (File folder : COMMFolder.listFiles()) {
-				try (BufferedReader br = new BufferedReader(new FileReader(folder+"/LogsGrammars.txt"))) {
-				    String line;
-				    while ((line = br.readLine()) != null) {
-				    	String parts[]=line.split(" ");
-				    	
-				    	if(usedCommandsperGeneration.containsKey(Integer.valueOf(parts[0])))
-				    	{
-				    		usedCommands=usedCommandsperGeneration.get(Integer.valueOf(parts[0]));
-				    	}
-				    	else
-				    	{
-				    		usedCommands=new ArrayList<String>();
-				    		usedCommandsperGeneration.put(Integer.valueOf(parts[0]), usedCommands);
-				    	}
-				    	for(int i=1; i<parts.length;i++)
-				    	{
-				    		if(!usedCommands.contains(cleaned(parts[i])))
-				    			usedCommands.add(cleaned(parts[i]));
-				    	}				    	
-				       
-				    }
-				    File toDelete=new File(folder+"/LogsGrammars.txt");
-					toDelete.delete();
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				File arq = new File(folder+"/LogsGrammars.txt");
+				if(arq.exists()) {
+					try (BufferedReader br = new BufferedReader(new FileReader(folder+"/LogsGrammars.txt"))) {
+						String line;
+						while ((line = br.readLine()) != null) {
+							String parts[]=line.split(" ");
+
+							if(usedCommandsperGeneration.containsKey(Integer.valueOf(parts[0])))
+							{
+								usedCommands=usedCommandsperGeneration.get(Integer.valueOf(parts[0]));
+							}
+							else
+							{
+								usedCommands=new ArrayList<String>();
+								usedCommandsperGeneration.put(Integer.valueOf(parts[0]), usedCommands);
+							}
+							for(int i=1; i<parts.length;i++)
+							{
+								if(!usedCommands.contains(cleaned(parts[i])))
+									usedCommands.add(cleaned(parts[i]));
+							}				    	
+
+						}
+						File toDelete=new File(folder+"/LogsGrammars.txt");
+						toDelete.delete();
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
-		
-		
+		}
 
 			
 	}

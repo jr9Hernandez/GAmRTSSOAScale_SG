@@ -302,20 +302,27 @@ public class Reproduction {
 	{
 		String cloneS = s;
 		  
-		while (cloneS.charAt(0)=='(' )
-		{
-			cloneS=cloneS.replaceFirst("\\(", "");
-		}
-		
-		if(cloneS.startsWith("if"))
-		{
-			cloneS=cloneS.replaceFirst("if", "");
-			if(cloneS.charAt(0)=='(')
+		try {
+			while (cloneS.charAt(0)=='(' )
 			{
 				cloneS=cloneS.replaceFirst("\\(", "");
 			}
-		}		
+		
+			if(cloneS.startsWith("if"))
+			{
+				cloneS=cloneS.replaceFirst("if", "");
+				if(cloneS.charAt(0)=='(')
+				{
+					cloneS=cloneS.replaceFirst("\\(", "");
+				}
+			}		
 
+			return cloneS;
+		}
+		catch(Exception e)
+		{
+			System.out.println(e+" String "+cloneS);
+		}
 		return cloneS;
 	}
 	

@@ -71,7 +71,7 @@ public class RunGA {
 			
 
 			// Fase 2 = avalia a população
-			//population = evalFunction.evalPopulation(population, this.generations, scrTable);
+			population = evalFunction.evalPopulation(population, this.generations, scrTable);
 			
 			//population.printWithValue(f0);
 			//System.out.println("sep");
@@ -116,7 +116,7 @@ public class RunGA {
 			population = selecao.applySelection(population, scrTable, pathTableScripts);
 
 			// Repete-se Fase 2 = Avaliação da população
-			//population = evalFunction.evalPopulation(population, this.generations, scrTable);
+			population = evalFunction.evalPopulation(population, this.generations, scrTable);
 			
 			//Get all the used commands
 			if(ConfigurationsGA.removeRules==true)

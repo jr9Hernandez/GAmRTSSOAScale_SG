@@ -1,3 +1,4 @@
 6 moveToCoord(Worker,3,0,u)))) 
 9 attack(Ranged,lessHealthy,u) (moveToCoord(Light,5,2,u)
 6 moveToCoord(Worker,3,0,u)))) attack(Ranged,lessHealthy)
+0 build(Base,30,u) moveToCoord(All,4,3,u)

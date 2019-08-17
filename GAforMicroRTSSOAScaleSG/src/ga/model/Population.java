@@ -757,20 +757,41 @@ public class Population {
 		String grammar=str;
 		grammar=grammar.replace("Z", "");
 		grammar=grammar.replace("X", "");
-		grammar=removePaddings(grammar);
-		grammar=grammar.replace("#", "");
-		grammar=grammar.replace("$", "i");
-		grammar=grammar.replace("@", "f");
-		
-		String parts[]=grammar.split("\\s+");
-		for(int i=parts.length-1; i>=0;i--)
+
+		boolean atLeastOne=true;
+		while(atLeastOne)
 		{
-			if(!parts[i].matches(".*[a-zA-Z]+.*"))
+		atLeastOne=false;
+		for(int i=0;i<grammar.length();i++)
+		{
+			if(grammar.charAt(i)=='(')
 			{
-				parts[i]="";
+				for(int j=i+1;j<grammar.length();j++)
+				{
+					if(grammar.charAt(j)!=')' && grammar.charAt(j)!=' ')
+					{
+						break;
+					}
+					else if(grammar.charAt(j)==')')
+					{
+						grammar=changeCharInPosition(i, 'Z', grammar);
+						grammar=changeCharInPosition(j, 'Z', grammar);
+						atLeastOne=true;
+						break;
+					}
+					
+				}
 			}
 		}
-		grammar=recoverStringFromArray(parts);
+		grammar=grammar.replace("Z", "");
+		
+		grammar=removePaddings(grammar);
+		grammar=grammar.replace("#", "");
+		}
+		
+		
+		grammar=grammar.replace("$", "i");
+		grammar=grammar.replace("@", "f");
 		return grammar;
 	}
 	

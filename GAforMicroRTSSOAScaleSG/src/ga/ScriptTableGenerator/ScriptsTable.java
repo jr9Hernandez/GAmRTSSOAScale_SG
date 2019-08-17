@@ -164,7 +164,7 @@ public class ScriptsTable {
 
 				if(collectionofIfs.size()>0)
 				{
-					for (int i = collectionofIfs.size()-1; i == 0; i-- ) {
+					for (int i = collectionofIfs.size()-1; i >= 0; i-- ) {
 
 						if(collectionofIfs.get(i).isLastOpen()==false)
 						{
@@ -191,7 +191,7 @@ public class ScriptsTable {
 
 				if(collectionofIfs.size()>0)
 				{
-					for (int i = collectionofIfs.size()-1; i == 0; i-- ) {
+					for (int i = collectionofIfs.size()-1; i >= 0; i-- ) {
 
 						if(collectionofIfs.get(i).isLastOpen()==false)
 						{
@@ -222,7 +222,7 @@ public class ScriptsTable {
 
 				if(collectionofIfs.size()>0)
 				{
-					for (int i = collectionofIfs.size()-1; i == 0; i-- ) {
+					for (int i = collectionofIfs.size()-1; i >= 0; i-- ) {
 
 						if(collectionofIfs.get(i).isLastOpen()==false)
 						{
@@ -257,7 +257,7 @@ public class ScriptsTable {
 					
 					if(collectionofIfs.get(collectionofIfs.size()-1).getMaxOpens()==0)
 					{
-						for (int i = collectionofIfs.size()-1; i == 0; i-- ) {
+						for (int i = collectionofIfs.size()-1; i >= 0; i-- ) {
 
 							if(collectionofIfs.get(i).isLastOpen()==false)
 							{
@@ -304,9 +304,16 @@ public class ScriptsTable {
 			{
 				while(collectionofIfs.size()>0)
 				{
-					genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
-					genotypeScript=genotypeScript+") ";
-					collectionofIfs.remove(collectionofIfs.size()-1);
+					if(collectionofIfs.get(collectionofIfs.size()-1).isLastOpen())
+					{
+						genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+						genotypeScript=genotypeScript+") ";
+						collectionofIfs.remove(collectionofIfs.size()-1);
+					}
+					else
+					{
+						collectionofIfs.remove(collectionofIfs.size()-1);
+					}
 
 				}
 

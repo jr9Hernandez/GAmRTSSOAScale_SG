@@ -427,6 +427,7 @@ public class Population {
 		}
 		newGrammar=validateUnusefulIfsImproved(newGrammar);
 		newGrammar=removePaddings(newGrammar);
+		newGrammar=newGrammar.replace("#", "");
 		newGrammar=removeTrashBracketsFromString(newGrammar);
 		newGrammar=newGrammar.replaceFirst("\\s+", "");
 		newGrammar=removingRemainingElses(newGrammar);

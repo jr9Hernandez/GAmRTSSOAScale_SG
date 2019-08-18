@@ -341,7 +341,7 @@ public class Population {
 	        		String newGrammar=replaceCommandsinGrammar(originalcompleteGrammars,newCh.getGenes().get(i));
 	        		String newTempGrammar= newGrammar.replaceAll("\\s","");
 	        	
-	        		if(newTempGrammar.length()>0)
+	        		if(newTempGrammar.length()>0 && newTempGrammar.matches(".*[a-zA-Z]+.*"))
 	        		{
 	        			if(!originalcompleteGrammars.equals(newGrammar))
 	        			{

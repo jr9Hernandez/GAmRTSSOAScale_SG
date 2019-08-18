@@ -858,7 +858,7 @@ public class Population {
 	{
 		while(grammar.contains("V"))
 		{
-			System.out.println("gram "+grammar);
+//			System.out.println("gram "+grammar);
 		boolean open=false;
 		int countOpen=0;
 		for(int i=0; i<grammar.length();i++)

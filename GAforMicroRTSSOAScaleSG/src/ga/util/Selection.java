@@ -38,7 +38,17 @@ public class Selection {
 		//using crossover and mutation
 		Reproduction rp=new Reproduction(parents,scrTable,pathTableScripts);
 		//Population newPopulation=rp.UniformCrossover();
-		Population newPopulation=rp.Crossover();
+		
+		Population newPopulation;
+		if(ConfigurationsGA.evolvingScript)
+		{
+			newPopulation=rp.CrossoverSingleScript();
+		}
+		else
+		{
+			newPopulation=rp.Crossover();
+		}
+		
 		//System.out.println("printing the new population after crossover");
 		//printMap(newPopulation.getChromosomes());
 		newPopulation=rp.mutation(newPopulation);

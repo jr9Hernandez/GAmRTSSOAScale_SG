@@ -213,6 +213,7 @@ public class Population {
 	}
 	public void getCommandsFromFullScript(int id,String script)
 	{
+		int counterIdsCimmands=0;
 		String[] splited = script.split("\\s+");
 		for(String s : splited)
 		{
@@ -231,18 +232,19 @@ public class Population {
 			if(allCommandsperGeneration.containsKey(id))
 			{
 				List<String> allCommandsStored=allCommandsperGeneration.get(id);
-				if(!allCommandsStored.contains(s))
+				if(!allCommandsStored.contains(String.valueOf(counterIdsCimmands)))
 				{
-					allCommandsStored.add(s);
+					allCommandsStored.add(String.valueOf(counterIdsCimmands));
 					allCommandsperGeneration.put(id, allCommandsStored);
 				}
 				
 			}
 			else
 			{	List<String> allCommandsStored=new ArrayList<String>();
-				allCommandsStored.add(s);
+				allCommandsStored.add(String.valueOf(counterIdsCimmands));
 				allCommandsperGeneration.put(id, allCommandsStored);
 			}
+			counterIdsCimmands++;
 		}
 			
 		}
@@ -338,7 +340,7 @@ public class Population {
 	        	{
 	        		//System.out.println(scriptsAlternativeTable);
 	        		originalcompleteGrammars=scriptsAlternativeTable.get(BigDecimal.valueOf(newCh.getGenes().get(i)));
-	        		String newGrammar=replaceCommandsinGrammar(originalcompleteGrammars,newCh.getGenes().get(i));
+	        		String newGrammar=replaceCommandsinGrammarAccordingIdScripts(originalcompleteGrammars,newCh.getGenes().get(i));
 	        		String newTempGrammar= newGrammar.replaceAll("\\s","");
 	        	
 	        		if(newTempGrammar.length()>0 && newTempGrammar.matches(".*[a-zA-Z]+.*"))
@@ -432,6 +434,52 @@ public class Population {
 		newGrammar=newGrammar.replaceFirst("\\s+", "");
 		newGrammar=removingRemainingElses(newGrammar);
 		return newGrammar;
+	}
+	
+	public String replaceCommandsinGrammarAccordingIdScripts(String originalcompleteGrammars,int id)
+	{		
+		
+		String newGrammar=originalcompleteGrammars;
+		String[] splited = newGrammar.split("\\s+");
+		for(String command:allCommandsperGeneration.get(id))
+		{
+			int counterIdsCimmands=0;
+						
+			for( int i=0;i<splited.length; i++)
+			{
+				String s=splited[i];
+				if(!s.contains("for") && !s.contains("if") && s.length()>0)
+				{
+					if(s.charAt(0) =='(')
+					{
+						s=s.replaceFirst("\\(", "");
+					}
+					while(s.charAt(s.length()-1)==')' && s.charAt(s.length()-2)==')')
+					{
+						s=s.substring(0, s.length() - 1);
+					}
+					if(counterIdsCimmands==Integer.valueOf(command))
+					{
+						splited[i]=splited[i].replace(s, "TOREMOVE");						
+						
+					}
+					counterIdsCimmands++;
+				}
+				
+			}
+			
+		}
+		newGrammar=recoverStringFromArray(splited);
+		newGrammar=newGrammar.replace("TOREMOVE", "");
+		
+		newGrammar=validateUnusefulIfsImproved(newGrammar);
+		newGrammar=removePaddings(newGrammar);
+		newGrammar=newGrammar.replace("#", "");
+		newGrammar=removeTrashBracketsFromString(newGrammar);
+		newGrammar=newGrammar.replaceFirst("\\s+", "");
+		newGrammar=removingRemainingElses(newGrammar);
+		return newGrammar;
+		
 	}
 	
 	public String validateUnusefulIfsImproved(String newGrammar)

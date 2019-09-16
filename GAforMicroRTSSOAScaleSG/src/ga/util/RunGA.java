@@ -73,8 +73,8 @@ public class RunGA {
 			// Fase 2 = avalia a população
 			population = evalFunction.evalPopulation(population, this.generations, scrTable);
 			
-			//population.printWithValue(f0);
-			//System.out.println("sep");
+//			population.printWithValue(f0);
+//			System.out.println("sep");
 			
 			//Get all the used commands
 			if(ConfigurationsGA.removeRules==true)
@@ -101,6 +101,14 @@ public class RunGA {
 			//Remove used commands from all commands
 			if(ConfigurationsGA.removeRules==true)
 				population.removeCommands(scrTable);
+			
+//		    Iterator it2 = population.getAllCommandsperGeneration().entrySet().iterator();
+//		    while (it2.hasNext()) {
+//		        Map.Entry pair = (Map.Entry)it2.next();
+//		        int id=(Integer)pair.getKey();
+//		        List<String> scripts= (List<String>) pair.getValue();
+//		        System.out.println("key "+id+" "+scripts);
+//		    }
 			
 			System.out.println("Log - Generation = " + this.generations);
 			f0.println("Log - Generation = " + this.generations);

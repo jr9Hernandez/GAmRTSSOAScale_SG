@@ -90,7 +90,7 @@ public class ScriptsTable {
 	//static methods
 
 	public ScriptsTable generateScriptsTable(int size){
-
+		
 		HashMap<String, BigDecimal> newChromosomes = new HashMap<>();
 		String tChom;
 		PrintWriter f0;

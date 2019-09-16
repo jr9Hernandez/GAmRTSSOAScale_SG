@@ -1,4 +1,2 @@
-6 moveToCoord(Worker,3,0,u)))) 
-9 attack(Ranged,lessHealthy,u) (moveToCoord(Light,5,2,u)
-6 moveToCoord(Worker,3,0,u)))) attack(Ranged,lessHealthy)
-0 harvest(50,u)
+7 0   
+9 0 1 2 

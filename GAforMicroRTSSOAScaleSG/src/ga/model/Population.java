@@ -213,6 +213,7 @@ public class Population {
 	}
 	public void getCommandsFromFullScript(int id,String script)
 	{
+		//System.out.println("script "+script);
 		int counterIdsCimmands=0;
 		String[] splited = script.split("\\s+");
 		for(String s : splited)
@@ -223,6 +224,7 @@ public class Population {
 				{
 					s=s.replaceFirst("\\(", "");
 				}
+				//System.out.println("part "+s);
 				while(s.charAt(s.length()-1)==')' && s.charAt(s.length()-2)==')')
 				{
 					s=s.substring(0, s.length() - 1);

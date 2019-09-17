@@ -462,6 +462,7 @@ public class Reproduction {
 	public String[]  chossingFromBag(String[]  candidates,String[] originals, List<FunctionsforGrammar>basicFunctions, List<FunctionsforGrammar>conditionalFunctions)
 	{
 		ScriptsTable objScriptTable=new ScriptsTable("");
+		
 		boolean found=false;
 		for (int i=0; i<originals.length;i++)
 		{
@@ -475,11 +476,27 @@ public class Reproduction {
 					//change with other basicFunction
 					if(originals[i].contains(",u,") || originals[i].contains(",u)") || originals[i].contains("(u,"))
 					{
-						candidates[i]=objScriptTable.returnBasicFunctionClean(true);
+						boolean m = rand.nextFloat() <= 0.5;
+						if(m)
+						{
+							candidates[i]=objScriptTable.returnBasicFunctionClean(true);
+						}
+						else
+						{
+							candidates[i]=objScriptTable.returnBasicFunctionCleanSame(true,originals[i]);
+						}
 					}
 					else
 					{
-						candidates[i]=objScriptTable.returnBasicFunctionClean(false);
+						boolean m = rand.nextFloat() <= 0.5;
+						if(m)
+						{
+							candidates[i]=objScriptTable.returnBasicFunctionClean(false);
+						}
+						else
+						{
+							candidates[i]=objScriptTable.returnBasicFunctionCleanSame(false,originals[i]);
+						}
 					}
 					found=true;
 					break;
@@ -494,18 +511,33 @@ public class Reproduction {
 						//change with other basicFunction
 						if(originals[i].contains(",u,") || originals[i].contains(",u)") || originals[i].contains("(u,"))
 						{
-							candidates[i]=objScriptTable.returnConditionalClean(true);
+							boolean m = rand.nextFloat() <= 0.5;
+							if(m)
+							{
+								candidates[i]=objScriptTable.returnConditionalClean(true);
+							}
+							else
+							{
+								candidates[i]=objScriptTable.returnConditionalCleanSame(true,originals[i]);
+							}
 						}
 						else
 						{
-							candidates[i]=objScriptTable.returnConditionalClean(false);
+							boolean m = rand.nextFloat() <= 0.5;
+							if(m)
+							{
+								candidates[i]=objScriptTable.returnConditionalClean(false);
+							}
+							else
+							{
+								candidates[i]=objScriptTable.returnConditionalCleanSame(false,originals[i]);
+							}
 						}
 						break;
 					}
 				}
 				
 			}
-			
 		}
 		
 		return candidates;

@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import ai.ScriptsGenerator.TableGenerator.FunctionsforGrammar;
 import ai.ScriptsGenerator.TableGenerator.Parameter;
@@ -502,6 +503,131 @@ public class ScriptsTable {
 		//basicFunction=basicFunction+") ";
 		return basicFunction+")";
 	}
+	
+	public String returnBasicFunctionCleanSame(Boolean forclausule,String oldFunction)
+	{
+		String basicFunction="";
+		int limitInferior;
+		int limitSuperior;
+		String discreteValue;
+		FunctionsforGrammar functionChosen=new FunctionsforGrammar();
+		String parts[]=oldFunction.split("[\\W]");
+		List<Integer> parametersDiscrete=new ArrayList<Integer>();
+		for(String part: parts)
+		{
+			if(Pattern.compile( "[0-9]" ).matcher(part).find()	)
+				{
+					
+					parametersDiscrete.add(Integer.valueOf(part));
+				}
+		}
+		
+		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
+		if(forclausule==false)
+		{
+			for(FunctionsforGrammar lis: functions.getBasicFunctionsForGrammar())
+			{
+				if(oldFunction.startsWith(lis.getNameFunction()))
+				{
+					functionChosen=lis;
+				}
+			}
+			
+		}
+		else
+		{
+			for(FunctionsforGrammar lis: functions.getBasicFunctionsForGrammarUnit())
+			{
+				if(oldFunction.startsWith(lis.getNameFunction()))
+				{
+					functionChosen=lis;
+					
+				}
+			}
+		}
+
+		basicFunction=basicFunction+functionChosen.getNameFunction()+"(";
+		for(Parameter parameter:functionChosen.getParameters())
+		{
+			if(parameter.getParameterName()=="u")
+			{				
+				basicFunction=basicFunction+"u,";
+			}
+			else if(parameter.getDiscreteSpecificValues()==null)
+			{
+				int currentValueParameter=parametersDiscrete.get(0);
+				parametersDiscrete.remove(0);
+				
+				boolean m = rand.nextFloat() <= 0.5;
+				limitInferior=(int)parameter.getInferiorLimit();
+				limitSuperior=(int)parameter.getSuperiorLimit();
+				
+				if(m)
+				{
+					if(!(currentValueParameter+ ConfigurationsGA.deltaForMutation>=limitSuperior))
+					{
+						if(limitSuperior!=limitInferior)
+						{
+							currentValueParameter = currentValueParameter + ConfigurationsGA.deltaForMutation;
+						}
+						else
+						{
+							currentValueParameter=limitSuperior;
+						}
+					}
+					else if(!(currentValueParameter- ConfigurationsGA.deltaForMutation<=limitInferior))
+					{
+						if(limitSuperior!=limitInferior)
+						{
+							currentValueParameter = currentValueParameter - ConfigurationsGA.deltaForMutation;
+						}
+						else
+						{
+							currentValueParameter=limitInferior;
+						}
+					}	
+				}
+				else
+				{
+					if(!(currentValueParameter- ConfigurationsGA.deltaForMutation<=limitInferior))
+					{
+						if(limitSuperior!=limitInferior)
+						{
+							currentValueParameter = currentValueParameter - ConfigurationsGA.deltaForMutation;
+						}
+						else
+						{
+							currentValueParameter=limitInferior;
+						}
+					}	
+					else if(!(currentValueParameter+ ConfigurationsGA.deltaForMutation>=limitSuperior))
+					{
+						if(limitSuperior!=limitInferior)
+						{
+							currentValueParameter = currentValueParameter + ConfigurationsGA.deltaForMutation;
+						}
+						else
+						{
+							currentValueParameter=limitSuperior;
+						}
+					}
+				}
+				
+
+
+				basicFunction=basicFunction+currentValueParameter+",";
+			}
+			else
+			{
+				int idChosen=rand.nextInt(parameter.getDiscreteSpecificValues().size());
+				discreteValue=parameter.getDiscreteSpecificValues().get(idChosen);
+				basicFunction=basicFunction+discreteValue+",";
+			}
+		}
+		basicFunction=basicFunction.substring(0, basicFunction.length() - 1);
+		//basicFunction=basicFunction+") ";
+		return basicFunction+")";
+	}
 
 	public String returnConditionalClean(boolean forClausule)
 	{
@@ -549,6 +675,108 @@ public class ScriptsTable {
 		conditional=conditional.substring(0, conditional.length() - 1);
 		//conditional="if("+conditional+")) ";
 		return conditional+")";
+	}
+	
+	public String returnConditionalCleanSame(boolean forClausule, String oldFunction)
+	{
+		String conditional="";
+		int limitInferior;
+		int limitSuperior;
+		String discreteValue;
+		FunctionsforGrammar functionChosen=new FunctionsforGrammar();
+		String parts[]=oldFunction.split("[\\W]");
+		List<Integer> parametersDiscrete=new ArrayList<Integer>();
+		for(String part: parts)
+		{
+			if(Pattern.compile( "[0-9]" ).matcher(part).find())
+				{
+					parametersDiscrete.add(Integer.valueOf(part));
+				}
+		}
+		
+		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
+		if(forClausule==false)
+		{
+			for(FunctionsforGrammar lis: functions.getConditionalsForGrammar())
+			{
+				if(oldFunction.startsWith(lis.getNameFunction()))
+				{
+					functionChosen=lis;
+				}
+			}
+			
+		}
+		else
+		{
+			for(FunctionsforGrammar lis: functions.getConditionalsForGrammarUnit())
+			{
+				if(oldFunction.startsWith(lis.getNameFunction()))
+				{
+					functionChosen=lis;
+				}
+			}
+		}
+
+		conditional=conditional+functionChosen.getNameFunction()+"(";
+		for(Parameter parameter:functionChosen.getParameters())
+		{
+			if(parameter.getParameterName()=="u")
+			{				
+				conditional=conditional+"u,";
+			}
+			else if(parameter.getDiscreteSpecificValues()==null)
+			{
+				int currentValueParameter=parametersDiscrete.get(0);
+				parametersDiscrete.remove(0);
+				
+				boolean m = rand.nextFloat() <= 0.5;
+				limitInferior=(int)parameter.getInferiorLimit();
+				limitSuperior=(int)parameter.getSuperiorLimit();
+				
+				if(m)
+				{
+					if(!(currentValueParameter+ConfigurationsGA.deltaForMutation>limitSuperior))
+					{
+						if(limitSuperior!=limitInferior)
+						{
+							currentValueParameter = currentValueParameter + ConfigurationsGA.deltaForMutation;
+						}
+						else
+						{
+							currentValueParameter=limitSuperior;
+						}
+					}
+				}
+				else
+				{
+					if(!(currentValueParameter-ConfigurationsGA.deltaForMutation<=limitInferior))
+					{
+						if(limitSuperior!=limitInferior)
+						{
+							currentValueParameter = currentValueParameter - ConfigurationsGA.deltaForMutation;
+						}
+						else
+						{
+							currentValueParameter=limitInferior;
+						}
+					}					
+				}
+				
+
+
+				conditional=conditional+currentValueParameter+",";
+			}
+			else
+			{
+				int idChosen=rand.nextInt(parameter.getDiscreteSpecificValues().size());
+				discreteValue=parameter.getDiscreteSpecificValues().get(idChosen);
+				conditional=conditional+discreteValue+",";
+			}
+		}
+		conditional=conditional.substring(0, conditional.length() - 1);
+		//basicFunction=basicFunction+") ";
+		return conditional+")";
+
 	}
 
 	//THis method uses a preexistent table of scripts instead of create a new one

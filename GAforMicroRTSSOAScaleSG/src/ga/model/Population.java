@@ -218,7 +218,7 @@ public class Population {
 		String[] splited = script.split("\\s+");
 		for(String s : splited)
 		{
-			if(!s.contains("for") && !s.contains("if") && s.length()>0)
+			if(!s.contains("for") && !s.contains("if") && s.length()>1)
 			{
 				if(s.charAt(0) =='(')
 				{
@@ -450,7 +450,7 @@ public class Population {
 			for( int i=0;i<splited.length; i++)
 			{
 				String s=splited[i];
-				if(!s.contains("for") && !s.contains("if") && s.length()>0)
+				if(!s.contains("for") && !s.contains("if") && s.length()>1)
 				{
 					if(s.charAt(0) =='(')
 					{

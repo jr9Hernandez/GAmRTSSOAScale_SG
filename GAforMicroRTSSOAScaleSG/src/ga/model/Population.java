@@ -346,6 +346,7 @@ public class Population {
 	        		String newGrammar=replaceCommandsinGrammarAccordingIdScripts(originalcompleteGrammars,newCh.getGenes().get(i));
 	        		
 	        		String newTempGrammar= newGrammar.replaceAll("\\s","");
+	        		newGrammar=newGrammar.trim();
 	        	
 	        		if(newTempGrammar.length()>0 && newTempGrammar.matches(".*[a-zA-Z]+.*"))
 	        		{
@@ -361,6 +362,7 @@ public class Population {
 	        				{   
 	        					//System.out.println("before replace Rules "+originalcompleteGrammars);
 	        					//System.out.println("After replace Rules "+newGrammar);
+	        					
 	        					int newId=scrTable.getScriptTable().size();
 	        					scrTable.getScriptTable().put(newGrammar, BigDecimal.valueOf(newId));
 	        					scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());

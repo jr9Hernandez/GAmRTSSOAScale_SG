@@ -342,7 +342,9 @@ public class Population {
 	        	{
 	        		//System.out.println(scriptsAlternativeTable);
 	        		originalcompleteGrammars=scriptsAlternativeTable.get(BigDecimal.valueOf(newCh.getGenes().get(i)));
+	        		
 	        		String newGrammar=replaceCommandsinGrammarAccordingIdScripts(originalcompleteGrammars,newCh.getGenes().get(i));
+	        		
 	        		String newTempGrammar= newGrammar.replaceAll("\\s","");
 	        	
 	        		if(newTempGrammar.length()>0 && newTempGrammar.matches(".*[a-zA-Z]+.*"))
@@ -351,10 +353,14 @@ public class Population {
 	        			{
 	        				if(scrTable.getScriptTable().containsKey(newGrammar))
 	        				{
+	        					//System.out.println("before replace Rules "+originalcompleteGrammars);
+	        					//System.out.println("After replace Rules "+newGrammar);
 	        					newCh.getGenes().set(i, scrTable.getScriptTable().get(newGrammar).intValue());
 	        				}
 	        				else
 	        				{   
+	        					//System.out.println("before replace Rules "+originalcompleteGrammars);
+	        					//System.out.println("After replace Rules "+newGrammar);
 	        					int newId=scrTable.getScriptTable().size();
 	        					scrTable.getScriptTable().put(newGrammar, BigDecimal.valueOf(newId));
 	        					scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
@@ -929,6 +935,7 @@ public class Population {
 				if(countOpen==0)
 				{
 					grammar=changeCharInPosition(i, '#', grammar);
+					break;
 				}
 			}
 		}

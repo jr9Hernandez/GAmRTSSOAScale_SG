@@ -360,6 +360,8 @@ public class Reproduction {
 		
 		
 		String cromScript=cromosomeById(genidScript);
+		String cromScriptOriginal=cromosomeById(genidScript);
+		
 		String cromScriptAux=cromScript;
 		cromScriptAux=cromScriptAux.replace("(for(u)", "");
 		cromScriptAux=cromScriptAux.replace("for(u)", "");
@@ -394,12 +396,16 @@ public class Reproduction {
 	    
 	    cromScript=removingTrashFromGrammar(cromScript);
 	    
+	    
+	    
 		if(scrTable.getScriptTable().containsKey(cromScript))
 		{
 			return scrTable.getScriptTable().get(cromScript).intValue();			
 		}
 		else
 		{
+			//System.out.println("beforeMutate "+cromScriptOriginal);
+			//System.out.println("afterMutate "+cromScript);
 			int newId=scrTable.getScriptTable().size();
 			scrTable.getScriptTable().put(cromScript, BigDecimal.valueOf(newId));
 			scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());

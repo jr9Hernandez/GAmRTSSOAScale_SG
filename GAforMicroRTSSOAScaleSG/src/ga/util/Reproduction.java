@@ -96,7 +96,8 @@ public class Reproduction {
 	{
 		Population newGeneration;
 		HashMap<Chromosome, BigDecimal> newChromosomes =new HashMap<Chromosome, BigDecimal>();		
-		while(newChromosomes.size()<(ConfigurationsGA.SIZE_POPULATION-ConfigurationsGA.SIZE_ELITE-ConfigurationsGA.SIZE_INVADERS))
+		int numberEliteMutated=ConfigurationsGA.SIZE_ELITE;
+		while(newChromosomes.size()<(ConfigurationsGA.SIZE_POPULATION-ConfigurationsGA.SIZE_ELITE-ConfigurationsGA.SIZE_INVADERS-numberEliteMutated))
 		{
 			//here we shuffle the list of parents in order to select always two different parents to reproduce
 			Collections.shuffle(parents);
@@ -333,6 +334,43 @@ public class Reproduction {
 		return p;
 	}
 	
+	public Population eliteMutated(Population p,HashMap<Chromosome, BigDecimal> elite)
+	{
+		//This method replace each gene with a random script with a probability of 10%
+		HashMap<Chromosome, BigDecimal> eliteMutated = new HashMap<>();
+		for(Chromosome c : elite.keySet()){
+
+			Chromosome newCh=new Chromosome();
+			newCh.setGenes((ArrayList<Integer>) c.getGenes().clone());
+			for(int i=0; i<newCh.getGenes().size();i++)
+			{
+				double mutatePercent = ConfigurationsGA.MUTATION_RATE;
+				boolean m = rand.nextFloat() <= mutatePercent;
+				if(ConfigurationsGA.evolvingScript)
+				{
+					m=true;
+				}
+
+				if(m)
+				{
+					//newCh.getGenes().set(i, rand.nextInt(scrTable.getCurrentSizeTable()));
+					
+					//The next line is added in order to keep mutation of rules
+					newCh.getGenes().set(i, mutationScript( p,newCh.getGenes().get(i)));
+				}
+			}
+			if(elite.containsKey(newCh) )
+			{
+				int scriptToMutate=rand.nextInt(newCh.getGenes().size());
+				newCh.getGenes().set(scriptToMutate, mutationScriptMandatory( newCh.getGenes().get(scriptToMutate)));
+			}
+			eliteMutated.put(newCh, BigDecimal.ZERO);
+		}
+		p.getChromosomes().putAll(eliteMutated);
+		return p;
+		
+	}
+	
 	public Population invaders(Population p)
 	{
 		HashMap<Chromosome, BigDecimal> newChromosomes = p.getChromosomes();
@@ -393,6 +431,64 @@ public class Reproduction {
 	    		cromScript=replaceFromCompleteGrammar(parts[i], news[i], cromScript );
 		
 	    }
+	    
+	    cromScript=removingTrashFromGrammar(cromScript);
+	    
+	    
+	    
+		if(scrTable.getScriptTable().containsKey(cromScript))
+		{
+			return scrTable.getScriptTable().get(cromScript).intValue();			
+		}
+		else
+		{
+			//System.out.println("beforeMutate "+cromScriptOriginal);
+			//System.out.println("afterMutate "+cromScript);
+			int newId=scrTable.getScriptTable().size();
+			scrTable.getScriptTable().put(cromScript, BigDecimal.valueOf(newId));
+			scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
+			addLineFile(newId+" "+cromScript);
+			return newId;
+		}
+		
+	}
+	
+	public int mutationScriptMandatory(int genidScript)
+	{
+		functions=new FunctionsforGrammar();
+		List<FunctionsforGrammar> basicFunctions=functions.getBasicFunctionsForGrammar();
+		List<FunctionsforGrammar> conditionalFunctions=functions.getConditionalsForGrammar();
+		
+		
+		String cromScript=cromosomeById(genidScript);
+		String cromScriptOriginal=cromosomeById(genidScript);
+		
+		String cromScriptAux=cromScript;
+		cromScriptAux=cromScriptAux.replace("(for(u)", "");
+		cromScriptAux=cromScriptAux.replace("for(u)", "");
+		
+		
+		//cromScriptAux=cromScriptAux.replaceAll("[^0-9!]", " ");
+	    String[] parts = cromScriptAux.trim().split("\\s+");
+	    String[] news = new String[parts.length];
+	       
+	    for(int i=0;i<parts.length;i++)
+	    {
+		    parts[i]=removeFromBeggining(parts[i]);
+		    parts[i]=removeFromLast(parts[i]);
+	    }
+		   
+//	    for(int i=0;i<parts.length;i++)
+//	    {
+//	    	System.out.println(parts[i]);
+//	    }
+	    
+	    news=chossingFromBag(news,parts,basicFunctions,conditionalFunctions);
+	    
+	    int partToMutate=rand.nextInt(parts.length);
+
+	    cromScript=replaceFromCompleteGrammar(parts[partToMutate], news[partToMutate], cromScript );
+
 	    
 	    cromScript=removingTrashFromGrammar(cromScript);
 	    

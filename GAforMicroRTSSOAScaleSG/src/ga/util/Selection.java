@@ -67,6 +67,9 @@ public class Selection {
 		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)ps.sortByValue(populacaoInicial.getChromosomes());
 		//System.out.println("printing elite last population");
 		//printMap(elite);
+		
+		//here we mutate copy of the elite individuals and add to the population 
+		newPopulation=rp.eliteMutated(newPopulation,elite);
 
 		//joining elite and new sons in chromosomesNewPopulation, 
 		HashMap<Chromosome, BigDecimal> chromosomesNewPopulation=new HashMap<Chromosome, BigDecimal>();

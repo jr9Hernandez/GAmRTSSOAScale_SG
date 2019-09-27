@@ -65,8 +65,8 @@ public class Selection {
 
 		//in elite is saved the best guys from the last population
 		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)ps.sortByValue(populacaoInicial.getChromosomes());
-		//System.out.println("printing elite last population");
-		//printMap(elite);
+//		System.out.println("printing elite last population");
+//		printMap(elite);
 		
 		//here we mutate copy of the elite individuals and add to the population 
 		newPopulation=rp.eliteMutated(newPopulation,elite);

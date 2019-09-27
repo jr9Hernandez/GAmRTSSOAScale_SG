@@ -339,7 +339,7 @@ public class Reproduction {
 		//This method replace each gene with a random script with a probability of 10%
 		HashMap<Chromosome, BigDecimal> eliteMutated = new HashMap<>();
 		for(Chromosome c : elite.keySet()){
-
+			//System.out.println("before mutating "+c.getGenes());
 			Chromosome newCh=new Chromosome();
 			newCh.setGenes((ArrayList<Integer>) c.getGenes().clone());
 			for(int i=0; i<newCh.getGenes().size();i++)
@@ -365,8 +365,11 @@ public class Reproduction {
 				newCh.getGenes().set(scriptToMutate, mutationScriptMandatory( newCh.getGenes().get(scriptToMutate)));
 			}
 			eliteMutated.put(newCh, BigDecimal.ZERO);
+			//System.out.println("after mutating "+newCh.getGenes());
 		}
+		//System.out.println("sizepop before"+p.getChromosomes().size());
 		p.getChromosomes().putAll(eliteMutated);
+		//System.out.println("sizepop after"+p.getChromosomes().size());
 		return p;
 		
 	}
@@ -376,7 +379,8 @@ public class Reproduction {
 		HashMap<Chromosome, BigDecimal> newChromosomes = p.getChromosomes();
 		
 		Chromosome tChom;
-		while (newChromosomes.size()< ConfigurationsGA.SIZE_POPULATION-ConfigurationsGA.SIZE_ELITE) {
+		int numberEliteMutated=ConfigurationsGA.SIZE_ELITE; 
+		while (newChromosomes.size()< ConfigurationsGA.SIZE_POPULATION-ConfigurationsGA.SIZE_ELITE-numberEliteMutated) {
 			//gerar o novo cromossomo com base no tamanho
 			tChom = new Chromosome();
 			int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;
@@ -442,8 +446,8 @@ public class Reproduction {
 		}
 		else
 		{
-			//System.out.println("beforeMutate "+cromScriptOriginal);
-			//System.out.println("afterMutate "+cromScript);
+			//System.out.println("beforeMutateScript "+cromScriptOriginal);
+			//System.out.println("afterMutateScript "+cromScript);
 			int newId=scrTable.getScriptTable().size();
 			scrTable.getScriptTable().put(cromScript, BigDecimal.valueOf(newId));
 			scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
@@ -500,8 +504,8 @@ public class Reproduction {
 		}
 		else
 		{
-			//System.out.println("beforeMutate "+cromScriptOriginal);
-			//System.out.println("afterMutate "+cromScript);
+			//System.out.println("beforeMutateScript "+cromScriptOriginal);
+			//System.out.println("afterMutateScript "+cromScript);
 			int newId=scrTable.getScriptTable().size();
 			scrTable.getScriptTable().put(cromScript, BigDecimal.valueOf(newId));
 			scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());

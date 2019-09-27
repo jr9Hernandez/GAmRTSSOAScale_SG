@@ -8,8 +8,8 @@ public final class ConfigurationsGA {
 	 public static final int SIZE_INVADERS = 10;
 	 public static final int K_TOURNMENT = 25;
 	 public static final int SIZE_PARENTSFORCROSSOVER = 40;
-	 public static final double MUTATION_RATE = 0.15;
-	 public static final double MUTATION_RATE_RULE = 0.15;
+	 public static final double MUTATION_RATE = 0.2;
+	 public static final double MUTATION_RATE_RULE = 0.2;
 	 public static final double MUTATION_ORDER_RATE = 0.1;
 	 public static final boolean INCREASING_INDEX = false;
 	 public static final double INCREASING_RATE = 0.2;

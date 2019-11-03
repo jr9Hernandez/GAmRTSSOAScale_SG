@@ -39,7 +39,6 @@ public class RunGA {
 	 *            Será a função de avaliação que desejamos utilizar
 	 */
 	public Population run(RatePopulation evalFunction) {
-
 		// Creating the table of scripts
 		scrTable = new ScriptsTable(pathTableScripts);
 		//do {

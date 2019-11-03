@@ -5,6 +5,7 @@
 package SetCoverSampling;
 
 import ai.RandomBiasedAI;
+import ai.CMAB.A3NWithinNoWait;
 import ai.ScriptsGenerator.ChromosomeAI;
 import ai.ScriptsGenerator.CommandInterfaces.ICommand;
 import ai.ScriptsGenerator.GPCompiler.FunctionGPCompiler;
@@ -49,7 +50,7 @@ public class GameSampling {
 
     static String _nameStrategies = "", _enemy = "";
     static AI[] strategies = null;
-    UnitTypeTable utt;
+    public UnitTypeTable utt;
     PhysicalGameState pgs;
     int MAXCYCLES;
     int PERIOD;
@@ -62,6 +63,8 @@ public class GameSampling {
     private HashMap<BigDecimal, String> scriptsTable;
     HashSet<String> usedCommands;
     ICompiler compiler = new MainGPCompiler();
+    //private final String dirPathPlayer = System.getProperty("user.dir").concat("/logs_game/logs_states_/");
+    private final String dirPathPlayer = "logs_game/logs_states";
     
     public GameSampling(String pathTableScripts)
     {
@@ -69,6 +72,17 @@ public class GameSampling {
         MAXCYCLES = 8000;
         PERIOD = 20;
         buildScriptsTable(pathTableScripts);
+        File file=new File(dirPathPlayer);
+    }
+    
+    public GameSampling(String pathTableScripts, boolean newPath)
+    {
+    	utt = new UnitTypeTable();
+        MAXCYCLES = 8000;
+        PERIOD = 20;
+        buildScriptsTable(pathTableScripts);
+        File file=new File(dirPathPlayer);
+        deleteFolder(file);
     }
 
     public void run(String portfolioPlayer1, String portfolioPlayer2, String pathLog) throws Exception {
@@ -116,15 +130,15 @@ public class GameSampling {
 //        AI ai2= new PGSSCriptChoiceRandom(utt, decodeScripts(utt, portfolioPlayer2), "PGSR", 2, 200);
         //AI ai1 = new PGSSCriptChoice(utt, decodeScripts(utt, String.valueOf(idScriptLeader).concat(";")), "--");
         //AI ai2 = new PGSSCriptChoice(utt, decodeScripts(utt, String.valueOf(idScriptEnemy).concat(";")), "--");
-        AI ai2 = new CmabAssymetricMCTS(100, -1, 100, 1, 0.3f,
+        AI ai2 = new A3NWithinNoWait(100, -1, 100, 1, 0.3f,
                 0.0f, 0.4f, 0, new RandomBiasedAI(utt),
                 new SimpleSqrtEvaluationFunction3(), true, utt,
-                "ManagerClosestEnemy", 3, scriptsRun1);
+                "ManagerRandom", 1, scriptsRun1);
         
-        AI ai1 = new CmabAssymetricMCTS(100, -1, 100, 1, 0.3f,
+        AI ai1 = new A3NWithinNoWait(100, -1, 100, 1, 0.3f,
                 0.0f, 0.4f, 0, new RandomBiasedAI(utt),
                 new SimpleSqrtEvaluationFunction3(), true, utt,
-                "ManagerClosestEnemy", 3, scriptsRun2);
+                "ManagerRandom", 1, scriptsRun2);
 
         
         System.out.println("---------AI's---------");
@@ -135,8 +149,8 @@ public class GameSampling {
         JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);;
 
         //File dir = new File("logs_states/log_"+idScriptLeader+"_"+idScriptEnemy+"_"+idSampling);
-        String dirPathPlayer0="logs_game/logs_states_"+pathLog+"/log_"+portfolioPlayer1+"_"+portfolioPlayer2+"/player0";
-        String dirPathPlayer1="logs_game/logs_states_"+pathLog+"/log_"+portfolioPlayer1+"_"+portfolioPlayer2+"/player1";
+        String dirPathPlayer0=dirPathPlayer+"/log_"+portfolioPlayer1+"_"+portfolioPlayer2+"/player0";
+        String dirPathPlayer1=dirPathPlayer+"/log_"+portfolioPlayer1+"_"+portfolioPlayer2+"/player1";
         File dirPlayer0 = new File(dirPathPlayer0);
         File dirPlayer1 = new File(dirPathPlayer1);
         dirPlayer0.mkdirs();
@@ -179,13 +193,13 @@ public class GameSampling {
                 
                 if (gs.canExecuteAnyAction(0)) {
                 	//verify what kind of action is and save the state in your specified folder
-                	saveState(gs, pa1,dirPathPlayer0,idState);
+                	saveState(gs, pa1,dirPathPlayer0,idState,pa1);
                 	//saveStateByType(gs, pa2);
                 }
                 if (gs.canExecuteAnyAction(1)) {
                 	//verify what kind of action is and save the state in your specified folder
                 	//saveStateByType(gs, pa1);
-                	saveState(gs, pa2,dirPathPlayer1,idState);
+                	saveState(gs, pa2,dirPathPlayer1,idState,pa2);
                 }
                 
                 gs.issueSafe(pa1);
@@ -217,23 +231,26 @@ public class GameSampling {
             */
           //avaliacao de tempo
             duracao = Duration.between(timeInicial, Instant.now());
-        } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMinutes() < 20));
+        } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMillis() < 10000));
 
         System.out.println("Game Over");
     }
 
     
-    public static void saveState(GameState gs_save, PlayerAction pAction,String path,int id) throws Exception{
+    public static void saveState(GameState gs_save, PlayerAction pAction,String path,int id, PlayerAction pa) throws Exception{
     	boolean typeState = getAllNones(pAction);
     	if(typeState){
     		return;
     	}
     	Writer writer;
     	writer = new FileWriter(path+"/"+"state_"+id+".txt");
-    	gs_save.toJSON(writer); 
-    	
+       	gs_save.toJSON(writer);
+    	writer.write("\n");
+    	writer.write(pa.getActions().toString());
     	writer.flush();
 		writer.close();
+		
+		
     }    
     /**
      * This function will save the state by type, using the PlayerAction to define what kind of state is it.
@@ -337,8 +354,10 @@ public class GameSampling {
     
     public PlayerAction generateActionbyScript(GameState g, int scriptSampling, int player) 
     {
-    	//AI ai1 = new PGSSCriptChoice(utt, decodeScripts(utt, String.valueOf(scriptSampling).concat(";")), "--");
-    	AI ai1=new WorkerDefense(utt);
+    	List<AI> scriptsRun1=decodeSingleScript(utt, scriptSampling);
+
+        AI ai1=scriptsRun1.get(0);
+        
         PlayerAction pa=null;
 		try {
 			pa = ai1.getAction(player, g);
@@ -363,6 +382,15 @@ public class GameSampling {
             //System.out.println("id "+idSc+" Elems "+scriptsTable.get(BigDecimal.valueOf(idSc)));
             scriptsAI.add(buildCommandsIA(utt, scriptsTable.get(BigDecimal.valueOf(idSc))));
         }
+
+        return scriptsAI;
+    }
+    
+    public List<AI> decodeSingleScript(UnitTypeTable utt, int iScripts) {
+        List<AI> scriptsAI = new ArrayList<>();
+
+            scriptsAI.add(buildCommandsIA(utt, scriptsTable.get(BigDecimal.valueOf(iScripts))));
+        
 
         return scriptsAI;
     }
@@ -397,6 +425,20 @@ public class GameSampling {
         List<ICommand> commandsGP = compiler.CompilerCode(code, utt);
         AI aiscript = new ChromosomeAI(utt, commandsGP, "P1", code, usedCommands);
         return aiscript;
+    }
+    
+    public static void deleteFolder(File folder) {
+        File[] files = folder.listFiles();
+        if(files!=null) { //some JVMs return null for empty dirs
+            for(File f: files) {
+                if(f.isDirectory()) {
+                    deleteFolder(f);
+                } else {
+                    f.delete();
+                }
+            }
+        }
+        folder.delete();
     }
 
 }

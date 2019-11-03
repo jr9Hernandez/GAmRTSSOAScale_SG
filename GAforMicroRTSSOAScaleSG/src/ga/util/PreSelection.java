@@ -71,6 +71,29 @@ public class PreSelection {
 
 	}
 	
+	public static <K, V extends Comparable<? super V>> Map<K, V> sortByValueBest(Map<K, V> map) {
+		List list = new LinkedList(map.entrySet());
+
+		Collections.sort(list, new Comparator() {
+			public int compare(Object o1, Object o2) {
+				return ((Comparable) ((Map.Entry) (o2)).getValue())
+						.compareTo(((Map.Entry) (o1)).getValue());
+			}
+		});
+
+		HashMap sortedHashMap = new LinkedHashMap();
+		for (Iterator it = list.iterator(); it.hasNext();) {
+			Map.Entry entry = (Map.Entry) it.next();
+			sortedHashMap.put(entry.getKey(), entry.getValue());
+			if(sortedHashMap.size()==1)
+			{
+				break;
+			}
+		} 
+		return sortedHashMap;
+
+	}
+	
 	public  <K, V extends Comparable<? super V>> Map<K, V> sortByValueEliteFItnessFunction(Map<K, V> map) {
 		List list = new LinkedList(map.entrySet());
 

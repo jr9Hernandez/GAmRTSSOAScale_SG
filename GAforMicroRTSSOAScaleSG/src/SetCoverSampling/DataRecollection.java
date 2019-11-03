@@ -43,25 +43,35 @@ public class DataRecollection {
 	Chromosome scriptsForPortfolio = new Chromosome();
 	String portfolioPlayer1;
 	String portfolioPlayer2;
-	//private final String pathTableScriptsInit = System.getProperty("user.dir").concat("/TableInitialPortfolio/");
-	private final String pathTableScriptsInit = "TableInitialPortfolio/";
+	String pathTableSetCover;
 
-	public DataRecollection(String pathLog) {
-		game = new GameSampling(pathTableScriptsInit);
+	public DataRecollection(String pathLog, String pathTableSetCover) {
+		this.pathTableSetCover=pathTableSetCover;
+		game = new GameSampling(pathTableSetCover,true);
 		rand = new Random();
 		utt = new UnitTypeTable();
 		this.pathLog=pathLog;
 	}
 
-	public void dataRecollection() {
+	public void dataRecollection(String curriculumPortfolio) {
 
 		// Creating the table of scripts
-		ScriptsTable scrTable = new ScriptsTable(pathTableScriptsInit);
-		scrTable = scrTable.generateScriptsTable(ConfigurationsGA.SIZE_TABLE_SCRIPTS);
-		scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
+		String portfolioPlayer1;
+		if(curriculumPortfolio.equals("empty"))
+		{
+			ScriptsTable scrTable = new ScriptsTable(pathTableSetCover);
+			scrTable = scrTable.generateScriptsTable(ConfigurationsGA.SIZE_TABLE_SCRIPTS);
+			scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
+		
 
-		scriptsForPortfolio=getPortfolioRandomSize(ConfigurationsSC.MAX_SIZE_PORTFOLIO,scrTable);	
-		String portfolioPlayer1=scriptsForPortfolio.getGenes().toString();
+			scriptsForPortfolio=getPortfolioRandomSize(ConfigurationsSC.MAX_SIZE_PORTFOLIO,scrTable);	
+			portfolioPlayer1=scriptsForPortfolio.getGenes().toString();
+			//System.out.println("port"+portfolioPlayer1);
+		}
+		else
+		{
+			portfolioPlayer1=curriculumPortfolio;
+		}
 
 		try {						
 			game.run(portfolioPlayer1,portfolioPlayer1,pathLog);

@@ -342,6 +342,214 @@ public class ScriptsTable {
 		return genotypeScript;
 
 	}
+	
+	public String buildScriptGenotypeOneCommand(int sizeGenotypeScript )
+	{
+		String genotypeScript = "";
+		int numberComponentsAdded=0;
+
+		boolean canCloseParenthesisIf=false;
+		boolean canOpenParenthesisIf=false;
+
+
+		boolean isOpenFor=false;
+
+
+
+		List<itemIf> collectionofIfs= new ArrayList<itemIf>();
+
+		while(numberComponentsAdded<sizeGenotypeScript)
+		{
+
+
+//			//for
+//			if(rand.nextInt(2)>0 && numberComponentsAdded<sizeGenotypeScript-1 && isOpenFor==false)
+//			{
+//				collectionofIfs.add(new itemIf(0,true,"for"));
+//				genotypeScript=genotypeScript+returnForFunction();
+//				isOpenFor=true;
+//				numberComponentsAdded++;
+//				canCloseParenthesisIf=false;
+//				canOpenParenthesisIf=false;
+//
+//				if(collectionofIfs.size()>0)
+//				{
+//					for (int i = collectionofIfs.size()-1; i >= 0; i-- ) {
+//
+//						if(collectionofIfs.get(i).isLastOpen()==false)
+//						{
+//							collectionofIfs.remove(i);
+//
+//						}
+//						else
+//						{
+//							break;
+//						}
+//					}
+//				}
+//				
+//			}
+
+
+			//basic function
+
+			genotypeScript=genotypeScript+returnBasicFunction(isOpenFor);
+			numberComponentsAdded++;
+			canCloseParenthesisIf=true;
+			canOpenParenthesisIf=false;
+
+			if(collectionofIfs.size()>0)
+			{
+				for (int i = collectionofIfs.size()-1; i >= 0; i-- ) {
+
+					if(collectionofIfs.get(i).isLastOpen()==false)
+					{
+						collectionofIfs.remove(i);
+
+					}
+					else
+					{
+						break;
+					}
+				}
+			}
+
+
+			
+			//conditional
+//			else if(rand.nextInt(2)>0 && numberComponentsAdded<sizeGenotypeScript-1)
+//			{
+//
+//				collectionofIfs.add(new itemIf(1,true,"if"));
+//
+//				genotypeScript=genotypeScript+returnConditional(isOpenFor);
+//				genotypeScript=genotypeScript+"(";
+//
+//				numberComponentsAdded++;
+//				canCloseParenthesisIf=false;
+//				canOpenParenthesisIf=false;
+//
+//				if(collectionofIfs.size()>0)
+//				{
+//					for (int i = collectionofIfs.size()-1; i >= 0; i-- ) {
+//
+//						if(collectionofIfs.get(i).isLastOpen()==false)
+//						{
+//							collectionofIfs.remove(i);
+//
+//						}
+//						else
+//						{
+//							break;
+//						}
+//					}
+//				}
+//
+//			}
+//
+//
+//
+//			//open parenthesis if
+//			if(collectionofIfs.size()>0)
+//			{
+//				//close parenthesis if
+//				if(rand.nextInt(2)>0  && canCloseParenthesisIf && collectionofIfs.get(collectionofIfs.size()-1).isLastOpen())
+//				{
+//					genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+//					genotypeScript=genotypeScript+") ";
+//					collectionofIfs.get(collectionofIfs.size()-1).setLastOpen(false);
+//					
+//					if(collectionofIfs.get(collectionofIfs.size()-1).getType()=="for")
+//					{
+//						isOpenFor=false;
+//					}
+//					
+//					if(collectionofIfs.get(collectionofIfs.size()-1).getMaxOpens()==0)
+//					{
+//						for (int i = collectionofIfs.size()-1; i >= 0; i-- ) {
+//
+//							if(collectionofIfs.get(i).isLastOpen()==false)
+//							{
+//
+//								collectionofIfs.remove(i);
+//
+//							}
+//							else
+//							{
+//								break;
+//							}
+//						}
+//					}
+//					canOpenParenthesisIf=true;
+//
+//				}
+//				
+//			}
+				
+//			if(collectionofIfs.size()>0)
+//			{
+//				if(rand.nextInt(2)>0 && canOpenParenthesisIf==true && collectionofIfs.get(collectionofIfs.size()-1).getMaxOpens()>0 && !collectionofIfs.get(collectionofIfs.size()-1).isLastOpen() && numberComponentsAdded<sizeGenotypeScript)
+//				{
+//					genotypeScript=genotypeScript+"(";
+//
+//					int counterLastIf=collectionofIfs.get(collectionofIfs.size()-1).getMaxOpens();
+//					counterLastIf--;
+//					collectionofIfs.get(collectionofIfs.size()-1).setMaxOpens(counterLastIf);
+//					collectionofIfs.get(collectionofIfs.size()-1).setLastOpen(true);
+//
+//					canOpenParenthesisIf=false;
+//					canCloseParenthesisIf=false;
+//
+//					collectionofIfs.get(collectionofIfs.size()-1).setLastOpen(true);
+//
+//				}
+//			}
+
+			
+
+			//ensure close open parenthesis if
+			//ensure close open parenthesis
+			if(numberComponentsAdded==sizeGenotypeScript)
+			{
+				while(collectionofIfs.size()>0)
+				{
+					if(collectionofIfs.get(collectionofIfs.size()-1).isLastOpen())
+					{
+						genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+						genotypeScript=genotypeScript+") ";
+						collectionofIfs.remove(collectionofIfs.size()-1);
+					}
+					else
+					{
+						collectionofIfs.remove(collectionofIfs.size()-1);
+					}
+
+				}
+
+			}
+
+			//			//close parenthesis for
+			//			if(rand.nextInt(2)>0 && isOpenFor  && canCloseParenthesisFor==true && isOpenIf==false)
+			//			{
+			//				genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+			//				genotypeScript=genotypeScript+") ";
+			//				isOpenFor=false;
+			//			}
+
+
+			//			if(numberComponentsAdded==sizeGenotypeScript && isOpenFor)
+			//			{			
+			//				genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+			//				genotypeScript=genotypeScript+") ";		
+			//			
+			//			}
+			//System.out.println("actual "+genotypeScript+ "collec "+collectionofIfs.size());
+		}
+		//
+
+		return genotypeScript;
+
+	}	
 
 	public String returnBasicFunction(Boolean forclausule)
 	{

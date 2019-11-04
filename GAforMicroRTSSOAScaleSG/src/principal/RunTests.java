@@ -1,5 +1,6 @@
 package principal;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import SetCoverSampling.DataRecollection;
+import SetCoverSampling.GameSampling;
 import SetCoverSampling.RunSampling;
 import ga.config.ConfigurationsGA;
 import ga.model.Chromosome;
@@ -24,9 +26,10 @@ import ga.util.Evaluation.FixedScriptedEval;
 
 public class RunTests {
 	
-	//private final String pathTableScriptsInit = System.getProperty("user.dir").concat("/TableInitialPortfolio/");
-	private static final String pathTableScriptsInit = "TableInitialPortfolio/";
-	private static final String pathTable = "Table/";
+	private final static String pathTableScriptsInit = System.getProperty("user.dir").concat("/TableInitialPortfolio/");
+	//private static final String pathTableScriptsInit = "TableInitialPortfolio/";
+	private static final String pathTable = System.getProperty("user.dir").concat("/Table/");
+	private final static String pathLogsBestPortfolios = System.getProperty("user.dir").concat("/TrackingPortfolios/TrackingPortfolios.txt");
 
 
 	public static void main(String[] args) {
@@ -55,6 +58,9 @@ public class RunTests {
 	
 		RatePopulation fEval;
 		String curriculumportfolio="empty";
+		
+		File logsBestPortfolios=new File(pathLogsBestPortfolios);
+		GameSampling.deleteFolder(logsBestPortfolios);
 		
 		//Here we play with a search-based algorithm and save the path
 		try {
@@ -86,6 +92,9 @@ public class RunTests {
 		
 		//popFinal.printWithValue();
 		
+		//here we save the best portfolio of this loop of the algorithm
+		
+		
 		//Here we chose the best individual
 		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)PreSelection.sortByValueBest(popFinal.getChromosomes());
 		for (Chromosome ch : elite.keySet()) {
@@ -95,6 +104,8 @@ public class RunTests {
 			
 		}
 		
+		//Fase 7 - finalizar 
+		fEval.finishProcess();
 		
 		//Here we play with a search-based algorithm and save the path
 		try {
@@ -103,8 +114,7 @@ public class RunTests {
 			// TODO Auto-generated catch block
 			er.printStackTrace();
 		}
-		//Fase 7 - finalizar 
-		fEval.finishProcess();
+		
 		
 		}
 		

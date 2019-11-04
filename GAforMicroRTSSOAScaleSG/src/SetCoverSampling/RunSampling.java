@@ -28,7 +28,7 @@ public class RunSampling {
 //		files = new File("logs/logs_states_"+pathLog).listFiles();
 //	    sampling(files);
 	    
-	    System.out.println("end");
+	    //System.out.println("end");
 		
 		
 	}

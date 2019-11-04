@@ -5,6 +5,7 @@
 package SetCoverSampling;
 
 import ai.RandomBiasedAI;
+import ai.CMAB.A3NNoWait;
 import ai.CMAB.A3NWithinNoWait;
 import ai.ScriptsGenerator.ChromosomeAI;
 import ai.ScriptsGenerator.CommandInterfaces.ICommand;
@@ -25,8 +26,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -63,8 +68,9 @@ public class GameSampling {
     private HashMap<BigDecimal, String> scriptsTable;
     HashSet<String> usedCommands;
     ICompiler compiler = new MainGPCompiler();
-    //private final String dirPathPlayer = System.getProperty("user.dir").concat("/logs_game/logs_states_/");
-    private final String dirPathPlayer = "logs_game/logs_states";
+    private final String dirPathPlayer = System.getProperty("user.dir").concat("/logs_game/logs_states/");
+    //private final String dirPathPlayer = "logs_game/logs_states";
+    private final String pathLogsBestPortfolios = System.getProperty("user.dir").concat("/TrackingPortfolios/");
     
     public GameSampling(String pathTableScripts)
     {
@@ -118,9 +124,23 @@ public class GameSampling {
 
         GameState gs = new GameState(pgs, utt);
         boolean gameover = false;
-
+        
+        File logsPortfolios = new File(pathLogsBestPortfolios+"TrackingPortfolios.txt");
+        logsPortfolios.createNewFile();
+//        PrintWriter writer = new PrintWriter(pathLogsBestPortfolios+"TrackingPortfolios.txt", "UTF-8");
+//        writer.close();
+        Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "New Loop".getBytes(), StandardOpenOption.APPEND);
+        Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "\n".getBytes(), StandardOpenOption.APPEND); 
+        
+        Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "Player0".getBytes(), StandardOpenOption.APPEND); 
+        Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "\n".getBytes(), StandardOpenOption.APPEND); 
         List<AI> scriptsRun1=decodeScripts(utt, iScriptsAi1);
+        Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "Player1".getBytes(), StandardOpenOption.APPEND);
+        Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "\n".getBytes(), StandardOpenOption.APPEND); 
         List<AI> scriptsRun2=decodeScripts(utt, iScriptsAi2);
+        Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "\n".getBytes(), StandardOpenOption.APPEND); 
+
+
         
         //System.out.println("idscriptleader "+idScriptLeader);
         //System.out.println("idscripEnemy "+idScriptEnemy);
@@ -130,15 +150,25 @@ public class GameSampling {
 //        AI ai2= new PGSSCriptChoiceRandom(utt, decodeScripts(utt, portfolioPlayer2), "PGSR", 2, 200);
         //AI ai1 = new PGSSCriptChoice(utt, decodeScripts(utt, String.valueOf(idScriptLeader).concat(";")), "--");
         //AI ai2 = new PGSSCriptChoice(utt, decodeScripts(utt, String.valueOf(idScriptEnemy).concat(";")), "--");
-        AI ai2 = new A3NWithinNoWait(100, -1, 100, 1, 0.3f,
-                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
-                new SimpleSqrtEvaluationFunction3(), true, utt,
-                "ManagerRandom", 1, scriptsRun1);
+//        AI ai2 = new A3NWithinNoWait(100, -1, 100, 1, 0.3f,
+//                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+//                new SimpleSqrtEvaluationFunction3(), true, utt,
+//                "ManagerRandom", 1, scriptsRun1);
+//        
+//        AI ai1 = new A3NWithinNoWait(100, -1, 100, 1, 0.3f,
+//                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+//                new SimpleSqrtEvaluationFunction3(), true, utt,
+//                "ManagerRandom", 1, scriptsRun2);
         
-        AI ai1 = new A3NWithinNoWait(100, -1, 100, 1, 0.3f,
+      	AI ai1 = new A3NNoWait(100, -1, 100, 1, 0.3f,
                 0.0f, 0.4f, 0, new RandomBiasedAI(utt),
                 new SimpleSqrtEvaluationFunction3(), true, utt,
-                "ManagerRandom", 1, scriptsRun2);
+                "ManagerClosestEnemy", 2, scriptsRun1);
+      	
+      	AI ai2 = new A3NNoWait(100, -1, 100, 1, 0.3f,
+                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+                new SimpleSqrtEvaluationFunction3(), true, utt,
+                "ManagerClosestEnemy", 2, scriptsRun1);
 
         
         System.out.println("---------AI's---------");
@@ -231,7 +261,7 @@ public class GameSampling {
             */
           //avaliacao de tempo
             duracao = Duration.between(timeInicial, Instant.now());
-        } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMillis() < 10000));
+        } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMillis() < 40000));
 
         System.out.println("Game Over");
     }
@@ -376,11 +406,18 @@ public class GameSampling {
     
     public List<AI> decodeScripts(UnitTypeTable utt, ArrayList<Integer> iScripts) {
         List<AI> scriptsAI = new ArrayList<>();
-
+        
         for (Integer idSc : iScripts) {
             //System.out.println("tam tab"+scriptsTable.size());
             //System.out.println("id "+idSc+" Elems "+scriptsTable.get(BigDecimal.valueOf(idSc)));
-            scriptsAI.add(buildCommandsIA(utt, scriptsTable.get(BigDecimal.valueOf(idSc))));
+        	try {
+        		       		
+        		Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), scriptsTable.get(BigDecimal.valueOf(idSc)).getBytes(), StandardOpenOption.APPEND);
+        		Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"),"\n".getBytes(), StandardOpenOption.APPEND);
+        	}catch (IOException e) {
+                //exception handling left as an exercise for the reader
+            }
+        	scriptsAI.add(buildCommandsIA(utt, scriptsTable.get(BigDecimal.valueOf(idSc))));
         }
 
         return scriptsAI;

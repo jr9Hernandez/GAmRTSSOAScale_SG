@@ -112,6 +112,7 @@ public class RunGA {
 			System.out.println("Log - Generation = " + this.generations);
 			f0.println("Log - Generation = " + this.generations);
 			population.printWithValue(f0);
+			f0.flush();
 		} while (resetPopulation(population));
 
 		resetControls();
@@ -150,6 +151,7 @@ public class RunGA {
 			System.out.println("Log - Generation = " + this.generations);
 			f0.println("Log - Generation = " + this.generations);
 			population.printWithValue(f0);
+			f0.flush();
 			
 			if(ConfigurationsGA.UCB1==true)
 			{

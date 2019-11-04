@@ -195,6 +195,137 @@ public class Reproduction {
 		return newGeneration;
 	}
 	
+	public Population CrossoverLimitedSize()
+	{
+		Population newGeneration;
+		HashMap<Chromosome, BigDecimal> newChromosomes =new HashMap<Chromosome, BigDecimal>();		
+		int numberEliteMutated=ConfigurationsGA.SIZE_ELITE;
+		while(newChromosomes.size()<(ConfigurationsGA.SIZE_POPULATION-ConfigurationsGA.SIZE_ELITE-ConfigurationsGA.SIZE_INVADERS-numberEliteMutated))
+		{
+			//here we shuffle the list of parents in order to select always two different parents to reproduce
+			Collections.shuffle(parents);
+			Chromosome parent1=parents.get(0).getKey();
+			Chromosome parent2=parents.get(1).getKey();
+			ArrayList<Chromosome> suitablechilds=new ArrayList<>();
+			int suitableChilds=0;
+			int maxtries=0;
+			do
+			{
+			maxtries++;
+			Chromosome child1= new Chromosome();
+			Chromosome child2= new Chromosome();
+
+			//The uniform crossover add to the son one of the parents gene for each position (selected randomly)
+			int sizeParent1=parent1.getGenes().size();
+			int sizeParent2=parent2.getGenes().size();
+			
+			int breakParent1;
+			int breakParent2;
+			
+			if(sizeParent1>1)
+			{
+				breakParent1=rand.nextInt(sizeParent1+1);
+			}
+			else
+			{
+				breakParent1=0;
+			}
+			if(sizeParent2>1)
+			{
+				breakParent2=rand.nextInt(sizeParent2+1);
+			}
+			else
+			{
+				breakParent2=0;
+			}
+			
+			ArrayList<Integer> p1sub1= new ArrayList<>();
+			ArrayList<Integer> p1sub2= new ArrayList<>();
+			ArrayList<Integer> p2sub1= new ArrayList<>();
+			ArrayList<Integer> p2sub2= new ArrayList<>();
+
+			
+			
+			for(int i=0;i<breakParent1;i++)
+			{
+				p1sub1.add(parent1.getGenes().get(i));
+			}
+			for(int i=breakParent1;i<sizeParent1;i++)
+			{
+				p1sub2.add(parent1.getGenes().get(i));
+			}
+			
+			for(int i=0;i<breakParent2;i++)
+			{
+				p2sub1.add(parent2.getGenes().get(i));
+			}
+			for(int i=breakParent2;i<sizeParent2;i++)
+			{
+				p2sub2.add(parent2.getGenes().get(i));
+			}	
+
+			child1.getGenes().addAll(p1sub1);
+			child1.getGenes().addAll(p2sub2);
+			if(child1.getGenes().size()<=ConfigurationsGA.SIZE_CHROMOSOME)
+			{
+				suitablechilds.add(child1);
+				suitableChilds++;
+			}
+			
+			child2.getGenes().addAll(p2sub1);
+			child2.getGenes().addAll(p1sub2);
+			if(child2.getGenes().size()<=ConfigurationsGA.SIZE_CHROMOSOME)
+			{
+				suitablechilds.add(child2);
+				suitableChilds++;
+			}
+			
+			}while(suitableChilds<2 && maxtries<10);
+			
+			Chromosome child1=new Chromosome();
+			Chromosome child2=new Chromosome();
+			if(maxtries<10)
+			{
+				child1=suitablechilds.get(0);
+				child2=suitablechilds.get(1);
+			}
+			else
+			{System.out.println("nueve");}
+
+			//The next method is just for avoiding infinite loops, adding a random element if
+			//one with the same key was already added (this can happen because sometimes the resulting
+			//element has the same KEY, and produce that the size of the map be always the same) 
+			if(newChromosomes.containsKey(child1) || maxtries>=10)
+			{
+				Chromosome tChom = new Chromosome();
+				int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;
+				for (int j = 0; j < sizeCh; j++) {
+					tChom.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));
+				}
+				newChromosomes.put(tChom, BigDecimal.ZERO);
+			}
+			
+			if(newChromosomes.containsKey(child2) || maxtries>=10)
+			{
+				Chromosome tChom = new Chromosome();
+				int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;
+				for (int j = 0; j < sizeCh; j++) {
+					tChom.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));
+				}
+				newChromosomes.put(tChom, BigDecimal.ZERO);
+			}
+
+			//here is added the child!
+			if(child1.getGenes().size()!=0)
+				newChromosomes.put(child1, BigDecimal.ZERO);
+			
+			if(child2.getGenes().size()!=0)
+				newChromosomes.put(child2, BigDecimal.ZERO);
+		}
+		newGeneration=new Population(newChromosomes);
+		return newGeneration;
+	}
+	
 	public Population CrossoverSingleScript()
 	{
 		Population newGeneration;

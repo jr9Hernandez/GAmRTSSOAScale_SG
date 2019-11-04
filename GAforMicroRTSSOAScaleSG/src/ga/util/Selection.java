@@ -46,7 +46,7 @@ public class Selection {
 		}
 		else
 		{
-			newPopulation=rp.Crossover();
+			newPopulation=rp.CrossoverLimitedSize();
 		}
 		
 		//System.out.println("printing the new population after crossover");

@@ -18,10 +18,10 @@ public final class ConfigurationsGA {
 	 public static final int QTD_ENEMIES_SAMPLE_ELITE = 10;
 	 public static final int QTD_RULES = 60088;
 	 public static final int SIZE_CHROMOSOME_SCRIPT = 10;
-	 public static final int SIZE_TABLE_SCRIPTS = 1000;
+	 public static final int SIZE_TABLE_SCRIPTS = 100;
 	 public static final int TYPE_CONTROL = 1;
 	 public static final int TIME_GA_EXEC = 13;
-	 public static final int QTD_GENERATIONS = 4;
+	 public static final int QTD_GENERATIONS = 20;
 	 public static final int deltaForMutation = 1;
 	 public static final boolean RESET_ENABLED = true;
 	 public static final boolean MUTATION_ORDER_ENABLED = true;
@@ -30,7 +30,7 @@ public final class ConfigurationsGA {
    
     public static final int QTD_RULES_CONDITIONAL=115;
     public static final int QTD_RULES_BASIC_FUNCTIONS=518;
-    public static final int MAX_QTD_COMPONENTS=10;
+    public static final int MAX_QTD_COMPONENTS=1;
     public static boolean recoverTable=false;
     
     public final static boolean removeRules=false;

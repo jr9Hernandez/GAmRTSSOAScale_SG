@@ -53,12 +53,13 @@ public class DataRecollection {
 		this.pathLog=pathLog;
 	}
 
-	public void dataRecollection(String curriculumPortfolio) {
+	public void runDataRecollection(String curriculumPortfolio) {
 
 		// Creating the table of scripts
 		String portfolioPlayer1;
 		if(curriculumPortfolio.equals("empty"))
 		{
+			
 			ScriptsTable scrTable = new ScriptsTable(pathTableSetCover);
 			scrTable = scrTable.generateScriptsTable(ConfigurationsGA.SIZE_TABLE_SCRIPTS);
 			scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());

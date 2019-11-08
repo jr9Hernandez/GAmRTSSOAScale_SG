@@ -18,7 +18,7 @@ public class RunSampling {
 		//Here we collect the data
 		String pathLog=String.valueOf(pathLogInt);
 		dataRecollection=new DataRecollection(pathLog,pathTableSetCover);
-		dataRecollection.dataRecollection(curriculumPortfolio);
+		dataRecollection.runDataRecollection(curriculumPortfolio);
 		
 		
 		//Here we sample

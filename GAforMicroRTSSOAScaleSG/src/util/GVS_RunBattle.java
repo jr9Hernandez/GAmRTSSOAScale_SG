@@ -7,7 +7,9 @@ package util;
 import util.SOA.*;
 import ai.PassiveAI;
 import ai.RandomBiasedAI;
+import ai.CMAB.A3NNoWait;
 import ai.CMAB.A3NWithinNoWait;
+import ai.CMAB.CmabNaiveMCTS;
 import ai.ScriptsGenerator.ChromosomeAI;
 import ai.ScriptsGenerator.CommandInterfaces.ICommand;
 import ai.ScriptsGenerator.GPCompiler.FunctionGPCompiler;
@@ -161,17 +163,17 @@ public class GVS_RunBattle {
       	//AI ai1 = new LightPGSSCriptChoice(utt, scriptsRun1,200, "PGSR");
       	//AI ai1=new PuppetSearchMCTS(utt);
         //AI ai1=new LightRush(utt);
-        AI ai1=new WorkerRush(utt);
+        //AI ai1=new WorkerRush(utt);
         
         //AI ai1 = new LightPGSSCriptChoiceNoWaits(utt, scriptsRun1,200, "PGSR");
         AI ai2 = new LightPGSSCriptChoiceNoWaits(utt, scriptsRun1,200, "PGSR");
         
 //      	AI ai2 = new LightPGSSCriptChoice(utt, scriptsRun,200, "PGSR");
 
-//        AI ai1 = new CmabAssymetricMCTS(100, -1, 100, 1, 0.3f,
+//        AI ai2 = new CmabAssymetricMCTS(100, -1, 100, 1, 0.3f,
 //                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
 //                new SimpleSqrtEvaluationFunction3(), true, utt,
-//                "ManagerClosestEnemy", 1, decodeScripts(utt, iScriptsAi1));
+//                "ManagerRandom", 3, decodeScripts(utt, iScriptsAi1));
 
 //        AI ai2 = new CmabAssymetricMCTS(100, -1, 100, 1, 0.3f,
 //                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
@@ -192,6 +194,14 @@ public class GVS_RunBattle {
 //                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
 //                new SimpleSqrtEvaluationFunction3(), true, utt,
 //                "ManagerRandom", 1, scriptsRun1);
+        
+  	AI ai1 = new A3NNoWait(100, -1, 100, 1, 0.3f,
+      0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+      new SimpleSqrtEvaluationFunction3(), true, utt,
+      "ManagerRandom", 5, scriptsRun1);
+  	
+//  	AI ai2 = new CmabNaiveMCTS(100, -1, 200, 10, 0.3f, 0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+//            new SimpleSqrtEvaluationFunction3(), true, "CmabCombinatorialGenerator", utt,scriptsRun1, "A1N");
 
 //      AI ai1 = new GABScriptChoose(utt, 1, 2, decodeScripts(utt, iScriptsAi1), "GAB");
 //      AI ai2 = new GABScriptChoose(utt, 1, 2, decodeScripts(utt, iScriptsAi2), "GAB");
@@ -316,11 +326,18 @@ public class GVS_RunBattle {
     public List<AI> decodeScripts(UnitTypeTable utt, ArrayList<Integer> iScripts) {
         List<AI> scriptsAI = new ArrayList<>();
 
-        for (Integer idSc : iScripts) {
-            //System.out.println("tam tab"+scriptsTable.size());
-            //System.out.println("id "+idSc+" Elems "+scriptsTable.get(BigDecimal.valueOf(idSc)));
-            scriptsAI.add(buildCommandsIA(utt, scriptsTable.get(BigDecimal.valueOf(idSc))));
-        }
+//        for (Integer idSc : iScripts) {
+//            //System.out.println("tam tab"+scriptsTable.size());
+//            //System.out.println("id "+idSc+" Elems "+scriptsTable.get(BigDecimal.valueOf(idSc)));
+//            scriptsAI.add(buildCommandsIA(utt, scriptsTable.get(BigDecimal.valueOf(idSc))));
+//        }
+        
+        //scriptsAI.add(buildCommandsIA(utt, "attack(All,lessHealthy)"));
+        scriptsAI.add(buildCommandsIA(utt, "harvest(3)"));
+        scriptsAI.add(buildCommandsIA(utt, "train(Worker,20,Right)"));
+        //scriptsAI.add(buildCommandsIA(utt, "moveaway(Worker)"));
+        scriptsAI.add(buildCommandsIA(utt, "attack(All,closest) "));
+
 
         return scriptsAI;
     }

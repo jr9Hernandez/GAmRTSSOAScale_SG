@@ -71,27 +71,30 @@ public class GameSampling {
     private final String dirPathPlayer = System.getProperty("user.dir").concat("/logs_game/logs_states/");
     //private final String dirPathPlayer = "logs_game/logs_states";
     private final String pathLogsBestPortfolios = System.getProperty("user.dir").concat("/TrackingPortfolios/");
+    String pathTableScripts;
     
     public GameSampling(String pathTableScripts)
     {
     	utt = new UnitTypeTable();
         MAXCYCLES = 8000;
         PERIOD = 20;
-        buildScriptsTable(pathTableScripts);
         File file=new File(dirPathPlayer);
+        this.pathTableScripts=pathTableScripts;
+        buildScriptsTable(pathTableScripts);
     }
     
     public GameSampling(String pathTableScripts, boolean newPath)
     {
     	utt = new UnitTypeTable();
         MAXCYCLES = 8000;
-        PERIOD = 20;
-        buildScriptsTable(pathTableScripts);
+        PERIOD = 20;        
         File file=new File(dirPathPlayer);
+        this.pathTableScripts=pathTableScripts;
         deleteFolder(file);
     }
 
     public void run(String portfolioPlayer1, String portfolioPlayer2, String pathLog) throws Exception {
+    	buildScriptsTable(pathTableScripts);
     	id = 0;
     	//controle de tempo
         Instant timeInicial = Instant.now();
@@ -115,12 +118,14 @@ public class GameSampling {
             iScriptsAi2.add(Integer.decode(element));
         }
         
-		pgs = PhysicalGameState.load("maps/8x8/basesWorkers8x8A.xml", utt);
+		//pgs = PhysicalGameState.load("maps/8x8/basesWorkers8x8A.xml", utt);
         //pgs = PhysicalGameState.load("maps/16x16/basesWorkers16x16A.xml", utt);        
         //pgs = PhysicalGameState.load("maps/BWDistantResources32x32.xml", utt);
         //pgs = PhysicalGameState.load("maps/32x32/basesWorkers32x32A.xml", utt);
         //pgs = PhysicalGameState.load("maps/24x24/basesWorkers24x24A.xml", utt);
         //pgs = PhysicalGameState.load("maps/BroodWar/(4)BloodBath.scmB.xml", utt);  
+          pgs = PhysicalGameState.load("maps/NoWhereToRun9x8.xml", utt);
+        
 
         GameState gs = new GameState(pgs, utt);
         boolean gameover = false;
@@ -160,15 +165,25 @@ public class GameSampling {
 //                new SimpleSqrtEvaluationFunction3(), true, utt,
 //                "ManagerRandom", 1, scriptsRun2);
         
+//      	AI ai1 = new A3NNoWait(100, -1, 100, 1, 0.3f,
+//                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+//                new SimpleSqrtEvaluationFunction3(), true, utt,
+//                "ManagerClosestEnemy", 2, scriptsRun1);
+//      	
+//      	AI ai2 = new A3NNoWait(100, -1, 100, 1, 0.3f,
+//                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+//                new SimpleSqrtEvaluationFunction3(), true, utt,
+//                "ManagerClosestEnemy", 2, scriptsRun1);
+      	
       	AI ai1 = new A3NNoWait(100, -1, 100, 1, 0.3f,
                 0.0f, 0.4f, 0, new RandomBiasedAI(utt),
                 new SimpleSqrtEvaluationFunction3(), true, utt,
-                "ManagerClosestEnemy", 2, scriptsRun1);
+                "ManagerRandom", 3, scriptsRun1);
       	
       	AI ai2 = new A3NNoWait(100, -1, 100, 1, 0.3f,
                 0.0f, 0.4f, 0, new RandomBiasedAI(utt),
                 new SimpleSqrtEvaluationFunction3(), true, utt,
-                "ManagerClosestEnemy", 2, scriptsRun1);
+                "ManagerRandom", 3, scriptsRun1);
 
         
         System.out.println("---------AI's---------");
@@ -176,7 +191,7 @@ public class GameSampling {
         System.out.println("AI 2 = "+ai2.toString()+"\n");        
         
         
-        JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);;
+        //JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);;
 
         //File dir = new File("logs_states/log_"+idScriptLeader+"_"+idScriptEnemy+"_"+idSampling);
         String dirPathPlayer0=dirPathPlayer+"/log_"+portfolioPlayer1+"_"+portfolioPlayer2+"/player0";
@@ -237,7 +252,7 @@ public class GameSampling {
                 
                 // simulate:
                 gameover = gs.cycle();
-                w.repaint();
+                //w.repaint();
                 nextTimeToUpdate += PERIOD;
                 idState++;
             } else {
@@ -262,6 +277,7 @@ public class GameSampling {
           //avaliacao de tempo
             duracao = Duration.between(timeInicial, Instant.now());
         } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMillis() < 40000));
+        //&& (duracao.toMillis() < 40000)
 
         System.out.println("Game Over");
     }
@@ -435,7 +451,7 @@ public class GameSampling {
     public HashMap<BigDecimal, String> buildScriptsTable(String pathTableScripts) {
         scriptsTable = new HashMap<>();
         String line="";
-        try (BufferedReader br = new BufferedReader(new FileReader(pathTableScripts + "/ScriptsTable.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(pathTableScripts + "ScriptsTable.txt"))) {
             while ((line = br.readLine()) != null) {
                 String code = line.substring(line.indexOf(" "), line.length());
                 String[] strArray = line.split(" ");

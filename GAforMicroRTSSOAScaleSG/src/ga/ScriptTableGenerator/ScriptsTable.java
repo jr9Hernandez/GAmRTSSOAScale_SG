@@ -716,6 +716,61 @@ public class ScriptsTable {
 		return basicFunction+")";
 	}
 	
+	public ArrayList<String> allBasicFunctions()
+	{
+		String basicFunction="";
+		ArrayList<String> allBasicFunctions=new ArrayList<>();
+		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
+		int counter=0;
+		for(FunctionsforGrammar functionChosen: functions.getBasicFunctionsForGrammar())
+		{
+			ArrayList<String> allBasicFunctionsPerFunction=new ArrayList<>();			
+			basicFunction=functionChosen.getNameFunction()+"(";
+			buildingFunction(basicFunction,counter,functionChosen.getParameters(),functionChosen.getParameters().size(),allBasicFunctionsPerFunction);
+			allBasicFunctions.addAll(allBasicFunctionsPerFunction);
+		
+		}
+		return allBasicFunctions;
+	}
+		
+	public ArrayList<String> buildingFunction(String partialFunction,int counter, List<Parameter> parameters, int maxSizeParameters,ArrayList<String> allBasicFunctions)
+	{
+		if(counter<maxSizeParameters)
+		{		
+			String currentFunction=partialFunction;
+			if(parameters.get(counter).getDiscreteSpecificValues()==null)
+			{
+				for(int i=(int)parameters.get(counter).getInferiorLimit();i<=(int)parameters.get(counter).getSuperiorLimit();i++)
+				{
+					
+					partialFunction=currentFunction+i+",";
+					buildingFunction(partialFunction,counter+1, parameters,  maxSizeParameters,allBasicFunctions);				
+				}
+
+			}
+			else
+			{
+				for(int i=0; i<parameters.get(counter).getDiscreteSpecificValues().size(); i++)
+				{
+					partialFunction=currentFunction+parameters.get(counter).getDiscreteSpecificValues().get(i)+",";
+					buildingFunction(partialFunction,counter+1, parameters,  maxSizeParameters,allBasicFunctions);
+				}
+
+
+			}
+			
+		}
+		else
+		{
+			partialFunction=partialFunction.substring(0, partialFunction.length() - 1);
+			partialFunction=partialFunction+")";
+			allBasicFunctions.add(partialFunction);
+			return allBasicFunctions;
+			
+		}
+		return allBasicFunctions;
+	}
+	
 	public String returnBasicFunctionCleanSame(Boolean forclausule,String oldFunction)
 	{
 		String basicFunction="";

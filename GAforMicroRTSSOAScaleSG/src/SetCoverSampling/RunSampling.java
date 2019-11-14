@@ -12,6 +12,7 @@ public class RunSampling {
 	
 	static DataRecollection dataRecollection;
 	
+	
 	public RunSampling(int pathLogInt, String pathTableSetCover, String curriculumPortfolio) throws IOException {
 		
 		

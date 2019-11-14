@@ -4,6 +4,7 @@
  */
 package SetCoverSampling;
 
+import ai.PassiveAI;
 import ai.RandomBiasedAI;
 import ai.CMAB.A3NNoWait;
 import ai.CMAB.A3NWithinNoWait;
@@ -12,10 +13,13 @@ import ai.ScriptsGenerator.CommandInterfaces.ICommand;
 import ai.ScriptsGenerator.GPCompiler.FunctionGPCompiler;
 import ai.ScriptsGenerator.GPCompiler.ICompiler;
 import ai.ScriptsGenerator.GPCompiler.MainGPCompiler;
+import ai.abstraction.RangedRush;
+import ai.abstraction.WorkerRush;
 import ai.asymmetric.PGS.*;
 import ai.competition.capivara.CmabAssymetricMCTS;
 import ai.core.AI;
 import ai.evaluation.SimpleSqrtEvaluationFunction3;
+import ga.ScriptTableGenerator.ScriptsTable;
 import gui.PhysicalGameStatePanel;
 import ai.configurablescript.BasicExpandedConfigurableScript;
 import ai.configurablescript.ScriptsCreator;
@@ -124,7 +128,7 @@ public class GameSampling {
         //pgs = PhysicalGameState.load("maps/32x32/basesWorkers32x32A.xml", utt);
         //pgs = PhysicalGameState.load("maps/24x24/basesWorkers24x24A.xml", utt);
         //pgs = PhysicalGameState.load("maps/BroodWar/(4)BloodBath.scmB.xml", utt);  
-          pgs = PhysicalGameState.load("maps/NoWhereToRun9x8.xml", utt);
+         pgs = PhysicalGameState.load("maps/NoWhereToRun9x8.xml", utt);
         
 
         GameState gs = new GameState(pgs, utt);
@@ -139,10 +143,10 @@ public class GameSampling {
         
         Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "Player0".getBytes(), StandardOpenOption.APPEND); 
         Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "\n".getBytes(), StandardOpenOption.APPEND); 
-        List<AI> scriptsRun1=decodeScripts(utt, iScriptsAi1);
+        List<AI> scriptsRun1=decodeScriptsSetCover(utt, iScriptsAi1);
         Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "Player1".getBytes(), StandardOpenOption.APPEND);
         Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "\n".getBytes(), StandardOpenOption.APPEND); 
-        List<AI> scriptsRun2=decodeScripts(utt, iScriptsAi2);
+        List<AI> scriptsRun2=decodeScriptsSetCover(utt, iScriptsAi2);
         Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "\n".getBytes(), StandardOpenOption.APPEND); 
 
 
@@ -175,15 +179,31 @@ public class GameSampling {
 //                new SimpleSqrtEvaluationFunction3(), true, utt,
 //                "ManagerClosestEnemy", 2, scriptsRun1);
       	
-      	AI ai1 = new A3NNoWait(100, -1, 100, 1, 0.3f,
+      	AI ai1 = new A3NNoWait(700, -1, 100, 1, 0.3f,
                 0.0f, 0.4f, 0, new RandomBiasedAI(utt),
                 new SimpleSqrtEvaluationFunction3(), true, utt,
-                "ManagerRandom", 3, scriptsRun1);
+                "ManagerRandom", 2, scriptsRun1);
       	
-      	AI ai2 = new A3NNoWait(100, -1, 100, 1, 0.3f,
+      	AI ai2 = new A3NNoWait(700, -1, 100, 1, 0.3f,
                 0.0f, 0.4f, 0, new RandomBiasedAI(utt),
                 new SimpleSqrtEvaluationFunction3(), true, utt,
-                "ManagerRandom", 3, scriptsRun1);
+                "ManagerRandom", 2, scriptsRun1);
+        
+//      AI ai2 = new CmabAssymetricMCTS(400, -1, 100, 1, 0.3f,
+//      0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+//      new SimpleSqrtEvaluationFunction3(), true, utt,
+//      "ManagerRandom", 2, scriptsRun1);
+//
+//		AI ai1 = new CmabAssymetricMCTS(400, -1, 100, 1, 0.3f,
+//      0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+//      new SimpleSqrtEvaluationFunction3(), true, utt,
+//      "ManagerRandom", 2, scriptsRun1);
+        
+        //AI ai2 = new WorkerRush(utt);;
+      	//AI ai1 = new LightPGSSCriptChoiceNoWaits(utt, scriptsRun1,200, "PGSR");
+        //AI ai1 = new PassiveAI();
+//        AI ai1 = new RangedRush(utt);
+//        AI ai2 = new RangedRush(utt);
 
         
         System.out.println("---------AI's---------");
@@ -191,7 +211,7 @@ public class GameSampling {
         System.out.println("AI 2 = "+ai2.toString()+"\n");        
         
         
-        //JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);;
+        JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);;
 
         //File dir = new File("logs_states/log_"+idScriptLeader+"_"+idScriptEnemy+"_"+idSampling);
         String dirPathPlayer0=dirPathPlayer+"/log_"+portfolioPlayer1+"_"+portfolioPlayer2+"/player0";
@@ -252,7 +272,7 @@ public class GameSampling {
                 
                 // simulate:
                 gameover = gs.cycle();
-                //w.repaint();
+                w.repaint();
                 nextTimeToUpdate += PERIOD;
                 idState++;
             } else {
@@ -276,7 +296,7 @@ public class GameSampling {
             */
           //avaliacao de tempo
             duracao = Duration.between(timeInicial, Instant.now());
-        } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMillis() < 40000));
+        } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMillis() < 240000));
         //&& (duracao.toMillis() < 40000)
 
         System.out.println("Game Over");
@@ -295,7 +315,6 @@ public class GameSampling {
     	writer.write(pa.getActions().toString());
     	writer.flush();
 		writer.close();
-		
 		
     }    
     /**
@@ -418,6 +437,26 @@ public class GameSampling {
         return pa;
     }
     
+    public PlayerAction generateActionbyScriptByString(GameState g, String scriptSampling, int player) 
+    {
+    	List<AI> scriptsRun1=decodeSingleScriptbyString(utt, scriptSampling);
+
+        AI ai1=scriptsRun1.get(0);
+        
+        PlayerAction pa=null;
+		try {
+			pa = ai1.getAction(player, g);
+			//pa1.getActions().toString();
+			//System.out.println(pa1.getActions());
+			//System.out.println("Action A1 ="+ pa1.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+        
+        return pa;
+    }
+    
 
     
     public List<AI> decodeScripts(UnitTypeTable utt, ArrayList<Integer> iScripts) {
@@ -439,10 +478,42 @@ public class GameSampling {
         return scriptsAI;
     }
     
+    public List<AI> decodeScriptsSetCover(UnitTypeTable utt, ArrayList<Integer> iScripts) {
+        List<AI> scriptsAI = new ArrayList<>();
+        
+        ScriptsTable st=new ScriptsTable(pathTableScripts);
+    	ArrayList<String> basicFunctions= st.allBasicFunctions();
+        for (Integer idSc : iScripts) {
+            //System.out.println("tam tab"+scriptsTable.size());
+            //System.out.println("id "+idSc+" Elems "+scriptsTable.get(BigDecimal.valueOf(idSc)));
+        	try {
+        		       		
+        		Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"),  basicFunctions.get(idSc).getBytes(), StandardOpenOption.APPEND);
+        		Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"),"\n".getBytes(), StandardOpenOption.APPEND);
+        	}catch (IOException e) {
+                //exception handling left as an exercise for the reader
+            }
+        	scriptsAI.add(buildCommandsIA(utt, basicFunctions.get(idSc)));
+        }
+
+        return scriptsAI;
+    }
+    
+    
+    
     public List<AI> decodeSingleScript(UnitTypeTable utt, int iScripts) {
         List<AI> scriptsAI = new ArrayList<>();
 
             scriptsAI.add(buildCommandsIA(utt, scriptsTable.get(BigDecimal.valueOf(iScripts))));
+        
+
+        return scriptsAI;
+    }
+    
+    public List<AI> decodeSingleScriptbyString(UnitTypeTable utt, String Script) {
+        List<AI> scriptsAI = new ArrayList<>();
+
+            scriptsAI.add(buildCommandsIA(utt, Script));
         
 
         return scriptsAI;

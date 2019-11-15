@@ -108,7 +108,14 @@ public class ScriptsTable {
 				//tChom = new ChromosomeScript();				
 				//int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME_SCRIPT)+1;
 				int sizeCh=rand.nextInt(ConfigurationsGA.MAX_QTD_COMPONENTS)+1;
-				tChom=buildScriptGenotypeSketch();
+				if(ConfigurationsGA.sketch)
+				{
+					tChom=buildScriptGenotypeSketch();
+				}
+				else
+				{
+					tChom=buildScriptGenotype(sizeCh);
+				}
 
 				//				for (int j = 0; j < sizeCh; j++) {
 				//					int typeSelected=rand.nextInt(numberOfTypes);

@@ -1,7 +1,7 @@
 package ga.config;
 
 public final class ConfigurationsGA {
-	public static final int SIZE_CHROMOSOME = 1;
+	public static final int SIZE_CHROMOSOME = 10;
 	 public static final int SIZE_POPULATION = 100;
 	 public static final int NUMBER_JOBS = 39;
 	 public static final int SIZE_ELITE = 10;
@@ -34,7 +34,7 @@ public final class ConfigurationsGA {
     public static boolean recoverTable=false;
     
     public final static boolean removeRules=true;
-    public static final boolean evolvingScript=true;
+    public static final boolean evolvingScript=false;
 	
     public static final boolean sketch=true;
     public static final String idSketch="A";

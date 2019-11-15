@@ -39,6 +39,10 @@ public class ScriptsTable {
 	private FunctionsforGrammar functions;
 
 	private String pathTableScripts;
+	
+	public ScriptsTable(){
+		functions=new FunctionsforGrammar();
+	}
 
 	public ScriptsTable(String pathTableScripts){
 		this.scriptsTable = new HashMap<>();
@@ -104,7 +108,7 @@ public class ScriptsTable {
 				//tChom = new ChromosomeScript();				
 				//int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME_SCRIPT)+1;
 				int sizeCh=rand.nextInt(ConfigurationsGA.MAX_QTD_COMPONENTS)+1;
-				tChom=buildScriptGenotype(sizeCh);
+				tChom=buildScriptGenotypeSketch();
 
 				//				for (int j = 0; j < sizeCh; j++) {
 				//					int typeSelected=rand.nextInt(numberOfTypes);
@@ -341,6 +345,22 @@ public class ScriptsTable {
 
 		return genotypeScript;
 
+	}
+	
+	public String buildScriptGenotypeSketch()
+	{
+		String genotypeScript = "";
+		int numberComponentsAdded=0;
+		Sketch sk=new Sketch();
+		if(ConfigurationsGA.idSketch=="A")
+		{
+			genotypeScript=sk.sketchA(genotypeScript,numberComponentsAdded);
+			genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+			//basicFunction=basicFunction+") ";
+			
+		}
+
+		return genotypeScript;
 	}
 
 	public String returnBasicFunction(Boolean forclausule)

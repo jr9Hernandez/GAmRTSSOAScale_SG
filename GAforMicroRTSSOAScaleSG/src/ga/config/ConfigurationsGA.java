@@ -36,5 +36,7 @@ public final class ConfigurationsGA {
     public final static boolean removeRules=true;
     public static final boolean evolvingScript=false;
 	
+    public static final boolean sketch=true;
+    public static final String idSketch="A";
 	
 }

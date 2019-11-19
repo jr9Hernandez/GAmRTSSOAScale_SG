@@ -24,7 +24,7 @@ import ga.util.Evaluation.RoundRobinSampleEval;
 import ga.util.Evaluation.SetCoverEval;
 import ga.util.Evaluation.FixedScriptedEval;
 
-public class RunTests {
+public class RunTestsGP {
 	
 	private final static String pathTableScriptsInit = System.getProperty("user.dir").concat("/TableInitialPortfolio/");
 	//private static final String pathTableScriptsInit = "TableInitialPortfolio/";

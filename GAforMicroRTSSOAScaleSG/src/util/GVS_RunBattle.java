@@ -90,10 +90,10 @@ public class GVS_RunBattle {
         List<String> maps = new ArrayList<>(Arrays.asList(
                 //"maps/24x24/basesWorkers24x24A.xml"
                 //"maps/32x32/basesWorkers32x32A.xml"
-                //"maps/8x8/basesWorkers8x8A.xml"
+                "maps/8x8/basesWorkers8x8A.xml"
                 //"maps/NoWhereToRun9x8.xml"
         //"maps/BroodWar/(4)BloodBath.scmB.xml"
-        		"maps/16x16/basesWorkers16x16A.xml"
+        		//"maps/16x16/basesWorkers16x16A.xml"
         ));
 
         UnitTypeTable utt = new UnitTypeTable();
@@ -153,7 +153,7 @@ public class GVS_RunBattle {
         
         List<AI> scriptsRun1=decodeScripts(utt, iScriptsAi2);
         List<AI> scriptsRun2=decodeScripts(utt, iScriptsAi1);
-        //AI ai2=scriptsRun1.get(0);
+        AI ai2=scriptsRun1.get(0);
 //      AI ai1 = new PGSSCriptChoiceRandom(utt, decodeScripts(utt, iScriptsAi1), "PGSR", 2, 200);
       //AI ai2 = new PGSSCriptChoiceRandom(utt, scriptsRun1, "PGSR", 1, 200);
         //List<AI> scriptsRun1=decodeScripts(utt, iScriptsAi1);
@@ -162,10 +162,10 @@ public class GVS_RunBattle {
         //AI ai2 = new LightPGSSCriptChoiceNoWaits(utt, scriptsRun1,200, "PGSR");
       	//AI ai1 = new LightPGSSCriptChoice(utt, scriptsRun1,200, "PGSR");
       	//AI ai1=new PuppetSearchMCTS(utt);
-        AI ai1=new LightRush(utt);
+//        AI ai1=new LightRush(utt);
         //AI ai1=new WorkerRush(utt);
         
-        //AI ai1 = new LightPGSSCriptChoiceNoWaits(utt, scriptsRun1,200, "PGSR");
+        AI ai1 = new LightPGSSCriptChoiceNoWaits(utt, scriptsRun1,200, "PGSR");
         //AI ai2 = new LightPGSSCriptChoiceNoWaits(utt, scriptsRun1,600, "PGSR");
         
 //      	AI ai2 = new LightPGSSCriptChoice(utt, scriptsRun,200, "PGSR");
@@ -204,8 +204,18 @@ public class GVS_RunBattle {
 //  	      new SimpleSqrtEvaluationFunction3(), true, utt,
 //  	      "ManagerClosestEnemy", 1, scriptsRun1);
   	
-  	AI ai2 = new CmabNaiveMCTS(100, -1, 200, 10, 0.3f, 0.0f, 0.4f, 0, new RandomBiasedAI(utt),
-            new SimpleSqrtEvaluationFunction3(), true, "CmabCombinatorialGenerator", utt,scriptsRun1, "A1N");
+//  	AI ai2 = new CmabNaiveMCTS(100, -1, 200, 10, 0.3f, 0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+//            new SimpleSqrtEvaluationFunction3(), true, "CmabCombinatorialGenerator", utt,scriptsRun1, "A1N");
+        
+//        AI ai2 = new CmabAssymetricMCTS(700, -1, 100, 1, 0.3f,
+//        	      0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+//        	      new SimpleSqrtEvaluationFunction3(), true, utt,
+//        	      "ManagerRandom", 2, scriptsRun1);
+//
+//        			AI ai1 = new CmabAssymetricMCTS(700, -1, 100, 1, 0.3f,
+//        	      0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+//        	      new SimpleSqrtEvaluationFunction3(), true, utt,
+//        	      "ManagerRandom", 2, scriptsRun1);
 
 //      AI ai1 = new GABScriptChoose(utt, 1, 2, decodeScripts(utt, iScriptsAi1), "GAB");
 //      AI ai2 = new GABScriptChoose(utt, 1, 2, decodeScripts(utt, iScriptsAi2), "GAB");
@@ -336,17 +346,17 @@ public class GVS_RunBattle {
 //            scriptsAI.add(buildCommandsIA(utt, scriptsTable.get(BigDecimal.valueOf(idSc))));
 //        }
         
-        //scriptsAI.add(buildCommandsIA(utt, "attack(All,lessHealthy)"));
-        scriptsAI.add(buildCommandsIA(utt, "harvest(1) attack(Worker,closest)"));
-       // scriptsAI.add(buildCommandsIA(utt, "attack(Worker,closest)"));
-        scriptsAI.add(buildCommandsIA(utt, "train(Worker,20,Right)"));
-//        scriptsAI.add(buildCommandsIA(utt, "attack(Worker,lessHealthy)"));
-//        scriptsAI.add(buildCommandsIA(utt, "train(Worker,20,Left)"));
-//        scriptsAI.add(buildCommandsIA(utt, "attack(Worker,mostHealthy)"));
-//        scriptsAI.add(buildCommandsIA(utt, "build(Barrack,1)"));
-//        scriptsAI.add(buildCommandsIA(utt, "train(Worker,20,Up)"));
-//        scriptsAI.add(buildCommandsIA(utt, "moveToUnit(Worker,Ally,farthest)"));
+        //scriptsAI.add(buildCommandsIA(utt, "harvest(5)"));
+        scriptsAI.add(buildCommandsIA(utt, "build(Barrack,1,Down)"));
 //        scriptsAI.add(buildCommandsIA(utt, "attack(Worker,farthest)"));
+//        scriptsAI.add(buildCommandsIA(utt, "train(Worker,20,Up)"));
+//        scriptsAI.add(buildCommandsIA(utt, "moveToUnit(Worker,Ally,lessHealthy)"));
+//        scriptsAI.add(buildCommandsIA(utt, "train(Worker,20,Left)"));
+//        scriptsAI.add(buildCommandsIA(utt, "moveToUnit(Worker,Ally,farthest)"));
+//        scriptsAI.add(buildCommandsIA(utt, "train(Worker,20,Down)"));
+//        scriptsAI.add(buildCommandsIA(utt, "attack(Worker,lessHealthy)"));
+//        scriptsAI.add(buildCommandsIA(utt, "harvest(1)"));
+//        scriptsAI.add(buildCommandsIA(utt, "moveToUnit(Worker,Ally,mostHealthy)"));
 //        scriptsAI.add(buildCommandsIA(utt, "attack(Worker,mostHealthy)"));
 //        scriptsAI.add(buildCommandsIA(utt, "train(Worker,20,Left)"));
 

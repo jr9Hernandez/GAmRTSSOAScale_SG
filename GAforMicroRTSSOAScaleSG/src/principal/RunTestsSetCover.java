@@ -28,7 +28,7 @@ import ga.util.Evaluation.SetCoverEval;
 import setcoverCalculation.RunSetCoverCalculation;
 import ga.util.Evaluation.FixedScriptedEval;
 
-public class RunTestsSetCoverGP {
+public class RunTestsSetCover {
 	
 	private final static String pathTableScriptsInit = System.getProperty("user.dir").concat("/TableInitialPortfolio/");
 	//private static final String pathTableScriptsInit = "TableInitialPortfolio/";

@@ -305,8 +305,9 @@ public class Reproduction {
 			{
 				newId= scrTable.getScriptTable().get(childConcatenated1).intValue();
 				//System.out.println("oldId1 "+ newId);
+				child1.addGene(newId);
 			}
-			else
+			else if(!scrTable.getScriptTable().containsKey(childConcatenated1) && childConcatenated1.length()>0)
 			{
 				//System.out.println("beforeMutateScript "+cromScriptOriginal);
 				//System.out.println("afterMutateScript "+cromScript);
@@ -315,15 +316,17 @@ public class Reproduction {
 				scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
 				addLineFile(newId+" "+childConcatenated1);
 				//System.out.println("newId1 "+ newId);
+				child1.addGene(newId);
 			}
-			child1.addGene(newId);
+			
 			
 			if(scrTable.getScriptTable().containsKey(childConcatenated2))
 			{
 				newId= scrTable.getScriptTable().get(childConcatenated2).intValue();
 				//System.out.println("oldId2 "+ newId);
+				child2.addGene(newId);
 			}
-			else
+			else if(!scrTable.getScriptTable().containsKey(childConcatenated2) && childConcatenated2.length()>0)
 			{
 				//System.out.println("beforeMutateScript "+cromScriptOriginal);
 				//System.out.println("afterMutateScript "+cromScript);
@@ -331,9 +334,9 @@ public class Reproduction {
 				scrTable.getScriptTable().put(childConcatenated2, BigDecimal.valueOf(newId));
 				scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
 				addLineFile(newId+" "+childConcatenated2);
+				child2.addGene(newId);
 				//System.out.println("newId2 "+ newId);
 			}
-			child2.addGene(newId);
 
 			//The next method is just for avoiding infinite loops, adding a random element if
 			//one with the same key was already added (this can happen because sometimes the resulting

@@ -38,17 +38,24 @@ public class RunGA {
 	 * @param evalFunction
 	 *            Será a função de avaliação que desejamos utilizar
 	 */
-	public Population run(RatePopulation evalFunction) {
+	public Population run(RatePopulation evalFunction, String scriptsSetCover) {
 		// Creating the table of scripts
 		scrTable = new ScriptsTable(pathTableScripts);
 		//do {
-			if(!ConfigurationsGA.recoverTable)
+			if(ConfigurationsGA.portfolioSetCover)
 			{
-				scrTable = scrTable.generateScriptsTable(ConfigurationsGA.SIZE_TABLE_SCRIPTS);
+				scrTable = scrTable.generateScriptsTableFromSetCover(ConfigurationsGA.SIZE_TABLE_SCRIPTS,scriptsSetCover);
 			}
 			else
 			{
-				scrTable = scrTable.generateScriptsTableRecover();
+				if(!ConfigurationsGA.recoverTable)
+				{
+					scrTable = scrTable.generateScriptsTable(ConfigurationsGA.SIZE_TABLE_SCRIPTS);
+				}
+				else
+				{
+					scrTable = scrTable.generateScriptsTableRecover();
+				}
 			}
 		   //}while(scrTable.checkDiversityofTypes());
 		scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());

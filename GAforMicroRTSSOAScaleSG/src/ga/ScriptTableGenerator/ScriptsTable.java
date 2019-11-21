@@ -37,9 +37,13 @@ public class ScriptsTable {
 	private HashMap<String, BigDecimal> scriptsTable ;
 	private int numberOfTypes;
 	private TableCommandsGenerator tcg;
-	private FunctionsforGrammar functions;
+	public FunctionsforGrammar functions;
 
 	private String pathTableScripts;
+	
+	public ScriptsTable() {
+		functions=new FunctionsforGrammar();
+	}	
 
 	public ScriptsTable(String pathTableScripts){
 		this.scriptsTable = new HashMap<>();
@@ -100,12 +104,12 @@ public class ScriptsTable {
 			f0 = new PrintWriter(new FileWriter(pathTableScripts+"ScriptsTable.txt"));
 
 			int i=0;
-			while(i<size)
+			while(i<30)
 			{
 				//tChom = new ChromosomeScript();				
 				//int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME_SCRIPT)+1;
-				int sizeCh=rand.nextInt(ConfigurationsGA.MAX_QTD_COMPONENTS)+1;
-				tChom=buildScriptGenotype(sizeCh);
+				//int sizeCh=rand.nextInt(1)+1;
+				tChom=buildScriptGenotypeSketch();
 
 				//				for (int j = 0; j < sizeCh; j++) {
 				//					int typeSelected=rand.nextInt(numberOfTypes);
@@ -135,6 +139,58 @@ public class ScriptsTable {
 
 		}
 		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts);
+		return st;
+	}
+	
+	public ScriptsTable generateScriptsTableFromSetCover(int size, String porfolioFromSetCover){
+		
+		HashMap<String, BigDecimal> newChromosomes = new HashMap<>();
+		String tChom;
+		PrintWriter f0;
+		Sketch sk=new Sketch(porfolioFromSetCover);
+//		System.out.println("before");
+//		functions.printFunctions(functions.getBasicFunctionsForGrammar());
+		try {
+			f0 = new PrintWriter(new FileWriter(pathTableScripts+"ScriptsTable.txt"));
+
+			int i=0;
+			
+			while(i<size)
+			{
+				//tChom = new ChromosomeScript();				
+				//int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME_SCRIPT)+1;
+				int sizeCh=rand.nextInt(ConfigurationsGA.MAX_QTD_COMPONENTS)+1;
+				tChom=buildScriptGenotypeSketchFromSetCover(porfolioFromSetCover,sk);
+
+				//				for (int j = 0; j < sizeCh; j++) {
+				//					int typeSelected=rand.nextInt(numberOfTypes);
+				//					int sizeRulesofType=tcg.getBagofTypes().get(typeSelected).size();
+				//					int idRuleSelected=tcg.getBagofTypes().get(typeSelected).get(rand.nextInt(sizeRulesofType));
+				//					tChom.addGene(idRuleSelected);
+				//				}
+
+				if(!newChromosomes.containsKey(tChom))
+				{
+					newChromosomes.put(tChom, BigDecimal.valueOf(i));
+					f0.println(i+" "+tChom);
+					i++;
+
+				}
+
+			}
+			
+			f0.flush();
+			f0.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		redefinitionBasicFuncions(sk);
+//		System.out.println("after");
+//		functions.printFunctions(functions.getBasicFunctionsForGrammar());
+		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts);
+		st.functions=functions;
 		return st;
 	}
 
@@ -554,6 +610,11 @@ public class ScriptsTable {
 		return genotypeScript;
 
 	}	
+	
+	public void redefineBasicFunctions(String portfolioSetcover)
+	{
+		
+	}
 
 	public String returnBasicFunction(Boolean forclausule)
 	{
@@ -1145,5 +1206,59 @@ public class ScriptsTable {
 	//			return true;
 	//		}		
 	//	}
+	
+	public String buildScriptGenotypeSketch()
+	{
+		String genotypeScript = "";
+		int numberComponentsAdded=0;
+		Sketch sk=new Sketch();
+		if(ConfigurationsGA.idSketch=="A")
+		{
+			genotypeScript=sk.sketchA(genotypeScript,numberComponentsAdded);
+			//genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+			//basicFunction=basicFunction+") ";
 
+		}
+
+		return genotypeScript;
+	}
+	
+	public String buildScriptGenotypeSketchFromSetCover(String porfolioFromSetCover,Sketch sk)
+	{
+		String genotypeScript = "";
+		int numberComponentsAdded=0;
+		
+		if(ConfigurationsGA.idSketch=="A")
+		{
+			genotypeScript=sk.sketchA(genotypeScript,numberComponentsAdded);
+			//genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+			//basicFunction=basicFunction+") ";
+
+		}
+		//System.out.println("genotype "+genotypeScript);
+		return genotypeScript.trim();
+	}
+
+	private void redefinitionBasicFuncions(Sketch sk) {
+		// TODO Auto-generated method stub
+		List<FunctionsforGrammar> basicFunctionsForGrammarNew=new ArrayList<>();
+		for(int i=0; i<functions.getBasicFunctionsForGrammar().size();i++)
+		{
+			int counterMatch=0;
+		
+			for(String basicFunction: sk.allBasicFunctionsRedefined) 
+			{
+				if(basicFunction.startsWith(functions.getBasicFunctionsForGrammar().get(i).getNameFunction()))
+				{
+					counterMatch++;				
+				}
+			}
+			if(counterMatch!=0)
+			{
+				basicFunctionsForGrammarNew.add(functions.getBasicFunctionsForGrammar().get(i));
+			}
+		}
+		functions.setBasicFunctionsForGrammar(basicFunctionsForGrammarNew);
+		
+	}
 }

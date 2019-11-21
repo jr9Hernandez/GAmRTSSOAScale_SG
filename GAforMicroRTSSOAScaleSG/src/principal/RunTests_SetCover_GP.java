@@ -78,7 +78,7 @@ public class RunTests_SetCover_GP {
 		//fEval = new SetCoverEval();
 		
 		//rodamos o GA
-		Population popFinal = ga.run(fEval);
+		Population popFinal = ga.run(fEval,curriculumportfolio);
 		
 		//popFinal.printWithValue();
 		

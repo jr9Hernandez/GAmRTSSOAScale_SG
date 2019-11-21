@@ -86,6 +86,14 @@ public class GameSampling {
         this.pathTableScripts=pathTableScripts;
         buildScriptsTable(pathTableScripts);
     }
+    public GameSampling()
+    {
+    	utt = new UnitTypeTable();
+        MAXCYCLES = 8000;
+        PERIOD = 20;
+        File file=new File(dirPathPlayer);
+        this.pathTableScripts=pathTableScripts;
+    }
     
     public GameSampling(String pathTableScripts, boolean newPath)
     {
@@ -179,25 +187,35 @@ public class GameSampling {
 //                new SimpleSqrtEvaluationFunction3(), true, utt,
 //                "ManagerClosestEnemy", 2, scriptsRun1);
       	
-//      	AI ai1 = new A3NNoWait(700, -1, 100, 1, 0.3f,
+//      	AI ai1 = new A3NNoWait(400, -1, 100, 1, 0.3f,
 //                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
 //                new SimpleSqrtEvaluationFunction3(), true, utt,
-//                "ManagerRandom", 2, scriptsRun1);
+//                "ManagerLessLife", 4, scriptsRun1);
 //      	
-//      	AI ai2 = new A3NNoWait(700, -1, 100, 1, 0.3f,
+//      	AI ai2 = new A3NNoWait(400, -1, 100, 1, 0.3f,
 //                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
 //                new SimpleSqrtEvaluationFunction3(), true, utt,
-//                "ManagerRandom", 2, scriptsRun1);
+//                "ManagerLessLife", 4, scriptsRun1);
+      	
+      	AI ai1 = new A3NNoWait(400, -1, 100, 1, 0.3f,
+                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+                new SimpleSqrtEvaluationFunction3(), true, utt,
+                "ManagerRandom", 1, scriptsRun1);
+      	
+      	AI ai2 = new A3NNoWait(400, -1, 100, 1, 0.3f,
+                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+                new SimpleSqrtEvaluationFunction3(), true, utt,
+                "ManagerRandom", 1, scriptsRun1);
         
-      AI ai2 = new CmabAssymetricMCTS(700, -1, 100, 1, 0.3f,
-      0.0f, 0.4f, 0, new RandomBiasedAI(utt),
-      new SimpleSqrtEvaluationFunction3(), true, utt,
-      "ManagerRandom", 2, scriptsRun1);
-
-		AI ai1 = new CmabAssymetricMCTS(700, -1, 100, 1, 0.3f,
-      0.0f, 0.4f, 0, new RandomBiasedAI(utt),
-      new SimpleSqrtEvaluationFunction3(), true, utt,
-      "ManagerRandom", 2, scriptsRun1);
+//      AI ai2 = new CmabAssymetricMCTS(100, -1, 100, 1, 0.3f,
+//      0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+//      new SimpleSqrtEvaluationFunction3(), true, utt,
+//      "ManagerRandom", 1, scriptsRun1);
+//
+//		AI ai1 = new CmabAssymetricMCTS(100, -1, 100, 1, 0.3f,
+//      0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+//      new SimpleSqrtEvaluationFunction3(), true, utt,
+//      "ManagerRandom", 1, scriptsRun1);
         
         //AI ai2 = new WorkerRush(utt);;
       	//AI ai1 = new LightPGSSCriptChoiceNoWaits(utt, scriptsRun1,200, "PGSR");
@@ -296,7 +314,7 @@ public class GameSampling {
             */
           //avaliacao de tempo
             duracao = Duration.between(timeInicial, Instant.now());
-        } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMillis() < 180000));
+        } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMillis() < 30000));
         //&& (duracao.toMillis() < 40000)
 
         System.out.println("Game Over");

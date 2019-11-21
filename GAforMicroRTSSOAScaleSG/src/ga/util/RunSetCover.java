@@ -70,7 +70,7 @@ public class RunSetCover {
 	public  void samplingByFiles(String folderLeader, File[] Files, ArrayList<String> allCommands, String pathPlayer)
 	{
 		new File(pathPlayer+"/sampling").mkdirs();
-		GameSampling game = new GameSampling(pathTableScripts);
+		GameSampling game = new GameSampling();
 		Random rand = new Random();
 		int numberStatesSampled=ConfigurationsSC.NUM_STATES_SAM;
 		int stateForSampling=0;

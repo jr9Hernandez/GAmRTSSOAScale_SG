@@ -1,0 +1,1764 @@
+Log - Generation = 0
+-- Population --
+Chromosome 167 39 
+Value = 0
+Chromosome 22 120 
+Value = 0
+Chromosome 105 115 
+Value = 0
+Chromosome 140 116 79 167 118 
+Value = 0
+Chromosome 141 
+Value = 0
+Chromosome 6 153 128 
+Value = 0
+Chromosome 120 112 134 59 
+Value = 0
+Chromosome 53 3 
+Value = 0
+Chromosome 150 
+Value = 0
+Chromosome 155 
+Value = 0
+Chromosome 51 191 80 182 
+Value = 0
+Chromosome 144 34 34 73 71 
+Value = 0
+Chromosome 9 27 49 11 
+Value = 0
+Chromosome 93 57 91 166 58 
+Value = 0
+Chromosome 101 86 179 34 110 
+Value = 0
+Chromosome 165 
+Value = 0
+Chromosome 123 94 
+Value = 0
+Chromosome 37 
+Value = 0
+Chromosome 1 183 1 97 
+Value = 0
+Chromosome 39 177 118 182 
+Value = 0
+Chromosome 66 45 119 
+Value = 0
+Chromosome 182 60 181 
+Value = 0
+Chromosome 27 120 128 18 
+Value = 0
+Chromosome 90 47 
+Value = 0
+Chromosome 15 125 134 
+Value = 0
+Chromosome 47 106 
+Value = 0
+Chromosome 46 90 168 
+Value = 0
+Chromosome 106 172 194 
+Value = 0
+Chromosome 1 
+Value = 0
+Chromosome 193 
+Value = 0
+-- Population --
+Log - Generation = 1
+-- Population --
+Chromosome 167 39 
+Value = 0
+Chromosome 22 120 
+Value = 0
+Chromosome 6 153 120 
+Value = 0
+Chromosome 142 115 
+Value = 0
+Chromosome 157 100 115 106 
+Value = 0
+Chromosome 22 128 
+Value = 0
+Chromosome 105 115 
+Value = 0
+Chromosome 6 153 128 
+Value = 0
+Chromosome 42 91 
+Value = 0
+Chromosome 27 49 11 
+Value = 0
+Chromosome 194 117 
+Value = 0
+Chromosome 150 
+Value = 0
+Chromosome 46 90 168 206 
+Value = 0
+Chromosome 22 211 
+Value = 0
+Chromosome 22 120 60 181 
+Value = 0
+Chromosome 15 82 41 
+Value = 0
+Chromosome 182 60 
+Value = 0
+Chromosome 201 46 202 168 
+Value = 0
+Chromosome 203 60 46 204 168 
+Value = 0
+Chromosome 205 120 
+Value = 0
+Chromosome 51 209 80 182 181 
+Value = 0
+Chromosome 51 
+Value = 0
+Chromosome 181 
+Value = 0
+Chromosome 182 
+Value = 0
+Chromosome 51 191 80 60 200 
+Value = 0
+Chromosome 210 39 
+Value = 0
+Chromosome 46 90 168 
+Value = 0
+Chromosome 9 27 49 
+Value = 0
+Chromosome 128 
+Value = 0
+Chromosome 207 153 208 60 181 
+Value = 0
+-- Population --
+Log - Generation = 2
+-- Population --
+Chromosome 22 182 
+Value = 0
+Chromosome 183 197 223 149 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 182 215 
+Value = 0
+Chromosome 224 193 
+Value = 0
+Chromosome 218 60 
+Value = 0
+Chromosome 22 120 
+Value = 0
+Chromosome 6 153 120 
+Value = 0
+Chromosome 216 60 
+Value = 0
+Chromosome 205 182 181 
+Value = 0
+Chromosome 210 120 60 219 
+Value = 0
+Chromosome 212 120 213 214 
+Value = 0
+Chromosome 226 205 227 
+Value = 0
+Chromosome 60 181 
+Value = 0
+Chromosome 71 217 7 139 182 
+Value = 0
+Chromosome 230 153 120 
+Value = 0
+Chromosome 228 39 
+Value = 0
+Chromosome 19 123 191 115 
+Value = 0
+Chromosome 22 221 205 120 
+Value = 0
+Chromosome 222 39 
+Value = 0
+Chromosome 205 120 
+Value = 0
+Chromosome 220 39 
+Value = 0
+Chromosome 51 209 80 120 
+Value = 0
+Chromosome 22 120 211 
+Value = 0
+Chromosome 22 229 
+Value = 0
+Chromosome 225 211 
+Value = 0
+Chromosome 182 
+Value = 0
+Chromosome 30 85 60 206 
+Value = 0
+Chromosome 120 
+Value = 0
+Chromosome 95 35 43 162 90 
+Value = 0
+-- Population --
+Log - Generation = 3
+-- Population --
+Chromosome 22 182 
+Value = 0
+Chromosome 183 197 223 149 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 231 232 
+Value = 0
+Chromosome 235 39 120 236 
+Value = 0
+Chromosome 205 182 181 
+Value = 0
+Chromosome 252 39 
+Value = 0
+Chromosome 243 244 138 214 
+Value = 0
+Chromosome 242 39 
+Value = 0
+Chromosome 220 
+Value = 0
+Chromosome 250 182 
+Value = 0
+Chromosome 51 209 
+Value = 0
+Chromosome 46 119 231 25 
+Value = 0
+Chromosome 240 241 
+Value = 0
+Chromosome 228 233 
+Value = 0
+Chromosome 238 221 220 39 
+Value = 0
+Chromosome 246 120 39 
+Value = 0
+Chromosome 51 209 80 120 182 
+Value = 0
+Chromosome 183 197 223 251 
+Value = 0
+Chromosome 51 209 80 228 39 
+Value = 0
+Chromosome 22 220 249 
+Value = 0
+Chromosome 245 
+Value = 0
+Chromosome 182 
+Value = 0
+Chromosome 194 37 123 
+Value = 0
+Chromosome 120 
+Value = 0
+Chromosome 234 39 211 
+Value = 0
+Chromosome 220 221 247 248 
+Value = 0
+Chromosome 239 39 
+Value = 0
+Chromosome 120 211 
+Value = 0
+Chromosome 73 213 237 
+Value = 0
+-- Population --
+Log - Generation = 4
+-- Population --
+Chromosome 22 182 
+Value = 0
+Chromosome 183 197 223 149 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 256 221 247 120 182 
+Value = 0
+Chromosome 51 260 80 261 39 
+Value = 0
+Chromosome 51 209 197 269 149 
+Value = 0
+Chromosome 270 182 
+Value = 0
+Chromosome 239 263 264 39 
+Value = 0
+Chromosome 252 39 
+Value = 0
+Chromosome 220 221 248 
+Value = 0
+Chromosome 220 221 247 
+Value = 0
+Chromosome 254 248 
+Value = 0
+Chromosome 197 223 149 
+Value = 0
+Chromosome 51 160 149 258 
+Value = 0
+Chromosome 253 221 
+Value = 0
+Chromosome 202 255 62 53 
+Value = 0
+Chromosome 262 247 248 
+Value = 0
+Chromosome 259 39 
+Value = 0
+Chromosome 266 267 223 268 
+Value = 0
+Chromosome 209 80 257 39 
+Value = 0
+Chromosome 239 39 194 37 123 
+Value = 0
+Chromosome 183 197 39 
+Value = 0
+Chromosome 248 
+Value = 0
+Chromosome 272 39 
+Value = 0
+Chromosome 51 209 80 120 258 
+Value = 0
+Chromosome 183 197 223 271 
+Value = 0
+Chromosome 220 221 246 120 39 
+Value = 0
+Chromosome 51 246 120 265 
+Value = 0
+Chromosome 188 13 244 225 
+Value = 0
+Chromosome 213 264 96 121 71 
+Value = 0
+-- Population --
+Log - Generation = 5
+-- Population --
+Chromosome 22 182 
+Value = 0
+Chromosome 183 197 223 149 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 239 39 194 123 
+Value = 0
+Chromosome 3 197 223 149 
+Value = 0
+Chromosome 239 123 
+Value = 0
+Chromosome 274 220 221 275 
+Value = 0
+Chromosome 276 258 
+Value = 0
+Chromosome 216 157 141 126 4 
+Value = 0
+Chromosome 273 
+Value = 0
+Chromosome 239 277 194 37 278 
+Value = 0
+Chromosome 282 
+Value = 0
+Chromosome 239 39 270 182 
+Value = 0
+Chromosome 51 13 244 225 
+Value = 0
+Chromosome 51 37 123 
+Value = 0
+Chromosome 22 284 
+Value = 0
+Chromosome 51 160 149 
+Value = 0
+Chromosome 283 120 258 
+Value = 0
+Chromosome 239 39 194 
+Value = 0
+Chromosome 89 77 67 
+Value = 0
+Chromosome 51 209 80 280 281 
+Value = 0
+Chromosome 182 
+Value = 0
+Chromosome 188 160 149 258 
+Value = 0
+Chromosome 270 182 13 244 225 
+Value = 0
+Chromosome 194 37 123 
+Value = 0
+Chromosome 167 285 
+Value = 0
+Chromosome 279 183 54 270 
+Value = 0
+Chromosome 188 
+Value = 0
+Chromosome 253 
+Value = 0
+Chromosome 258 47 118 164 
+Value = 0
+-- Population --
+Log - Generation = 6
+-- Population --
+Chromosome 22 182 
+Value = 0
+Chromosome 183 197 223 149 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 274 288 275 
+Value = 0
+Chromosome 274 220 296 4 
+Value = 0
+Chromosome 298 197 223 149 
+Value = 0
+Chromosome 239 39 194 123 
+Value = 0
+Chromosome 274 220 221 275 
+Value = 0
+Chromosome 273 
+Value = 0
+Chromosome 239 274 220 221 275 
+Value = 0
+Chromosome 216 295 141 126 275 
+Value = 0
+Chromosome 274 4 
+Value = 0
+Chromosome 89 290 285 
+Value = 0
+Chromosome 287 39 123 
+Value = 0
+Chromosome 215 
+Value = 0
+Chromosome 216 157 39 194 123 
+Value = 0
+Chromosome 289 123 
+Value = 0
+Chromosome 286 
+Value = 0
+Chromosome 167 67 
+Value = 0
+Chromosome 294 
+Value = 0
+Chromosome 15 52 
+Value = 0
+Chromosome 51 37 183 54 270 
+Value = 0
+Chromosome 292 126 4 
+Value = 0
+Chromosome 171 34 275 238 
+Value = 0
+Chromosome 167 277 
+Value = 0
+Chromosome 22 297 
+Value = 0
+Chromosome 51 37 194 291 
+Value = 0
+Chromosome 167 285 273 
+Value = 0
+Chromosome 293 141 126 4 
+Value = 0
+Chromosome 255 
+Value = 0
+-- Population --
+Log - Generation = 7
+-- Population --
+Chromosome 22 182 
+Value = 0
+Chromosome 183 197 223 149 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 167 277 55 4 
+Value = 0
+Chromosome 300 157 39 277 
+Value = 0
+Chromosome 194 301 
+Value = 0
+Chromosome 300 10 245 208 71 
+Value = 0
+Chromosome 314 39 
+Value = 0
+Chromosome 304 197 223 149 
+Value = 0
+Chromosome 183 197 299 50 
+Value = 0
+Chromosome 277 
+Value = 0
+Chromosome 167 194 312 
+Value = 0
+Chromosome 239 39 194 123 286 
+Value = 0
+Chromosome 293 305 126 4 306 
+Value = 0
+Chromosome 307 308 286 
+Value = 0
+Chromosome 310 197 22 297 
+Value = 0
+Chromosome 22 309 197 223 149 
+Value = 0
+Chromosome 298 197 311 149 277 
+Value = 0
+Chromosome 167 
+Value = 0
+Chromosome 295 
+Value = 0
+Chromosome 10 53 301 257 188 
+Value = 0
+Chromosome 293 141 
+Value = 0
+Chromosome 303 
+Value = 0
+Chromosome 167 277 
+Value = 0
+Chromosome 302 37 167 277 
+Value = 0
+Chromosome 22 297 
+Value = 0
+Chromosome 223 149 
+Value = 0
+Chromosome 126 23 
+Value = 0
+Chromosome 22 306 
+Value = 0
+Chromosome 313 197 223 149 
+Value = 0
+-- Population --
+Log - Generation = 8
+-- Population --
+Chromosome 22 182 
+Value = 0
+Chromosome 183 197 223 149 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 10 50 
+Value = 0
+Chromosome 167 50 
+Value = 0
+Chromosome 183 197 299 39 
+Value = 0
+Chromosome 181 323 
+Value = 0
+Chromosome 22 325 
+Value = 0
+Chromosome 326 327 223 149 
+Value = 0
+Chromosome 126 23 307 308 286 
+Value = 0
+Chromosome 167 194 312 
+Value = 0
+Chromosome 307 319 286 23 
+Value = 0
+Chromosome 318 194 286 
+Value = 0
+Chromosome 194 324 
+Value = 0
+Chromosome 293 
+Value = 0
+Chromosome 167 
+Value = 0
+Chromosome 307 308 286 141 
+Value = 0
+Chromosome 10 299 50 
+Value = 0
+Chromosome 121 168 
+Value = 0
+Chromosome 50 
+Value = 0
+Chromosome 321 322 312 
+Value = 0
+Chromosome 15 214 125 66 
+Value = 0
+Chromosome 315 308 
+Value = 0
+Chromosome 183 316 317 50 286 
+Value = 0
+Chromosome 126 23 
+Value = 0
+Chromosome 113 166 50 
+Value = 0
+Chromosome 197 299 320 
+Value = 0
+Chromosome 167 194 312 323 
+Value = 0
+Chromosome 126 
+Value = 0
+Chromosome 328 39 
+Value = 0
+-- Population --
+Log - Generation = 9
+-- Population --
+Chromosome 22 182 
+Value = 0
+Chromosome 183 197 223 149 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 323 
+Value = 0
+Chromosome 10 
+Value = 0
+Chromosome 10 50 
+Value = 0
+Chromosome 277 188 311 54 
+Value = 0
+Chromosome 181 126 
+Value = 0
+Chromosome 88 53 263 
+Value = 0
+Chromosome 113 166 329 323 
+Value = 0
+Chromosome 167 299 50 
+Value = 0
+Chromosome 113 166 334 
+Value = 0
+Chromosome 181 323 330 
+Value = 0
+Chromosome 22 335 
+Value = 0
+Chromosome 181 332 299 50 
+Value = 0
+Chromosome 22 182 126 
+Value = 0
+Chromosome 65 139 11 
+Value = 0
+Chromosome 158 285 
+Value = 0
+Chromosome 167 337 
+Value = 0
+Chromosome 10 299 50 
+Value = 0
+Chromosome 126 333 
+Value = 0
+Chromosome 167 23 
+Value = 0
+Chromosome 105 170 90 74 
+Value = 0
+Chromosome 181 
+Value = 0
+Chromosome 113 166 
+Value = 0
+Chromosome 126 23 
+Value = 0
+Chromosome 315 
+Value = 0
+Chromosome 183 197 223 336 
+Value = 0
+Chromosome 209 140 
+Value = 0
+Chromosome 158 283 331 178 
+Value = 0
+-- Population --
+Log - Generation = 10
+-- Population --
+Chromosome 22 182 
+Value = 0
+Chromosome 183 197 223 149 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 323 
+Value = 0
+Chromosome 259 
+Value = 0
+Chromosome 126 23 315 
+Value = 0
+Chromosome 310 207 284 340 341 
+Value = 0
+Chromosome 333 
+Value = 0
+Chromosome 100 33 335 64 274 
+Value = 0
+Chromosome 167 181 
+Value = 0
+Chromosome 339 
+Value = 0
+Chromosome 342 
+Value = 0
+Chromosome 110 317 72 
+Value = 0
+Chromosome 345 182 
+Value = 0
+Chromosome 126 343 23 
+Value = 0
+Chromosome 167 39 338 140 
+Value = 0
+Chromosome 39 
+Value = 0
+Chromosome 167 
+Value = 0
+Chromosome 126 10 50 
+Value = 0
+Chromosome 167 39 10 
+Value = 0
+Chromosome 8 21 
+Value = 0
+Chromosome 183 197 346 149 
+Value = 0
+Chromosome 181 
+Value = 0
+Chromosome 344 139 11 
+Value = 0
+Chromosome 126 333 39 
+Value = 0
+Chromosome 209 140 139 11 
+Value = 0
+Chromosome 167 347 
+Value = 0
+Chromosome 209 140 
+Value = 0
+Chromosome 167 126 23 
+Value = 0
+Chromosome 65 
+Value = 0
+-- Population --
+Log - Generation = 11
+-- Population --
+Chromosome 22 182 
+Value = 0
+Chromosome 183 197 223 149 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 323 
+Value = 0
+Chromosome 196 
+Value = 0
+Chromosome 167 361 
+Value = 0
+Chromosome 310 207 284 340 341 
+Value = 0
+Chromosome 10 50 
+Value = 0
+Chromosome 183 197 223 348 
+Value = 0
+Chromosome 149 
+Value = 0
+Chromosome 5 118 107 161 
+Value = 0
+Chromosome 310 349 284 
+Value = 0
+Chromosome 183 356 223 323 
+Value = 0
+Chromosome 352 181 284 340 353 
+Value = 0
+Chromosome 350 
+Value = 0
+Chromosome 167 181 354 341 
+Value = 0
+Chromosome 39 
+Value = 0
+Chromosome 126 10 50 
+Value = 0
+Chromosome 357 207 
+Value = 0
+Chromosome 183 197 346 149 
+Value = 0
+Chromosome 303 
+Value = 0
+Chromosome 344 139 47 355 50 
+Value = 0
+Chromosome 360 197 223 348 
+Value = 0
+Chromosome 50 
+Value = 0
+Chromosome 242 
+Value = 0
+Chromosome 22 359 
+Value = 0
+Chromosome 167 351 
+Value = 0
+Chromosome 197 57 209 
+Value = 0
+Chromosome 126 342 
+Value = 0
+Chromosome 126 358 167 
+Value = 0
+-- Population --
+Log - Generation = 12
+-- Population --
+Chromosome 126 367 149 
+Value = 0
+Chromosome 22 374 
+Value = 0
+Chromosome 22 182 
+Value = 0
+Chromosome 183 197 223 149 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 369 370 
+Value = 0
+Chromosome 196 
+Value = 0
+Chromosome 167 361 
+Value = 0
+Chromosome 139 282 313 92 
+Value = 0
+Chromosome 126 39 
+Value = 0
+Chromosome 365 358 366 39 
+Value = 0
+Chromosome 306 371 50 253 372 
+Value = 0
+Chromosome 167 376 
+Value = 0
+Chromosome 149 
+Value = 0
+Chromosome 234 362 363 364 217 
+Value = 0
+Chromosome 260 255 
+Value = 0
+Chromosome 350 
+Value = 0
+Chromosome 89 373 283 14 281 
+Value = 0
+Chromosome 358 167 
+Value = 0
+Chromosome 27 316 
+Value = 0
+Chromosome 183 197 223 375 
+Value = 0
+Chromosome 358 
+Value = 0
+Chromosome 359 
+Value = 0
+Chromosome 167 
+Value = 0
+Chromosome 126 358 167 361 
+Value = 0
+Chromosome 271 317 
+Value = 0
+Chromosome 22 368 
+Value = 0
+Chromosome 126 358 167 
+Value = 0
+Chromosome 337 39 178 
+Value = 0
+Chromosome 65 
+Value = 0
+-- Population --
+Log - Generation = 13
+-- Population --
+Chromosome 167 39 
+Value = 0
+Chromosome 126 367 149 
+Value = 0
+Chromosome 22 374 
+Value = 0
+Chromosome 22 182 
+Value = 0
+Chromosome 22 374 167 
+Value = 0
+Chromosome 384 317 94 385 386 
+Value = 0
+Chromosome 22 368 39 
+Value = 0
+Chromosome 358 167 376 
+Value = 0
+Chromosome 22 390 
+Value = 0
+Chromosome 167 376 361 
+Value = 0
+Chromosome 167 383 
+Value = 0
+Chromosome 126 376 
+Value = 0
+Chromosome 349 
+Value = 0
+Chromosome 387 127 328 107 
+Value = 0
+Chromosome 282 313 92 
+Value = 0
+Chromosome 4 388 35 
+Value = 0
+Chromosome 252 62 299 
+Value = 0
+Chromosome 358 
+Value = 0
+Chromosome 382 196 
+Value = 0
+Chromosome 20 176 347 308 
+Value = 0
+Chromosome 368 
+Value = 0
+Chromosome 391 182 
+Value = 0
+Chromosome 139 126 39 
+Value = 0
+Chromosome 126 367 389 
+Value = 0
+Chromosome 167 376 196 
+Value = 0
+Chromosome 378 
+Value = 0
+Chromosome 379 
+Value = 0
+Chromosome 139 196 
+Value = 0
+Chromosome 255 377 282 
+Value = 0
+Chromosome 358 380 381 368 
+Value = 0
+-- Population --
+Log - Generation = 14
+-- Population --
+Chromosome 167 39 
+Value = 0
+Chromosome 126 367 149 
+Value = 0
+Chromosome 22 374 
+Value = 0
+Chromosome 387 
+Value = 0
+Chromosome 395 396 
+Value = 0
+Chromosome 167 401 368 39 
+Value = 0
+Chromosome 126 367 404 
+Value = 0
+Chromosome 88 60 
+Value = 0
+Chromosome 76 181 58 43 
+Value = 0
+Chromosome 387 399 376 
+Value = 0
+Chromosome 400 126 376 
+Value = 0
+Chromosome 167 376 
+Value = 0
+Chromosome 358 167 378 
+Value = 0
+Chromosome 368 291 214 177 
+Value = 0
+Chromosome 167 383 
+Value = 0
+Chromosome 358 397 328 107 
+Value = 0
+Chromosome 126 328 107 
+Value = 0
+Chromosome 358 380 381 368 398 
+Value = 0
+Chromosome 22 405 
+Value = 0
+Chromosome 167 39 126 376 
+Value = 0
+Chromosome 393 388 35 
+Value = 0
+Chromosome 387 402 376 
+Value = 0
+Chromosome 387 358 380 381 392 
+Value = 0
+Chromosome 11 302 269 8 84 
+Value = 0
+Chromosome 167 403 
+Value = 0
+Chromosome 266 399 313 44 123 
+Value = 0
+Chromosome 376 
+Value = 0
+Chromosome 126 376 127 328 107 
+Value = 0
+Chromosome 126 
+Value = 0
+Chromosome 127 328 394 
+Value = 0
+-- Population --
+Log - Generation = 15
+-- Population --
+Chromosome 167 39 
+Value = 0
+Chromosome 126 367 149 
+Value = 0
+Chromosome 22 374 
+Value = 0
+Chromosome 73 199 342 203 
+Value = 0
+Chromosome 395 396 
+Value = 0
+Chromosome 52 215 
+Value = 0
+Chromosome 55 379 40 
+Value = 0
+Chromosome 393 388 126 
+Value = 0
+Chromosome 76 181 58 43 
+Value = 0
+Chromosome 127 407 394 
+Value = 0
+Chromosome 76 181 58 43 126 
+Value = 0
+Chromosome 406 
+Value = 0
+Chromosome 203 389 306 
+Value = 0
+Chromosome 126 409 149 
+Value = 0
+Chromosome 387 402 376 
+Value = 0
+Chromosome 35 
+Value = 0
+Chromosome 22 410 
+Value = 0
+Chromosome 105 
+Value = 0
+Chromosome 358 167 396 
+Value = 0
+Chromosome 167 277 
+Value = 0
+Chromosome 395 378 
+Value = 0
+Chromosome 358 167 408 
+Value = 0
+Chromosome 393 126 
+Value = 0
+Chromosome 376 
+Value = 0
+Chromosome 86 401 51 175 138 
+Value = 0
+Chromosome 126 343 
+Value = 0
+Chromosome 108 399 126 
+Value = 0
+Chromosome 126 
+Value = 0
+Chromosome 395 396 126 
+Value = 0
+Chromosome 388 35 
+Value = 0
+-- Population --
+Log - Generation = 16
+-- Population --
+Chromosome 167 39 
+Value = 0
+Chromosome 126 367 149 
+Value = 0
+Chromosome 22 374 
+Value = 0
+Chromosome 203 389 306 105 
+Value = 0
+Chromosome 52 215 395 396 126 
+Value = 0
+Chromosome 253 358 368 
+Value = 0
+Chromosome 423 424 
+Value = 0
+Chromosome 413 181 58 43 
+Value = 0
+Chromosome 76 181 343 
+Value = 0
+Chromosome 52 105 
+Value = 0
+Chromosome 203 389 306 
+Value = 0
+Chromosome 412 
+Value = 0
+Chromosome 414 410 406 
+Value = 0
+Chromosome 416 
+Value = 0
+Chromosome 127 407 406 
+Value = 0
+Chromosome 417 
+Value = 0
+Chromosome 76 181 105 
+Value = 0
+Chromosome 405 398 203 94 
+Value = 0
+Chromosome 393 388 415 
+Value = 0
+Chromosome 126 422 149 
+Value = 0
+Chromosome 58 43 126 
+Value = 0
+Chromosome 181 419 420 126 
+Value = 0
+Chromosome 126 58 43 
+Value = 0
+Chromosome 22 418 126 
+Value = 0
+Chromosome 242 
+Value = 0
+Chromosome 203 389 411 
+Value = 0
+Chromosome 127 
+Value = 0
+Chromosome 76 105 
+Value = 0
+Chromosome 167 421 
+Value = 0
+Chromosome 52 215 407 394 
+Value = 0
+-- Population --
+Log - Generation = 17
+-- Population --
+Chromosome 126 367 149 
+Value = 0
+Chromosome 405 398 437 438 439 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 22 374 
+Value = 0
+Chromosome 393 
+Value = 0
+Chromosome 65 81 73 419 82 
+Value = 0
+Chromosome 393 388 398 203 94 
+Value = 0
+Chromosome 203 
+Value = 0
+Chromosome 393 388 426 30 306 
+Value = 0
+Chromosome 432 94 
+Value = 0
+Chromosome 21 
+Value = 0
+Chromosome 167 442 
+Value = 0
+Chromosome 203 389 306 415 
+Value = 0
+Chromosome 393 427 428 105 
+Value = 0
+Chromosome 218 
+Value = 0
+Chromosome 58 43 430 
+Value = 0
+Chromosome 444 374 
+Value = 0
+Chromosome 440 441 126 
+Value = 0
+Chromosome 203 30 306 
+Value = 0
+Chromosome 393 429 415 
+Value = 0
+Chromosome 431 389 306 356 
+Value = 0
+Chromosome 433 61 408 209 85 
+Value = 0
+Chromosome 425 127 407 406 
+Value = 0
+Chromosome 393 388 105 
+Value = 0
+Chromosome 242 
+Value = 0
+Chromosome 398 436 94 
+Value = 0
+Chromosome 314 12 
+Value = 0
+Chromosome 443 367 149 
+Value = 0
+Chromosome 57 434 435 
+Value = 0
+Chromosome 383 
+Value = 0
+-- Population --
+Log - Generation = 18
+-- Population --
+Chromosome 126 367 149 
+Value = 0
+Chromosome 405 398 437 438 439 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 447 448 
+Value = 0
+Chromosome 453 
+Value = 0
+Chromosome 332 278 95 378 31 
+Value = 0
+Chromosome 443 367 149 218 
+Value = 0
+Chromosome 199 281 56 
+Value = 0
+Chromosome 65 81 73 419 82 
+Value = 0
+Chromosome 451 81 73 452 82 
+Value = 0
+Chromosome 126 454 149 
+Value = 0
+Chromosome 201 363 268 
+Value = 0
+Chromosome 433 61 73 419 82 
+Value = 0
+Chromosome 433 61 408 209 
+Value = 0
+Chromosome 407 
+Value = 0
+Chromosome 443 367 446 85 
+Value = 0
+Chromosome 443 149 
+Value = 0
+Chromosome 167 456 
+Value = 0
+Chromosome 236 140 176 373 413 
+Value = 0
+Chromosome 101 
+Value = 0
+Chromosome 126 409 367 450 
+Value = 0
+Chromosome 367 149 
+Value = 0
+Chromosome 167 442 445 
+Value = 0
+Chromosome 126 393 
+Value = 0
+Chromosome 167 314 449 
+Value = 0
+Chromosome 443 367 149 167 442 
+Value = 0
+Chromosome 405 398 455 438 439 
+Value = 0
+Chromosome 442 
+Value = 0
+Chromosome 167 442 367 149 
+Value = 0
+Chromosome 65 81 408 209 85 
+Value = 0
+-- Population --
+Log - Generation = 19
+-- Population --
+Chromosome 167 39 
+Value = 0
+Chromosome 126 367 149 
+Value = 0
+Chromosome 405 398 437 438 439 
+Value = 0
+Chromosome 455 438 439 
+Value = 0
+Chromosome 453 
+Value = 0
+Chromosome 167 460 39 
+Value = 0
+Chromosome 443 367 149 218 
+Value = 0
+Chromosome 463 398 464 438 465 
+Value = 0
+Chromosome 167 149 218 
+Value = 0
+Chromosome 457 85 
+Value = 0
+Chromosome 405 398 453 
+Value = 0
+Chromosome 433 461 408 209 
+Value = 0
+Chromosome 167 314 
+Value = 0
+Chromosome 462 367 149 
+Value = 0
+Chromosome 443 367 39 
+Value = 0
+Chromosome 218 
+Value = 0
+Chromosome 443 149 
+Value = 0
+Chromosome 443 367 149 218 449 
+Value = 0
+Chromosome 28 43 279 
+Value = 0
+Chromosome 255 294 
+Value = 0
+Chromosome 433 
+Value = 0
+Chromosome 65 81 408 39 
+Value = 0
+Chromosome 278 415 199 351 
+Value = 0
+Chromosome 458 459 85 
+Value = 0
+Chromosome 167 39 10 149 218 
+Value = 0
+Chromosome 466 39 
+Value = 0
+Chromosome 443 367 85 
+Value = 0
+Chromosome 443 
+Value = 0
+Chromosome 398 50 158 
+Value = 0
+Chromosome 449 
+Value = 0
+-- Population --
+Log - Generation = 20
+-- Population --
+Chromosome 167 39 
+Value = 0
+Chromosome 126 367 149 
+Value = 0
+Chromosome 405 398 437 438 439 
+Value = 0
+Chromosome 278 439 
+Value = 0
+Chromosome 455 469 415 199 470 
+Value = 0
+Chromosome 478 398 437 438 439 
+Value = 0
+Chromosome 443 367 149 218 
+Value = 0
+Chromosome 477 39 
+Value = 0
+Chromosome 457 85 
+Value = 0
+Chromosome 455 367 149 
+Value = 0
+Chromosome 462 
+Value = 0
+Chromosome 457 85 439 
+Value = 0
+Chromosome 455 438 439 474 
+Value = 0
+Chromosome 467 438 439 
+Value = 0
+Chromosome 462 367 149 
+Value = 0
+Chromosome 443 475 149 218 433 
+Value = 0
+Chromosome 468 367 149 
+Value = 0
+Chromosome 126 438 476 
+Value = 0
+Chromosome 125 349 
+Value = 0
+Chromosome 443 367 149 314 
+Value = 0
+Chromosome 126 367 375 
+Value = 0
+Chromosome 167 149 
+Value = 0
+Chromosome 455 438 
+Value = 0
+Chromosome 177 
+Value = 0
+Chromosome 48 65 
+Value = 0
+Chromosome 167 473 
+Value = 0
+Chromosome 443 
+Value = 0
+Chromosome 443 149 367 218 
+Value = 0
+Chromosome 471 149 472 
+Value = 0
+Chromosome 443 314 
+Value = 0
+-- Population --
+Log - Generation = 21
+-- Population --
+Chromosome 167 39 
+Value = 0
+Chromosome 126 367 149 
+Value = 0
+Chromosome 405 398 437 438 439 
+Value = 0
+Chromosome 477 39 
+Value = 0
+Chromosome 462 
+Value = 0
+Chromosome 477 39 439 
+Value = 0
+Chromosome 455 469 
+Value = 0
+Chromosome 455 438 415 199 470 
+Value = 0
+Chromosome 467 438 443 
+Value = 0
+Chromosome 405 398 487 438 439 
+Value = 0
+Chromosome 371 50 129 195 
+Value = 0
+Chromosome 126 469 415 480 481 
+Value = 0
+Chromosome 2 483 286 
+Value = 0
+Chromosome 48 65 167 277 
+Value = 0
+Chromosome 477 
+Value = 0
+Chromosome 479 30 476 
+Value = 0
+Chromosome 462 367 149 443 
+Value = 0
+Chromosome 39 
+Value = 0
+Chromosome 407 347 243 435 
+Value = 0
+Chromosome 485 439 367 149 
+Value = 0
+Chromosome 126 486 149 
+Value = 0
+Chromosome 455 438 39 
+Value = 0
+Chromosome 439 
+Value = 0
+Chromosome 272 39 
+Value = 0
+Chromosome 455 482 476 
+Value = 0
+Chromosome 167 39 477 
+Value = 0
+Chromosome 443 
+Value = 0
+Chromosome 232 258 
+Value = 0
+Chromosome 445 
+Value = 0
+Chromosome 484 65 
+Value = 0
+-- Population --
+Log - Generation = 22
+-- Population --
+Chromosome 167 39 
+Value = 0
+Chromosome 126 367 149 
+Value = 0
+Chromosome 405 398 437 438 439 
+Value = 0
+Chromosome 497 498 
+Value = 0
+Chromosome 455 495 30 476 
+Value = 0
+Chromosome 455 30 476 
+Value = 0
+Chromosome 371 443 
+Value = 0
+Chromosome 467 30 499 500 195 
+Value = 0
+Chromosome 467 482 476 
+Value = 0
+Chromosome 468 205 102 
+Value = 0
+Chromosome 455 469 
+Value = 0
+Chromosome 167 501 
+Value = 0
+Chromosome 467 438 443 
+Value = 0
+Chromosome 438 488 
+Value = 0
+Chromosome 455 469 494 476 
+Value = 0
+Chromosome 479 30 476 
+Value = 0
+Chromosome 479 
+Value = 0
+Chromosome 467 438 445 
+Value = 0
+Chromosome 126 367 502 
+Value = 0
+Chromosome 405 398 437 503 439 
+Value = 0
+Chromosome 438 415 199 470 
+Value = 0
+Chromosome 111 146 
+Value = 0
+Chromosome 243 393 491 475 
+Value = 0
+Chromosome 492 438 493 
+Value = 0
+Chromosome 467 445 
+Value = 0
+Chromosome 496 
+Value = 0
+Chromosome 32 17 489 490 
+Value = 0
+Chromosome 479 469 
+Value = 0
+Chromosome 455 482 476 
+Value = 0
+Chromosome 443 
+Value = 0
+-- Population --
+Log - Generation = 23
+-- Population --
+Chromosome 510 467 511 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 126 367 149 
+Value = 0
+Chromosome 405 398 437 438 439 
+Value = 0
+Chromosome 504 234 404 505 
+Value = 0
+Chromosome 111 17 489 490 
+Value = 0
+Chromosome 167 468 205 102 
+Value = 0
+Chromosome 455 30 167 508 
+Value = 0
+Chromosome 510 30 512 39 
+Value = 0
+Chromosome 32 17 205 102 
+Value = 0
+Chromosome 467 490 
+Value = 0
+Chromosome 32 17 489 445 
+Value = 0
+Chromosome 467 506 507 39 
+Value = 0
+Chromosome 476 
+Value = 0
+Chromosome 467 445 39 
+Value = 0
+Chromosome 32 
+Value = 0
+Chromosome 167 
+Value = 0
+Chromosome 39 
+Value = 0
+Chromosome 513 39 
+Value = 0
+Chromosome 438 445 
+Value = 0
+Chromosome 405 398 437 30 439 
+Value = 0
+Chromosome 126 367 514 
+Value = 0
+Chromosome 32 17 489 490 
+Value = 0
+Chromosome 468 489 490 
+Value = 0
+Chromosome 435 103 
+Value = 0
+Chromosome 467 30 445 
+Value = 0
+Chromosome 32 17 489 476 
+Value = 0
+Chromosome 111 146 479 438 476 
+Value = 0
+Chromosome 91 276 53 
+Value = 0
+Chromosome 32 509 
+Value = 0
+-- Population --
+Log - Generation = 24
+-- Population --
+Chromosome 514 
+Value = 0
+Chromosome 510 467 511 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 126 367 149 
+Value = 0
+Chromosome 4 
+Value = 0
+Chromosome 261 
+Value = 0
+Chromosome 521 367 277 
+Value = 0
+Chromosome 467 506 515 476 
+Value = 0
+Chromosome 468 514 
+Value = 0
+Chromosome 468 519 490 
+Value = 0
+Chromosome 106 517 418 69 
+Value = 0
+Chromosome 524 367 149 
+Value = 0
+Chromosome 476 
+Value = 0
+Chromosome 46 425 
+Value = 0
+Chromosome 90 150 
+Value = 0
+Chromosome 126 367 489 523 
+Value = 0
+Chromosome 307 85 
+Value = 0
+Chromosome 39 
+Value = 0
+Chromosome 126 367 435 103 
+Value = 0
+Chromosome 467 511 
+Value = 0
+Chromosome 520 277 
+Value = 0
+Chromosome 467 506 507 39 476 
+Value = 0
+Chromosome 345 522 489 
+Value = 0
+Chromosome 506 507 277 
+Value = 0
+Chromosome 467 126 367 514 
+Value = 0
+Chromosome 512 80 518 
+Value = 0
+Chromosome 516 506 507 514 
+Value = 0
+Chromosome 13 382 131 200 158 
+Value = 0
+Chromosome 167 421 
+Value = 0
+Chromosome 449 
+Value = 0
+-- Population --
+Log - Generation = 25
+-- Population --
+Chromosome 514 
+Value = 0
+Chromosome 510 467 511 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 518 
+Value = 0
+Chromosome 333 418 118 174 530 
+Value = 0
+Chromosome 533 
+Value = 0
+Chromosome 126 367 489 
+Value = 0
+Chromosome 80 518 
+Value = 0
+Chromosome 527 39 523 
+Value = 0
+Chromosome 105 400 288 316 241 
+Value = 0
+Chromosome 158 
+Value = 0
+Chromosome 316 483 532 511 247 
+Value = 0
+Chromosome 528 529 
+Value = 0
+Chromosome 512 261 
+Value = 0
+Chromosome 167 
+Value = 0
+Chromosome 89 384 202 253 
+Value = 0
+Chromosome 512 80 518 489 523 
+Value = 0
+Chromosome 106 
+Value = 0
+Chromosome 367 489 523 
+Value = 0
+Chromosome 193 438 182 263 
+Value = 0
+Chromosome 510 467 537 
+Value = 0
+Chromosome 538 39 
+Value = 0
+Chromosome 516 525 511 39 
+Value = 0
+Chromosome 126 531 
+Value = 0
+Chromosome 375 
+Value = 0
+Chromosome 512 534 535 
+Value = 0
+Chromosome 377 
+Value = 0
+Chromosome 506 138 526 428 
+Value = 0
+Chromosome 510 536 
+Value = 0
+Chromosome 126 476 
+Value = 0
+-- Population --
+Log - Generation = 26
+-- Population --
+Chromosome 514 
+Value = 0
+Chromosome 510 467 511 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 550 39 510 551 
+Value = 0
+Chromosome 105 510 536 
+Value = 0
+Chromosome 167 554 
+Value = 0
+Chromosome 348 547 175 355 464 
+Value = 0
+Chromosome 288 549 241 
+Value = 0
+Chromosome 538 
+Value = 0
+Chromosome 105 400 510 467 511 
+Value = 0
+Chromosome 548 
+Value = 0
+Chromosome 367 489 523 265 
+Value = 0
+Chromosome 546 39 
+Value = 0
+Chromosome 39 
+Value = 0
+Chromosome 167 
+Value = 0
+Chromosome 552 
+Value = 0
+Chromosome 105 39 523 
+Value = 0
+Chromosome 334 344 
+Value = 0
+Chromosome 400 542 543 241 
+Value = 0
+Chromosome 105 400 288 142 241 
+Value = 0
+Chromosome 30 111 512 192 
+Value = 0
+Chromosome 105 288 316 241 
+Value = 0
+Chromosome 524 160 
+Value = 0
+Chromosome 541 210 
+Value = 0
+Chromosome 538 545 39 
+Value = 0
+Chromosome 540 400 288 316 241 
+Value = 0
+Chromosome 510 536 
+Value = 0
+Chromosome 510 467 553 
+Value = 0
+Chromosome 544 141 208 62 
+Value = 0
+Chromosome 510 539 
+Value = 0
+-- Population --
+Log - Generation = 27
+-- Population --
+Chromosome 514 
+Value = 0
+Chromosome 510 467 511 
+Value = 0
+Chromosome 167 39 
+Value = 0
+Chromosome 524 
+Value = 0
+Chromosome 563 511 
+Value = 0
+Chromosome 510 467 556 39 
+Value = 0
+Chromosome 105 288 503 467 511 
+Value = 0
+Chromosome 510 516 511 555 
+Value = 0
+Chromosome 566 39 
+Value = 0
+Chromosome 510 241 
+Value = 0
+Chromosome 316 241 
+Value = 0
+Chromosome 538 
+Value = 0
+Chromosome 510 467 141 208 62 
+Value = 0
+Chromosome 105 389 
+Value = 0
+Chromosome 546 541 562 
+Value = 0
+Chromosome 39 
+Value = 0
+Chromosome 177 513 501 141 240 
+Value = 0
+Chromosome 105 557 288 142 558 
+Value = 0
+Chromosome 105 39 523 
+Value = 0
+Chromosome 546 39 523 
+Value = 0
+Chromosome 105 288 167 
+Value = 0
+Chromosome 510 565 511 
+Value = 0
+Chromosome 179 
+Value = 0
+Chromosome 564 
+Value = 0
+Chromosome 524 160 
+Value = 0
+Chromosome 105 560 316 561 
+Value = 0
+Chromosome 478 505 
+Value = 0
+Chromosome 105 39 523 559 
+Value = 0
+Chromosome 511 
+Value = 0
+Chromosome 543 411 83 
+Value = 0
+-- Population --

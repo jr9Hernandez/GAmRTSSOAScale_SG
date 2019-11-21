@@ -153,7 +153,7 @@ public class GVS_RunBattle {
         
         List<AI> scriptsRun1=decodeScripts(utt, iScriptsAi2);
         List<AI> scriptsRun2=decodeScripts(utt, iScriptsAi1);
-        AI ai2=scriptsRun1.get(0);
+        //AI ai2=scriptsRun1.get(0);
 //      AI ai1 = new PGSSCriptChoiceRandom(utt, decodeScripts(utt, iScriptsAi1), "PGSR", 2, 200);
       //AI ai2 = new PGSSCriptChoiceRandom(utt, scriptsRun1, "PGSR", 1, 200);
         //List<AI> scriptsRun1=decodeScripts(utt, iScriptsAi1);
@@ -163,10 +163,10 @@ public class GVS_RunBattle {
       	//AI ai1 = new LightPGSSCriptChoice(utt, scriptsRun1,200, "PGSR");
       	//AI ai1=new PuppetSearchMCTS(utt);
 //        AI ai1=new LightRush(utt);
-        //AI ai1=new WorkerRush(utt);
+        AI ai2=new WorkerRush(utt);
         
+        //AI ai1 = new LightPGSSCriptChoiceNoWaits(utt, scriptsRun1,200, "PGSR");
         AI ai1 = new LightPGSSCriptChoiceNoWaits(utt, scriptsRun1,200, "PGSR");
-        //AI ai2 = new LightPGSSCriptChoiceNoWaits(utt, scriptsRun1,600, "PGSR");
         
 //      	AI ai2 = new LightPGSSCriptChoice(utt, scriptsRun,200, "PGSR");
 
@@ -340,14 +340,14 @@ public class GVS_RunBattle {
     public List<AI> decodeScripts(UnitTypeTable utt, ArrayList<Integer> iScripts) {
         List<AI> scriptsAI = new ArrayList<>();
 
-//        for (Integer idSc : iScripts) {
-//            //System.out.println("tam tab"+scriptsTable.size());
-//            //System.out.println("id "+idSc+" Elems "+scriptsTable.get(BigDecimal.valueOf(idSc)));
-//            scriptsAI.add(buildCommandsIA(utt, scriptsTable.get(BigDecimal.valueOf(idSc))));
-//        }
+        for (Integer idSc : iScripts) {
+            //System.out.println("tam tab"+scriptsTable.size());
+            //System.out.println("id "+idSc+" Elems "+scriptsTable.get(BigDecimal.valueOf(idSc)));
+            scriptsAI.add(buildCommandsIA(utt, scriptsTable.get(BigDecimal.valueOf(idSc))));
+        }
         
         //scriptsAI.add(buildCommandsIA(utt, "harvest(5)"));
-        scriptsAI.add(buildCommandsIA(utt, "build(Barrack,1,Down)"));
+//        scriptsAI.add(buildCommandsIA(utt, "build(Barrack,1,Down)"));
 //        scriptsAI.add(buildCommandsIA(utt, "attack(Worker,farthest)"));
 //        scriptsAI.add(buildCommandsIA(utt, "train(Worker,20,Up)"));
 //        scriptsAI.add(buildCommandsIA(utt, "moveToUnit(Worker,Ally,lessHealthy)"));

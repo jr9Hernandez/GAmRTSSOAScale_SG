@@ -528,7 +528,7 @@ public class Reproduction {
 	public int mutationScript(Population p, int genidScript)
 	{
 		functions=new FunctionsforGrammar();
-		List<FunctionsforGrammar> basicFunctions=functions.getBasicFunctionsForGrammar();
+		List<FunctionsforGrammar> basicFunctions=scrTable.functions.getBasicFunctionsForGrammar();
 		List<FunctionsforGrammar> conditionalFunctions=functions.getConditionalsForGrammar();
 		
 		
@@ -591,7 +591,7 @@ public class Reproduction {
 	public int mutationScriptMandatory(int genidScript)
 	{
 		functions=new FunctionsforGrammar();
-		List<FunctionsforGrammar> basicFunctions=functions.getBasicFunctionsForGrammar();
+		List<FunctionsforGrammar> basicFunctions=scrTable.functions.getBasicFunctionsForGrammar();
 		List<FunctionsforGrammar> conditionalFunctions=functions.getConditionalsForGrammar();
 		
 		
@@ -699,6 +699,7 @@ public class Reproduction {
 	public String[]  chossingFromBag(String[]  candidates,String[] originals, List<FunctionsforGrammar>basicFunctions, List<FunctionsforGrammar>conditionalFunctions)
 	{
 		ScriptsTable objScriptTable=new ScriptsTable("");
+		objScriptTable.functions.setBasicFunctionsForGrammar(basicFunctions);
 		
 		boolean found=false;
 		for (int i=0; i<originals.length;i++)

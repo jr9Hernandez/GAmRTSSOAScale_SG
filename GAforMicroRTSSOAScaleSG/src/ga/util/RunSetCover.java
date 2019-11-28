@@ -127,13 +127,13 @@ public class RunSetCover {
 			if (gsSimulator.canExecuteAnyAction(1)){
 				for (int j = 0; j < allCommands.size(); j++) {
 
-						PlayerAction pa= game.generateActionbyScriptByString(gsSimulator,allCommands.get(j) , 1);
+						ArrayList<PlayerAction> paL= game.generateActionbyScriptByString(gsSimulator,allCommands.get(j) , 1);
 //						System.out.println("actions script "+pa.getActions().toString());
 //						System.out.println("actions state "+sa.getAction());						
 //						System.out.println(Arrays.toString(parts));
 //						System.out.println(parts[k]);
 //						System.out.println(pa.getActions().toString());		
-						fitnessUnitAction(pa, sa,j);
+						fitnessUnitAction(paL, sa,j);
 //						try {
 //							Writer writer = new FileWriter(pathPlayer+"/sampling/"+Files[i].getName()+".txt",true);
 //							writer.write(pa.getActions().toString());
@@ -161,10 +161,14 @@ public class RunSetCover {
 //		}
 	}
 	
-	 public void fitnessUnitAction(PlayerAction pa, StateAction sa, int idScript) {
+	 public void fitnessUnitAction(ArrayList<PlayerAction> paL, StateAction sa, int idScript) {
 		int counterFItness=0;
-		String [] unitActionsPlayerAction=  unitActionSplitted(pa.getActions().toString());
+		
 		String [] unitActionsStateAction=  unitActionSplitted(sa.getAction());
+		
+		for(PlayerAction pa:paL)
+		{
+		String [] unitActionsPlayerAction=  unitActionSplitted(pa.getActions().toString());
 
 		for(String uasa:unitActionsStateAction)
 		{
@@ -188,10 +192,10 @@ public class RunSetCover {
 						CommandsCovering.add(idScript);
 						dataH.put(sa.getNameState()+"_"+uasa, CommandsCovering);
 					}
-					
-					
+										
 				}
 			}
+		}
 		}
 
 	}

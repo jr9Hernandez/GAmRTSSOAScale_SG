@@ -455,24 +455,32 @@ public class GameSampling {
         return pa;
     }
     
-    public PlayerAction generateActionbyScriptByString(GameState g, String scriptSampling, int player) 
+    public ArrayList<PlayerAction> generateActionbyScriptByString(GameState g, String scriptSampling, int player) 
     {
+    	ArrayList<PlayerAction> paL=new ArrayList<>();
     	List<AI> scriptsRun1=decodeSingleScriptbyString(utt, scriptSampling);
 
-        AI ai1=scriptsRun1.get(0);
-        
-        PlayerAction pa=null;
-		try {
-			pa = ai1.getAction(player, g);
-			//pa1.getActions().toString();
-			//System.out.println(pa1.getActions());
-			//System.out.println("Action A1 ="+ pa1.toString());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}  
-        
-        return pa;
+    	ChromosomeAI ai1=(ChromosomeAI) scriptsRun1.get(0);
+    	PlayerAction pa=null;   
+    	try {
+    		for(Unit u : g.getUnits()) {
+    			if(u.getPlayer() == player){
+    				pa=null; 
+    				pa = ai1.getActionSingleUnit(player, g,u);
+//    				System.out.println("player"+pa.getActions().toString());
+//    				System.out.println("Unit"+pa.getAction(u).toString());
+    				paL.add(pa);
+    			}
+    		}
+    		//pa1.getActions().toString();
+    		//System.out.println(pa1.getActions());
+    		//System.out.println("Action A1 ="+ pa1.toString());
+    	} catch (Exception e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}  
+
+    	return paL;
     }
     
 

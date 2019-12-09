@@ -29,7 +29,7 @@ public class RunSetCoverCalculation {
 //			e.printStackTrace();
 //		}
 		objData.printDataMap(data);
-		//System.out.println(data.size());
+		System.out.println(data.size());
 		DataFormatting sc=new DataFormatting(data,basicFunctions.size());
 		sc.fillMatrix();
 		//sc.printMatrix();		

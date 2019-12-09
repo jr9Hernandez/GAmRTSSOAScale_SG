@@ -71,6 +71,7 @@ public class GVS_RunBattle {
     String pathLogsUsedCommands;
     ICompiler compiler = new MainGPCompiler();
     HashSet<String> usedCommands;
+    HashMap<Long, String> counterByFunction=new HashMap<Long, String>();
 
     public GVS_RunBattle(String pathTableScripts, String pathLogsUsedCommands) {
     	this.pathLogsUsedCommands=pathLogsUsedCommands;
@@ -153,7 +154,7 @@ public class GVS_RunBattle {
         
         List<AI> scriptsRun1=decodeScripts(utt, iScriptsAi2);
         List<AI> scriptsRun2=decodeScripts(utt, iScriptsAi1);
-        //AI ai2=scriptsRun1.get(0);
+        //AI ai1=scriptsRun1.get(0);
 //      AI ai1 = new PGSSCriptChoiceRandom(utt, decodeScripts(utt, iScriptsAi1), "PGSR", 2, 200);
       //AI ai2 = new PGSSCriptChoiceRandom(utt, scriptsRun1, "PGSR", 1, 200);
         //List<AI> scriptsRun1=decodeScripts(utt, iScriptsAi1);
@@ -163,10 +164,11 @@ public class GVS_RunBattle {
       	//AI ai1 = new LightPGSSCriptChoice(utt, scriptsRun1,200, "PGSR");
       	//AI ai1=new PuppetSearchMCTS(utt);
 //        AI ai1=new LightRush(utt);
-        AI ai2=new WorkerRush(utt);
+        //AI ai2=new WorkerRush(utt);
+        AI ai2=new PassiveAI();
         
-        //AI ai1 = new LightPGSSCriptChoiceNoWaits(utt, scriptsRun1,200, "PGSR");
         AI ai1 = new LightPGSSCriptChoiceNoWaits(utt, scriptsRun1,200, "PGSR");
+        //AI ai1 = new LightPGSSCriptChoiceNoWaits(utt, scriptsRun1,200, "PGSR");
         
 //      	AI ai2 = new LightPGSSCriptChoice(utt, scriptsRun,200, "PGSR");
 
@@ -346,11 +348,9 @@ public class GVS_RunBattle {
             scriptsAI.add(buildCommandsIA(utt, scriptsTable.get(BigDecimal.valueOf(idSc))));
         }
         
-        //scriptsAI.add(buildCommandsIA(utt, "harvest(5)"));
-//        scriptsAI.add(buildCommandsIA(utt, "build(Barrack,1,Down)"));
-//        scriptsAI.add(buildCommandsIA(utt, "attack(Worker,farthest)"));
-//        scriptsAI.add(buildCommandsIA(utt, "train(Worker,20,Up)"));
-//        scriptsAI.add(buildCommandsIA(utt, "moveToUnit(Worker,Ally,lessHealthy)"));
+
+ //       scriptsAI.add(buildCommandsIA(utt, "train(Worker,50,EnemyDir) for(u) (if(HaveQtdUnitsHarversting(2)) (attack(Worker,mostHealthy,u)) (harvest(50,u)))"));
+//        scriptsAI.add(buildCommandsIA(utt, "train(Worker,50,EnemyDir) for(u) (if(HaveQtdUnitsHarversting(3)) (attack(Worker,mostHealthy,u)) (harvest(50,u)))"));
 //        scriptsAI.add(buildCommandsIA(utt, "train(Worker,20,Left)"));
 //        scriptsAI.add(buildCommandsIA(utt, "moveToUnit(Worker,Ally,farthest)"));
 //        scriptsAI.add(buildCommandsIA(utt, "train(Worker,20,Down)"));
@@ -386,7 +386,7 @@ public class GVS_RunBattle {
             //System.out.println("idSc "+idSc);
             commands.add(tcg.getCommandByID(idSc));;
         }
-        AI aiscript = new ChromosomeAI(utt, commands, "P1", "", new HashSet<String>());
+        AI aiscript = new ChromosomeAI(utt, commands, "P1", "", new HashSet<String>(), new HashMap<Long, String>());
 
         return aiscript;
     }
@@ -419,7 +419,8 @@ public class GVS_RunBattle {
     	usedCommands=new HashSet<String> ();
     	FunctionGPCompiler.counterCommands=0;
         List<ICommand> commandsGP = compiler.CompilerCode(code, utt);
-        AI aiscript = new ChromosomeAI(utt, commandsGP, "P1", code, usedCommands);
+        System.out.println("ia "+commandsGP);
+        AI aiscript = new ChromosomeAI(utt, commandsGP, "P1", code, usedCommands,counterByFunction);
         return aiscript;
     }
     

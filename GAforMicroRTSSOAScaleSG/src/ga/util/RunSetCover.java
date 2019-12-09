@@ -26,12 +26,21 @@ import SetCoverSampling.ConfigurationsSC;
 import SetCoverSampling.GameSampling;
 import SetCoverSampling.IndividualFitness;
 import SetCoverSampling.StateAction;
+import ai.ScriptsGenerator.Command.BasicBoolean.IfFunction;
+import ai.ScriptsGenerator.CommandInterfaces.ICommand;
+import ai.ScriptsGenerator.GPCompiler.ConditionalGPCompiler;
+import ai.abstraction.pathfinding.AStarPathFinding;
+import ai.abstraction.pathfinding.PathFinding;
 import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
 import ga.model.Population;
 import ga.util.Evaluation.RatePopulation;
 import rts.GameState;
 import rts.PlayerAction;
+import rts.ResourceUsage;
+import rts.UnitAction;
+import rts.units.Unit;
+import rts.units.UnitTypeTable;
 import util.sqlLite.Log_Facade;
 
 
@@ -47,14 +56,17 @@ public class RunSetCover {
 	{
 		ScriptsTable st=new ScriptsTable(pathTableScripts);
 		ArrayList<String> basicFunctions= st.allBasicFunctions();
+		ArrayList<String> conditionalsFunctions= st.allConditionalFunctions();
+//		System.out.println(Arrays.toString(conditionalsFunctions.toArray()));
+//		System.out.println("size "+conditionalsFunctions.size());
 		File[] files = new File(dirPathPlayer).listFiles();	
 		
-		presampling(files,basicFunctions);
+		presampling(files,basicFunctions,conditionalsFunctions);
 		
 
 	}
 
-	public  void presampling(File[] files, ArrayList<String> allCommands) {
+	public  void presampling(File[] files, ArrayList<String> allCommands,ArrayList<String> allConditionals) {
 	    for (File file : files) {
 	            //System.out.println("Directory: " + file.getName());
 	            //sampling(file.listFiles()); // Calls same method again.
@@ -63,11 +75,11 @@ public class RunSetCover {
 	    		String pathPlayer=file.getAbsolutePath()+"/player1";
 	    		File filePlayer=new File(pathPlayer);
 					
-	        	samplingByFiles(filePlayer.getName(), filePlayer.listFiles(), allCommands, pathPlayer);	        	
+	        	samplingByFiles(filePlayer.getName(), filePlayer.listFiles(), allCommands, pathPlayer,allConditionals);	        	
 	    }
 	}
 	
-	public  void samplingByFiles(String folderLeader, File[] Files, ArrayList<String> allCommands, String pathPlayer)
+	public  void samplingByFiles(String folderLeader, File[] Files, ArrayList<String> allCommands, String pathPlayer, ArrayList<String> allConditionals)
 	{
 		new File(pathPlayer+"/sampling").mkdirs();
 		GameSampling game = new GameSampling();
@@ -95,9 +107,13 @@ public class RunSetCover {
 				e.printStackTrace();
 			}		
 			
+//			GameState gsSimulator = GameState.fromJSON(sa.getState(),game.utt);
+//			String []listactionsAllStates=unitActionSplitted(sa.getAction());
+//			totalActionsAllStates=totalActionsAllStates+listactionsAllStates.length;
 
 			GameState gsSimulator = GameState.fromJSON(sa.getState(),game.utt);
-			String []listactionsAllStates=unitActionSplitted(sa.getAction());
+			PlayerAction paOriginal=PlayerAction.fromJSON(sa.getAction(), gsSimulator, game.utt);
+			String []listactionsAllStates=unitActionSplitted(paOriginal.getActions().toString());
 			totalActionsAllStates=totalActionsAllStates+listactionsAllStates.length;
 			
 //			if (gsSimulator.canExecuteAnyAction(0)){
@@ -133,7 +149,7 @@ public class RunSetCover {
 //						System.out.println(Arrays.toString(parts));
 //						System.out.println(parts[k]);
 //						System.out.println(pa.getActions().toString());		
-						fitnessUnitAction(pa, sa,j);
+						fitnessUnitAction(pa, sa,j,gsSimulator,game.utt);
 //						try {
 //							Writer writer = new FileWriter(pathPlayer+"/sampling/"+Files[i].getName()+".txt",true);
 //							writer.write(pa.getActions().toString());
@@ -148,11 +164,14 @@ public class RunSetCover {
 //					
 //
 //				}
+				}
+				//For player 1
+				validateIfConditionalIsTrue(allConditionals,gsSimulator,1,paOriginal,game.utt);
 			}
-			}
+
 		}	
 		System.out.println("");
-		System.out.println("AllActionsAllStates "+totalActionsAllStates);
+		System.out.println("AllActionsAllStatesT "+totalActionsAllStates);
 		System.out.println("");
 		//print the objects 
 //		for(IndividualFitness ind:listIndividualFitness)
@@ -161,10 +180,35 @@ public class RunSetCover {
 //		}
 	}
 	
-	 public void fitnessUnitAction(PlayerAction pa, StateAction sa, int idScript) {
+	public void validateIfConditionalIsTrue(ArrayList<String> allConditionals,GameState g, int player,PlayerAction currentPlayerAction, UnitTypeTable utt)
+	{
+		ConditionalGPCompiler conditionalCompiler = new ConditionalGPCompiler();
+		for(String conditional:allConditionals)
+		{
+			IfFunction ifFun = new IfFunction();
+			String[] fragments = conditional.split(" ");
+			//first build the if and get the conditional
+			//	        if (isIfInitialClause(fragments[pos])) {
+			//remove the tags and get the conditional
+			String sCond = fragments[0];
+			if (sCond.startsWith("(if(")) {
+				sCond = sCond.replace("(if(", "").trim();
+			} else {
+				sCond = sCond.replace("if(", "").trim();
+			}
+			sCond=sCond+")";
+			ifFun.setConditional(conditionalCompiler.getConditionalByCode(sCond));
+			System.out.println("chis "+sCond+" "+ifFun.getConditional().runConditional(g, player, currentPlayerAction,new AStarPathFinding(), utt,new HashMap<Long, String>()));
+			//	        }
+		}
+		
+	}
+	
+	 public void fitnessUnitAction(PlayerAction pa, StateAction sa, int idScript, GameState gsSimulator, UnitTypeTable utt) {
 		int counterFItness=0;
 		String [] unitActionsPlayerAction=  unitActionSplitted(pa.getActions().toString());
-		String [] unitActionsStateAction=  unitActionSplitted(sa.getAction());
+		PlayerAction paOriginal=PlayerAction.fromJSON(sa.getAction(), gsSimulator, utt);
+		String [] unitActionsStateAction=  unitActionSplitted(paOriginal.getActions().toString());
 
 		for(String uasa:unitActionsStateAction)
 		{

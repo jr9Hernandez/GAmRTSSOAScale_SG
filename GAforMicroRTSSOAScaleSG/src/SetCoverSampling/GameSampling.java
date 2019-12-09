@@ -71,6 +71,7 @@ public class GameSampling {
     
     private HashMap<BigDecimal, String> scriptsTable;
     HashSet<String> usedCommands;
+    HashMap<Long, String> counterByFunction;
     ICompiler compiler = new MainGPCompiler();
     private final String dirPathPlayer = System.getProperty("user.dir").concat("/logs_game/logs_states/");
     //private final String dirPathPlayer = "logs_game/logs_states";
@@ -330,7 +331,8 @@ public class GameSampling {
     	writer = new FileWriter(path+"/"+"state_"+id+".txt");
        	gs_save.toJSON(writer);
     	writer.write("\n");
-    	writer.write(pa.getActions().toString());
+    	pAction.toJSON(writer);
+    	//writer.write(pa.getActions().toString());
     	writer.flush();
 		writer.close();
 		
@@ -563,9 +565,10 @@ public class GameSampling {
     
     private AI buildCommandsIA(UnitTypeTable utt, String code) {
     	usedCommands=new HashSet<String> ();
+    	counterByFunction=new HashMap<Long, String>();
     	FunctionGPCompiler.counterCommands=0;
         List<ICommand> commandsGP = compiler.CompilerCode(code, utt);
-        AI aiscript = new ChromosomeAI(utt, commandsGP, "P1", code, usedCommands);
+        AI aiscript = new ChromosomeAI(utt, commandsGP, "P1", code, usedCommands, counterByFunction);
         return aiscript;
     }
     

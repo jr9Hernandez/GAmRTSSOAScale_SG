@@ -793,6 +793,23 @@ public class ScriptsTable {
 		}
 		return allBasicFunctions;
 	}
+	
+	public ArrayList<String> allConditionalFunctions()
+	{
+		String conditionalFunction="";
+		ArrayList<String> allConditionalFunctions=new ArrayList<>();
+		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
+		int counter=0;
+		for(FunctionsforGrammar functionChosen: functions.getConditionalsForGrammar())
+		{
+			ArrayList<String> allConditionalFunctionsPerFunction=new ArrayList<>();			
+			conditionalFunction=functionChosen.getNameFunction()+"(";
+			buildingFunction(conditionalFunction,counter,functionChosen.getParameters(),functionChosen.getParameters().size(),allConditionalFunctionsPerFunction);
+			allConditionalFunctions.addAll(allConditionalFunctionsPerFunction);
+		
+		}
+		return allConditionalFunctions;
+	}
 		
 	public ArrayList<String> buildingFunction(String partialFunction,int counter, List<Parameter> parameters, int maxSizeParameters,ArrayList<String> allBasicFunctions)
 	{

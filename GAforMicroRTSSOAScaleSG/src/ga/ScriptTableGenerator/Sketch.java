@@ -23,7 +23,7 @@ public class Sketch {
 	{
 		allBasicFunctions=st.allBasicFunctions();
 		allBasicFunctionsRedefined=st.allBasicFunctions();
-		maxComponents=1;
+		maxComponents=ConfigurationsGA.MAX_QTD_COMPONENTS;
 //		System.out.println(Arrays.toString(allBasicFunctions.toArray()));
 //		System.out.println(Arrays.toString(allBasicFunctionsRedefined.toArray()));
 	}

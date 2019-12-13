@@ -17,7 +17,7 @@ import ga.model.Chromosome;
 import ga.model.Population;
 import ga.util.PreSelection;
 import ga.util.RunGA;
-import ga.util.RunSetCover;
+import ga.util.RunScriptByState;
 import ga.util.Evaluation.RatePopulation;
 import ga.util.Evaluation.RoundRobinEliteandSampleEval;
 import ga.util.Evaluation.RoundRobinEliteandSampleIterativeEval;
@@ -61,7 +61,7 @@ public class RunTestsSetCover {
 		//* 
 		//aplicando o Algoritmo Genético
 		//criei uma classe para controlar a execução do GA.
-		RunSetCover sc = new RunSetCover();
+		RunScriptByState sc = new RunScriptByState();
 		
 		RunSetCoverCalculation scCalculation = new RunSetCoverCalculation(sc.dataH);
 		List<Integer> setCover=scCalculation.getSetCover();

@@ -68,18 +68,26 @@ public class DataRecollection {
 			scriptsForPortfolio=getPortfolioRandomSize(ConfigurationsSC.MAX_SIZE_PORTFOLIO,scrTable);	
 			portfolioPlayer1=scriptsForPortfolio.getGenes().toString();
 			//System.out.println("port"+portfolioPlayer1);
+			
+			try {						
+				game.run(portfolioPlayer1,portfolioPlayer1,pathLog,true);
+				sampleCounter++;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		else
 		{
 			portfolioPlayer1=curriculumPortfolio;
-		}
-
-		try {						
-			game.run(portfolioPlayer1,portfolioPlayer1,pathLog);
-			sampleCounter++;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			try {						
+				game.run(portfolioPlayer1,portfolioPlayer1,pathLog,false);
+				sampleCounter++;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	

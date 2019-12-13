@@ -4,16 +4,15 @@ public class StateAction {
 	
 	public StateAction()
 	{
-		this.state=state;
-		this.action=action;
-		this.nameState=nameState;
+
 	}
 	
-	public StateAction(String state, String action, String nameState)
+	public StateAction(String state, String action, String nameState, String counterByFunction)
 	{
 		this.state=state;
 		this.action=action;
 		this.nameState=nameState;
+		this.counterByFunction=counterByFunction;
 	}
 	/**
 	 * @return the state
@@ -57,9 +56,18 @@ public class StateAction {
 		this.nameState = nameState;
 	}
 
+	public String getCounterByFunction() {
+		return counterByFunction;
+	}
+
+	public void setCounterByFunction(String counterByFunction) {
+		this.counterByFunction = counterByFunction;
+	}
+
 	private String state;
 	private String action;
 	private String nameState;
+	private String counterByFunction;
 
 	
 

@@ -41,7 +41,9 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JFrame;
 
@@ -71,7 +73,7 @@ public class GameSampling {
     
     private HashMap<BigDecimal, String> scriptsTable;
     HashSet<String> usedCommands;
-    HashMap<Long, String> counterByFunction;
+    static HashMap<Long, String> counterByFunction =new HashMap<Long, String>();
     ICompiler compiler = new MainGPCompiler();
     private final String dirPathPlayer = System.getProperty("user.dir").concat("/logs_game/logs_states/");
     //private final String dirPathPlayer = "logs_game/logs_states";
@@ -106,7 +108,8 @@ public class GameSampling {
         deleteFolder(file);
     }
 
-    public void run(String portfolioPlayer1, String portfolioPlayer2, String pathLog) throws Exception {
+    public void run(String portfolioPlayer1, String portfolioPlayer2, String pathLog, boolean isInitialRandomGame) throws Exception {
+    	System.out.println("portfolioPlayer1 "+portfolioPlayer1+" pathTableScripts "+pathTableScripts);
     	buildScriptsTable(pathTableScripts);
     	id = 0;
     	//controle de tempo
@@ -152,10 +155,10 @@ public class GameSampling {
         
         Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "Player0".getBytes(), StandardOpenOption.APPEND); 
         Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "\n".getBytes(), StandardOpenOption.APPEND); 
-        List<AI> scriptsRun1=decodeScriptsSetCover(utt, iScriptsAi1);
+        List<AI> scriptsRun1=decodeScriptsSetCover(utt, iScriptsAi1, isInitialRandomGame);
         Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "Player1".getBytes(), StandardOpenOption.APPEND);
         Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "\n".getBytes(), StandardOpenOption.APPEND); 
-        List<AI> scriptsRun2=decodeScriptsSetCover(utt, iScriptsAi2);
+        List<AI> scriptsRun2=decodeScriptsSetCover(utt, iScriptsAi2, isInitialRandomGame);
         Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), "\n".getBytes(), StandardOpenOption.APPEND); 
 
 
@@ -261,6 +264,10 @@ public class GameSampling {
             		id++;
             	}
                 */
+            	
+            	//Here I will recover the counterByFunction before modify it by the getAction()
+            	HashMap<Long, String> counterByFunctionOriginal = new HashMap<Long,String>(counterByFunction);
+            	
                 PlayerAction pa1 = ai1.getAction(0, gs);  
                 //System.out.println("Tempo de execução P1="+(startTime = System.currentTimeMillis() - startTime));
                 //System.out.println("Action A1 ="+ pa1.toString());
@@ -277,13 +284,13 @@ public class GameSampling {
                 
                 if (gs.canExecuteAnyAction(0)) {
                 	//verify what kind of action is and save the state in your specified folder
-                	saveState(gs, pa1,dirPathPlayer0,idState,pa1);
+                	saveState(gs, pa1,dirPathPlayer0,idState,pa1,counterByFunctionOriginal);
                 	//saveStateByType(gs, pa2);
                 }
                 if (gs.canExecuteAnyAction(1)) {
                 	//verify what kind of action is and save the state in your specified folder
                 	//saveStateByType(gs, pa1);
-                	saveState(gs, pa2,dirPathPlayer1,idState,pa2);
+                	saveState(gs, pa2,dirPathPlayer1,idState,pa2, counterByFunctionOriginal);
                 }
                 
                 gs.issueSafe(pa1);
@@ -322,7 +329,7 @@ public class GameSampling {
     }
 
     
-    public static void saveState(GameState gs_save, PlayerAction pAction,String path,int id, PlayerAction pa) throws Exception{
+    public static void saveState(GameState gs_save, PlayerAction pAction,String path,int id, PlayerAction pa, HashMap<Long, String> counterByFunctionOriginal) throws Exception{
     	boolean typeState = getAllNones(pAction);
     	if(typeState){
     		return;
@@ -332,6 +339,16 @@ public class GameSampling {
        	gs_save.toJSON(writer);
     	writer.write("\n");
     	pAction.toJSON(writer);
+    	writer.write("\n");
+    	
+    	//saving the hashmap as a string
+    	Iterator it = counterByFunctionOriginal.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            writer.write(pair.getKey() +" "+ pair.getValue()+";");
+        }
+    	
+    	
     	//writer.write(pa.getActions().toString());
     	writer.flush();
 		writer.close();
@@ -498,23 +515,49 @@ public class GameSampling {
         return scriptsAI;
     }
     
-    public List<AI> decodeScriptsSetCover(UnitTypeTable utt, ArrayList<Integer> iScripts) {
+    public List<AI> decodeScriptsSetCover(UnitTypeTable utt, ArrayList<Integer> iScripts, boolean isInitialRandomGame) {
         List<AI> scriptsAI = new ArrayList<>();
         
         ScriptsTable st=new ScriptsTable(pathTableScripts);
     	ArrayList<String> basicFunctions= st.allBasicFunctions();
-        for (Integer idSc : iScripts) {
-            //System.out.println("tam tab"+scriptsTable.size());
-            //System.out.println("id "+idSc+" Elems "+scriptsTable.get(BigDecimal.valueOf(idSc)));
-        	try {
-        		       		
-        		Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"),  basicFunctions.get(idSc).getBytes(), StandardOpenOption.APPEND);
-        		Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"),"\n".getBytes(), StandardOpenOption.APPEND);
-        	}catch (IOException e) {
-                //exception handling left as an exercise for the reader
+    	
+    	if(isInitialRandomGame)
+    	{
+            for (Integer idSc : iScripts) {
+                //System.out.println("tam tab"+scriptsTable.size());
+                //System.out.println("id "+idSc+" Elems "+scriptsTable.get(BigDecimal.valueOf(idSc)));
+            	try {
+            		       		
+            		Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"), scriptsTable.get(BigDecimal.valueOf(idSc)).getBytes(), StandardOpenOption.APPEND);
+            		Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"),"\n".getBytes(), StandardOpenOption.APPEND);
+            	}catch (IOException e) {
+                    //exception handling left as an exercise for the reader
+                }
+            	scriptsAI.add(buildCommandsIA(utt, scriptsTable.get(BigDecimal.valueOf(idSc))));
+            	
             }
-        	scriptsAI.add(buildCommandsIA(utt, basicFunctions.get(idSc)));
-        }
+    	}
+    	else
+    	{
+    		for (Integer idSc : iScripts) {
+    			//System.out.println("tam tab"+scriptsTable.size());
+    			//System.out.println("id "+idSc+" Elems "+scriptsTable.get(BigDecimal.valueOf(idSc)));
+    			try {
+
+    				Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"),  basicFunctions.get(idSc).getBytes(), StandardOpenOption.APPEND);
+    				Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"),"\n".getBytes(), StandardOpenOption.APPEND);
+    			}catch (IOException e) {
+    				//exception handling left as an exercise for the reader
+    			}
+    			scriptsAI.add(buildCommandsIA(utt, basicFunctions.get(idSc)));
+    			//System.out.println("basicFunctions "+basicFunctions.size());
+    			//        	for(int i=0;i<basicFunctions.size();i++)
+    			//        	{
+    			//        		System.out.println("comandos "+basicFunctions.get(i));
+    			//        	}
+
+    		}
+    	}
 
         return scriptsAI;
     }
@@ -565,7 +608,6 @@ public class GameSampling {
     
     private AI buildCommandsIA(UnitTypeTable utt, String code) {
     	usedCommands=new HashSet<String> ();
-    	counterByFunction=new HashMap<Long, String>();
     	FunctionGPCompiler.counterCommands=0;
         List<ICommand> commandsGP = compiler.CompilerCode(code, utt);
         AI aiscript = new ChromosomeAI(utt, commandsGP, "P1", code, usedCommands, counterByFunction);

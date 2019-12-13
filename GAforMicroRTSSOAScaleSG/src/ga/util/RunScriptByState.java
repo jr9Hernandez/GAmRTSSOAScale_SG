@@ -44,7 +44,7 @@ import rts.units.UnitTypeTable;
 import util.sqlLite.Log_Facade;
 
 
-public class RunSetCover {
+public class RunScriptByState {
 	
 	private final String dirPathPlayer = System.getProperty("user.dir").concat("/logs_game/logs_states/");
     //private final String dirPathPlayer = "logs_game/logs_states/";
@@ -52,7 +52,7 @@ public class RunSetCover {
     private final static String pathTableScripts = System.getProperty("user.dir").concat("/Table/");
     //private final static String pathTableScripts = "Table/";
     public HashMap<String, List<Integer>> dataH=new HashMap<String, List<Integer>>();
-	public RunSetCover()
+	public RunScriptByState()
 	{
 		ScriptsTable st=new ScriptsTable(pathTableScripts);
 		ArrayList<String> basicFunctions= st.allBasicFunctions();
@@ -113,6 +113,8 @@ public class RunSetCover {
 
 			GameState gsSimulator = GameState.fromJSON(sa.getState(),game.utt);
 			PlayerAction paOriginal=PlayerAction.fromJSON(sa.getAction(), gsSimulator, game.utt);
+			HashMap<Long, String> counterByFunction = recoverCounterByFunctionSetCover(sa.getCounterByFunction());
+			
 			String []listactionsAllStates=unitActionSplitted(paOriginal.getActions().toString());
 			totalActionsAllStates=totalActionsAllStates+listactionsAllStates.length;
 			
@@ -180,6 +182,24 @@ public class RunSetCover {
 //		}
 	}
 	
+	
+	public HashMap<Long, String> recoverCounterByFunctionSetCover(String counterByFunctionFromSetcover) 
+	{
+		HashMap<Long, String> counterByFunction =new HashMap<Long, String>();
+	
+		if(counterByFunctionFromSetcover!=null)
+		{
+			System.out.println("counterByFunctionFromSetcover "+counterByFunctionFromSetcover);		
+			String[] parts = counterByFunctionFromSetcover.split(";");
+			for(String part: parts)
+			{
+				String[] actions= part.split("\\s+");
+				counterByFunction.put(Long.valueOf(actions[0]).longValue(), actions[1]);
+			}
+		}
+		return counterByFunction;
+	}
+	
 	public void validateIfConditionalIsTrue(ArrayList<String> allConditionals,GameState g, int player,PlayerAction currentPlayerAction, UnitTypeTable utt)
 	{
 		ConditionalGPCompiler conditionalCompiler = new ConditionalGPCompiler();
@@ -198,7 +218,7 @@ public class RunSetCover {
 			}
 			sCond=sCond+")";
 			ifFun.setConditional(conditionalCompiler.getConditionalByCode(sCond));
-			System.out.println("chis "+sCond+" "+ifFun.getConditional().runConditional(g, player, currentPlayerAction,new AStarPathFinding(), utt,new HashMap<Long, String>()));
+			//System.out.println("chis "+sCond+" "+ifFun.getConditional().runConditional(g, player, currentPlayerAction,new AStarPathFinding(), utt,new HashMap<Long, String>()));
 			//	        }
 		}
 		
@@ -253,6 +273,11 @@ public class RunSetCover {
 				line = br.readLine();
 				sa.setAction(line);
 				line = br.readLine();
+				if(line != null)
+				{
+					sa.setCounterByFunction(line);
+					line = br.readLine();
+				}
 			}
 			return sa;
 		} finally {

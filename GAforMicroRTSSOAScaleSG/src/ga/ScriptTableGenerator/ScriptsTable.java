@@ -100,6 +100,7 @@ public class ScriptsTable {
 		HashMap<String, BigDecimal> newChromosomes = new HashMap<>();
 		String tChom;
 		PrintWriter f0;
+		Sketch sk=new Sketch();
 		try {
 			f0 = new PrintWriter(new FileWriter(pathTableScripts+"ScriptsTable.txt"));
 
@@ -109,7 +110,7 @@ public class ScriptsTable {
 				//tChom = new ChromosomeScript();				
 				//int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME_SCRIPT)+1;
 				//int sizeCh=rand.nextInt(1)+1;
-				tChom=buildScriptGenotypeSketch();
+				tChom=buildScriptGenotypeSketchFromSetCover("",sk);
 
 				//				for (int j = 0; j < sizeCh; j++) {
 				//					int typeSelected=rand.nextInt(numberOfTypes);
@@ -1224,21 +1225,20 @@ public class ScriptsTable {
 	//		}		
 	//	}
 	
-	public String buildScriptGenotypeSketch()
-	{
-		String genotypeScript = "";
-		int numberComponentsAdded=0;
-		Sketch sk=new Sketch();
-		if(ConfigurationsGA.idSketch=="A")
-		{
-			genotypeScript=sk.sketchA(genotypeScript,numberComponentsAdded);
-			//genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
-			//basicFunction=basicFunction+") ";
-
-		}
-
-		return genotypeScript;
-	}
+//	public String buildScriptGenotypeSketch(String porfolioFromSetCover,Sketch sk)
+//	{
+//		String genotypeScript = "";
+//		int numberComponentsAdded=0;
+//		if(ConfigurationsGA.idSketch=="A")
+//		{
+//			genotypeScript=sk.sketchA(genotypeScript,numberComponentsAdded);
+//			//genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+//			//basicFunction=basicFunction+") ";
+//
+//		}
+//
+//		return genotypeScript;
+//	}
 	
 	public String buildScriptGenotypeSketchFromSetCover(String porfolioFromSetCover,Sketch sk)
 	{

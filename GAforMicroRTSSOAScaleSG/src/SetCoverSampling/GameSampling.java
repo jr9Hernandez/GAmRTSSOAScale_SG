@@ -474,8 +474,9 @@ public class GameSampling {
         return pa;
     }
     
-    public PlayerAction generateActionbyScriptByString(GameState g, String scriptSampling, int player) 
+    public PlayerAction generateActionbyScriptByString(GameState g, String scriptSampling, int player, HashMap<Long, String> counterByFunction) 
     {
+    	this.counterByFunction = new HashMap<Long,String>(counterByFunction);
     	List<AI> scriptsRun1=decodeSingleScriptbyString(utt, scriptSampling);
 
         AI ai1=scriptsRun1.get(0);
@@ -521,8 +522,8 @@ public class GameSampling {
         ScriptsTable st=new ScriptsTable(pathTableScripts);
     	ArrayList<String> basicFunctions= st.allBasicFunctions();
     	
-    	if(isInitialRandomGame)
-    	{
+//    	if(isInitialRandomGame)
+//    	{
             for (Integer idSc : iScripts) {
                 //System.out.println("tam tab"+scriptsTable.size());
                 //System.out.println("id "+idSc+" Elems "+scriptsTable.get(BigDecimal.valueOf(idSc)));
@@ -536,28 +537,28 @@ public class GameSampling {
             	scriptsAI.add(buildCommandsIA(utt, scriptsTable.get(BigDecimal.valueOf(idSc))));
             	
             }
-    	}
-    	else
-    	{
-    		for (Integer idSc : iScripts) {
-    			//System.out.println("tam tab"+scriptsTable.size());
-    			//System.out.println("id "+idSc+" Elems "+scriptsTable.get(BigDecimal.valueOf(idSc)));
-    			try {
-
-    				Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"),  basicFunctions.get(idSc).getBytes(), StandardOpenOption.APPEND);
-    				Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"),"\n".getBytes(), StandardOpenOption.APPEND);
-    			}catch (IOException e) {
-    				//exception handling left as an exercise for the reader
-    			}
-    			scriptsAI.add(buildCommandsIA(utt, basicFunctions.get(idSc)));
-    			//System.out.println("basicFunctions "+basicFunctions.size());
-    			//        	for(int i=0;i<basicFunctions.size();i++)
-    			//        	{
-    			//        		System.out.println("comandos "+basicFunctions.get(i));
-    			//        	}
-
-    		}
-    	}
+//    	}
+//    	else
+//    	{
+//    		for (Integer idSc : iScripts) {
+//    			//System.out.println("tam tab"+scriptsTable.size());
+//    			//System.out.println("id "+idSc+" Elems "+scriptsTable.get(BigDecimal.valueOf(idSc)));
+//    			try {
+//
+//    				Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"),  basicFunctions.get(idSc).getBytes(), StandardOpenOption.APPEND);
+//    				Files.write(Paths.get(pathLogsBestPortfolios+"TrackingPortfolios.txt"),"\n".getBytes(), StandardOpenOption.APPEND);
+//    			}catch (IOException e) {
+//    				//exception handling left as an exercise for the reader
+//    			}
+//    			scriptsAI.add(buildCommandsIA(utt, basicFunctions.get(idSc)));
+//    			//System.out.println("basicFunctions "+basicFunctions.size());
+//    			//        	for(int i=0;i<basicFunctions.size();i++)
+//    			//        	{
+//    			//        		System.out.println("comandos "+basicFunctions.get(i));
+//    			//        	}
+//
+//    		}
+//    	}
 
         return scriptsAI;
     }

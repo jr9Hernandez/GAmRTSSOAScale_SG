@@ -52,6 +52,7 @@ public class RunScriptByState {
     private final static String pathTableScripts = System.getProperty("user.dir").concat("/Table/");
     //private final static String pathTableScripts = "Table/";
     public HashMap<String, List<Integer>> dataH=new HashMap<String, List<Integer>>();
+    public HashSet<String> booleansUsed=new HashSet<>();
 	public RunScriptByState()
 	{
 		ScriptsTable st=new ScriptsTable(pathTableScripts);
@@ -145,7 +146,7 @@ public class RunScriptByState {
 			if (gsSimulator.canExecuteAnyAction(1)){
 				for (int j = 0; j < allCommands.size(); j++) {
 
-						PlayerAction pa= game.generateActionbyScriptByString(gsSimulator,allCommands.get(j) , 1);
+						PlayerAction pa= game.generateActionbyScriptByString(gsSimulator,allCommands.get(j) , 1, counterByFunction);
 //						System.out.println("actions script "+pa.getActions().toString());
 //						System.out.println("actions state "+sa.getAction());						
 //						System.out.println(Arrays.toString(parts));
@@ -168,7 +169,7 @@ public class RunScriptByState {
 //				}
 				}
 				//For player 1
-				validateIfConditionalIsTrue(allConditionals,gsSimulator,1,paOriginal,game.utt);
+				validateIfConditionalIsTrue(allConditionals,gsSimulator,1,paOriginal,game.utt, counterByFunction);
 			}
 
 		}	
@@ -200,7 +201,7 @@ public class RunScriptByState {
 		return counterByFunction;
 	}
 	
-	public void validateIfConditionalIsTrue(ArrayList<String> allConditionals,GameState g, int player,PlayerAction currentPlayerAction, UnitTypeTable utt)
+	public void validateIfConditionalIsTrue(ArrayList<String> allConditionals,GameState g, int player,PlayerAction currentPlayerAction, UnitTypeTable utt, HashMap<Long,String> counterByFunction)
 	{
 		ConditionalGPCompiler conditionalCompiler = new ConditionalGPCompiler();
 		for(String conditional:allConditionals)
@@ -216,9 +217,13 @@ public class RunScriptByState {
 			} else {
 				sCond = sCond.replace("if(", "").trim();
 			}
-			sCond=sCond+")";
+			//sCond=sCond+")";
 			ifFun.setConditional(conditionalCompiler.getConditionalByCode(sCond));
-			//System.out.println("chis "+sCond+" "+ifFun.getConditional().runConditional(g, player, currentPlayerAction,new AStarPathFinding(), utt,new HashMap<Long, String>()));
+			if(ifFun.getConditional().runConditional(g, player, currentPlayerAction,new AStarPathFinding(), utt,new HashMap<Long,String>(counterByFunction)))
+				{
+					System.out.println("sCond "+sCond);
+					booleansUsed.add(sCond);				
+				}
 			//	        }
 		}
 		

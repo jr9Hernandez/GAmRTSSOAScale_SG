@@ -717,10 +717,12 @@ public class Reproduction {
 						boolean m = rand.nextFloat() <= 0.5;
 						if(m)
 						{
+							//change by other random function
 							candidates[i]=objScriptTable.returnBasicFunctionClean(true);
 						}
 						else
 						{
+							//change by the same function with other paramethers
 							candidates[i]=objScriptTable.returnBasicFunctionCleanSame(true,originals[i]);
 						}
 					}
@@ -729,10 +731,12 @@ public class Reproduction {
 						boolean m = rand.nextFloat() <= 0.5;
 						if(m)
 						{
+							//change by other random function
 							candidates[i]=objScriptTable.returnBasicFunctionClean(false);
 						}
 						else
 						{
+							//change by the same function with other paramethers
 							candidates[i]=objScriptTable.returnBasicFunctionCleanSame(false,originals[i]);
 						}
 					}
@@ -752,10 +756,12 @@ public class Reproduction {
 							boolean m = rand.nextFloat() <= 0.5;
 							if(m)
 							{
+								//change by other random function
 								candidates[i]=objScriptTable.returnConditionalClean(true);
 							}
 							else
 							{
+								//change by the same function with other paramethers
 								candidates[i]=objScriptTable.returnConditionalCleanSame(true,originals[i]);
 							}
 						}
@@ -764,10 +770,12 @@ public class Reproduction {
 							boolean m = rand.nextFloat() <= 0.5;
 							if(m)
 							{
+								//change by other random function
 								candidates[i]=objScriptTable.returnConditionalClean(false);
 							}
 							else
 							{
+								//change by the same function with other paramethers
 								candidates[i]=objScriptTable.returnConditionalCleanSame(false,originals[i]);
 							}
 						}

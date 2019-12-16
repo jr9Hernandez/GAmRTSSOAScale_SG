@@ -55,7 +55,7 @@ public class RunTests_SetCover_GP {
 		
 		
 
-		for(int i=0;i<ConfigurationsGA.LOOPS_SELFPLAY;i++)
+		for(int i=1;i<ConfigurationsGA.LOOPS_SELFPLAY;i++)
 		{
 			
 		//SC

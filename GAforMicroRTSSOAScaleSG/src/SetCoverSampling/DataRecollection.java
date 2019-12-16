@@ -256,7 +256,8 @@ public Chromosome getPortfolioRandomSize(int size, ScriptsTable scrTable){
 	List<Integer> scriptsForPortfolio = new ArrayList<>();
 
 	Chromosome tChom = new Chromosome();
-	int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;
+	//int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;
+	int sizeCh=1;
 	for (int j = 0; j < sizeCh; j++) {
 		tChom.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));
 	}

@@ -21,7 +21,7 @@ public final class ConfigurationsGA {
 	 public static final int SIZE_TABLE_SCRIPTS = 200;
 	 public static final int TYPE_CONTROL = 1;
 	 public static final int TIME_GA_EXEC = 13; 
-	 public static final int QTD_GENERATIONS = 1000;
+	 public static final int QTD_GENERATIONS = 10;
 	 public static final int deltaForMutation = 1;
 	 public static final boolean RESET_ENABLED = true;
 	 public static final boolean MUTATION_ORDER_ENABLED = true;

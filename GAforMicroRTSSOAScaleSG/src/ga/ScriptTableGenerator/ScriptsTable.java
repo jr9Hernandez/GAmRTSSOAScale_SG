@@ -736,7 +736,6 @@ public class ScriptsTable {
 		if(forclausule==false)
 		{
 			int idBasicActionSelected=rand.nextInt(functions.getBasicFunctionsForGrammar().size());
-			System.out.println("visit "+functions.getBasicFunctionsForGrammar().size());
 			functionChosen=functions.getBasicFunctionsForGrammar().get(idBasicActionSelected);
 		}
 		else

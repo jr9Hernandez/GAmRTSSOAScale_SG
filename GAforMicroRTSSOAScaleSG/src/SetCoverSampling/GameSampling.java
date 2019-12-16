@@ -476,7 +476,7 @@ public class GameSampling {
     
     public PlayerAction generateActionbyScriptByString(GameState g, String scriptSampling, int player, HashMap<Long, String> counterByFunction) 
     {
-    	this.counterByFunction = new HashMap<Long,String>(counterByFunction);
+    	GameSampling.counterByFunction = new HashMap<Long,String>(counterByFunction);
     	List<AI> scriptsRun1=decodeSingleScriptbyString(utt, scriptSampling);
 
         AI ai1=scriptsRun1.get(0);

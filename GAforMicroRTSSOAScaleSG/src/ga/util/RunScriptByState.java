@@ -55,7 +55,9 @@ public class RunScriptByState {
     public HashSet<String> booleansUsed=new HashSet<>();
 	public RunScriptByState()
 	{
+		dataH=new HashMap<String, List<Integer>>();
 		ScriptsTable st=new ScriptsTable(pathTableScripts);
+		booleansUsed=new HashSet<>();
 		ArrayList<String> basicFunctions= st.allBasicFunctions();
 		ArrayList<String> conditionalsFunctions= st.allConditionalFunctions();
 //		System.out.println(Arrays.toString(conditionalsFunctions.toArray()));

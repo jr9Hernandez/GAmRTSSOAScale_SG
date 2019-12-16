@@ -330,18 +330,27 @@ public class Reproduction {
 	{
 		Population newGeneration;
 		HashMap<Chromosome, BigDecimal> newChromosomes =new HashMap<Chromosome, BigDecimal>();		
-		while(newChromosomes.size()<(ConfigurationsGA.SIZE_POPULATION-ConfigurationsGA.SIZE_ELITE-ConfigurationsGA.SIZE_INVADERS))
+		int numberEliteMutated=ConfigurationsGA.SIZE_ELITE;
+		while(newChromosomes.size()<(ConfigurationsGA.SIZE_POPULATION-ConfigurationsGA.SIZE_ELITE-ConfigurationsGA.SIZE_INVADERS-numberEliteMutated))
 		{
 			//here we shuffle the list of parents in order to select always two different parents to reproduce
 			Collections.shuffle(parents);
 			Chromosome parent1=parents.get(0).getKey();
 			Chromosome parent2=parents.get(1).getKey();
+//			System.out.println("parent1 "+parent1.getGenes());
+//			System.out.println("parent2 "+parent2.getGenes());
+			
+			String [] parentGenotype1=recoverParentStringParts(parent1.getGenes().get(0));
+			String [] parentGenotype2=recoverParentStringParts(parent2.getGenes().get(0));
+			
 			Chromosome child1= new Chromosome();
 			Chromosome child2= new Chromosome();
+			ArrayList <String> childGenotype1=new ArrayList<>();
+			ArrayList <String> childGenotype2=new ArrayList<>();
 
 			//The uniform crossover add to the son one of the parents gene for each position (selected randomly)
-			int sizeParent1=recoverSizeParent(child1.getGenes().get(0));
-			int sizeParent2=recoverSizeParent(child2.getGenes().get(0));
+			int sizeParent1=parentGenotype1.length;
+			int sizeParent2=parentGenotype2.length;
 			
 			int breakParent1;
 			int breakParent2;
@@ -363,36 +372,102 @@ public class Reproduction {
 				breakParent2=0;
 			}
 			
-			ArrayList<Integer> p1sub1= new ArrayList<>();
-			ArrayList<Integer> p1sub2= new ArrayList<>();
-			ArrayList<Integer> p2sub1= new ArrayList<>();
-			ArrayList<Integer> p2sub2= new ArrayList<>();
+			ArrayList<String> p1sub1= new ArrayList<>();
+			ArrayList<String> p1sub2= new ArrayList<>();
+			ArrayList<String> p2sub1= new ArrayList<>();
+			ArrayList<String> p2sub2= new ArrayList<>();
 
 			
 			
 			for(int i=0;i<breakParent1;i++)
 			{
-				p1sub1.add(parent1.getGenes().get(i));
+				p1sub1.add(parentGenotype1[i]);
 			}
 			for(int i=breakParent1;i<sizeParent1;i++)
 			{
-				p1sub2.add(parent1.getGenes().get(i));
+				p1sub2.add(parentGenotype1[i]);
 			}
 			
 			for(int i=0;i<breakParent2;i++)
 			{
-				p2sub1.add(parent2.getGenes().get(i));
+				p2sub1.add(parentGenotype2[i]);
 			}
 			for(int i=breakParent2;i<sizeParent2;i++)
 			{
-				p2sub2.add(parent2.getGenes().get(i));
+				p2sub2.add(parentGenotype2[i]);
 			}	
-
-			child1.getGenes().addAll(p1sub1);
-			child1.getGenes().addAll(p2sub2);
 			
-			child2.getGenes().addAll(p2sub1);
-			child2.getGenes().addAll(p1sub2);
+//			System.out.println("p1sub1");
+//			p1sub1.forEach(System.out::println);
+//			
+//			System.out.println("p1sub2");
+//			p1sub2.forEach(System.out::println);
+//			
+//			System.out.println("p2sub1");
+//			p2sub1.forEach(System.out::println);
+//			
+//			System.out.println("p2sub2");
+//			p2sub2.forEach(System.out::println);
+
+			childGenotype1.addAll(p1sub1);
+			childGenotype1.addAll(p2sub2);
+			String[] arrchildGenotype1 = childGenotype1.toArray(new String[childGenotype1.size()]);
+			
+			childGenotype2.addAll(p1sub2);
+			childGenotype2.addAll(p2sub1);
+			String[] arrchildGenotype2 = childGenotype2.toArray(new String[childGenotype2.size()]);
+			
+//			System.out.println("childGenotype1");
+//			childGenotype1.forEach(System.out::println);
+//			
+//			System.out.println("childGenotype2");
+//			childGenotype2.forEach(System.out::println);
+
+			String childConcatenated1=recoverStringFromArray(arrchildGenotype1);
+			childConcatenated1=childConcatenated1.trim();
+			String childConcatenated2=recoverStringFromArray(arrchildGenotype2);
+			childConcatenated2=childConcatenated2.trim();
+			
+//			System.out.println("childConcatenated1"+childConcatenated1);
+//			System.out.println("childConcatenated2"+childConcatenated2);
+			
+			int newId;
+			if(scrTable.getScriptTable().containsKey(childConcatenated1))
+			{
+				newId= scrTable.getScriptTable().get(childConcatenated1).intValue();
+				//System.out.println("oldId1 "+ newId);
+				child1.addGene(newId);
+			}
+			else if(!scrTable.getScriptTable().containsKey(childConcatenated1) && childConcatenated1.length()>0)
+			{
+				//System.out.println("beforeMutateScript "+cromScriptOriginal);
+				//System.out.println("afterMutateScript "+cromScript);
+				newId=scrTable.getScriptTable().size();
+				scrTable.getScriptTable().put(childConcatenated1, BigDecimal.valueOf(newId));
+				scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
+				addLineFile(newId+" "+childConcatenated1);
+				//System.out.println("newId1 "+ newId);
+				child1.addGene(newId);
+			}
+			
+			
+			if(scrTable.getScriptTable().containsKey(childConcatenated2))
+			{
+				newId= scrTable.getScriptTable().get(childConcatenated2).intValue();
+				//System.out.println("oldId2 "+ newId);
+				child2.addGene(newId);
+			}
+			else if(!scrTable.getScriptTable().containsKey(childConcatenated2) && childConcatenated2.length()>0)
+			{
+				//System.out.println("beforeMutateScript "+cromScriptOriginal);
+				//System.out.println("afterMutateScript "+cromScript);
+				newId=scrTable.getScriptTable().size();
+				scrTable.getScriptTable().put(childConcatenated2, BigDecimal.valueOf(newId));
+				scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
+				addLineFile(newId+" "+childConcatenated2);
+				child2.addGene(newId);
+				//System.out.println("newId2 "+ newId);
+			}
 
 			//The next method is just for avoiding infinite loops, adding a random element if
 			//one with the same key was already added (this can happen because sometimes the resulting
@@ -416,6 +491,9 @@ public class Reproduction {
 				}
 				newChromosomes.put(tChom, BigDecimal.ZERO);
 			}
+			
+//			System.out.println("child1 "+child1.getGenes());
+//			System.out.println("child2 "+child2.getGenes());
 
 			//here is added the child!
 			if(child1.getGenes().size()!=0)
@@ -426,6 +504,12 @@ public class Reproduction {
 		}
 		newGeneration=new Population(newChromosomes);
 		return newGeneration;
+	}
+
+	private String [] recoverParentStringParts(Integer id) {
+		String script=cromosomeById(id);
+		String [] parentsSplit=script.split("\\s+");
+		return parentsSplit;
 	}
 
 	private int recoverSizeParent(Integer id) {
@@ -943,6 +1027,17 @@ public class Reproduction {
     }catch(Exception e){    
         e.printStackTrace();    
     } 
+	}
+	
+	public String recoverStringFromArray(String [] parts)
+	{
+		String newGrammar="";
+		for(String part:parts)
+		{
+			newGrammar=newGrammar+" "+part;
+		}
+		
+		return newGrammar;
 	}
 
 }

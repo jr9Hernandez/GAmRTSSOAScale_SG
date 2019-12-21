@@ -41,6 +41,7 @@ public class RunTests_SetCover_GP {
 
 	
 		String curriculumportfolio="empty";
+		String bestPortfolioFromGA="empty";
 		
 		File logsBestPortfolios=new File(pathLogsBestPortfolios);
 		GameSampling.deleteFolder(logsBestPortfolios);
@@ -68,7 +69,7 @@ public class RunTests_SetCover_GP {
 		
 		//* 
 		//applying the GP
-		RunGA ga = new RunGA();
+		RunGA ga = new RunGA(curriculumportfolio);
 		
 		//escolhemos uma função de avaliação
 		//RatePopulation fEval = new RoundRobinEval();
@@ -90,7 +91,7 @@ public class RunTests_SetCover_GP {
 			ArrayList<Integer> Genes=(ArrayList<Integer>) ch.getGenes().clone();
 			curriculumportfolio=Genes.toString();
 			
-		}
+		}		
 				
 		//Here we play with a search-based algorithm and save the path
 		try {
@@ -99,6 +100,8 @@ public class RunTests_SetCover_GP {
 			// TODO Auto-generated catch block
 			er.printStackTrace();
 		}
+		
+		curriculumportfolio=ga.recoverScriptGenotype(curriculumportfolio).trim();
 		
 		
 		}

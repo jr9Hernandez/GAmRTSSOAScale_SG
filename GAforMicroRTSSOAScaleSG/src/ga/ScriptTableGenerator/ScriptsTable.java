@@ -145,7 +145,7 @@ public class ScriptsTable {
 		return st;
 	}
 	
-	public ScriptsTable generateScriptsTableFromSetCover(int size, String porfolioFromSetCover, HashSet<String> booleansUsed){
+	public ScriptsTable generateScriptsTableFromSetCover(int size, String porfolioFromSetCover, HashSet<String> booleansUsed, String curriculumportfolio){
 		
 		HashMap<String, BigDecimal> newChromosomes = new HashMap<>();
 		String tChom;
@@ -157,6 +157,18 @@ public class ScriptsTable {
 			f0 = new PrintWriter(new FileWriter(pathTableScripts+"ScriptsTable.txt"));
 
 			int i=0;
+			
+			if(!curriculumportfolio.equals("empty"))
+			{
+				tChom=curriculumportfolio;
+				if(!newChromosomes.containsKey(tChom))
+				{
+					newChromosomes.put(tChom, BigDecimal.valueOf(i));
+					f0.println(i+" "+tChom);
+					i++;
+
+				}
+			}
 			
 			while(i<size)
 			{
@@ -1259,7 +1271,7 @@ public class ScriptsTable {
 		
 		if(ConfigurationsGA.idSketch=="B")
 		{
-			genotypeScript=sk.sketchB(genotypeScript,numberComponentsAdded);
+			genotypeScript=sk.sketchBLimitedSize(genotypeScript,numberComponentsAdded);
 			//genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
 			//basicFunction=basicFunction+") ";
 

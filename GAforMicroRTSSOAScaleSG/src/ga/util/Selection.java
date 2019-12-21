@@ -42,7 +42,7 @@ public class Selection {
 		Population newPopulation;
 		if(ConfigurationsGA.evolvingScript)
 		{
-			newPopulation=rp.CrossoverSingleScript();
+			newPopulation=rp.CrossoverSingleScriptLimitedSize();
 		}
 		else
 		{

@@ -30,11 +30,11 @@ public final class ConfigurationsGA {
    
      public static final int QTD_RULES_CONDITIONAL=115;
      public static final int QTD_RULES_BASIC_FUNCTIONS=518;
-     public static final int MAX_QTD_COMPONENTS=10;
+     public static final int MAX_QTD_COMPONENTS=7;
      public static boolean recoverTable=false;
     
      public final static boolean removeRules=false;
-     public static final boolean evolvingScript=false;
+     public static final boolean evolvingScript=true;
     
      public static final int LOOPS_SELFPLAY = 50;
     

@@ -78,7 +78,7 @@ public class RunTestsGP {
 		//* 
 		//aplicando o Algoritmo Genético
 		//criei uma classe para controlar a execução do GA.
-		RunGA ga = new RunGA();
+		RunGA ga = new RunGA(curriculumportfolio);
 		
 		//escolhemos uma função de avaliação
 		//RatePopulation fEval = new RoundRobinEval();

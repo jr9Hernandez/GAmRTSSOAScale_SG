@@ -219,6 +219,151 @@ public class Sketch {
 		return genotypeScript.trim();
 	}
 	
+	public String sketchBLimitedSize(String genotypeScript,int numberComponentsAdded) {
+		
+		boolean canCloseParenthesisIf=false;
+		boolean canOpenParenthesisIf=false;
+		boolean isOpenFor=false;
+		int sizeGenotypeScript=ConfigurationsGA.MAX_QTD_COMPONENTS;
+
+		List<itemIf> collectionofIfs= new ArrayList<itemIf>();
+		int continueCoin=0;
+		do
+		{
+
+			//basic function
+			int coin=rand.nextInt(2);
+			if(coin==0)
+			{
+				genotypeScript=genotypeScript+returnBasicFunction(isOpenFor)+" ";
+				numberComponentsAdded++;
+				canCloseParenthesisIf=true;
+				canOpenParenthesisIf=false;
+
+				if(collectionofIfs.size()>0)
+				{
+					for (int i = collectionofIfs.size()-1; i >= 0; i-- ) {
+
+						if(collectionofIfs.get(i).isLastOpen()==false)
+						{
+							collectionofIfs.remove(i);
+
+						}
+						else
+						{
+							break;
+						}
+					}
+				}
+
+
+			}
+			//conditional
+			else if(coin==1 && collectionofIfs.size()==0  && numberComponentsAdded<sizeGenotypeScript-1)
+			{
+				collectionofIfs.add(new itemIf(1,true,"if"));
+				genotypeScript=genotypeScript+returnBoolean(isOpenFor)+" ";
+				genotypeScript=genotypeScript+"(";
+
+				numberComponentsAdded++;
+				canCloseParenthesisIf=false;
+				canOpenParenthesisIf=false;
+
+				if(collectionofIfs.size()>0)
+				{
+					for (int i = collectionofIfs.size()-1; i >= 0; i-- ) {
+
+						if(collectionofIfs.get(i).isLastOpen()==false)
+						{
+							collectionofIfs.remove(i);
+
+						}
+						else
+						{
+							break;
+						}
+					}
+				}
+
+			}
+
+
+
+			//close parenthesis if
+			if(collectionofIfs.size()>0)
+			{
+				//int coinOpenClose=;
+				//close parenthesis if
+				if(rand.nextInt(2)==0  && canCloseParenthesisIf && collectionofIfs.get(collectionofIfs.size()-1).isLastOpen())
+				{
+					genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+					genotypeScript=genotypeScript+") ";
+					collectionofIfs.get(collectionofIfs.size()-1).setLastOpen(false);
+					
+					
+					if(collectionofIfs.get(collectionofIfs.size()-1).getMaxOpens()==0)
+					{
+						for (int i = collectionofIfs.size()-1; i >= 0; i-- ) {
+
+							if(collectionofIfs.get(i).isLastOpen()==false)
+							{
+
+								collectionofIfs.remove(i);
+
+							}
+							else
+							{
+								break;
+							}
+						}
+					}
+					canOpenParenthesisIf=true;
+
+				}
+				
+				else if(rand.nextInt(2)==0 && canOpenParenthesisIf==true && collectionofIfs.get(collectionofIfs.size()-1).getMaxOpens()>0 && !collectionofIfs.get(collectionofIfs.size()-1).isLastOpen() )
+				{
+					genotypeScript=genotypeScript+"(";
+
+					int counterLastIf=collectionofIfs.get(collectionofIfs.size()-1).getMaxOpens();
+					counterLastIf--;
+					collectionofIfs.get(collectionofIfs.size()-1).setMaxOpens(counterLastIf);
+					collectionofIfs.get(collectionofIfs.size()-1).setLastOpen(true);
+
+					canOpenParenthesisIf=false;
+					canCloseParenthesisIf=false;
+
+					collectionofIfs.get(collectionofIfs.size()-1).setLastOpen(true);
+
+				}
+				
+			}
+
+			continueCoin=rand.nextInt(2);
+		}while(collectionofIfs.size()>0 || continueCoin==1 && numberComponentsAdded<sizeGenotypeScript);
+		
+		//ensure close open parenthesis
+
+		while(collectionofIfs.size()>0 )
+		{
+			if(collectionofIfs.get(collectionofIfs.size()-1).isLastOpen())
+			{
+				genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+				genotypeScript=genotypeScript+") ";
+				collectionofIfs.remove(collectionofIfs.size()-1);
+			}
+			else
+			{
+				collectionofIfs.remove(collectionofIfs.size()-1);
+			}
+
+		}
+
+		//
+
+		return genotypeScript.trim();
+	}	
+	
 
 	public int counterIfsOpen(List<itemIf> collectionofIfs)
 	{

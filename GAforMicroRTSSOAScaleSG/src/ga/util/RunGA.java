@@ -1,10 +1,16 @@
 package ga.util;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -17,6 +23,13 @@ import ga.util.Evaluation.RatePopulation;
 import util.sqlLite.Log_Facade;
 
 public class RunGA {
+	
+	String curriculumportfolio;
+	
+	public RunGA(String curriculumportfolio)
+	{
+		this.curriculumportfolio=curriculumportfolio;
+	}
 
 	private Population population;
 	private Instant timeInicial;
@@ -34,7 +47,7 @@ public class RunGA {
 
 	/**
 	 * Este metodo aplicará todas as fases do processo de um algoritmo Genético
-	 * 
+	 * Fres
 	 * @param evalFunction
 	 *            Será a função de avaliação que desejamos utilizar
 	 */
@@ -44,7 +57,7 @@ public class RunGA {
 		//do {
 			if(ConfigurationsGA.portfolioSetCover)
 			{
-				scrTable = scrTable.generateScriptsTableFromSetCover(ConfigurationsGA.SIZE_TABLE_SCRIPTS,scriptsSetCover,booleansUsed);
+				scrTable = scrTable.generateScriptsTableFromSetCover(ConfigurationsGA.SIZE_TABLE_SCRIPTS,scriptsSetCover,booleansUsed,curriculumportfolio);
 			}
 			else
 			{
@@ -233,5 +246,45 @@ public class RunGA {
 		}
 
 	}
+	
+	public String recoverScriptGenotype(String portfolioIds)
+	{
+		String portfolioGenotype;
+        ArrayList<Integer> iScriptsAi1 = new ArrayList<>();
+        portfolioIds = portfolioIds.replaceAll("\\s+","");
+        String[] itens = portfolioIds.replace("[", "").replace("]", "").split(",");
+
+        for (String element : itens) {
+            iScriptsAi1.add(Integer.decode(element));
+        }
+        
+        portfolioGenotype=buildScriptsTable(pathTableScripts).get(BigDecimal.valueOf(iScriptsAi1.get(0)));
+       
+		return portfolioGenotype;
+	}
+	
+    public HashMap<BigDecimal, String> buildScriptsTable(String pathTableScripts) {
+    	HashMap<BigDecimal, String> scriptsTable = new HashMap<>();
+        String line="";
+        try (BufferedReader br = new BufferedReader(new FileReader(pathTableScripts + "ScriptsTable.txt"))) {
+            while ((line = br.readLine()) != null) {
+                String code = line.substring(line.indexOf(" "), line.length());
+                String[] strArray = line.split(" ");
+                int idScript = Integer.decode(strArray[0]);
+                scriptsTable.put(BigDecimal.valueOf(idScript), code);
+            }
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block            
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch(Exception e){
+            System.out.println(line);
+            System.out.println(e);
+        }
+
+        return scriptsTable;
+    }
 	
 }

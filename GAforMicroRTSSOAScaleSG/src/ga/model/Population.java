@@ -107,8 +107,11 @@ public class Population {
 	public static Population getInitialPopulation(int size, ScriptsTable scrTable){
 		HashMap<Chromosome, BigDecimal> newChromosomes = new HashMap<>();
 		
-		Chromosome tChom;
-		for (int i = 0; i < size; i++) {
+		Chromosome tChom=new Chromosome();;
+		tChom.addGene(0); //This is for ading the best individual from the last GP iteration
+		newChromosomes.put(tChom, BigDecimal.ZERO);
+		
+		while (newChromosomes.size()<ConfigurationsGA.SIZE_POPULATION) {
 			//gerar o novo cromossomo com base no tamanho
 			tChom = new Chromosome();
 			int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;

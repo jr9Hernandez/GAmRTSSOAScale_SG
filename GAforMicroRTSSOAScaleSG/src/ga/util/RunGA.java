@@ -38,13 +38,13 @@ public class RunGA {
 	 * @param evalFunction
 	 *            Será a função de avaliação que desejamos utilizar
 	 */
-	public Population run(RatePopulation evalFunction, String scriptsSetCover) {
+	public Population run(RatePopulation evalFunction, String scriptsSetCover, HashSet<String> booleansUsed) {
 		// Creating the table of scripts
 		scrTable = new ScriptsTable(pathTableScripts);
 		//do {
 			if(ConfigurationsGA.portfolioSetCover)
 			{
-				scrTable = scrTable.generateScriptsTableFromSetCover(ConfigurationsGA.SIZE_TABLE_SCRIPTS,scriptsSetCover);
+				scrTable = scrTable.generateScriptsTableFromSetCover(ConfigurationsGA.SIZE_TABLE_SCRIPTS,scriptsSetCover,booleansUsed);
 			}
 			else
 			{

@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import SetCoverSampling.DataRecollection;
 import SetCoverSampling.GameSampling;
@@ -88,7 +89,7 @@ public class RunTestsGP {
 		fEval = new SetCoverEval();
 		
 		//rodamos o GA
-		Population popFinal = ga.run(fEval,"");
+		Population popFinal = ga.run(fEval,"", new HashSet<String>());
 		
 		//popFinal.printWithValue();
 		

@@ -812,17 +812,18 @@ public class Reproduction {
 					}
 					else
 					{
-						boolean m = rand.nextFloat() <= 0.5;
-						if(m)
-						{
-							//change by other random function
-							candidates[i]=objScriptTable.returnBasicFunctionClean(false);
-						}
-						else
-						{
-							//change by the same function with other paramethers
-							candidates[i]=objScriptTable.returnBasicFunctionCleanSame(false,originals[i]);
-						}
+//						boolean m = rand.nextFloat() <= 0.5;
+//						if(m)
+//						{
+//							//change by other random function
+//							candidates[i]=objScriptTable.returnBasicFunctionClean(false);
+//						}
+//						else
+//						{
+//							//change by the same function with other paramethers
+//							candidates[i]=objScriptTable.returnBasicFunctionCleanSame(false,originals[i]);
+//						}
+						candidates[i]=scrTable.allBasicFunctionsRedefined.get(new Random().nextInt(scrTable.allBasicFunctionsRedefined.size()));
 					}
 					found=true;
 					break;
@@ -851,17 +852,19 @@ public class Reproduction {
 						}
 						else
 						{
-							boolean m = rand.nextFloat() <= 0.5;
-							if(m)
-							{
-								//change by other random function
-								candidates[i]=objScriptTable.returnConditionalClean(false);
-							}
-							else
-							{
-								//change by the same function with other paramethers
-								candidates[i]=objScriptTable.returnConditionalCleanSame(false,originals[i]);
-							}
+//							boolean m = rand.nextFloat() <= 0.5;
+//							if(m)
+//							{
+//								//change by other random function
+//								candidates[i]=objScriptTable.returnConditionalClean(false);
+//							}
+//							else
+//							{
+//								//change by the same function with other paramethers
+//								candidates[i]=objScriptTable.returnConditionalCleanSame(false,originals[i]);
+//							}
+							candidates[i]=scrTable.allBooleansFunctionsRedefined.get(new Random().nextInt(scrTable.allBasicFunctionsRedefined.size()));
+
 						}
 						break;
 					}

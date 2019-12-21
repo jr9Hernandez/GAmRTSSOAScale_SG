@@ -191,8 +191,7 @@ public class RunScriptByState {
 		HashMap<Long, String> counterByFunction =new HashMap<Long, String>();
 	
 		if(counterByFunctionFromSetcover!=null)
-		{
-			System.out.println("counterByFunctionFromSetcover "+counterByFunctionFromSetcover);		
+		{	
 			String[] parts = counterByFunctionFromSetcover.split(";");
 			for(String part: parts)
 			{
@@ -223,7 +222,6 @@ public class RunScriptByState {
 			ifFun.setConditional(conditionalCompiler.getConditionalByCode(sCond));
 			if(ifFun.getConditional().runConditional(g, player, currentPlayerAction,new AStarPathFinding(), utt,new HashMap<Long,String>(counterByFunction)))
 				{
-					System.out.println("sCond "+sCond);
 					booleansUsed.add(sCond);				
 				}
 			//	        }

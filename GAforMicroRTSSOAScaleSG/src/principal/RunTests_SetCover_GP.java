@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import SetCoverSampling.DataRecollection;
@@ -63,7 +64,7 @@ public class RunTests_SetCover_GP {
 		
 		RunSetCoverCalculation scCalculation = new RunSetCoverCalculation(sc.dataH);
 		List<Integer> setCover=scCalculation.getSetCover();
-		curriculumportfolio=setCover.toString();
+		String scriptsSetCover=setCover.toString();
 		
 		//* 
 		//applying the GP
@@ -78,11 +79,18 @@ public class RunTests_SetCover_GP {
 		//fEval = new SetCoverEval();
 		
 		//rodamos o GA
-		Population popFinal = ga.run(fEval,curriculumportfolio);
+		Population popFinal = ga.run(fEval,scriptsSetCover,sc.booleansUsed);
 		
 		//popFinal.printWithValue();
 		
-		//here we save the best portfolio of this loop of the algorithm
+		//Here we chose the best individual
+		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)PreSelection.sortByValueBest(popFinal.getChromosomes());
+		for (Chromosome ch : elite.keySet()) {
+			
+			ArrayList<Integer> Genes=(ArrayList<Integer>) ch.getGenes().clone();
+			curriculumportfolio=Genes.toString();
+			
+		}
 				
 		//Here we play with a search-based algorithm and save the path
 		try {

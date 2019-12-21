@@ -38,6 +38,8 @@ public class ScriptsTable {
 	private int numberOfTypes;
 	private TableCommandsGenerator tcg;
 	public FunctionsforGrammar functions;
+	public ArrayList<String> allBasicFunctionsRedefined;
+	public ArrayList<String> allBooleansFunctionsRedefined;
 
 	private String pathTableScripts;
 	
@@ -143,12 +145,12 @@ public class ScriptsTable {
 		return st;
 	}
 	
-	public ScriptsTable generateScriptsTableFromSetCover(int size, String porfolioFromSetCover){
+	public ScriptsTable generateScriptsTableFromSetCover(int size, String porfolioFromSetCover, HashSet<String> booleansUsed){
 		
 		HashMap<String, BigDecimal> newChromosomes = new HashMap<>();
 		String tChom;
 		PrintWriter f0;
-		Sketch sk=new Sketch(porfolioFromSetCover);
+		Sketch sk=new Sketch(porfolioFromSetCover,booleansUsed);
 //		System.out.println("before");
 //		functions.printFunctions(functions.getBasicFunctionsForGrammar());
 		try {
@@ -187,10 +189,12 @@ public class ScriptsTable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
-		redefinitionBasicFuncions(sk);
-//		System.out.println("after");
+		allBasicFunctionsRedefined=redefinitionBasicFuncions(sk);
+		allBooleansFunctionsRedefined=redefinitionBooleansFuncions(sk);
 //		functions.printFunctions(functions.getBasicFunctionsForGrammar());
 		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts);
+		st.allBasicFunctionsRedefined=allBasicFunctionsRedefined;
+		st.allBooleansFunctionsRedefined=allBooleansFunctionsRedefined;
 		st.functions=functions;
 		return st;
 	}
@@ -1252,11 +1256,19 @@ public class ScriptsTable {
 			//basicFunction=basicFunction+") ";
 
 		}
+		
+		if(ConfigurationsGA.idSketch=="B")
+		{
+			genotypeScript=sk.sketchB(genotypeScript,numberComponentsAdded);
+			//genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+			//basicFunction=basicFunction+") ";
+
+		}
 		//System.out.println("genotype "+genotypeScript);
 		return genotypeScript.trim();
 	}
 
-	private void redefinitionBasicFuncions(Sketch sk) {
+	private ArrayList<String> redefinitionBasicFuncions(Sketch sk) {
 		// TODO Auto-generated method stub
 		List<FunctionsforGrammar> basicFunctionsForGrammarNew=new ArrayList<>();
 		for(int i=0; i<functions.getBasicFunctionsForGrammar().size();i++)
@@ -1276,6 +1288,32 @@ public class ScriptsTable {
 			}
 		}
 		functions.setBasicFunctionsForGrammar(basicFunctionsForGrammarNew);
+		ArrayList<String> allBasicFunctionsRedefined=sk.allBasicFunctionsRedefined;
+		return allBasicFunctionsRedefined;
 		
+	}
+	
+	private ArrayList<String> redefinitionBooleansFuncions(Sketch sk) {
+		// TODO Auto-generated method stub
+		List<FunctionsforGrammar> booleansForGrammarNew=new ArrayList<>();
+		for(int i=0; i<functions.getConditionalsForGrammar().size();i++)
+		{
+			int counterMatch=0;
+		
+			for(String booleanFunction: sk.allBooleansFunctionsRedefined) 
+			{
+				if(booleanFunction.startsWith(functions.getConditionalsForGrammar().get(i).getNameFunction()))
+				{
+					counterMatch++;				
+				}
+			}
+			if(counterMatch!=0)
+			{
+				booleansForGrammarNew.add(functions.getConditionalsForGrammar().get(i));
+			}
+		}
+		functions.setConditionalsForGrammar(booleansForGrammarNew);
+		ArrayList<String> allBooleansFunctionsRedefined=sk.allBooleansFunctionsRedefined;
+		return allBooleansFunctionsRedefined;
 	}
 }

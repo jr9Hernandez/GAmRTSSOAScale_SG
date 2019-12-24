@@ -41,7 +41,6 @@ public class RunTests_SetCover_GP {
 
 	
 		String curriculumportfolio="empty";
-		String bestPortfolioFromGA="empty";
 		
 		File logsBestPortfolios=new File(pathLogsBestPortfolios);
 		GameSampling.deleteFolder(logsBestPortfolios);

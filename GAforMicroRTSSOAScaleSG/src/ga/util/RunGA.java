@@ -18,8 +18,10 @@ import java.util.Map;
 
 import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
+import ga.model.Chromosome;
 import ga.model.Population;
 import ga.util.Evaluation.RatePopulation;
+import ga.util.Evaluation.RoundRobinEliteandSampleIterativeEval;
 import util.sqlLite.Log_Facade;
 
 public class RunGA {
@@ -51,7 +53,7 @@ public class RunGA {
 	 * @param evalFunction
 	 *            Será a função de avaliação que desejamos utilizar
 	 */
-	public Population run(RatePopulation evalFunction, String scriptsSetCover, HashSet<String> booleansUsed) {
+	public Population run(RoundRobinEliteandSampleIterativeEval evalFunction, String scriptsSetCover, HashSet<String> booleansUsed) {
 		// Creating the table of scripts
 		scrTable = new ScriptsTable(pathTableScripts);
 		//do {
@@ -141,9 +143,11 @@ public class RunGA {
 
 			// Fase 4 = Seleção (Aplicar Cruzamento e Mutação)
 			Selection selecao = new Selection();
-			population = selecao.applySelection(population, scrTable, pathTableScripts);
+			HashMap<Chromosome, BigDecimal> eliteIndividuals=new HashMap<Chromosome, BigDecimal>();
+			population = selecao.applySelection(population, scrTable, pathTableScripts,eliteIndividuals);
 
 			// Repete-se Fase 2 = Avaliação da população
+			evalFunction.setEliteIndividuals(eliteIndividuals);
 			population = evalFunction.evalPopulation(population, this.generations, scrTable);
 			
 			//Get all the used commands

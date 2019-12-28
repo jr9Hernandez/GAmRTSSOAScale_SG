@@ -73,9 +73,9 @@ public class RunTests_SetCover_GP {
 		//escolhemos uma função de avaliação
 		//RatePopulation fEval = new RoundRobinEval();
 		//RatePopulation fEval = new RoundRobinSampleEval();
-		RatePopulation fEval = new RoundRobinEliteandSampleEval();
+		//RatePopulation fEval = new RoundRobinEliteandSampleEval();
 		//RatePopulation fEval = new RoundRobinIterativeEval();
-		//RatePopulation fEval = new RoundRobinEliteandSampleIterativeEval();
+		RoundRobinEliteandSampleIterativeEval fEval = new RoundRobinEliteandSampleIterativeEval();
 		//fEval = new SetCoverEval();
 		
 		//rodamos o GA

@@ -57,7 +57,7 @@ public class RunTestsGP {
 		
 		//################################################################33
 	
-		RatePopulation fEval;
+		//RatePopulation fEval;
 		String curriculumportfolio="empty";
 		
 		File logsBestPortfolios=new File(pathLogsBestPortfolios);
@@ -85,8 +85,8 @@ public class RunTestsGP {
 		//RatePopulation fEval = new RoundRobinSampleEval();
 		//RatePopulation fEval = new RoundRobinEliteandSampleEval();
 		//RatePopulation fEval = new RoundRobinIterativeEval();
-		//RatePopulation fEval = new RoundRobinEliteandSampleIterativeEval();
-		fEval = new SetCoverEval();
+		RoundRobinEliteandSampleIterativeEval fEval = new RoundRobinEliteandSampleIterativeEval();
+		//fEval = new SetCoverEval();
 		
 		//rodamos o GA
 		Population popFinal = ga.run(fEval,"", new HashSet<String>());

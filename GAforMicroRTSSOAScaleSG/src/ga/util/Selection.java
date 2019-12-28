@@ -22,7 +22,7 @@ public class Selection {
 	
 	static Random rand = new Random();
 	
-	public Population applySelection(Population populacaoInicial,ScriptsTable scrTable, String pathTableScripts){
+	public Population applySelection(Population populacaoInicial,ScriptsTable scrTable, String pathTableScripts, HashMap<Chromosome, BigDecimal> eliteIndividuals){
 
 
 		//System.out.println("printing the initial population");
@@ -65,6 +65,7 @@ public class Selection {
 
 		//in elite is saved the best guys from the last population
 		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)ps.sortByValue(populacaoInicial.getChromosomes());
+		eliteIndividuals=elite;
 //		System.out.println("printing elite last population");
 //		printMap(elite);
 		

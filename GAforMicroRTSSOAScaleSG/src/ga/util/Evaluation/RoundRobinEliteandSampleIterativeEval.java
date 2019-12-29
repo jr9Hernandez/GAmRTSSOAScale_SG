@@ -550,7 +550,7 @@ public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
 		for(int i=0;i<arrayElite.size();i++)
 		{
 			eliteH.add(arrayElite.get(i).getKey());
-			System.out.println(arrayElite.get(i).getKey().getGenes().toString()+" ");
+			System.out.print(arrayElite.get(i).getKey().getGenes().toString()+" ");
 		}
 		System.out.println("");
 		this.ChromosomeSample.addAll(eliteH);

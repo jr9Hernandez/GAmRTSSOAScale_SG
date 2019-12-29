@@ -630,7 +630,7 @@ public class Reproduction {
 			if(suitableChilds>=2)
 			{
 				arrchildGenotype1=suitablechilds.get(0);
-				arrchildGenotype1=suitablechilds.get(1);
+				arrchildGenotype2=suitablechilds.get(1);
 			}
 
 			String childConcatenated1=recoverStringFromArray(arrchildGenotype1);

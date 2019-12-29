@@ -37,6 +37,7 @@ public class RunGA {
 	private Instant timeInicial;
 	private int generations = 0;
 	private ScriptsTable scrTable;
+	private HashMap<Chromosome, BigDecimal> eliteIndividuals=new HashMap<Chromosome, BigDecimal>();
 
 	private final String pathTableScripts = System.getProperty("user.dir").concat("/Table/");
 	private final String pathLogs = System.getProperty("user.dir").concat("/Tracking/");
@@ -92,7 +93,8 @@ public class RunGA {
 			
 
 			// Fase 2 = avalia a população
-			population = evalFunction.evalPopulation(population, this.generations, scrTable);
+			evalFunction.setEliteIndividuals(eliteIndividuals);
+			population = evalFunction.evalPopulation(population, this.generations, scrTable);			
 			
 //			population.printWithValue(f0);
 //			System.out.println("sep");
@@ -143,7 +145,6 @@ public class RunGA {
 
 			// Fase 4 = Seleção (Aplicar Cruzamento e Mutação)
 			Selection selecao = new Selection();
-			HashMap<Chromosome, BigDecimal> eliteIndividuals=new HashMap<Chromosome, BigDecimal>();
 			population = selecao.applySelection(population, scrTable, pathTableScripts,eliteIndividuals);
 
 			// Repete-se Fase 2 = Avaliação da população

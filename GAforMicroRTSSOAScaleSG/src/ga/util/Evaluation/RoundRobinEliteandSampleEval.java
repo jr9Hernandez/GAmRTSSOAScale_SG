@@ -42,6 +42,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 	ArrayList<String> SOA_arqs = new ArrayList<>();
 
 	ArrayList<Chromosome> ChromosomeSample = new ArrayList<>();
+	HashMap<Chromosome, BigDecimal> eliteIndividuals;
 
 	public RoundRobinEliteandSampleEval() {
 		super();
@@ -379,15 +380,24 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		PreSelection ps=new PreSelection(population);	
 		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)ps.sortByValue(population.getChromosomes());
 		ArrayList<Entry<Chromosome, BigDecimal>> arrayElite = new ArrayList<>();
-		arrayElite.addAll(elite.entrySet());
 		
+		if(getEliteIndividuals().size()>0)
+		{
+			arrayElite.addAll(getEliteIndividuals().entrySet());
+		}
+		else
+		{
+			arrayElite.addAll(elite.entrySet());
+		}
+		
+		System.out.println("Elite last generation");
 		HashSet<Chromosome> eliteH = new HashSet<>();
 		for(int i=0;i<arrayElite.size();i++)
 		{
 			eliteH.add(arrayElite.get(i).getKey());
-
+			System.out.print(arrayElite.get(i).getKey().getGenes().toString()+" ");
 		}
-		
+		System.out.println("");
 		this.ChromosomeSample.addAll(eliteH);
 	}
 
@@ -445,6 +455,14 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 
 		}
 
+	}
+	
+	public HashMap<Chromosome, BigDecimal> getEliteIndividuals() {
+		return eliteIndividuals;
+	}
+
+	public void setEliteIndividuals(HashMap<Chromosome, BigDecimal> eliteIndividuals) {
+		this.eliteIndividuals = eliteIndividuals;
 	}
 
 }

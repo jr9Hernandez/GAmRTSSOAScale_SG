@@ -21,9 +21,9 @@ public class Selection {
 	 */
 	
 	static Random rand = new Random();
+	public HashMap<Chromosome, BigDecimal> eliteIndividuals;
 	
-	public Population applySelection(Population populacaoInicial,ScriptsTable scrTable, String pathTableScripts, HashMap<Chromosome, BigDecimal> eliteIndividuals){
-
+	public Population applySelection(Population populacaoInicial,ScriptsTable scrTable, String pathTableScripts){
 
 		//System.out.println("printing the initial population");
 		//printMap(populacaoInicial.getChromosomes());
@@ -64,14 +64,13 @@ public class Selection {
 		//printMap(newPopulation.getChromosomes());
 
 		//in elite is saved the best guys from the last population
-		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)ps.sortByValue(populacaoInicial.getChromosomes());
+		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)ps.sortByValue(populacaoInicial.getChromosomes());		
 		eliteIndividuals=elite;
 //		System.out.println("printing elite last population");
 //		printMap(elite);
 		
 		//here we mutate copy of the elite individuals and add to the population 
 		newPopulation=rp.eliteMutated(newPopulation,elite);
-
 		//joining elite and new sons in chromosomesNewPopulation, 
 		HashMap<Chromosome, BigDecimal> chromosomesNewPopulation=new HashMap<Chromosome, BigDecimal>();
 		chromosomesNewPopulation.putAll(newPopulation.getChromosomes());
@@ -86,7 +85,6 @@ public class Selection {
 		//printMap(chromosomesNewPopulation);
 
 		newPopulation=rp.RemoveCopies(newPopulation);
-		
 		return newPopulation;
 	}
 

@@ -83,9 +83,9 @@ public class RunTestsGP {
 		//escolhemos uma função de avaliação
 		//RatePopulation fEval = new RoundRobinEval();
 		//RatePopulation fEval = new RoundRobinSampleEval();
-		//RatePopulation fEval = new RoundRobinEliteandSampleEval();
+		RoundRobinEliteandSampleEval fEval = new RoundRobinEliteandSampleEval();
 		//RatePopulation fEval = new RoundRobinIterativeEval();
-		RoundRobinEliteandSampleIterativeEval fEval = new RoundRobinEliteandSampleIterativeEval();
+		//RoundRobinEliteandSampleIterativeEval fEval = new RoundRobinEliteandSampleIterativeEval();
 		//fEval = new SetCoverEval();
 		
 		//rodamos o GA

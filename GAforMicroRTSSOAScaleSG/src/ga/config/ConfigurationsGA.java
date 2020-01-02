@@ -14,14 +14,14 @@ public final class ConfigurationsGA {
 	 public static final boolean INCREASING_INDEX = false;
 	 public static final double INCREASING_RATE = 0.2;
 	 public static final double DECREASING_RATE = 0.2;
-	 public static final int QTD_ENEMIES_SAMPLE_RANDOM = 2;
+	 public static final int QTD_ENEMIES_SAMPLE_RANDOM = 3;
 	 public static final int QTD_ENEMIES_SAMPLE_ELITE = 10;
 	 public static final int QTD_RULES = 60088;
 	 public static final int SIZE_CHROMOSOME_SCRIPT = 10;
 	 public static final int SIZE_TABLE_SCRIPTS = 200;
 	 public static final int TYPE_CONTROL = 1;
 	 public static final int TIME_GA_EXEC = 13; 
-	 public static final int QTD_GENERATIONS = 50;
+	 public static final int QTD_GENERATIONS = 20;
 	 public static final int deltaForMutation = 1;
 	 public static final boolean RESET_ENABLED = true;
 	 public static final boolean MUTATION_ORDER_ENABLED = true;

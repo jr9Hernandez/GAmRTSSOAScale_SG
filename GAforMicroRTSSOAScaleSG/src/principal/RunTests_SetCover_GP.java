@@ -3,6 +3,9 @@ package principal;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -65,6 +68,16 @@ public class RunTests_SetCover_GP {
 		RunSetCoverCalculation scCalculation = new RunSetCoverCalculation(sc.dataH);
 		List<Integer> setCover=scCalculation.getSetCover();
 		String scriptsSetCover=setCover.toString();
+		
+		if(Files.exists(Paths.get(pathTable+"ScriptsTable.txt"))) { 
+			Path source = Paths.get(pathTable+"ScriptsTable.txt");
+			try {
+				Files.move(source, source.resolveSibling("ScriptsTable"+i+".txt"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 		//* 
 		//applying the GP

@@ -323,7 +323,7 @@ public class GameSampling {
             */
           //avaliacao de tempo
             duracao = Duration.between(timeInicial, Instant.now());
-        } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMillis() < 500000));
+        } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMillis() < 900000));
         //&& (duracao.toMillis() < 40000)
 
         System.out.println("Game Over");

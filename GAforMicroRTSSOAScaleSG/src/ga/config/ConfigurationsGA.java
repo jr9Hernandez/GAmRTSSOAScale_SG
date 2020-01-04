@@ -2,12 +2,12 @@ package ga.config;
 
 public final class ConfigurationsGA {
 	public static final int SIZE_CHROMOSOME = 1;
-	 public static final int SIZE_POPULATION = 30;
+	 public static final int SIZE_POPULATION = 60;
 	 public static final int NUMBER_JOBS = 39;
-	 public static final int SIZE_ELITE = 5;
-	 public static final int SIZE_INVADERS = 3;
-	 public static final int K_TOURNMENT = 6;
-	 public static final int SIZE_PARENTSFORCROSSOVER = 12;
+	 public static final int SIZE_ELITE = 6;
+	 public static final int SIZE_INVADERS = 6;
+	 public static final int K_TOURNMENT = 15;
+	 public static final int SIZE_PARENTSFORCROSSOVER = 24;
 	 public static final double MUTATION_RATE = 0.3;
 	 public static final double MUTATION_RATE_RULE = 0.3;
 	 public static final double MUTATION_ORDER_RATE = 0.1;
@@ -18,7 +18,7 @@ public final class ConfigurationsGA {
 	 public static final int QTD_ENEMIES_SAMPLE_ELITE = 10;
 	 public static final int QTD_RULES = 60088;
 	 public static final int SIZE_CHROMOSOME_SCRIPT = 10;
-	 public static final int SIZE_TABLE_SCRIPTS = 200;
+	 public static final int SIZE_TABLE_SCRIPTS = 10000;
 	 public static final int TYPE_CONTROL = 1;
 	 public static final int TIME_GA_EXEC = 13; 
 	 public static final int QTD_GENERATIONS = 20;
@@ -30,7 +30,7 @@ public final class ConfigurationsGA {
    
      public static final int QTD_RULES_CONDITIONAL=115;
      public static final int QTD_RULES_BASIC_FUNCTIONS=518;
-     public static final int MAX_QTD_COMPONENTS=7;
+     public static final int MAX_QTD_COMPONENTS=9;
      public static boolean recoverTable=false;
     
      public final static boolean removeRules=false;

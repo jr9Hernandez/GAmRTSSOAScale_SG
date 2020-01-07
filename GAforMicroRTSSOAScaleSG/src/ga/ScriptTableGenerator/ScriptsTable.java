@@ -1269,12 +1269,17 @@ public class ScriptsTable {
 
 		}
 		
-		if(ConfigurationsGA.idSketch=="B")
+		else if(ConfigurationsGA.idSketch=="B")
 		{
 			genotypeScript=sk.sketchBLimitedSize(genotypeScript,numberComponentsAdded);
 			//genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
 			//basicFunction=basicFunction+") ";
 
+		}
+		
+		else if(ConfigurationsGA.idSketch=="C")
+		{
+			genotypeScript=sk.sketchCLimitedSize(genotypeScript,numberComponentsAdded);
 		}
 		//System.out.println("genotype "+genotypeScript);
 		return genotypeScript.trim();

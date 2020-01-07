@@ -21,7 +21,7 @@ public final class ConfigurationsGA {
 	 public static final int SIZE_TABLE_SCRIPTS = 10000;
 	 public static final int TYPE_CONTROL = 1;
 	 public static final int TIME_GA_EXEC = 13; 
-	 public static final int QTD_GENERATIONS = 20;
+	 public static final int QTD_GENERATIONS = 100;
 	 public static final int deltaForMutation = 1;
 	 public static final boolean RESET_ENABLED = true;
 	 public static final boolean MUTATION_ORDER_ENABLED = true;
@@ -39,7 +39,7 @@ public final class ConfigurationsGA {
      public static final int LOOPS_SELFPLAY = 50;
     
      public static final boolean sketch=true;
-     public static final String idSketch="B";
+     public static final String idSketch="C";
      public static final boolean setCoverBooleans=true;
      
      public static final boolean portfolioSetCover=true;

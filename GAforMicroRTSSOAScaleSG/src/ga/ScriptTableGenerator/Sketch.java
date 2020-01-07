@@ -376,7 +376,7 @@ public class Sketch {
 				counterOpensIfs++;
 			}
 		}
-		System.out.println("counter "+counterOpensIfs);
+		//System.out.println("counter "+counterOpensIfs);
 		return counterOpensIfs;
 	}
 	

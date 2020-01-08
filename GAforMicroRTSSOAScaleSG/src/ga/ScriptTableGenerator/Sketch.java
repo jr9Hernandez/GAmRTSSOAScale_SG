@@ -50,7 +50,7 @@ public class Sketch {
 			allBooleansFunctionsRedefined=redefiningBooleansForScripts();
 			allBooleansMatchingTypeByCommands=st.allBooleansMatchingTypeBYCommands(typesUnitsinCommands);
 			System.out.println("booleanos from commands "+Arrays.toString(allBooleansMatchingTypeByCommands.toArray()));
-			//allBooleansFunctionsRedefined.addAll(allBooleansMatchingTypeByCommands);
+			allBooleansFunctionsRedefined.addAll(allBooleansMatchingTypeByCommands);
 		}
 		else
 		{

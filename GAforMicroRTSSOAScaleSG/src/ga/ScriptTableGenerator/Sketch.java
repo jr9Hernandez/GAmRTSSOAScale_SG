@@ -21,8 +21,10 @@ public class Sketch {
 	ArrayList<String> allBasicFunctionsRedefined;
 	ArrayList<String> allBooleansFunctions;
 	ArrayList<String> allBooleansFunctionsRedefined;
+	ArrayList<String> allBooleansMatchingTypeByCommands;
 	int maxComponents;
 	HashSet<String> booleansUsed;
+	HashSet<String> typesUnitsinCommands=new HashSet();
 	
 	public Sketch()
 	{
@@ -46,6 +48,9 @@ public class Sketch {
 		if(ConfigurationsGA.setCoverBooleans)
 		{
 			allBooleansFunctionsRedefined=redefiningBooleansForScripts();
+			allBooleansMatchingTypeByCommands=st.allBooleansMatchingTypeBYCommands(typesUnitsinCommands);
+			System.out.println("booleanos from commands "+Arrays.toString(allBooleansMatchingTypeByCommands.toArray()));
+			//allBooleansFunctionsRedefined.addAll(allBooleansMatchingTypeByCommands);
 		}
 		else
 		{
@@ -758,7 +763,20 @@ public class Sketch {
             //System.out.println("tam tab"+scriptsTable.size());
             //System.out.println("id "+idSc+" Elems "+scriptsTable.get(BigDecimal.valueOf(idSc)));
         	commandsRedefined.add(allBasicFunctions.get(idSc));
+        	
+            //here I added the types of units
+
+            if(allBasicFunctions.get(idSc).contains("Ranged"))
+            	typesUnitsinCommands.add("Ranged");
+            if(allBasicFunctions.get(idSc).contains("Light"))
+            	typesUnitsinCommands.add("Light");
+            if(allBasicFunctions.get(idSc).contains("Heavy"))
+            	typesUnitsinCommands.add("Heavy");
+            if(allBasicFunctions.get(idSc).contains("Worker"))
+            	typesUnitsinCommands.add("Worker");
         }
+        
+
         return commandsRedefined;
 	}
 	

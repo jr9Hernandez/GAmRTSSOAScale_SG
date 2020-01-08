@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -826,6 +827,85 @@ public class ScriptsTable {
 		
 		}
 		return allConditionalFunctions;
+	}
+	
+	public ArrayList<String> allBooleansMatchingTypeBYCommands(HashSet<String> typesUnitsinCommands)
+	{
+		String conditionalFunction="";
+		ArrayList<String> allConditionalFunctionsMatchingTypeUnits=new ArrayList<>();
+		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
+		int counter=0;
+		for(FunctionsforGrammar functionChosen: functions.getConditionalsForGrammar())
+		{
+			if(functionChosen.getNameFunction().equals("HaveQtdUnitsAttacking") )
+			{
+				ArrayList<String> allConditionalFunctionsPerFunction=new ArrayList<>();			
+				conditionalFunction=functionChosen.getNameFunction()+"(";
+				buildingFunctionMatchingTypesUnits(conditionalFunction,counter,functionChosen.getParameters(),functionChosen.getParameters().size(),allConditionalFunctionsPerFunction, typesUnitsinCommands);
+				allConditionalFunctionsMatchingTypeUnits.addAll(allConditionalFunctionsPerFunction);
+			}
+			
+			if(functionChosen.getNameFunction().equals("HaveQtdUnitsHarversting") && typesUnitsinCommands.contains("Worker"))
+			{
+				ArrayList<String> allConditionalFunctionsPerFunction=new ArrayList<>();			
+				conditionalFunction=functionChosen.getNameFunction()+"(";
+				buildingFunction(conditionalFunction,counter,functionChosen.getParameters(),functionChosen.getParameters().size(),allConditionalFunctionsPerFunction );
+				allConditionalFunctionsMatchingTypeUnits.addAll(allConditionalFunctionsPerFunction);
+			}
+		
+		}
+		return allConditionalFunctionsMatchingTypeUnits;
+	}
+	
+	public ArrayList<String> buildingFunctionMatchingTypesUnits(String partialFunction,int counter, List<Parameter> parameters, int maxSizeParameters,ArrayList<String> allBasicFunctions, HashSet<String> typesUnitsinCommands)
+	{
+		if(counter<maxSizeParameters)
+		{		
+			String currentFunction=partialFunction;
+			if(parameters.get(counter).getDiscreteSpecificValues()==null)
+			{
+				for(int i=(int)parameters.get(counter).getInferiorLimit();i<=(int)parameters.get(counter).getSuperiorLimit();i++)
+				{
+					
+					partialFunction=currentFunction+i+",";
+					buildingFunctionMatchingTypesUnits(partialFunction,counter+1, parameters,  maxSizeParameters,allBasicFunctions,typesUnitsinCommands);				
+				}
+
+			}
+			else
+			{
+				for(int i=0; i<parameters.get(counter).getDiscreteSpecificValues().size(); i++)
+				{
+					partialFunction=currentFunction+parameters.get(counter).getDiscreteSpecificValues().get(i)+",";
+					buildingFunctionMatchingTypesUnits(partialFunction,counter+1, parameters,  maxSizeParameters,allBasicFunctions,typesUnitsinCommands);
+				}
+
+
+			}
+			
+		}
+		else
+		{
+			partialFunction=partialFunction.substring(0, partialFunction.length() - 1);
+			partialFunction=partialFunction+")";
+			if(matchInString(partialFunction,typesUnitsinCommands))
+				allBasicFunctions.add(partialFunction);
+			return allBasicFunctions;
+			
+		}
+		return allBasicFunctions;
+	}
+	
+	public boolean matchInString(String partialFunction, HashSet<String> typesUnitsinCommands)
+	{
+	     Iterator<String> it = typesUnitsinCommands.iterator();
+	     while(it.hasNext()){
+	    	 if(partialFunction.contains(it.next()))
+	    	 {
+	    		 return true;
+	    	 }
+	     }
+	     return false;
 	}
 		
 	public ArrayList<String> buildingFunction(String partialFunction,int counter, List<Parameter> parameters, int maxSizeParameters,ArrayList<String> allBasicFunctions)

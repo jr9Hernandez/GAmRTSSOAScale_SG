@@ -1,378 +1,246 @@
 Log - Generation = 0
 -- Population --
-Chromosome 131 
+Chromosome 3139 
 Value = 0
-Chromosome 68 
+Chromosome 16452 
 Value = 0
-Chromosome 133 
+Chromosome 10052 
 Value = 0
-Chromosome 197 
+Chromosome 5062 
 Value = 0
-Chromosome 6 
+Chromosome 7369 
 Value = 0
-Chromosome 138 
+Chromosome 15817 
 Value = 0
-Chromosome 15 
+Chromosome 19786 
 Value = 0
-Chromosome 16 
+Chromosome 15436 
 Value = 0
-Chromosome 80 
+Chromosome 9165 
 Value = 0
-Chromosome 145 
+Chromosome 8399 
 Value = 0
-Chromosome 85 
+Chromosome 18384 
 Value = 0
-Chromosome 153 
+Chromosome 11473 
 Value = 0
-Chromosome 91 
+Chromosome 11858 
 Value = 0
-Chromosome 156 
+Chromosome 339 
 Value = 0
-Chromosome 32 
+Chromosome 6867 
 Value = 0
-Chromosome 36 
+Chromosome 3159 
 Value = 0
-Chromosome 37 
+Chromosome 14423 
 Value = 0
-Chromosome 40 
+Chromosome 343 
 Value = 0
-Chromosome 105 
+Chromosome 7385 
 Value = 0
-Chromosome 43 
+Chromosome 10458 
 Value = 0
-Chromosome 110 
+Chromosome 7005 
 Value = 0
-Chromosome 111 
+Chromosome 4067 
 Value = 0
-Chromosome 176 
+Chromosome 12899 
 Value = 0
-Chromosome 116 
+Chromosome 7908 
 Value = 0
-Chromosome 180 
+Chromosome 5611 
 Value = 0
-Chromosome 118 
+Chromosome 17262 
 Value = 0
-Chromosome 120 
+Chromosome 2160 
 Value = 0
-Chromosome 57 
+Chromosome 18160 
 Value = 0
-Chromosome 121 
+Chromosome 4725 
+Value = 0
+Chromosome 3576 
+Value = 0
+Chromosome 19325 
+Value = 0
+Chromosome 14462 
+Value = 0
+Chromosome 3838 
 Value = 0
 Chromosome 0 
+Value = 0
+Chromosome 10497 
+Value = 0
+Chromosome 12545 
+Value = 0
+Chromosome 1158 
+Value = 0
+Chromosome 19334 
+Value = 0
+Chromosome 4870 
+Value = 0
+Chromosome 17549 
+Value = 0
+Chromosome 4110 
+Value = 0
+Chromosome 10768 
+Value = 0
+Chromosome 15251 
+Value = 0
+Chromosome 9107 
+Value = 0
+Chromosome 8726 
+Value = 0
+Chromosome 8217 
+Value = 0
+Chromosome 9626 
+Value = 0
+Chromosome 9755 
+Value = 0
+Chromosome 1056 
+Value = 0
+Chromosome 3108 
+Value = 0
+Chromosome 8744 
+Value = 0
+Chromosome 5161 
+Value = 0
+Chromosome 18985 
+Value = 0
+Chromosome 10928 
+Value = 0
+Chromosome 9651 
+Value = 0
+Chromosome 7732 
+Value = 0
+Chromosome 9783 
+Value = 0
+Chromosome 19128 
+Value = 0
+Chromosome 10682 
+Value = 0
+Chromosome 9661 
 Value = 0
 -- Population --
 Log - Generation = 1
 -- Population --
-Chromosome 131 
+Chromosome 20034 
 Value = 0
-Chromosome 68 
+Chromosome 20035 
 Value = 0
-Chromosome 133 
+Chromosome 3139 
 Value = 0
-Chromosome 197 
+Chromosome 10052 
 Value = 0
-Chromosome 6 
+Chromosome 20036 
 Value = 0
-Chromosome 201 
+Chromosome 16452 
 Value = 0
-Chromosome 138 
+Chromosome 20037 
+Value = 0
+Chromosome 20038 
+Value = 0
+Chromosome 5062 
+Value = 0
+Chromosome 20039 
+Value = 0
+Chromosome 20040 
+Value = 0
+Chromosome 20041 
+Value = 0
+Chromosome 7369 
+Value = 0
+Chromosome 15817 
+Value = 0
+Chromosome 20042 
+Value = 0
+Chromosome 7882 
+Value = 0
+Chromosome 20043 
+Value = 0
+Chromosome 20044 
+Value = 0
+Chromosome 20045 
+Value = 0
+Chromosome 20046 
+Value = 0
+Chromosome 20047 
+Value = 0
+Chromosome 20048 
+Value = 0
+Chromosome 20049 
+Value = 0
+Chromosome 20050 
+Value = 0
+Chromosome 20051 
+Value = 0
+Chromosome 20052 
+Value = 0
+Chromosome 20053 
+Value = 0
+Chromosome 20054 
+Value = 0
+Chromosome 20055 
+Value = 0
+Chromosome 20056 
+Value = 0
+Chromosome 20057 
+Value = 0
+Chromosome 20058 
+Value = 0
+Chromosome 2160 
+Value = 0
+Chromosome 10612 
+Value = 0
+Chromosome 18941 
+Value = 0
+Chromosome 18433 
+Value = 0
+Chromosome 18820 
 Value = 0
 Chromosome 13 
 Value = 0
-Chromosome 207 
+Chromosome 404 
 Value = 0
-Chromosome 143 
+Chromosome 8726 
 Value = 0
-Chromosome 208 
+Chromosome 4506 
 Value = 0
-Chromosome 209 
+Chromosome 20004 
 Value = 0
-Chromosome 210 
+Chromosome 20005 
 Value = 0
-Chromosome 211 
+Chromosome 20006 
 Value = 0
-Chromosome 212 
+Chromosome 20011 
 Value = 0
-Chromosome 213 
+Chromosome 6062 
 Value = 0
-Chromosome 149 
+Chromosome 9520 
 Value = 0
-Chromosome 214 
+Chromosome 20021 
 Value = 0
-Chromosome 215 
+Chromosome 20023 
 Value = 0
-Chromosome 216 
+Chromosome 20025 
 Value = 0
-Chromosome 217 
+Chromosome 12089 
 Value = 0
-Chromosome 153 
+Chromosome 20026 
 Value = 0
-Chromosome 218 
+Chromosome 20027 
 Value = 0
-Chromosome 219 
+Chromosome 20028 
 Value = 0
-Chromosome 28 
+Chromosome 20029 
 Value = 0
-Chromosome 37 
+Chromosome 3901 
 Value = 0
-Chromosome 40 
+Chromosome 20030 
 Value = 0
-Chromosome 171 
+Chromosome 20031 
 Value = 0
-Chromosome 186 
+Chromosome 20032 
 Value = 0
-Chromosome 128 
-Value = 0
--- Population --
-Log - Generation = 2
--- Population --
-Chromosome 131 
-Value = 0
-Chromosome 68 
-Value = 0
-Chromosome 133 
-Value = 0
-Chromosome 197 
-Value = 0
-Chromosome 6 
-Value = 0
-Chromosome 20 
-Value = 0
-Chromosome 216 
-Value = 0
-Chromosome 221 
-Value = 0
-Chromosome 96 
-Value = 0
-Chromosome 97 
-Value = 0
-Chromosome 227 
-Value = 0
-Chromosome 228 
-Value = 0
-Chromosome 37 
-Value = 0
-Chromosome 229 
-Value = 0
-Chromosome 101 
-Value = 0
-Chromosome 230 
-Value = 0
-Chromosome 231 
-Value = 0
-Chromosome 232 
-Value = 0
-Chromosome 233 
-Value = 0
-Chromosome 234 
-Value = 0
-Chromosome 235 
-Value = 0
-Chromosome 236 
-Value = 0
-Chromosome 237 
-Value = 0
-Chromosome 238 
-Value = 0
-Chromosome 239 
-Value = 0
-Chromosome 240 
-Value = 0
-Chromosome 116 
-Value = 0
-Chromosome 56 
-Value = 0
-Chromosome 63 
-Value = 0
-Chromosome 1 
-Value = 0
--- Population --
-Log - Generation = 3
--- Population --
-Chromosome 258 
-Value = 0
-Chromosome 259 
-Value = 0
-Chromosome 131 
-Value = 0
-Chromosome 260 
-Value = 0
-Chromosome 68 
-Value = 0
-Chromosome 261 
-Value = 0
-Chromosome 133 
-Value = 0
-Chromosome 197 
-Value = 0
-Chromosome 262 
-Value = 0
-Chromosome 6 
-Value = 0
-Chromosome 201 
-Value = 0
-Chromosome 139 
-Value = 0
-Chromosome 16 
-Value = 0
-Chromosome 37 
-Value = 0
-Chromosome 231 
-Value = 0
-Chromosome 106 
-Value = 0
-Chromosome 112 
-Value = 0
-Chromosome 242 
-Value = 0
-Chromosome 243 
-Value = 0
-Chromosome 248 
-Value = 0
-Chromosome 249 
-Value = 0
-Chromosome 250 
-Value = 0
-Chromosome 251 
-Value = 0
-Chromosome 252 
-Value = 0
-Chromosome 253 
-Value = 0
-Chromosome 254 
-Value = 0
-Chromosome 255 
-Value = 0
-Chromosome 256 
-Value = 0
-Chromosome 257 
-Value = 0
-Chromosome 1 
-Value = 0
--- Population --
-Log - Generation = 4
--- Population --
-Chromosome 258 
-Value = 0
-Chromosome 259 
-Value = 0
-Chromosome 131 
-Value = 0
-Chromosome 260 
-Value = 0
-Chromosome 68 
-Value = 0
-Chromosome 133 
-Value = 0
-Chromosome 6 
-Value = 0
-Chromosome 263 
-Value = 0
-Chromosome 264 
-Value = 0
-Chromosome 265 
-Value = 0
-Chromosome 271 
-Value = 0
-Chromosome 272 
-Value = 0
-Chromosome 273 
-Value = 0
-Chromosome 274 
-Value = 0
-Chromosome 275 
-Value = 0
-Chromosome 276 
-Value = 0
-Chromosome 20 
-Value = 0
-Chromosome 277 
-Value = 0
-Chromosome 278 
-Value = 0
-Chromosome 23 
-Value = 0
-Chromosome 279 
-Value = 0
-Chromosome 280 
-Value = 0
-Chromosome 281 
-Value = 0
-Chromosome 282 
-Value = 0
-Chromosome 27 
-Value = 0
-Chromosome 283 
-Value = 0
-Chromosome 284 
-Value = 0
-Chromosome 225 
-Value = 0
-Chromosome 101 
-Value = 0
-Chromosome 257 
-Value = 0
--- Population --
-Log - Generation = 5
--- Population --
-Chromosome 258 
-Value = 0
-Chromosome 259 
-Value = 0
-Chromosome 131 
-Value = 0
-Chromosome 4 
-Value = 0
-Chromosome 260 
-Value = 0
-Chromosome 68 
-Value = 0
-Chromosome 5 
-Value = 0
-Chromosome 264 
-Value = 0
-Chromosome 277 
-Value = 0
-Chromosome 23 
-Value = 0
-Chromosome 221 
-Value = 0
-Chromosome 291 
-Value = 0
-Chromosome 292 
-Value = 0
-Chromosome 293 
-Value = 0
-Chromosome 294 
-Value = 0
-Chromosome 295 
-Value = 0
-Chromosome 296 
-Value = 0
-Chromosome 297 
-Value = 0
-Chromosome 298 
-Value = 0
-Chromosome 299 
-Value = 0
-Chromosome 300 
-Value = 0
-Chromosome 301 
-Value = 0
-Chromosome 302 
-Value = 0
-Chromosome 238 
-Value = 0
-Chromosome 303 
-Value = 0
-Chromosome 304 
-Value = 0
-Chromosome 305 
-Value = 0
-Chromosome 306 
-Value = 0
-Chromosome 246 
-Value = 0
-Chromosome 1 
+Chromosome 20033 
 Value = 0
 -- Population --

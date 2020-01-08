@@ -872,8 +872,8 @@ public class Reproduction {
 		}
 		else
 		{
-			//System.out.println("beforeMutateScript "+cromScriptOriginal);
-			//System.out.println("afterMutateScript "+cromScript);
+//			System.out.println("beforeMutateScript "+cromScriptOriginal);
+//			System.out.println("afterMutateScript "+cromScript);
 			int newId=scrTable.getScriptTable().size();
 			scrTable.getScriptTable().put(cromScript, BigDecimal.valueOf(newId));
 			scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
@@ -1009,17 +1009,20 @@ public class Reproduction {
 					//change with other basicFunction
 					if(originals[i].contains(",u,") || originals[i].contains(",u)") || originals[i].contains("(u,"))
 					{
-						boolean m = rand.nextFloat() <= 0.5;
-						if(m)
-						{
-							//change by other random function
-							candidates[i]=objScriptTable.returnBasicFunctionClean(true);
-						}
-						else
-						{
-							//change by the same function with other paramethers
-							candidates[i]=objScriptTable.returnBasicFunctionCleanSame(true,originals[i]);
-						}
+//						boolean m = rand.nextFloat() <= 0.5;
+//						if(m)
+//						{
+//							//change by other random function
+//							candidates[i]=objScriptTable.returnBasicFunctionClean(true);
+//						}
+//						else
+//						{
+//							//change by the same function with other paramethers
+//							candidates[i]=objScriptTable.returnBasicFunctionCleanSame(true,originals[i]);
+//						}
+						candidates[i]=scrTable.allBasicFunctionsRedefined.get(new Random().nextInt(scrTable.allBasicFunctionsRedefined.size()));
+						candidates[i]=candidates[i].substring(0, candidates[i].length() - 1);
+						candidates[i]=candidates[i]+",u)";
 					}
 					else
 					{
@@ -1049,17 +1052,20 @@ public class Reproduction {
 						//change with other basicFunction
 						if(originals[i].contains(",u,") || originals[i].contains(",u)") || originals[i].contains("(u,"))
 						{
-							boolean m = rand.nextFloat() <= 0.5;
-							if(m)
-							{
-								//change by other random function
-								candidates[i]=objScriptTable.returnConditionalClean(true);
-							}
-							else
-							{
-								//change by the same function with other paramethers
-								candidates[i]=objScriptTable.returnConditionalCleanSame(true,originals[i]);
-							}
+//							boolean m = rand.nextFloat() <= 0.5;
+//							if(m)
+//							{
+//								//change by other random function
+//								candidates[i]=objScriptTable.returnConditionalClean(true);
+//							}
+//							else
+//							{
+//								//change by the same function with other paramethers
+//								candidates[i]=objScriptTable.returnConditionalCleanSame(true,originals[i]);
+//							}
+							candidates[i]=scrTable.allBooleansFunctionsRedefined.get(new Random().nextInt(scrTable.allBasicFunctionsRedefined.size()));
+							candidates[i]=candidates[i].substring(0, candidates[i].length() - 1);
+							candidates[i]=candidates[i]+",u)";
 						}
 						else
 						{

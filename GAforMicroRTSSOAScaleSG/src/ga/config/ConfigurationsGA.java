@@ -18,7 +18,7 @@ public final class ConfigurationsGA {
 	 public static final int QTD_ENEMIES_SAMPLE_ELITE = 10;
 	 public static final int QTD_RULES = 60088;
 	 public static final int SIZE_CHROMOSOME_SCRIPT = 10;
-	 public static final int SIZE_TABLE_SCRIPTS = 30000;
+	 public static final int SIZE_TABLE_SCRIPTS = 100000;
 	 public static final int TYPE_CONTROL = 1;
 	 public static final int TIME_GA_EXEC = 13; 
 	 public static final int QTD_GENERATIONS = 100;
@@ -36,7 +36,7 @@ public final class ConfigurationsGA {
      public final static boolean removeRules=false;
      public static final boolean evolvingScript=true;
     
-     public static final int LOOPS_SELFPLAY = 50;
+     public static final int LOOPS_SELFPLAY = 2;
     
      public static final boolean sketch=true;
      public static final String idSketch="C";

@@ -1,6 +1,8 @@
 package ga.ScriptTableGenerator;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -25,6 +27,7 @@ public class Sketch {
 	int maxComponents;
 	HashSet<String> booleansUsed;
 	HashSet<String> typesUnitsinCommands=new HashSet();
+	private final String pathTrackingSC = System.getProperty("user.dir").concat("/Tracking/SCcommands.txt");
 	
 	public Sketch()
 	{
@@ -56,11 +59,28 @@ public class Sketch {
 		{
 			allBooleansFunctionsRedefined=st.allConditionalFunctions();
 		}
-		System.out.println(Arrays.toString(allBasicFunctions.toArray()));
-		System.out.println(Arrays.toString(allBasicFunctionsRedefined.toArray()));
-		System.out.println("Booleans "+allBooleansFunctions.size()+" "+allBooleansFunctionsRedefined.size());
-		System.out.println(Arrays.toString(allBooleansFunctions.toArray()));
-		System.out.println(Arrays.toString(allBooleansFunctionsRedefined.toArray()));
+		PrintWriter f0;
+		try {
+			f0 = new PrintWriter(new FileWriter(pathTrackingSC));
+
+			System.out.println(Arrays.toString(allBasicFunctions.toArray()));
+			f0.println(Arrays.toString(allBasicFunctions.toArray()));
+			System.out.println(Arrays.toString(allBasicFunctionsRedefined.toArray()));
+			f0.println(Arrays.toString(allBasicFunctionsRedefined.toArray()));
+			System.out.println("Booleans "+allBooleansFunctions.size()+" "+allBooleansFunctionsRedefined.size());
+			f0.println("Booleans "+allBooleansFunctions.size()+" "+allBooleansFunctionsRedefined.size());
+			System.out.println(Arrays.toString(allBooleansFunctions.toArray()));
+			f0.println(Arrays.toString(allBooleansFunctions.toArray()));
+			System.out.println(Arrays.toString(allBooleansFunctionsRedefined.toArray()));
+			f0.println(Arrays.toString(allBooleansFunctionsRedefined.toArray()));
+			f0.flush();
+			f0.close();
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		maxComponents=ConfigurationsGA.MAX_QTD_COMPONENTS;
 	}
 	public String sketchA(String genotypeScript,int numberComponentsAdded) {

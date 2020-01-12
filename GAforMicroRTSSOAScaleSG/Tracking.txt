@@ -1,246 +1,246 @@
 Log - Generation = 0
 -- Population --
-Chromosome 3139 
+Chromosome 82243 
 Value = 0
-Chromosome 16452 
+Chromosome 42564 
 Value = 0
-Chromosome 10052 
+Chromosome 92228 
 Value = 0
-Chromosome 5062 
+Chromosome 35654 
 Value = 0
-Chromosome 7369 
+Chromosome 6345 
 Value = 0
-Chromosome 15817 
+Chromosome 13260 
 Value = 0
-Chromosome 19786 
+Chromosome 88653 
 Value = 0
-Chromosome 15436 
+Chromosome 72527 
 Value = 0
-Chromosome 9165 
+Chromosome 27861 
 Value = 0
-Chromosome 8399 
+Chromosome 52182 
 Value = 0
-Chromosome 18384 
+Chromosome 84696 
 Value = 0
-Chromosome 11473 
+Chromosome 27227 
 Value = 0
-Chromosome 11858 
+Chromosome 53470 
 Value = 0
-Chromosome 339 
+Chromosome 16735 
 Value = 0
-Chromosome 6867 
+Chromosome 45666 
 Value = 0
-Chromosome 3159 
+Chromosome 7138 
 Value = 0
-Chromosome 14423 
+Chromosome 12131 
 Value = 0
-Chromosome 343 
+Chromosome 80610 
 Value = 0
-Chromosome 7385 
+Chromosome 88802 
 Value = 0
-Chromosome 10458 
+Chromosome 81892 
 Value = 0
-Chromosome 7005 
+Chromosome 99431 
 Value = 0
-Chromosome 4067 
+Chromosome 62951 
 Value = 0
-Chromosome 12899 
+Chromosome 21096 
 Value = 0
-Chromosome 7908 
+Chromosome 71785 
 Value = 0
-Chromosome 5611 
+Chromosome 52075 
 Value = 0
-Chromosome 17262 
+Chromosome 80494 
 Value = 0
-Chromosome 2160 
+Chromosome 39667 
 Value = 0
-Chromosome 18160 
+Chromosome 62711 
 Value = 0
-Chromosome 4725 
+Chromosome 22777 
 Value = 0
-Chromosome 3576 
+Chromosome 44538 
 Value = 0
-Chromosome 19325 
+Chromosome 87163 
 Value = 0
-Chromosome 14462 
+Chromosome 74234 
 Value = 0
-Chromosome 3838 
+Chromosome 75260 
+Value = 0
+Chromosome 68223 
+Value = 0
+Chromosome 28798 
 Value = 0
 Chromosome 0 
 Value = 0
-Chromosome 10497 
+Chromosome 35464 
 Value = 0
-Chromosome 12545 
+Chromosome 81547 
 Value = 0
-Chromosome 1158 
+Chromosome 2702 
 Value = 0
-Chromosome 19334 
+Chromosome 58895 
 Value = 0
-Chromosome 4870 
+Chromosome 41490 
 Value = 0
-Chromosome 17549 
+Chromosome 54804 
 Value = 0
-Chromosome 4110 
+Chromosome 65428 
 Value = 0
-Chromosome 10768 
+Chromosome 19221 
 Value = 0
-Chromosome 15251 
+Chromosome 46745 
 Value = 0
-Chromosome 9107 
+Chromosome 87578 
 Value = 0
-Chromosome 8726 
+Chromosome 57372 
 Value = 0
-Chromosome 8217 
+Chromosome 33573 
 Value = 0
-Chromosome 9626 
+Chromosome 25384 
 Value = 0
-Chromosome 9755 
+Chromosome 82857 
 Value = 0
-Chromosome 1056 
+Chromosome 97578 
 Value = 0
-Chromosome 3108 
+Chromosome 20779 
 Value = 0
-Chromosome 8744 
+Chromosome 47151 
 Value = 0
-Chromosome 5161 
+Chromosome 48818 
 Value = 0
-Chromosome 18985 
+Chromosome 48438 
 Value = 0
-Chromosome 10928 
+Chromosome 88246 
 Value = 0
-Chromosome 9651 
+Chromosome 56761 
 Value = 0
-Chromosome 7732 
+Chromosome 19258 
 Value = 0
-Chromosome 9783 
+Chromosome 94529 
 Value = 0
-Chromosome 19128 
-Value = 0
-Chromosome 10682 
-Value = 0
-Chromosome 9661 
+Chromosome 35008 
 Value = 0
 -- Population --
 Log - Generation = 1
 -- Population --
-Chromosome 20034 
+Chromosome 100035 
 Value = 0
-Chromosome 20035 
+Chromosome 82243 
 Value = 0
-Chromosome 3139 
+Chromosome 100034 
 Value = 0
-Chromosome 10052 
+Chromosome 964 
 Value = 0
-Chromosome 20036 
+Chromosome 100037 
 Value = 0
-Chromosome 16452 
+Chromosome 42564 
 Value = 0
-Chromosome 20037 
+Chromosome 100036 
 Value = 0
-Chromosome 20038 
+Chromosome 92228 
 Value = 0
-Chromosome 5062 
+Chromosome 100039 
 Value = 0
-Chromosome 20039 
+Chromosome 35654 
 Value = 0
-Chromosome 20040 
+Chromosome 80966 
 Value = 0
-Chromosome 20041 
+Chromosome 100038 
 Value = 0
-Chromosome 7369 
+Chromosome 100041 
 Value = 0
-Chromosome 15817 
+Chromosome 100040 
 Value = 0
-Chromosome 20042 
+Chromosome 6345 
 Value = 0
-Chromosome 7882 
+Chromosome 100043 
 Value = 0
-Chromosome 20043 
+Chromosome 100042 
 Value = 0
-Chromosome 20044 
+Chromosome 100045 
 Value = 0
-Chromosome 20045 
+Chromosome 13260 
 Value = 0
-Chromosome 20046 
+Chromosome 100044 
 Value = 0
-Chromosome 20047 
+Chromosome 100047 
 Value = 0
-Chromosome 20048 
+Chromosome 100046 
 Value = 0
-Chromosome 20049 
+Chromosome 100049 
 Value = 0
-Chromosome 20050 
+Chromosome 100048 
 Value = 0
-Chromosome 20051 
+Chromosome 100051 
 Value = 0
-Chromosome 20052 
+Chromosome 100050 
 Value = 0
-Chromosome 20053 
+Chromosome 100053 
 Value = 0
-Chromosome 20054 
+Chromosome 27861 
 Value = 0
-Chromosome 20055 
+Chromosome 100052 
 Value = 0
-Chromosome 20056 
+Chromosome 86 
 Value = 0
-Chromosome 20057 
+Chromosome 100055 
 Value = 0
-Chromosome 20058 
+Chromosome 100054 
 Value = 0
-Chromosome 2160 
+Chromosome 100057 
 Value = 0
-Chromosome 10612 
+Chromosome 100056 
 Value = 0
-Chromosome 18941 
+Chromosome 100059 
 Value = 0
-Chromosome 18433 
+Chromosome 100058 
 Value = 0
-Chromosome 18820 
+Chromosome 100061 
 Value = 0
-Chromosome 13 
+Chromosome 100060 
 Value = 0
-Chromosome 404 
+Chromosome 69727 
 Value = 0
-Chromosome 8726 
+Chromosome 100063 
 Value = 0
-Chromosome 4506 
+Chromosome 100062 
 Value = 0
-Chromosome 20004 
+Chromosome 100064 
 Value = 0
-Chromosome 20005 
+Chromosome 21096 
 Value = 0
-Chromosome 20006 
+Chromosome 383 
 Value = 0
-Chromosome 20011 
+Chromosome 56720 
 Value = 0
-Chromosome 6062 
+Chromosome 12185 
 Value = 0
-Chromosome 9520 
+Chromosome 92963 
 Value = 0
-Chromosome 20021 
+Chromosome 95909 
 Value = 0
-Chromosome 20023 
+Chromosome 100004 
 Value = 0
-Chromosome 20025 
+Chromosome 54183 
 Value = 0
-Chromosome 12089 
+Chromosome 100011 
 Value = 0
-Chromosome 20026 
+Chromosome 2738 
 Value = 0
-Chromosome 20027 
+Chromosome 100018 
 Value = 0
-Chromosome 20028 
+Chromosome 100025 
 Value = 0
-Chromosome 20029 
+Chromosome 22713 
 Value = 0
-Chromosome 3901 
+Chromosome 100029 
 Value = 0
-Chromosome 20030 
+Chromosome 100031 
 Value = 0
-Chromosome 20031 
+Chromosome 100030 
 Value = 0
-Chromosome 20032 
+Chromosome 100033 
 Value = 0
-Chromosome 20033 
+Chromosome 100032 
 Value = 0
 -- Population --

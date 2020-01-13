@@ -8,6 +8,7 @@ import util.SOA.*;
 import ai.PassiveAI;
 import ai.RandomBiasedAI;
 import ai.CMAB.A3NNoWait;
+import ai.CMAB.A3NWithin;
 import ai.CMAB.A3NWithinNoWait;
 import ai.CMAB.CmabNaiveMCTS;
 import ai.ScriptsGenerator.ChromosomeAI;
@@ -21,6 +22,7 @@ import ai.abstraction.LightRush;
 import ai.abstraction.RangedRush;
 import ai.abstraction.WorkerRush;
 import ai.abstraction.pathfinding.AStarPathFinding;
+import ai.ahtn.AHTNAI;
 import ai.core.AI;
 import ai.evaluation.SimpleSqrtEvaluationFunction3;
 import ai.asymmetric.GAB.SandBox.GABScriptChoose;
@@ -29,6 +31,7 @@ import ai.asymmetric.PGS.LightPGSSCriptChoiceNoWaits;
 import ai.asymmetric.PGS.PGSSCriptChoiceRandom;
 import ai.competition.capivara.CmabAssymetricMCTS;
 import ai.configurablescript.BasicExpandedConfigurableScript;
+import ai.configurablescript.ScriptsCreator;
 import ai.mcts.naivemcts.NaiveMCTS;
 import ai.puppet.PuppetSearchMCTS;
 import gui.PhysicalGameStatePanel;
@@ -91,11 +94,11 @@ public class GVS_RunBattle {
         List<String> maps = new ArrayList<>(Arrays.asList(
                 //"maps/24x24/basesWorkers24x24A.xml"
                 //"maps/32x32/basesWorkers32x32A.xml"
-                //"maps/battleMaps/Others/RangedHeavyMixed.xml"
+                "maps/battleMaps/Others/RangedHeavyMixed.xml"
                 //"maps/NoWhereToRun9x8.xml"
         //"maps/BroodWar/(4)BloodBath.scmB.xml"
         		//"maps/16x16/basesWorkers16x16A.xml"
-        		"maps/8x8/basesWorkers8x8A.xml"
+        		//"maps/8x8/basesWorkers8x8A.xml"
         ));
 
         UnitTypeTable utt = new UnitTypeTable();
@@ -153,20 +156,27 @@ public class GVS_RunBattle {
         //pgs 
         //pgs 
         
-        List<AI> scriptsRun1=decodeScripts(utt, iScriptsAi2);
-        List<AI> scriptsRun2=decodeScriptsAlt(utt, iScriptsAi1);
-        AI ai1=scriptsRun1.get(0);
-        //AI ai2=scriptsRun2.get(0);
+        List<AI> scriptsRun1=decodeScripts(utt, iScriptsAi1);
+        List<AI> scriptsRun2=decodeScriptsAlt(utt, iScriptsAi2);
+        //AI ai2=scriptsRun1.get(0);
+        AI ai1=scriptsRun2.get(0);
 //      AI ai1 = new PGSSCriptChoiceRandom(utt, decodeScripts(utt, iScriptsAi1), "PGSR", 2, 200);
       //AI ai2 = new PGSSCriptChoiceRandom(utt, scriptsRun1, "PGSR", 1, 200);
+        
+        //AI ai2=new BasicExpandedConfigurableScript(utt, new AStarPathFinding(), 18, 0, 0, 1, 2, 2, -1, -1, 3); //WR
         //List<AI> scriptsRun1=decodeScripts(utt, iScriptsAi1);
         //List<AI> scriptsRun2=decodeScripts(utt, iScriptsAi2);
       	//AI ai2 = new LightPGSSCriptChoice(utt, scriptsRun1,200, "PGSR");
         //AI ai2 = new LightPGSSCriptChoiceNoWaits(utt, scriptsRun1,200, "PGSR");
       	//AI ai1 = new LightPGSSCriptChoice(utt, scriptsRun1,200, "PGSR");
       	//AI ai1=new PuppetSearchMCTS(utt);
-       AI ai2=new LightRush(utt);
+       //AI ai1=new LightRush(utt);
+        //AI ai2=new StrategyTactics(utt);
         //AI ai2=new WorkerRush(utt);
+        //AI ai2=new NaiveMCTS(utt);
+        AI ai2=new A3NWithin(100, -1, 100, 8, 0.3F, 0.0F, 0.4F, 0, new RandomBiasedAI(utt),
+                new SimpleSqrtEvaluationFunction3(), true, utt, "ManagerClosestEnemy", 3,
+                decodeScriptsOld(utt, "0;"), "A3N");
 //        AI ai2=new PassiveAI();
 //        
 //        AI ai1 = new LightPGSSCriptChoiceNoWaits(utt, scriptsRun1,200, "PGSR");
@@ -356,7 +366,7 @@ public class GVS_RunBattle {
 //        scriptsAI.add(buildCommandsIA(utt, "attack(Ranged,closest) if(HaveQtdUnitsAttacking(Ranged,3)) (moveToUnit(Heavy,Ally,mostHealthy))",counterByFunction));
         //scriptsAI.add(buildCommandsIA(utt, "0 moveToUnit(Ranged,Ally,strongest) attack(Heavy,closest) if(HaveUnitsToDistantToEnemy(Heavy,11)) (attack(Heavy,closest)) attack(Ranged,closest)"));
     
-          scriptsAI.add(buildCommandsIA(utt, "for(u) (if(HaveQtdUnitsHarversting(1,u)) (attack(All,closest,u)) (harvest(50,u)) if(HaveQtdUnitsAttacking(All,1,u)) (attack(Light,closest,u)) if(HaveQtdUnitsHarversting(1,u)) (train(Worker,20,Up)) )"));
+          scriptsAI.add(buildCommandsIA(utt, "82012 for(u) (if(HaveQtdUnitsbyType(Worker,2,u)) (train(Worker,50,EnemyDir,u)) (harvest(50,u) train(Worker,50,EnemyDir,u))) for(u) (attack(Worker,closest,u))"));
 //        scriptsAI.add(buildCommandsIA(utt, "moveToUnit(Worker,Ally,mostHealthy)"));
 //        scriptsAI.add(buildCommandsIA(utt, "0 moveToUnit(Ranged,Ally,strongest) attack(Heavy,closest) if(HaveUnitsToDistantToEnemy(Heavy,11)) (attack(Heavy,closest)) attack(Ranged,closest)"));
 //        scriptsAI.add(buildCommandsIA(utt, "10315 if(HaveUnitsToDistantToEnemy(Ranged,3)) (moveToUnit(Ranged,Ally,strongest)) attack(Heavy,closest) if(HaveUnitsToDistantToEnemy(Ranged,3)) (attack(Ranged,closest)) (moveToUnit(Ranged,Ally,strongest)) moveToUnit(Ranged,Ally,strongest) attack(Heavy,farthest) attack(Heavy,farthest)"));
@@ -378,7 +388,7 @@ public class GVS_RunBattle {
 //        scriptsAI.add(buildCommandsIA(utt, "837 if(HaveQtdEnemiesbyType(Heavy,3)) (moveToUnit(Ranged,Ally,strongest)) attack(Heavy,closest) if(HaveUnitsToDistantToEnemy(Heavy,11)) (attack(Ranged,closest) attack(Ranged,closest)) (attack(Heavy,closest) attack(Ranged,closest)) if(HaveEnemiesStrongest(Ranged)) (moveToUnit(Ranged,Ally,strongest))"));
 //        scriptsAI.add(buildCommandsIA(utt, "if(HaveUnitsToDistantToEnemy(Heavy,5)) (attack(Ranged,closest) attack(Heavy,closest)) (moveaway(Ranged))"));
 //        scriptsAI.add(buildCommandsIA(utt, "train(Worker,20,Left)"));
-//        scriptsAI.add(buildCommandsIA(utt, "moveToUnit(Worker,Ally,farthest)"));
+        scriptsAI.add(buildCommandsIA(utt, "83422 for(u) (if(HaveQtdUnitsbyType(Worker,2,u)) (train(Worker,50,Right,u))) train(Worker,50,Down) for(u) (if(HaveQtdUnitsbyType(Worker,2,u)) (attack(Worker,closest,u)) (harvest(50,u) attack(Worker,closest,u)))"));
 //        scriptsAI.add(buildCommandsIA(utt, "train(Worker,20,Down)"));
 //        scriptsAI.add(buildCommandsIA(utt, "837 if(HaveQtdEnemiesbyType(Heavy,3)) (moveToUnit(Ranged,Ally,strongest)) attack(Heavy,closest) if(HaveUnitsToDistantToEnemy(Heavy,11)) (attack(Ranged,closest) attack(Ranged,closest)) (attack(Heavy,closest) attack(Ranged,closest)) if(HaveEnemiesStrongest(Ranged)) (moveToUnit(Ranged,Ally,strongest))"));
 //        scriptsAI.add(buildCommandsIA(utt, "harvest(1)"));
@@ -390,6 +400,28 @@ public class GVS_RunBattle {
 //        scriptsAI.add(buildCommandsIA(utt, "10248 attack(Heavy,closest) if(HaveUnitsToDistantToEnemy(Heavy,15)) (attack(Ranged,lessHealthy)) (attack(Ranged,lessHealthy)) attack(Ranged,lessHealthy) if(HaveUnitsToDistantToEnemy(Heavy,15)) (attack(Ranged,lessHealthy)) attack(Ranged,lessHealthy) if(HaveUnitsToDistantToEnemy(Ranged,8)) (attack(Ranged,lessHealthy)) attack(Heavy,closest)"));
 //          scriptsAI.add(buildCommandsIA(utt, "attack(Light,closest)",counterByFunction));
         
+        return scriptsAI;
+    }
+    
+    public static List<AI> decodeScriptsOld(UnitTypeTable utt, String sScripts) {
+
+        //decompõe a tupla
+        ArrayList<Integer> iScriptsAi1 = new ArrayList<>();
+        String[] itens = sScripts.split(";");
+
+        for (String element : itens) {
+            iScriptsAi1.add(Integer.decode(element));
+        }
+
+        List<AI> scriptsAI = new ArrayList<>();
+
+        ScriptsCreator sc = new ScriptsCreator(utt, 300);
+        ArrayList<BasicExpandedConfigurableScript> scriptsCompleteSet = sc.getScriptsMixReducedSet();
+
+        iScriptsAi1.forEach((idSc) -> {
+            scriptsAI.add(scriptsCompleteSet.get(idSc));
+        });
+
         return scriptsAI;
     }
 

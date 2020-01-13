@@ -394,7 +394,7 @@ public class Population {
 	        //it.remove(); // avoids a ConcurrentModificationException
 	    }
 	    
-	    while(ChromosomesNew.size()<ConfigurationsGA.SIZE_PARENTSFORCROSSOVER)
+	    while(ChromosomesNew.size()<ConfigurationsGA.SIZE_POPULATION)
 	    {
         	Chromosome newCh = new Chromosome();
 			int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;

@@ -1,4 +1,6 @@
-/util/
-/ga/
 /SetCoverSampling/
+/ga/
+/model/
 /principal/
+/setcoverCalculation/
+/util/

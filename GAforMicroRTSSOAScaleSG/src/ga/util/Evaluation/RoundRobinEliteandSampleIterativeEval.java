@@ -539,6 +539,7 @@ public class RoundRobinEliteandSampleIterativeEval implements RatePopulation {
 		if(getEliteIndividuals().size()>0)
 		{
 			arrayElite.addAll(getEliteIndividuals().entrySet());
+			System.out.println("have elite");
 		}
 		else
 		{

@@ -140,8 +140,8 @@ public class GameSampling {
         //pgs = PhysicalGameState.load("maps/32x32/basesWorkers32x32A.xml", utt);
         //pgs = PhysicalGameState.load("maps/24x24/basesWorkers24x24A.xml", utt);
         //pgs = PhysicalGameState.load("maps/BroodWar/(4)BloodBath.scmB.xml", utt);  
-         //pgs = PhysicalGameState.load("maps/NoWhereToRun9x8.xml", utt);
-		pgs = PhysicalGameState.load("maps/battleMaps/Others/RangedHeavyMixed.xml", utt);
+         pgs = PhysicalGameState.load("maps/NoWhereToRun9x8.xml", utt);
+		//pgs = PhysicalGameState.load("maps/battleMaps/Others/RangedHeavyMixed.xml", utt);
         
 
         GameState gs = new GameState(pgs, utt);
@@ -202,15 +202,15 @@ public class GameSampling {
 //                new SimpleSqrtEvaluationFunction3(), true, utt,
 //                "ManagerLessLife", 4, scriptsRun1);
       	
-      	AI ai1 = new A3NNoWait(500, -1, 100, 1, 0.3f,
+      	AI ai1 = new A3NNoWait(500, -1, 500, 1, 0.3f,
                 0.0f, 0.4f, 0, new RandomBiasedAI(utt),
                 new SimpleSqrtEvaluationFunction3(), true, utt,
-                "ManagerRandom", 3, scriptsRun1);
+                "ManagerClosestEnemy", 2, scriptsRun1);
       	
-      	AI ai2 = new A3NNoWait(500, -1, 100, 1, 0.3f,
+      	AI ai2 = new A3NNoWait(500, -1, 500, 1, 0.3f,
                 0.0f, 0.4f, 0, new RandomBiasedAI(utt),
                 new SimpleSqrtEvaluationFunction3(), true, utt,
-                "ManagerRandom", 3, scriptsRun1);
+                "ManagerClosestEnemy", 2, scriptsRun1);
         
 //      AI ai2 = new CmabAssymetricMCTS(100, -1, 100, 1, 0.3f,
 //      0.0f, 0.4f, 0, new RandomBiasedAI(utt),
@@ -234,7 +234,7 @@ public class GameSampling {
         System.out.println("AI 2 = "+ai2.toString()+"\n");        
         
         
-        //JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);;
+        JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);;
 
         //File dir = new File("logs_states/log_"+idScriptLeader+"_"+idScriptEnemy+"_"+idSampling);
         String dirPathPlayer0=dirPathPlayer+"/log_"+portfolioPlayer1+"_"+portfolioPlayer2+"/player0";
@@ -299,7 +299,7 @@ public class GameSampling {
                 
                 // simulate:
                 gameover = gs.cycle();
-                //w.repaint();
+                w.repaint();
                 nextTimeToUpdate += PERIOD;
                 idState++;
             } else {
@@ -323,7 +323,7 @@ public class GameSampling {
             */
           //avaliacao de tempo
             duracao = Duration.between(timeInicial, Instant.now());
-        } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMillis() < 1200000));
+        } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMillis() < 120000));
         //&& (duracao.toMillis() < 40000)
 
         System.out.println("Game Over");

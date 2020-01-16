@@ -233,18 +233,33 @@ public class RunScriptByState {
 		int counterFItness=0;
 		String [] unitActionsPlayerAction=  unitActionSplitted(pa.getActions().toString());
 		PlayerAction paOriginal=PlayerAction.fromJSON(sa.getAction(), gsSimulator, utt);
-		String [] unitActionsStateAction=  unitActionSplitted(paOriginal.getActions().toString());
-
-		for(String uasa:unitActionsStateAction)
+		String [] unitActionsStateActionArr=  unitActionSplitted(paOriginal.getActions().toString());
+		List<String> saList = Arrays.asList(unitActionsStateActionArr);
+		List<String> coveringCommandsList = new ArrayList<>();
+		//System.out.println("actionState "+sa.getAction());
+		for(String uasa:saList)
 		{
 			
 			//System.out.println("uasa "+uasa);
 			for(String uapa:unitActionsPlayerAction)
 			{	//System.out.println("uapa "+uapa);
+				 String [] uapaSplited=uapa.split("\\(");
+				 String [] uasaSplited=uasa.split("\\(");
+				 
+				 String [] uapaSplitedAux=uapa.split("\\),");
+				 String [] uasaSplitedAux=uasa.split("\\),");
+				 
+//				 System.out.println("uasatype "+uasaSplited[0]);
+//				 System.out.println("uapatype "+uapaSplited[0]);
+//				 
+//				 System.out.println("uasaAction "+uasaSplitedAux[uasaSplitedAux.length-1]);
+//				 System.out.println("uapaAction "+uapaSplitedAux[uapaSplitedAux.length-1]);
+				 
 			
-				if(uapa.equals(uasa) && !uasa.contains("wait"))
+				if(uapaSplited[0].equals(uasaSplited[0]) && uapaSplitedAux[uapaSplitedAux.length-1].equals(uasaSplitedAux[uasaSplitedAux.length-1]) && !coveringCommandsList.contains(uapa) && !uasa.contains("wait"))
 				{
-					
+					//System.out.println("Enter! "+uasa);
+					coveringCommandsList.add(uapa);
 					if(!dataH.containsKey(sa.getNameState()+"_"+uasa))
 					{
 						List<Integer> CommandsCovering=new ArrayList<Integer>();
@@ -257,10 +272,11 @@ public class RunScriptByState {
 						CommandsCovering.add(idScript);
 						dataH.put(sa.getNameState()+"_"+uasa, CommandsCovering);
 					}
-					
+					break;
 					
 				}
 			}
+			
 		}
 
 	}

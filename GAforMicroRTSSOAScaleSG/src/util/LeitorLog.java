@@ -105,8 +105,17 @@ public class LeitorLog {
 					}
 					if(linha.startsWith("Winner")){
 						String item = linha.replace("Winner", "").trim();
-						tResult.setEvaluation(Integer.decode(item));
-						
+						tResult.setEvaluation(Integer.decode(item));						
+					}
+					if(linha.startsWith("ltd3_Player_0"))
+					{
+						String item = linha.replace("ltd3_Player_0", "").trim();
+						tResult.setLtd3IAI1(Double.parseDouble(item));
+					}
+					if(linha.startsWith("ltd3_Player_1"))
+					{
+						String item = linha.replace("ltd3_Player_1", "").trim();
+						tResult.setLtd3IAI2(Double.parseDouble(item));
 					}
 										
 					linha = learArq.readLine();

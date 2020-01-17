@@ -4,6 +4,7 @@ public class EvalResult  implements Comparable<EvalResult>{
 	
 	private Integer evaluation;
 	private String IA1, IA2;
+	private double ltd3IAI1, ltd3IAI2;
 	
 	public EvalResult(){
 		evaluation = 0;
@@ -57,6 +58,22 @@ public class EvalResult  implements Comparable<EvalResult>{
 		}
 		
 		return 0;
+	}
+
+	public double getLtd3IAI1() {
+		return ltd3IAI1;
+	}
+
+	public void setLtd3IAI1(double ltd3ia1) {
+		ltd3IAI1 = ltd3ia1;
+	}
+
+	public double getLtd3IAI2() {
+		return ltd3IAI2;
+	}
+
+	public void setLtd3IAI2(double ltd3ia12) {
+		ltd3IAI2 = ltd3ia12;
 	}
 	
 }

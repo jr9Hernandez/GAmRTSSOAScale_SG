@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Random;
 
@@ -33,6 +34,12 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 
 	//private static final String pathCentral = "/home/rubens/cluster/TesteNewGASG/centralSOA";
 	private static final String pathCentral = System.getProperty("user.dir").concat("/centralSOA");
+	
+	/*
+	 * key - name of the file
+	 * value - data of the file
+	 */
+	private final LinkedHashMap<String, String> battleFiles = new LinkedHashMap<String, String>();
 
 	// Classes de informa√ß√£o
 	private int atualGeneration = 0;
@@ -66,6 +73,19 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 
 		// ler resultados
 		ArrayList<EvalResult> resultados = lerResultados();
+		//check if all files were read
+				while(resultados.size() < this.battleFiles.size()) {
+					//record missing files
+					generatedMissingFiles(resultados);
+					//continue with the iterative controll
+					controllExecute();
+					ArrayList<EvalResult> missResultados = lerResultados();
+					resultados.addAll(missResultados);
+				}
+				
+		System.out.println("Number of matchs necessary "+ this.battleFiles.size());
+		System.out.println("Total of matchs read "+resultados.size());
+		
 		// atualizar valores das populacoes
 		updatePopulationValue(resultados, population);
 
@@ -289,6 +309,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 	 */
 	private void runBattles(Population population) {
 		int numberSOA = 1;
+		this.battleFiles.clear();
 		// montar a lista de batalhas que ir√£o ocorrer
 		
 		
@@ -323,8 +344,10 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 							FileWriter arq = new FileWriter(arqConfig, false);
 							PrintWriter gravarArq = new PrintWriter(arq);
 
-							gravarArq.println(convertBasicTuple(cIA1) + "#(" + convertBasicTuple(cIA2) + ")#" + i + "#"
-									+ atualGeneration);
+							String infFile = convertBasicTuple(cIA1) + "#(" + convertBasicTuple(cIA2) + ")#" + i + "#"
+									+ atualGeneration;
+							gravarArq.println(infFile);
+							this.battleFiles.put(strConfig, infFile);
 
 							gravarArq.flush();
 							gravarArq.close();
@@ -349,8 +372,10 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 							FileWriter arq = new FileWriter(arqConfig, false);
 							PrintWriter gravarArq = new PrintWriter(arq);
 
-							gravarArq.println("(" + convertBasicTuple(cIA2) + ")#" + convertBasicTuple(cIA1) + "#" + i
-									+ "#" + atualGeneration);
+							String infFile = "(" + convertBasicTuple(cIA2) + ")#" + convertBasicTuple(cIA1) + "#" + i
+									+ "#" + atualGeneration;
+							gravarArq.println(infFile);
+							this.battleFiles.put(strConfig, infFile);
 
 							gravarArq.flush();
 							gravarArq.close();
@@ -469,6 +494,52 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 
 		}
 
+	}
+	
+	private void generatedMissingFiles(ArrayList<EvalResult> resultados) {
+		HashSet<String> logs = new HashSet<String>();
+		for (EvalResult evalResult : resultados) {
+			String file = evalResult.getLogFileName().replace("Eval_", "");
+			file = file.replace("_", "#").replace("00", "0");
+			logs.add(file);
+		}		
+		//key = reduced name of the file 
+		//value = full path of the file
+		HashMap<String, String> intersect = new HashMap<String, String>();
+		for (String arqsGen : battleFiles.keySet()) {			
+			intersect.put(arqsGen.substring(arqsGen.lastIndexOf("/")+1), arqsGen);
+		}
+		for (String fileToRemove : logs) {
+			intersect.remove(fileToRemove);
+		}
+		//record the necessary files
+		for(String miss : intersect.values()) {
+			String data = battleFiles.get(miss);
+			saveNewBattle(miss,data);
+		}
+	}
+	private void saveNewBattle(String miss, String data) {
+		File arqConfig = new File(miss);
+		if (!arqConfig.exists()) {
+			try {
+				arqConfig.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		// escreve a configuraÁ„o de teste
+		try {
+			FileWriter arq = new FileWriter(arqConfig, false);
+			PrintWriter gravarArq = new PrintWriter(arq);			
+			gravarArq.println(data);
+			gravarArq.flush();
+			gravarArq.close();
+			arq.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public HashMap<Chromosome, BigDecimal> getEliteIndividuals() {

@@ -494,11 +494,14 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 			
 		}
 		//record the necessary files
+		int cont = 1;
 		System.out.println("Missed Files found "+ intersect.size()+ " missed files to be generated");
 		for(String key : intersect.keySet()) {
 			String data = intersect.get(key);
-			System.out.println("File: "+key+" data: "+ data);
-			saveNewBattle(key,data);
+			String newName = key.substring(0, key.lastIndexOf("/")+1).concat("file"+cont).concat(".txt");
+			System.out.println("File: "+key+" data: "+ data+" generated with name "+newName);
+			saveNewBattle(newName,data);
+			cont++;
 		}
 	}
 	

@@ -271,7 +271,7 @@ public class ScriptsTable {
 					{
 						for (int i = collectionofIfs.size()-1; i >= 0; i-- ) {
 
-							if(collectionofIfs.get(i).isLastOpen()==false)
+							if(collectionofIfs.get(i).isLastOpen()==false) 
 							{
 
 								collectionofIfs.remove(i);

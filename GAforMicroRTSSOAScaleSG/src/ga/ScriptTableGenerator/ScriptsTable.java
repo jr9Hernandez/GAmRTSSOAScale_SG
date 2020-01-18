@@ -361,8 +361,8 @@ public class ScriptsTable {
 		Sketch sk=new Sketch();
 		if(ConfigurationsGA.idSketch=="A")
 		{
-			genotypeScript=sk.sketchA(genotypeScript,numberComponentsAdded);
-			genotypeScript=genotypeScript.substring(0, genotypeScript.length() - 1);
+			genotypeScript=sk.sketchC(genotypeScript,numberComponentsAdded);
+			genotypeScript=genotypeScript.trim();
 			//basicFunction=basicFunction+") ";
 			
 		}

@@ -22,6 +22,7 @@ import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
 import ga.model.Chromosome;
 import ga.model.Population;
+import util.Cut_Point;
 import util.sqlLite.UCB_Facade;
 
 public class Reproduction {
@@ -377,9 +378,17 @@ public class Reproduction {
 
 	private String [] recoverParentStringParts(Integer id) {
 		String script=cromosomeById(id);
-		String [] parentsSplit=script.split("\\s+");
+		ArrayList <String> listFragments=Cut_Point.cut_in_fragments(script);
+		String [] parentsSplit=listFragments.toArray(new String[listFragments.size()]);;
 		return parentsSplit;
 	}
+
+	private int recoverSizeParent(Integer id) {
+		String script=cromosomeById(id);
+		
+		return 0;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public Population mutation(Population p)
 	{

@@ -120,22 +120,8 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
         } else if (evalResult.getEvaluation() == 1){
             updateChromo(pop, evalResult.getIA2(), BigDecimal.ONE);
         }else{
-        	if(evalResult.getLtd3IAI1()>0)
-        	{
-        		updateChromo(pop, evalResult.getIA1(), new BigDecimal(evalResult.getLtd3IAI1()));
-        	}
-        	else
-        	{
-        		updateChromo(pop, evalResult.getIA1(), new BigDecimal(0));
-        	}
-        	if(evalResult.getLtd3IAI2()>0)
-        	{
-        		updateChromo(pop, evalResult.getIA2(), new BigDecimal(evalResult.getLtd3IAI2()));
-        	}
-        	else
-        	{
-        		updateChromo(pop, evalResult.getIA2(), new BigDecimal(0));
-        	}
+            updateChromo(pop, evalResult.getIA1(), new BigDecimal(0.5));
+            updateChromo(pop, evalResult.getIA2(), new BigDecimal(0.5));
         }
         
     }

@@ -184,7 +184,7 @@ public class LeitorLog {
 	 * @param lista = ArrayList<String> que retornará os arquivos encontrados
 	 * @return Lista de Strings com todos os caminhos absolutos dos arquivos com o nome encontrado
 	 */
-	public ArrayList<String> buscar(File arquivo, String palavra, ArrayList<String> lista) {
+	public ArrayList<String> buscar(File arquivo, String palavra, ArrayList<String> lista) { 
         if (arquivo.isDirectory()) {
             File[] subPastas = arquivo.listFiles();
             for (int i = 0; i < subPastas.length; i++) {

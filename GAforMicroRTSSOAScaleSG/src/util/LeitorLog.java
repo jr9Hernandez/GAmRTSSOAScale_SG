@@ -85,8 +85,6 @@ public class LeitorLog {
 			EvalResult tResult = new EvalResult();
 			
 			File arqTour = new File(caminhoArquivo);
-			String name = caminhoArquivo.substring(caminhoArquivo.lastIndexOf("/")+1);
-			tResult.setLogFileName(name);
 
 			try {
 				FileReader arq = new FileReader(arqTour);

@@ -540,7 +540,7 @@ public class Population {
 							closed=true;
 							countOpen--;
 						}
-						else if(Character.isLetter(newGrammar.charAt(j)) && newGrammar.charAt(j) !='Z' && newGrammar.charAt(j) !='X')
+						else if(Character.isLetter(newGrammar.charAt(j)) && newGrammar.charAt(j) !='?' && newGrammar.charAt(j) !='¿')
 						{
 							letter=true;
 						}
@@ -548,15 +548,15 @@ public class Population {
 						if(closed==true && letter==false && countOpen==0)
 						{
 							
-							newGrammar=changeCharInPosition(pointClosed,'Z',newGrammar);
-							newGrammar=changeCharInPosition(pointOpen,'Z',newGrammar);
+							newGrammar=changeCharInPosition(pointClosed,'?',newGrammar);
+							newGrammar=changeCharInPosition(pointOpen,'?',newGrammar);
 							//newGrammar=newGrammar.replace("Z", "");
 							
 							int start = newGrammar.lastIndexOf(removedExcess);
 							StringBuilder builder = new StringBuilder();
 							
 							builder.append(newGrammar.substring(0, start));
-							builder.append("X");
+							builder.append("¿");
 							builder.append(newGrammar.substring(start + removedExcess.length()));
 							newGrammar=builder.toString();
 							
@@ -827,8 +827,8 @@ public class Population {
 	{
 
 		String grammar=str;
-		grammar=grammar.replace("Z", "");
-		grammar=grammar.replace("X", "");
+		grammar=grammar.replace("?", "");
+		grammar=grammar.replace("¿", "");
 
 		boolean atLeastOne=true;
 		while(atLeastOne)
@@ -846,8 +846,8 @@ public class Population {
 					}
 					else if(grammar.charAt(j)==')')
 					{
-						grammar=changeCharInPosition(i, 'Z', grammar);
-						grammar=changeCharInPosition(j, 'Z', grammar);
+						grammar=changeCharInPosition(i, '?', grammar);
+						grammar=changeCharInPosition(j, '?', grammar);
 						atLeastOne=true;
 						break;
 					}
@@ -855,7 +855,7 @@ public class Population {
 				}
 			}
 		}
-		grammar=grammar.replace("Z", "");
+		grammar=grammar.replace("?", "");
 		
 		grammar=removePaddings(grammar);
 		grammar=grammar.replace("#", "");
@@ -878,38 +878,34 @@ public class Population {
 			{
 				for(int j=0;j<parts[i].length();j++)
 				{
-					if(Character.isLetter(parts[i].charAt(j)))
+					if(Character.isLetter(parts[i].charAt(j)) && (!parts[i].contains("if") && !parts[i].contains("for")))
 					{
 						if(j>0)
 						{
-							if(parts[i].charAt(j-1) =='(')
+							int k=j-1;
+							while(parts[i].charAt(k) =='(' )
 							{
-								if(i>0)
+								if(i>1)
 								{
-									int k=j-1;
-									while(k>0)
-										{
-											if(!(parts[i-1].charAt(parts[i-1].length()-1)==')') || k>0)
-											{
-												parts[i]=changeCharInPosition(k, 'V', parts[i]);
-												
-											}
-											k--;
-										}
-									break;
+									if(!parts[i-2].contains("if") && (!parts[i-1].contains("if") && !parts[i-1].contains("for")))
+									{
+										parts[i]=changeCharInPosition(k, '*', parts[i]);
+
+									}
+									k--;
+
+									if(k<0)
+										break;
 								}
 								else {
-									int k=j-1;
-									while(k>=0)
-										{
-											if(k>=0)
-											{
-												parts[i]=changeCharInPosition(k, 'V', parts[i]);
-												
-											}
-											k--;
-										}
-									break;
+									if(i==0 || (i==1 && (!parts[i-1].contains("if") && !parts[i-1].contains("for"))))
+									{
+										parts[i]=changeCharInPosition(k, '*', parts[i]);
+									}
+									k--;
+
+									if(k<0)
+										break;
 								}
 							}
 						}
@@ -918,6 +914,7 @@ public class Population {
 				}
 			}
 		}
+		
 		grammar=recoverStringFromArray(parts);
 		grammar=balancingParentes(grammar);
 		grammar=grammar.replace("#", "");
@@ -926,14 +923,14 @@ public class Population {
 	
 	public String balancingParentes(String grammar)
 	{
-		while(grammar.contains("V"))
+		while(grammar.contains("*"))
 		{
 //			System.out.println("gram "+grammar);
 		boolean open=false;
 		int countOpen=0;
 		for(int i=0; i<grammar.length();i++)
 		{
-			if(grammar.charAt(i) =='V' && open==false)
+			if(grammar.charAt(i) =='*' && open==false)
 			{	
 			    open=true;
 			    countOpen++;

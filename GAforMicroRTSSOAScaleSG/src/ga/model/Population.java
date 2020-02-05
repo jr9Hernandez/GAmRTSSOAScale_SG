@@ -881,7 +881,7 @@ public class Population {
 							{
 								if(i>1)
 								{
-									if(!parts[i-2].contains("if") && (!parts[i-1].contains("if") && !parts[i-1].contains("for")))
+									if((!parts[i-2].contains("if") && (!parts[i-1].contains("if") && !parts[i-1].contains("for"))) || k>0)
 									{
 										parts[i]=changeCharInPosition(k, '*', parts[i]);
 
@@ -892,7 +892,7 @@ public class Population {
 										break;
 								}
 								else {
-									if(i==0 || (i==1 && (!parts[i-1].contains("if") && !parts[i-1].contains("for"))))
+									if((i==0 || (i==1 && (!parts[i-1].contains("if") && !parts[i-1].contains("for")))) || k>0)
 									{
 										parts[i]=changeCharInPosition(k, '*', parts[i]);
 									}

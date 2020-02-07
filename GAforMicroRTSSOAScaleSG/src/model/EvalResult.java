@@ -5,6 +5,7 @@ public class EvalResult  implements Comparable<EvalResult>{
 	private Integer evaluation;
 	private String IA1, IA2;
 	private double ltd3IAI1, ltd3IAI2;
+	private String logFileName;
 	
 	public EvalResult(){
 		evaluation = 0;
@@ -74,6 +75,12 @@ public class EvalResult  implements Comparable<EvalResult>{
 
 	public void setLtd3IAI2(double ltd3ia12) {
 		ltd3IAI2 = ltd3ia12;
+	}
+	public String getLogFileName() {
+		return logFileName;
+	}
+	public void setLogFileName(String logFileName) {
+		this.logFileName = logFileName;
 	}
 	
 }

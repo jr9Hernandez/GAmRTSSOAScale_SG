@@ -567,7 +567,8 @@ public class Reproduction {
 			ArrayList<String> p2sub1= new ArrayList<>();
 			ArrayList<String> p2sub2= new ArrayList<>();
 
-			
+//			System.out.println("breakParent1 "+breakParent1);
+//			System.out.println("breakParent2 "+breakParent2);
 			
 			for(int i=0;i<breakParent1;i++)
 			{

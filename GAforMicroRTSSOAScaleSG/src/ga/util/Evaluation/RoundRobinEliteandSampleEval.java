@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Random;
 
@@ -33,8 +34,14 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 
 	//private static final String pathCentral = "/home/rubens/cluster/TesteNewGASG/centralSOA";
 	private static final String pathCentral = System.getProperty("user.dir").concat("/centralSOA");
+	
+	/*
+	 * key - name of the file
+	 * value - data of the file
+	 */
+	private final LinkedHashMap<String, String> battleFiles = new LinkedHashMap<String, String>();
 
-	// Classes de informação
+	// Classes de informaÃ§Ã£o
 	private int atualGeneration = 0;
 
 	// Atributos locais
@@ -58,14 +65,27 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		// executa os confrontos
 		runBattles(population);
 
-		// Só permite continuar a execução após terminar os JOBS.
+		// SÃ³ permite continuar a execuÃ§Ã£o apÃ³s terminar os JOBS.
 		controllExecute();
 
-		// remove qualquer aquivo que não possua um vencedor
+		// remove qualquer aquivo que nÃ£o possua um vencedor
 		removeLogsEmpty();
 
 		// ler resultados
 		ArrayList<EvalResult> resultados = lerResultados();
+		//check if all files were read
+				while(resultados.size() < this.battleFiles.size()) {
+					//record missing files
+					generatedMissingFiles(resultados);
+					//continue with the iterative controll
+					controllExecute();
+					ArrayList<EvalResult> missResultados = lerResultados();
+					resultados.addAll(missResultados);
+				}
+				
+		System.out.println("Number of matchs necessary "+ this.battleFiles.size());
+		System.out.println("Total of matchs read "+resultados.size());
+		
 		// atualizar valores das populacoes
 		updatePopulationValue(resultados, population);
 
@@ -82,7 +102,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		ArrayList<EvalResult> resultsNoDraw = results;
 
 		/*
-		 * System.out.println("Avaliações sem Draw"); for (EvalResult evalResult
+		 * System.out.println("AvaliaÃ§Ãµes sem Draw"); for (EvalResult evalResult
 		 * : resultsNoDraw) { evalResult.print(); }
 		 */
 
@@ -100,15 +120,14 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
         } else if (evalResult.getEvaluation() == 1){
             updateChromo(pop, evalResult.getIA2(), BigDecimal.ONE);
         }else{
-        	updateChromo(pop, evalResult.getIA1(), new BigDecimal(0.5));
+            updateChromo(pop, evalResult.getIA1(), new BigDecimal(0.5));
             updateChromo(pop, evalResult.getIA2(), new BigDecimal(0.5));
-        
         }
         
     }
 
     private void updateChromo(Population pop, String IAWinner, BigDecimal value) {
-        // buscar na popula��o a IA compat�vel.
+        // buscar na população a IA compatível.
                 Chromosome chrUpdate = null;
                 for (Chromosome ch : pop.getChromosomes().keySet()) {
                     if (convertBasicTuple(ch).equals(IAWinner)) {
@@ -149,7 +168,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 	}
 
 	/**
-	 * Verifica se os jobs já foram encerrados no cluster.
+	 * Verifica se os jobs jÃ¡ foram encerrados no cluster.
 	 */
 	private void controllExecute() {
 
@@ -227,7 +246,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 	}
 
 	/**
-	 * irá verificar se todas as pastas SOA estão vazias
+	 * irÃ¡ verificar se todas as pastas SOA estÃ£o vazias
 	 * 
 	 * @return True se estiver vazias
 	 */
@@ -256,7 +275,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 	}
 
 	/**
-	 * Irá verificar a pasta central não tem mais arquivos.
+	 * IrÃ¡ verificar a pasta central nÃ£o tem mais arquivos.
 	 * 
 	 * @return
 	 */
@@ -269,14 +288,15 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 	}
 
 	/**
-	 * Metódo para enviar todas as batalhas ao cluster.
+	 * MetÃ³do para enviar todas as batalhas ao cluster.
 	 * 
 	 * @param population
-	 *            Que contém as configuracoes para a IA
+	 *            Que contÃ©m as configuracoes para a IA
 	 */
 	private void runBattles(Population population) {
 		int numberSOA = 1;
-		// montar a lista de batalhas que irão ocorrer
+		this.battleFiles.clear();
+		// montar a lista de batalhas que irÃ£o ocorrer
 		
 		
 		defineChromosomeSample(population);
@@ -305,13 +325,15 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 								e.printStackTrace();
 							}
 						}
-						// escreve a configuração de teste
+						// escreve a configuraÃ§Ã£o de teste
 						try {
 							FileWriter arq = new FileWriter(arqConfig, false);
 							PrintWriter gravarArq = new PrintWriter(arq);
 
-							gravarArq.println(convertBasicTuple(cIA1) + "#(" + convertBasicTuple(cIA2) + ")#" + i + "#"
-									+ atualGeneration);
+							String infFile = convertBasicTuple(cIA1) + "#(" + convertBasicTuple(cIA2) + ")#" + i + "#"
+									+ atualGeneration;
+							gravarArq.println(infFile);
+							this.battleFiles.put(strConfig, infFile);
 
 							gravarArq.flush();
 							gravarArq.close();
@@ -336,8 +358,10 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 							FileWriter arq = new FileWriter(arqConfig, false);
 							PrintWriter gravarArq = new PrintWriter(arq);
 
-							gravarArq.println("(" + convertBasicTuple(cIA2) + ")#" + convertBasicTuple(cIA1) + "#" + i
-									+ "#" + atualGeneration);
+							String infFile = "(" + convertBasicTuple(cIA2) + ")#" + convertBasicTuple(cIA1) + "#" + i
+									+ "#" + atualGeneration;
+							gravarArq.println(infFile);
+							this.battleFiles.put(strConfig, infFile);
 
 							gravarArq.flush();
 							gravarArq.close();
@@ -456,6 +480,62 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 
 		}
 
+	}
+	
+	private void generatedMissingFiles(ArrayList<EvalResult> resultados) {
+		HashMap<String, String> intersect = new HashMap<String, String>();
+		//check by data
+		for(String key : this.battleFiles.keySet()) {
+			String fileData = this.battleFiles.get(key);
+			String[] itens = fileData.split("#");
+			if(!thereIsMatch(itens[0],itens[1], resultados)) {
+				intersect.put(key, fileData);
+			}
+			
+		}
+		//record the necessary files
+		int cont = 1;
+		System.out.println("Missed Files found "+ intersect.size()+ " missed files to be generated");
+		for(String key : intersect.keySet()) {
+			String data = intersect.get(key);
+			String newName = key.substring(0, key.lastIndexOf("/")+1).concat("file"+cont).concat(".txt");
+			System.out.println("File: "+key+" data: "+ data+" generated with name "+newName);
+			saveNewBattle(newName,data);
+			cont++;
+		}
+	}
+	
+	private boolean thereIsMatch(String ia1, String ia2, ArrayList<EvalResult> resultados) {
+		for (EvalResult evalResult : resultados) {
+			if(evalResult.getIA1().equals(ia1) && evalResult.getIA2().equals(ia2)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private void saveNewBattle(String miss, String data) {
+		File arqConfig = new File(miss);
+		if (!arqConfig.exists()) {
+			try {
+				arqConfig.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		// escreve a configuração de teste
+		try {
+			FileWriter arq = new FileWriter(arqConfig, false);
+			PrintWriter gravarArq = new PrintWriter(arq);			
+			gravarArq.println(data);
+			gravarArq.flush();
+			gravarArq.close();
+			arq.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public HashMap<Chromosome, BigDecimal> getEliteIndividuals() {

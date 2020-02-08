@@ -11,14 +11,18 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
@@ -322,12 +326,16 @@ public class Population {
 	
 	public void changeGrammars(ScriptsTable scrTable)
 	{
+		Comparator<Entry<Chromosome, BigDecimal>> valueComparator = (e1, e2) -> e1.getValue().compareTo(e2.getValue());
 
-		HashMap<Chromosome, BigDecimal> ChromosomesNew=new HashMap<>();
-	    Iterator it = Chromosomes.entrySet().iterator();
+		Map<Chromosome, BigDecimal> sortedMap = Chromosomes.entrySet().stream().sorted(valueComparator)
+				.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+	
+		HashMap<Chromosome, BigDecimal> ChromosomesNew = new HashMap<>();		
+		Iterator it = sortedMap.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry pair = (Map.Entry)it.next();
-	        int value=((BigDecimal)pair.getValue()).intValue();
+	        BigDecimal value=((BigDecimal)pair.getValue());
 	        Chromosome chOriginal=(Chromosome)pair.getKey();
 	        ArrayList<Integer> scriptsId= ((Chromosome)pair.getKey()).getGenes();
 	        
@@ -384,7 +392,7 @@ public class Population {
 	        
 	        if(newCh.getGenes().size()>0) 
 	        {
-	        	ChromosomesNew.put(newCh, BigDecimal.valueOf(value));
+	        	ChromosomesNew.put(newCh, value);
 	        }	        
 	        
 	    	        

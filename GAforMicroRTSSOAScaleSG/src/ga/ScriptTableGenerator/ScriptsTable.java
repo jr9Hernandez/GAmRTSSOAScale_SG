@@ -152,6 +152,7 @@ public class ScriptsTable {
 		String tChom;
 		PrintWriter f0;
 		Sketch sk=new Sketch();
+		//Sketch sk=new Sketch(porfolioFromSetCover,booleansUsed);
 //		System.out.println("before");
 //		functions.printFunctions(functions.getBasicFunctionsForGrammar());
 		try {

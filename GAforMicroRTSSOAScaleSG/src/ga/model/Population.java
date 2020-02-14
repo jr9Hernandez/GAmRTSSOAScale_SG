@@ -564,7 +564,7 @@ public class Population {
 							break;
 
 						}
-						else if(closed==false && letter==true)
+						else if(letter==true)
 						{
 							int start = newGrammar.lastIndexOf(removedExcess);
 							if(removedExcess.contains("for"))

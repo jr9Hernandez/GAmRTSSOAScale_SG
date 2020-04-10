@@ -43,6 +43,8 @@ public final class ConfigurationsGA {
      public static final boolean setCoverBooleans=true;
      
      public static final boolean portfolioSetCover=true;
+     
+     public static final boolean randomSetCover=true;
 	
 	
 }

@@ -154,14 +154,14 @@ public class GVS_RunBattle {
         //AI ai1=new WorkerRush(utt);
        // AI ai1=new BasicExpandedConfigurableScript(utt, new AStarPathFinding(), 18, 0, 0, 1, 2, 2, -1, -1, 3); //WR
         //AI ai2=new BasicExpandedConfigurableScript(utt, new AStarPathFinding(), 18, 0, 0, 1, 2, 2, -1, -1, 3); //WR
-        //AI ai1=new BasicExpandedConfigurableScript(utt, new AStarPathFinding(), 18, 0, 0, 1, 2, 2, -1, -1, 4); //lr
+        //AI ai2=new BasicExpandedConfigurableScript(utt, new AStarPathFinding(), 18, 0, 0, 1, 2, 2, -1, -1, 4); //lr
         //pgs 
         //pgs 
         
         List<AI> scriptsRun1=decodeScripts(utt, iScriptsAi1);
         List<AI> scriptsRun2=decodeScriptsAlt(utt, iScriptsAi2);
-        AI ai1=scriptsRun1.get(0);
-        AI ai2=scriptsRun2.get(0);
+        AI ai2=scriptsRun1.get(0);
+        AI ai1=scriptsRun2.get(0);
 //      AI ai1 = new PGSSCriptChoiceRandom(utt, decodeScripts(utt, iScriptsAi1), "PGSR", 2, 200);
       //AI ai2 = new PGSSCriptChoiceRandom(utt, scriptsRun1, "PGSR", 1, 200);
         
@@ -173,7 +173,7 @@ public class GVS_RunBattle {
       	//AI ai1 = new LightPGSSCriptChoice(utt, scriptsRun1,200, "PGSR");
       	//AI ai2=new PuppetSearchMCTS(utt);
       	//AI ai2=new BasicExpandedConfigurableScript(utt, new AStarPathFinding(), 18, 0, 0, 1, 2, 2, -1, -1, 6); //RR
-       //AI ai2=new LightRush(utt);
+       //AI ai1=new LightRush(utt);
         //AI ai2=new StrategyTactics(utt);
         //AI ai1=new WorkerRush(utt);
         //AI ai2=new NaiveMCTS(utt);
@@ -377,7 +377,7 @@ public class GVS_RunBattle {
 //        scriptsAI.add(buildCommandsIA(utt, " if(HaveUnitsToDistantToEnemy(Ranged,7)) (attack(Ranged,closest)) (attack(Ranged,closest) moveToUnit(Heavy,Ally,lessHealthy) attack(Heavy,strongest) moveToUnit(Heavy,Ally,lessHealthy))"));
 //        scriptsAI.add(buildCommandsIA(utt, "train(Worker,50,EnemyDir) for(u) (if(HaveQtdUnitsHarversting(3)) (attack(Worker,mostHealthy,u)) (harvest(50,u)))"));
 //        scriptsAI.add(buildCommandsIA(utt, "train(Worker,20,Left)"));
-        scriptsAI.add(buildCommandsIA(utt, "80345 if(HaveQtdEnemiesbyType(Heavy,7)) (train(Light,50,EnemyDir)) attack(Heavy,mostHealthy)"));
+        scriptsAI.add(buildCommandsIA(utt, "81698 if(HaveQtdUnitsbyType(Worker,1)) (attack(Worker,weakest))"));
 //        scriptsAI.add(buildCommandsIA(utt, "moveToUnit(Worker,Ally,farthest)"));
 //        scriptsAI.add(buildCommandsIA(utt, "attack(Ranged,closest) if(HaveQtdUnitsAttacking(Ranged,3)) (moveToUnit(Heavy,Ally,mostHealthy))",counterByFunction));
         //scriptsAI.add(buildCommandsIA(utt, "0 moveToUnit(Ranged,Ally,strongest) attack(Heavy,closest) if(HaveUnitsToDistantToEnemy(Heavy,11)) (attack(Heavy,closest)) attack(Ranged,closest)"));
@@ -410,7 +410,7 @@ public class GVS_RunBattle {
 //        }
         //System.out.println("ay " +new BigDecimal(0.87));
  //      scriptsAI.add(buildCommandsIA(utt, "80346 for(u) (moveToUnit(Light,Ally,mostHealthy,u) if(HaveQtdUnitsAttacking(Heavy,4,u)) (build(Base,50,Left,u)) moveToUnit(Worker,Enemy,closest,u))"));
-        scriptsAI.add(buildCommandsIA(utt, "73172 attack(Ranged,lessHealthy) attack(Ranged,closest) for(u) (if(HaveUnitsToDistantToEnemy(Ranged,4,u)) (moveToUnit(Ranged,Ally,lessHealthy,u)) build(Base,50,Down,u)) for(u) (train(Light,50,Down,u)) harvest(50) for(u) (if(HaveQtdUnitsbyType(Worker,2,u)) (attack(Heavy,mostHealthy,u) moveToUnit(Heavy,Enemy,weakest,u)) (attack(Heavy,lessHealthy,u)))"));
+        //scriptsAI.add(buildCommandsIA(utt, "73172 attack(Ranged,lessHealthy) attack(Ranged,closest) for(u) (if(HaveUnitsToDistantToEnemy(Ranged,4,u)) (moveToUnit(Ranged,Ally,lessHealthy,u)) build(Base,50,Down,u)) for(u) (train(Light,50,Down,u)) harvest(50) for(u) (if(HaveQtdUnitsbyType(Worker,2,u)) (attack(Heavy,mostHealthy,u) moveToUnit(Heavy,Enemy,weakest,u)) (attack(Heavy,lessHealthy,u)))"));
         //       scriptsAI.add(buildCommandsIA(utt, "80467 for(u) (attack(Ranged,closest,u)) for(u) (if(HaveUnitsToDistantToEnemy(Heavy,11,u)) (attack(Heavy,closest,u)))"));
  //       scriptsAI.add(buildCommandsIA(utt, "80668 for(u) (if(HaveUnitsToDistantToEnemy(Heavy,11,u)) (attack(Heavy,closest,u))) attack(Ranged,closest)"));
   //      scriptsAI.add(buildCommandsIA(utt, "80689 if(HaveEnemiesStrongest(Ranged)) (attack(Ranged,closest)) for(u) (attack(Ranged,closest,u)) for(u) (if(HaveUnitsToDistantToEnemy(Heavy,11,u)) (attack(Heavy,closest,u)))"));
@@ -420,13 +420,14 @@ public class GVS_RunBattle {
         
         
         //        scriptsAI.add(buildCommandsIA(utt, "837 if(HaveQtdEnemiesbyType(Heavy,3)) (moveToUnit(Ranged,Ally,strongest)) attack(Heavy,closest) if(HaveUnitsToDistantToEnemy(Heavy,11)) (attack(Ranged,closest) attack(Ranged,closest)) (attack(Heavy,closest) attack(Ranged,closest)) if(HaveEnemiesStrongest(Ranged)) (moveToUnit(Ranged,Ally,strongest))"));
-//        scriptsAI.add(buildCommandsIA(utt, "0 moveToUnit(Ranged,Ally,strongest) attack(Heavy,closest) if(HaveUnitsToDistantToEnemy(Heavy,11)) (attack(Heavy,closest)) attack(Ranged,closest)"));
+//        scriptsAI.add(buildCommandsIA(utt, "for(u) (attack(Worker,farthest,u))"));
 //        scriptsAI.add(buildCommandsIA(utt, "10188 attack(Heavy,closest) if(HaveUnitsToDistantToEnemy(Ranged,3)) (attack(Heavy,farthest)) (attack(Heavy,farthest)) moveToUnit(Ranged,Ally,strongest) attack(Heavy,closest) if(HaveUnitsToDistantToEnemy(Heavy,11)) (attack(Heavy,closest)) attack(Ranged,closest)"));
 //        scriptsAI.add(buildCommandsIA(utt, "10195 moveToUnit(Ranged,Ally,strongest) if(HaveUnitsToDistantToEnemy(Heavy,19)) (attack(Ranged,closest)) attack(Heavy,closest) if(HaveUnitsToDistantToEnemy(Heavy,11)) (attack(Ranged,lessHealthy)) (attack(Ranged,closest)) attack(Ranged,closest)"));
 //        scriptsAI.add(buildCommandsIA(utt, "8158 moveToUnit(Ranged,Ally,strongest) attack(Heavy,closest) attack(Ranged,closest)"));
 //        scriptsAI.add(buildCommandsIA(utt, "10227 attack(Heavy,closest) if(HaveUnitsToDistantToEnemy(Heavy,11)) (attack(Heavy,closest)) attack(Ranged,lessHealthy) moveToUnit(Ranged,Ally,strongest)"));
 //        scriptsAI.add(buildCommandsIA(utt, "10248 attack(Heavy,closest) if(HaveUnitsToDistantToEnemy(Heavy,15)) (attack(Ranged,lessHealthy)) (attack(Ranged,lessHealthy)) attack(Ranged,lessHealthy) if(HaveUnitsToDistantToEnemy(Heavy,15)) (attack(Ranged,lessHealthy)) attack(Ranged,lessHealthy) if(HaveUnitsToDistantToEnemy(Ranged,8)) (attack(Ranged,lessHealthy)) attack(Heavy,closest)"));
 //          scriptsAI.add(buildCommandsIA(utt, "attack(Light,closest)",counterByFunction));
+        scriptsAI.add(buildCommandsIA(utt, "81283 attack(Worker,closest) train(Worker,50,Up) moveaway(Worker)"));
         
         return scriptsAI;
     }

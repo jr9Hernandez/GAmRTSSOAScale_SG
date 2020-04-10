@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import ga.ScriptTableGenerator.ScriptsTable;
 
@@ -55,6 +56,30 @@ public class RunSetCoverCalculation {
 	 */
 	public List<Integer> getSetCover() {
 		return setCover;
+	}
+	
+	public List<Integer> getRandomSetCoverOfSameSize() {
+		
+		List<Integer>  setCoverRandom=new ArrayList();
+		ScriptsTable st=new ScriptsTable(pathTableScripts);
+		ArrayList<String> OriginalAllbasicFunctions= st.allBasicFunctions();
+		
+		System.out.println("All basic functions size"+OriginalAllbasicFunctions.size());
+
+		System.out.println("original setcover scripts size "+setCover.size());
+		System.out.println("original setcover scripts "+setCover);
+
+		Random rnd=new Random();
+		
+		for(int i=0; i<setCover.size();i++)
+		{
+			setCoverRandom.add(rnd.nextInt(OriginalAllbasicFunctions.size()));
+		}
+		
+		System.out.println("New Random setcover scripts size "+setCoverRandom.size());
+		System.out.println("New Random setcover scripts "+setCoverRandom);
+		
+		return setCoverRandom;
 	}
 
 	/**

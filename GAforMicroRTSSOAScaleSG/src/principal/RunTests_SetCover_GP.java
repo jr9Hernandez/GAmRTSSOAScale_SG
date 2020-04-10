@@ -66,7 +66,7 @@ public class RunTests_SetCover_GP {
 		RunScriptByState sc = new RunScriptByState();
 		
 		RunSetCoverCalculation scCalculation = new RunSetCoverCalculation(sc.dataH);
-		List<Integer> setCover=scCalculation.getSetCover();
+		List<Integer> setCover=scCalculation.getRandomSetCoverOfSameSize();
 		String scriptsSetCover=setCover.toString();
 		
 		if(Files.exists(Paths.get(pathTable+"ScriptsTable.txt"))) { 
@@ -92,7 +92,7 @@ public class RunTests_SetCover_GP {
 		//fEval = new SetCoverEval();
 		
 		//rodamos o GA
-		Population popFinal = ga.run(fEval,scriptsSetCover,sc.booleansUsed);
+		Population popFinal = ga.run(fEval,scriptsSetCover,sc.getBooleansRandomFromOriginalBooleans());
 		
 		//popFinal.printWithValue();
 		

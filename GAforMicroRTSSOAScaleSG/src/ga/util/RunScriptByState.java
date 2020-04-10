@@ -53,6 +53,7 @@ public class RunScriptByState {
     //private final static String pathTableScripts = "Table/";
     public HashMap<String, List<Integer>> dataH=new HashMap<String, List<Integer>>();
     public HashSet<String> booleansUsed=new HashSet<>();
+    
 	public RunScriptByState()
 	{
 		dataH=new HashMap<String, List<Integer>>();
@@ -328,4 +329,33 @@ public class RunScriptByState {
         }
         return linha;
     }
+
+	public HashSet<String> getBooleansUsed() {
+		return booleansUsed;
+	}
+	public HashSet<String> getBooleansRandomFromOriginalBooleans() {
+		HashSet<String> booleansRandomFromOriginalUsed=new HashSet<>();
+		ScriptsTable st=new ScriptsTable(pathTableScripts);
+		ArrayList<String> allConditionalsOriginal= st.allConditionalFunctions();
+		System.out.println("Size Original booleans " +allConditionalsOriginal.size());
+
+		Random rnd=new Random();
+		//I put 82 because is the number of total booleans used in the original IJCAI experiments
+		while(booleansRandomFromOriginalUsed.size()<82)
+		{
+			booleansRandomFromOriginalUsed.add(allConditionalsOriginal.get(rnd.nextInt(allConditionalsOriginal.size())));
+		}
+		
+		System.out.println("size original used booleans "+booleansUsed.size());
+		System.out.println("original used booleans "+booleansUsed);
+		System.out.println("New Random booleans size "+booleansRandomFromOriginalUsed.size());
+		System.out.println("New Random booleans "+booleansRandomFromOriginalUsed);
+		
+		
+		return booleansRandomFromOriginalUsed;
+	}
+
+	public void setBooleansUsed(HashSet<String> booleansUsed) {
+		this.booleansUsed = booleansUsed;
+	}
 }

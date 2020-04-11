@@ -67,6 +67,7 @@ public class DataRecollection {
 
 			scriptsForPortfolio=getPortfolioRandomSize(ConfigurationsSC.MAX_SIZE_PORTFOLIO,scrTable);	
 			portfolioPlayer1=scriptsForPortfolio.getGenes().toString();
+			portfolioPlayer1="[0]";
 			//System.out.println("port"+portfolioPlayer1);
 			
 			try {						

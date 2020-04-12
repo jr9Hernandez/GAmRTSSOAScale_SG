@@ -172,7 +172,7 @@ public class ScriptsTable {
 			
 			if(!curriculumportfolio.equals("empty"))
 			{
-				tChom=curriculumportfolio;
+				tChom="for(u) (if(HaveQtdUnitsHarversting(1,u)) (attack(Worker,closest,u)) (harvest(50,u)) train(Worker,50,EnemyDir,u))";
 				if(!newChromosomes.containsKey(tChom))
 				{
 					newChromosomes.put(tChom, BigDecimal.valueOf(i));

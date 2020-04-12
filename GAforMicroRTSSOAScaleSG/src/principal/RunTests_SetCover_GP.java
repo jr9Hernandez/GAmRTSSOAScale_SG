@@ -43,7 +43,7 @@ public class RunTests_SetCover_GP {
 	public static void main(String[] args) {
 
 	
-		String curriculumportfolio="empty";
+		String curriculumportfolio="for(u) (if(HaveQtdUnitsHarversting(1,u)) (attack(Worker,closest,u)) (harvest(50,u)) train(Worker,50,EnemyDir,u))";
 		
 		File logsBestPortfolios=new File(pathLogsBestPortfolios);
 		GameSampling.deleteFolder(logsBestPortfolios);

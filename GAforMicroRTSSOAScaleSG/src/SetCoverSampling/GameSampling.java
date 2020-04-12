@@ -202,18 +202,15 @@ public class GameSampling {
 //                new SimpleSqrtEvaluationFunction3(), true, utt,
 //                "ManagerLessLife", 4, scriptsRun1);
       	
-//      	AI ai1 = new A3NNoWait(500, -1, 500, 1, 0.3f,
-//                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
-//                new SimpleSqrtEvaluationFunction3(), true, utt,
-//                "ManagerRandom", 3, scriptsRun1);
-//      	
-//      	AI ai2 = new A3NNoWait(500, -1, 500, 1, 0.3f,
-//                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
-//                new SimpleSqrtEvaluationFunction3(), true, utt,
-//                "ManagerRandom", 3, scriptsRun1);
+      	AI ai1 = new A3NNoWait(500, -1, 500, 1, 0.3f,
+                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+                new SimpleSqrtEvaluationFunction3(), true, utt,
+                "ManagerRandom", 3, scriptsRun1);
       	
-      	AI ai1=scriptsRun1.get(0);
-      	AI ai2=scriptsRun1.get(0);
+      	AI ai2 = new A3NNoWait(500, -1, 500, 1, 0.3f,
+                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
+                new SimpleSqrtEvaluationFunction3(), true, utt,
+                "ManagerRandom", 3, scriptsRun1);
         
 //      AI ai2 = new CmabAssymetricMCTS(100, -1, 100, 1, 0.3f,
 //      0.0f, 0.4f, 0, new RandomBiasedAI(utt),

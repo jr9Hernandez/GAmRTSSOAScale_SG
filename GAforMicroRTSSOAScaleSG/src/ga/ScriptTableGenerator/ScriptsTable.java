@@ -170,16 +170,13 @@ public class ScriptsTable {
 
 			int i=0;
 			
-			if(!curriculumportfolio.equals("empty"))
+			tChom="for(u) (if(HaveQtdUnitsHarversting(1,u)) (attack(Worker,closest,u)) (harvest(50,u)) train(Worker,50,EnemyDir,u))";
+			if(!newChromosomes.containsKey(tChom))
 			{
-				tChom="for(u) (if(HaveQtdUnitsHarversting(1,u)) (attack(Worker,closest,u)) (harvest(50,u)) train(Worker,50,EnemyDir,u))";
-				if(!newChromosomes.containsKey(tChom))
-				{
-					newChromosomes.put(tChom, BigDecimal.valueOf(i));
-					f0.println(i+" "+tChom);
-					i++;
+				newChromosomes.put(tChom, BigDecimal.valueOf(i));
+				f0.println(i+" "+tChom);
+				i++;
 
-				}
 			}
 			
 			while(i<size)

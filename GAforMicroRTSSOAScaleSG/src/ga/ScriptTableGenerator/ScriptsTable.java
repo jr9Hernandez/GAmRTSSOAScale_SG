@@ -109,7 +109,7 @@ public class ScriptsTable {
 
 			int i=0;
 			
-			tChom="for(u) (if(HaveUnitsToDistantToEnemy(Worker,4,u)) (attack(Worker,closest,u)) (train(Worker,50,EnemyDir,u))) for(u) (harvest(50,u)) for(u) (if(HaveQtdUnitsbyType(Worker,2,u)) (moveToUnit(Worker,Ally,mostHealthy,u))) for(u) (if(HaveUnitsToDistantToEnemy(Worker,16,u)) (attack(Worker,mostHealthy,u)))";
+			tChom="for(u) (if(HaveQtdUnitsHarversting(1,u)) (attack(Worker,closest,u)) (harvest(50,u)) train(Worker,50,EnemyDir,u))";
 			if(!newChromosomes.containsKey(tChom))
 			{
 				newChromosomes.put(tChom, BigDecimal.valueOf(i));

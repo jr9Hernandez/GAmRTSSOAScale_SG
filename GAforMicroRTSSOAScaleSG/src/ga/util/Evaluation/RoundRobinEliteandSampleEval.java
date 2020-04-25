@@ -388,7 +388,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		System.out.print("Random set ");
 		while (samples.size() < ConfigurationsGA.QTD_ENEMIES_SAMPLE_RANDOM) {
 			
-			Chromosome cTemp;
+			Chromosome cTemp; 
 			do {
 				cTemp = temp.get(rand.nextInt(totalPop));
 			}while(ChromosomeSample.contains(cTemp));

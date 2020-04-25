@@ -187,14 +187,14 @@ public class ScriptsTable {
 		        i++;
 		    } 
 		    
-		    tChom = "build(Barrack,50,Right) for(u) (if(HaveQtdUnitsbyType(Worker,1,u)) (train(Light,20,EnemyDir,u))) attack(Heavy,closest) harvest(50)";
+		    tChom = "build(Barrack,50,Right) for(u) (if(HaveQtdUnitsbyType(Worker,1,u)) (train(Heavy,20,EnemyDir,u))) attack(Heavy,closest) harvest(50)";
 		    if (!newChromosomes.containsKey(tChom)) {
 		        newChromosomes.put(tChom, BigDecimal.valueOf(i));
 		        f0.println(String.valueOf(i) + " " + tChom);
 		        i++;
 		    } 
 		    
-		    tChom = "build(Barrack,50,Right) for(u) (if(HaveQtdUnitsbyType(Worker,1,u)) (train(Light,20,EnemyDir,u))) attack(Ranged,closest) harvest(50)";
+		    tChom = "build(Barrack,50,Right) for(u) (if(HaveQtdUnitsbyType(Worker,1,u)) (train(Ranged,20,EnemyDir,u))) attack(Ranged,closest) harvest(50)";
 		    if (!newChromosomes.containsKey(tChom)) {
 		        newChromosomes.put(tChom, BigDecimal.valueOf(i));
 		        f0.println(String.valueOf(i) + " " + tChom);

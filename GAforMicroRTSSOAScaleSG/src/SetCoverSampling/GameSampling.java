@@ -134,8 +134,8 @@ public class GameSampling {
             iScriptsAi2.add(Integer.decode(element));
         }
         
-		pgs = PhysicalGameState.load("maps/8x8/basesWorkers8x8A.xml", utt);
-        //pgs = PhysicalGameState.load("maps/16x16/basesWorkers16x16A.xml", utt);        
+		//pgs = PhysicalGameState.load("maps/8x8/basesWorkers8x8A.xml", utt);
+        pgs = PhysicalGameState.load("maps/16x16/basesWorkers16x16A.xml", utt);        
         //pgs = PhysicalGameState.load("maps/BWDistantResources32x32.xml", utt);
         //pgs = PhysicalGameState.load("maps/32x32/basesWorkers32x32A.xml", utt);
         //pgs = PhysicalGameState.load("maps/24x24/basesWorkers24x24A.xml", utt);

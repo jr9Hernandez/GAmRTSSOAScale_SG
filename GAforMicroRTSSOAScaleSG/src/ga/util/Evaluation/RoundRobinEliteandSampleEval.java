@@ -302,6 +302,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		defineChromosomeSample(population);
 		defineRandomSet(population);
 
+		System.out.println("lastopponent "+ChromosomeSample.get(ChromosomeSample.size()-1).getGenes().toString());
 		for (int i = 0; i < TOTAL_PARTIDAS_ROUND; i++) {
 
 			for (Chromosome cIA1 : population.getChromosomes().keySet()) {
@@ -394,6 +395,21 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 			System.out.print("Random set "+cTemp.getGenes().toString());
 			samples.add(cTemp);
 		}
+		
+		//Here we add the first 4 scripts from the curriculum as opponents
+		Chromosome tChom = new Chromosome();;
+		tChom.addGene(0);
+		samples.add(tChom);
+		tChom = new Chromosome();
+		tChom.addGene(1);
+		samples.add(tChom);
+		tChom = new Chromosome();
+		tChom.addGene(2);
+		samples.add(tChom);
+		tChom = new Chromosome();
+		tChom.addGene(3);
+		samples.add(tChom);
+				
 		System.out.println("");
 		this.ChromosomeSample.addAll(samples);
 

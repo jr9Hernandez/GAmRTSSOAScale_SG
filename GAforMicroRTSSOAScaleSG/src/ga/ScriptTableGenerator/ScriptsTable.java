@@ -180,6 +180,28 @@ public class ScriptsTable {
 
 			}
 			
+		    tChom = "build(Barrack,50,Right) for(u) (if(HaveQtdUnitsbyType(Worker,1,u)) (train(Light,20,EnemyDir,u))) attack(Light,closest) harvest(50)";
+		    if (!newChromosomes.containsKey(tChom)) {
+		        newChromosomes.put(tChom, BigDecimal.valueOf(i));
+		        f0.println(String.valueOf(i) + " " + tChom);
+		        i++;
+		    } 
+		    
+		    tChom = "build(Barrack,50,Right) for(u) (if(HaveQtdUnitsbyType(Worker,1,u)) (train(Light,20,EnemyDir,u))) attack(Heavy,closest) harvest(50)";
+		    if (!newChromosomes.containsKey(tChom)) {
+		        newChromosomes.put(tChom, BigDecimal.valueOf(i));
+		        f0.println(String.valueOf(i) + " " + tChom);
+		        i++;
+		    } 
+		    
+		    tChom = "build(Barrack,50,Right) for(u) (if(HaveQtdUnitsbyType(Worker,1,u)) (train(Light,20,EnemyDir,u))) attack(Ranged,closest) harvest(50)";
+		    if (!newChromosomes.containsKey(tChom)) {
+		        newChromosomes.put(tChom, BigDecimal.valueOf(i));
+		        f0.println(String.valueOf(i) + " " + tChom);
+		        i++;
+		    } 
+		  
+			
 			while(i<size)
 			{
 				//tChom = new ChromosomeScript();				

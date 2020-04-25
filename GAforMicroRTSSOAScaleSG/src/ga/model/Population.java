@@ -115,6 +115,18 @@ public class Population {
 		tChom.addGene(0); //This is for ading the best individual from the last GP iteration
 		newChromosomes.put(tChom, BigDecimal.ZERO);
 		
+		tChom=new Chromosome();;
+		tChom.addGene(1); //
+		newChromosomes.put(tChom, BigDecimal.ZERO);
+		
+		tChom=new Chromosome();;
+		tChom.addGene(2); //
+		newChromosomes.put(tChom, BigDecimal.ZERO);
+		
+		tChom=new Chromosome();;
+		tChom.addGene(3); //
+		newChromosomes.put(tChom, BigDecimal.ZERO);
+		
 		while (newChromosomes.size()<ConfigurationsGA.SIZE_POPULATION) {
 			//gerar o novo cromossomo com base no tamanho
 			tChom = new Chromosome();

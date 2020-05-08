@@ -109,7 +109,7 @@ public class ScriptsTable {
 
 			int i=0;
 			
-			tChom="for(u) (if(HaveQtdUnitsHarversting(1,u)) (attack(Worker,closest,u)) (harvest(50,u)) train(Worker,50,EnemyDir,u))";
+			tChom="build(Barrack,50,Right) for(u) (if(HaveQtdUnitsbyType(Worker,1,u)) (train(Ranged,20,EnemyDir,u)) (train(Worker,50,EnemyDir))) attack(Ranged,closest) harvest(50)";
 			if(!newChromosomes.containsKey(tChom))
 			{
 				newChromosomes.put(tChom, BigDecimal.valueOf(i));
@@ -162,7 +162,7 @@ public class ScriptsTable {
 		String tChom;
 		PrintWriter f0;
 		//Sketch sk=new Sketch();
-		Sketch sk=new Sketch(porfolioFromSetCover,booleansUsed);
+		Sketch sk=new Sketch();
 //		System.out.println("before");
 //		functions.printFunctions(functions.getBasicFunctionsForGrammar());
 		try {
@@ -171,7 +171,7 @@ public class ScriptsTable {
 			int i=0;
 			
 
-			tChom="for(u) (if(HaveQtdUnitsHarversting(1,u)) (attack(Worker,closest,u)) (harvest(50,u)) train(Worker,50,EnemyDir,u))";
+			tChom="build(Barrack,50,Right) for(u) (if(HaveQtdUnitsbyType(Worker,1,u)) (train(Ranged,20,EnemyDir,u)) (train(Worker,50,EnemyDir))) attack(Ranged,closest) harvest(50)";
 			if(!newChromosomes.containsKey(tChom))
 			{
 				newChromosomes.put(tChom, BigDecimal.valueOf(i));
@@ -185,7 +185,7 @@ public class ScriptsTable {
 				//tChom = new ChromosomeScript();				
 				//int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME_SCRIPT)+1;
 				int sizeCh=rand.nextInt(ConfigurationsGA.MAX_QTD_COMPONENTS)+1;
-				tChom=buildScriptGenotypeSketchFromSetCover(porfolioFromSetCover,sk);
+				tChom=buildScriptGenotypeSketchFromSetCover("",sk);
 
 				//				for (int j = 0; j < sizeCh; j++) {
 				//					int typeSelected=rand.nextInt(numberOfTypes);

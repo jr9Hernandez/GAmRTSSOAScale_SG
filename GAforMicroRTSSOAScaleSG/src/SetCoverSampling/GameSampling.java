@@ -134,13 +134,13 @@ public class GameSampling {
             iScriptsAi2.add(Integer.decode(element));
         }
         
-		pgs = PhysicalGameState.load("maps/8x8/basesWorkers8x8A.xml", utt);
+		//pgs = PhysicalGameState.load("maps/8x8/basesWorkers8x8A.xml", utt);
         //pgs = PhysicalGameState.load("maps/16x16/basesWorkers16x16A.xml", utt);        
         //pgs = PhysicalGameState.load("maps/BWDistantResources32x32.xml", utt);
         //pgs = PhysicalGameState.load("maps/32x32/basesWorkers32x32A.xml", utt);
         //pgs = PhysicalGameState.load("maps/24x24/basesWorkers24x24A.xml", utt);
         //pgs = PhysicalGameState.load("maps/BroodWar/(4)BloodBath.scmB.xml", utt);  
-        // pgs = PhysicalGameState.load("maps/NoWhereToRun9x8.xml", utt);
+         pgs = PhysicalGameState.load("maps/NoWhereToRun9x8.xml", utt);
 		//pgs = PhysicalGameState.load("maps/battleMaps/Others/RangedHeavyMixed.xml", utt);
         
 
@@ -205,12 +205,12 @@ public class GameSampling {
       	AI ai1 = new A3NNoWait(500, -1, 500, 1, 0.3f,
                 0.0f, 0.4f, 0, new RandomBiasedAI(utt),
                 new SimpleSqrtEvaluationFunction3(), true, utt,
-                "ManagerRandom", 3, scriptsRun1);
+                "ManagerClosestEnemy", 2, scriptsRun1);
       	
       	AI ai2 = new A3NNoWait(500, -1, 500, 1, 0.3f,
                 0.0f, 0.4f, 0, new RandomBiasedAI(utt),
                 new SimpleSqrtEvaluationFunction3(), true, utt,
-                "ManagerRandom", 3, scriptsRun1);
+                "ManagerClosestEnemy", 2, scriptsRun1);
         
 //      AI ai2 = new CmabAssymetricMCTS(100, -1, 100, 1, 0.3f,
 //      0.0f, 0.4f, 0, new RandomBiasedAI(utt),

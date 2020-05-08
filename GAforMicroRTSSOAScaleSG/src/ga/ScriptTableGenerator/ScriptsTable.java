@@ -170,7 +170,33 @@ public class ScriptsTable {
 
 			int i=0;
 			
+			tChom="for(u) (if(HaveQtdUnitsHarversting(1,u)) (attack(Worker,closest,u)) (harvest(50,u)) train(Worker,50,EnemyDir,u))";
+			if(!newChromosomes.containsKey(tChom))
+			{
+				newChromosomes.put(tChom, BigDecimal.valueOf(i));
+				f0.println(i+" "+tChom);
+				i++;
 
+			}
+			
+			tChom="build(Barrack,50,Right) for(u) (if(HaveQtdUnitsbyType(Worker,1,u)) (train(Light,20,EnemyDir,u)) (train(Worker,50,EnemyDir))) attack(Light,closest) harvest(50)";
+			if(!newChromosomes.containsKey(tChom))
+			{
+				newChromosomes.put(tChom, BigDecimal.valueOf(i));
+				f0.println(i+" "+tChom);
+				i++;
+
+			}
+
+			tChom="build(Barrack,50,Right) for(u) (if(HaveQtdUnitsbyType(Worker,1,u)) (train(Heavy,20,EnemyDir,u)) (train(Worker,50,EnemyDir))) attack(Heavy,closest) harvest(50)";
+			if(!newChromosomes.containsKey(tChom))
+			{
+				newChromosomes.put(tChom, BigDecimal.valueOf(i));
+				f0.println(i+" "+tChom);
+				i++;
+
+			}
+			
 			tChom="build(Barrack,50,Right) for(u) (if(HaveQtdUnitsbyType(Worker,1,u)) (train(Ranged,20,EnemyDir,u)) (train(Worker,50,EnemyDir))) attack(Ranged,closest) harvest(50)";
 			if(!newChromosomes.containsKey(tChom))
 			{

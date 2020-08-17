@@ -65,13 +65,14 @@ public class RunScriptByState {
 		File[] files = new File(dirPathPlayer).listFiles();	
 		
 		presampling(files,basicFunctions,conditionalsFunctions);
-		
+//		System.out.println("size final Matrix "+dataH.size());
 
 	}
 
 	public  void presampling(File[] files, ArrayList<String> allCommands,ArrayList<String> allConditionals) {
 	    for (File file : files) {
-	            //System.out.println("Directory: " + file.getName());
+//	    		System.out.println("size Matrix "+dataH.size());
+//	            System.out.println("Directory: " + file.getName());
 	            //sampling(file.listFiles()); // Calls same method again.
 	    	
 	    		//For player0 //we should interchange player here in order to avoid influence of the map side

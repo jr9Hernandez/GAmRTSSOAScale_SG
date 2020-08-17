@@ -105,7 +105,7 @@ public class GameSampling {
         PERIOD = 20;        
         File file=new File(dirPathPlayer);
         this.pathTableScripts=pathTableScripts;
-        deleteFolder(file);
+        //deleteFolder(file);
     }
 
     public void run(String portfolioPlayer1, String portfolioPlayer2, String pathLog, boolean isInitialRandomGame) throws Exception {
@@ -285,13 +285,13 @@ public class GameSampling {
                 
                 if (gs.canExecuteAnyAction(0)) {
                 	//verify what kind of action is and save the state in your specified folder
-                	saveState(gs, pa1,dirPathPlayer0,idState,pa1,counterByFunctionOriginal);
+                	saveState(gs, pa1,dirPathPlayer0,idState,pa1,counterByFunctionOriginal,pathLog);
                 	//saveStateByType(gs, pa2);
                 }
                 if (gs.canExecuteAnyAction(1)) {
                 	//verify what kind of action is and save the state in your specified folder
                 	//saveStateByType(gs, pa1);
-                	saveState(gs, pa2,dirPathPlayer1,idState,pa2, counterByFunctionOriginal);
+                	saveState(gs, pa2,dirPathPlayer1,idState,pa2, counterByFunctionOriginal,pathLog);
                 }
                 
                 gs.issueSafe(pa1);
@@ -330,13 +330,13 @@ public class GameSampling {
     }
 
     
-    public static void saveState(GameState gs_save, PlayerAction pAction,String path,int id, PlayerAction pa, HashMap<Long, String> counterByFunctionOriginal) throws Exception{
+    public static void saveState(GameState gs_save, PlayerAction pAction,String path,int id, PlayerAction pa, HashMap<Long, String> counterByFunctionOriginal, String numberGame) throws Exception{
     	boolean typeState = getAllNones(pAction);
     	if(typeState){
     		return;
     	}
     	Writer writer;
-    	writer = new FileWriter(path+"/"+"state_"+id+".txt");
+    	writer = new FileWriter(path+"/"+numberGame+"_state_"+id+".txt");
        	gs_save.toJSON(writer);
     	writer.write("\n");
     	pAction.toJSON(writer);

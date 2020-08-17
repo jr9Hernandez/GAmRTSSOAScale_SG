@@ -54,11 +54,14 @@ public class RunTests_SetCover_GP {
 		if(!ConfigurationsGA.fixedTrace)
 		{
 			//Here we play with a search-based algorithm and save the path
-			try {
-				RunSampling sampling=new RunSampling(0,pathTableScriptsInit,curriculumportfolio);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			for(int i=0;i<ConfigurationsGA.numberA3Ngames;i++)
+			{
+				try {
+					RunSampling sampling=new RunSampling(i,pathTableScriptsInit,curriculumportfolio);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		

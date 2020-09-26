@@ -68,7 +68,7 @@ public class Sketch {
 			System.out.println(Arrays.toString(allBasicFunctionsRedefined.toArray()));
 			f0.println(Arrays.toString(allBasicFunctionsRedefined.toArray()));
 			System.out.println("Booleans "+allBooleansFunctions.size()+" "+allBooleansFunctionsRedefined.size());
-			f0.println("Booleans "+allBooleansFunctions.size()+" "+allBooleansFunctionsRedefined.size());
+			//f0.println("Booleans "+allBooleansFunctions.size()+" "+allBooleansFunctionsRedefined.size());
 			System.out.println(Arrays.toString(allBooleansFunctions.toArray()));
 			f0.println(Arrays.toString(allBooleansFunctions.toArray()));
 			System.out.println(Arrays.toString(allBooleansFunctionsRedefined.toArray()));

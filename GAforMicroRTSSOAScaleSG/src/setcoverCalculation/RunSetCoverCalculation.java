@@ -28,7 +28,7 @@ public class RunSetCoverCalculation {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-//		objData.printDataMap(data);
+		//objData.printDataMap(data);
 //		System.out.println(data.size());
 		DataFormatting sc=new DataFormatting(data,basicFunctions.size());
 		sc.fillMatrix();

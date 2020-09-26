@@ -46,6 +46,6 @@ public final class ConfigurationsGA {
 	
      public static final boolean fixedTrace=false;
      
-     public static final int numberA3Ngames=2;
+     public static final int numberA3Ngames=1;
 	
 }

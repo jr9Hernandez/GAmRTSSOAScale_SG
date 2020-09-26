@@ -17,6 +17,7 @@ import java.util.List;
 import SetCoverSampling.DataRecollection;
 import SetCoverSampling.GameSampling;
 import SetCoverSampling.RunSampling;
+import ai.ScriptsGenerator.TableGenerator.FunctionsforGrammar;
 import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
 import ga.model.Chromosome;
@@ -41,6 +42,7 @@ public class RunTests_SetCover_GP {
 	private static final String pathTable = System.getProperty("user.dir").concat("/Table/");
 	private final static String pathLogsBestPortfolios = System.getProperty("user.dir").concat("/TrackingPortfolios/TrackingPortfolios.txt");
 	private final static String pathFixedTrace = System.getProperty("user.dir").concat("/FixedTrace/FixedTrace.txt");
+	private final static String pathLasi = System.getProperty("user.dir").concat("/lasiCommands/SCcommands.txt");
 	
 
 	public static void main(String[] args) {
@@ -110,6 +112,7 @@ public class RunTests_SetCover_GP {
 		{
 			File arqTour = new File(pathFixedTrace);
 
+			//Review this code, its possible to being saving Additionals "]"
 			try {
 				FileReader arq = new FileReader(arqTour);
 				BufferedReader bf = new BufferedReader(arq);
@@ -136,6 +139,10 @@ public class RunTests_SetCover_GP {
 		System.out.println("format final commands: "+scriptsSetCover);
 		
 		System.out.println("format final booleans: "+booleansUsedRedefined.toString());
+		
+		//Testing functionsForGrammars
+//		FunctionsforGrammar fg = new FunctionsforGrammar();
+//		fg.reducingCommandsFromFile(pathLasi);
 		Population popFinal = ga.run(fEval,scriptsSetCover,booleansUsedRedefined);
 		
 		//popFinal.printWithValue();

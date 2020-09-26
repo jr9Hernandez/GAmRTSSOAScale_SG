@@ -202,7 +202,8 @@ public class ScriptsTable {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
+		
 		allBasicFunctionsRedefined=redefinitionBasicFuncions(sk);
 		allBooleansFunctionsRedefined=redefinitionBooleansFuncions(sk);
 //		functions.printFunctions(functions.getBasicFunctionsForGrammar());
@@ -797,7 +798,7 @@ public class ScriptsTable {
 	}
 	
 	public ArrayList<String> allBasicFunctions()
-	{
+	{	
 		String basicFunction="";
 		ArrayList<String> allBasicFunctions=new ArrayList<>();
 		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
@@ -1387,6 +1388,9 @@ public class ScriptsTable {
 		}
 		functions.setBasicFunctionsForGrammar(basicFunctionsForGrammarNew);
 		ArrayList<String> allBasicFunctionsRedefined=sk.allBasicFunctionsRedefined;
+		
+		System.out.println("size allBasicFunctionsRedefined "+allBasicFunctionsRedefined.size());
+		System.out.println("size allBasicFunctionsRedefinedNormal "+functions.getBasicFunctionsForGrammar().size());
 		return allBasicFunctionsRedefined;
 		
 	}
@@ -1397,7 +1401,8 @@ public class ScriptsTable {
 		for(int i=0; i<functions.getConditionalsForGrammar().size();i++)
 		{
 			int counterMatch=0;
-		
+
+
 			for(String booleanFunction: sk.allBooleansFunctionsRedefined) 
 			{
 				if(booleanFunction.startsWith(functions.getConditionalsForGrammar().get(i).getNameFunction()))

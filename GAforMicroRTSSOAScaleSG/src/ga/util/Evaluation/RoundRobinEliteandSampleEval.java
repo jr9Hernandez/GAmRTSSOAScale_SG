@@ -415,7 +415,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 			arrayElite.addAll(elite.entrySet());
 		}
 		
-		System.out.println("Elite last generation");
+		System.out.println("Elite last generation (Eval function)");
 		HashSet<Chromosome> eliteH = new HashSet<>();
 		for(int i=0;i<arrayElite.size();i++)
 		{

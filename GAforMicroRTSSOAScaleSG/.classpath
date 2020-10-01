@@ -7,6 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/Ingeniero Gil/Desktop/cosas/jaxws-rt-2.1.4.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/MicroRTS_WS2"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/mRTS_AST"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

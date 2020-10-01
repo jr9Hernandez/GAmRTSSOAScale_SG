@@ -17,6 +17,8 @@ import java.util.Scanner;
 import java.util.Set;
 
 import ai.ScriptsGenerator.TableGenerator.FunctionsforGrammar;
+import ai.synthesis.grammar.dslTree.builderDSLTree.BuilderDSLTreeSingleton;
+import ai.synthesis.grammar.dslTree.interfacesDSL.iDSL;
 import ga.ScriptTableGenerator.ChromosomeScript;
 import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
@@ -37,6 +39,12 @@ public class Reproduction {
 	public Reproduction(List<Map.Entry<Chromosome, BigDecimal>> parents,ScriptsTable scrTable, String pathTableScripts)
 	{
 		this.parents=parents;
+		this.scrTable=scrTable;
+		this.pathTableScripts=pathTableScripts;
+	}
+	
+	public Reproduction(ScriptsTable scrTable, String pathTableScripts)
+	{
 		this.scrTable=scrTable;
 		this.pathTableScripts=pathTableScripts;
 	}
@@ -815,6 +823,53 @@ public class Reproduction {
 				tChom.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));
 			}
 			newChromosomes.put(tChom, BigDecimal.ZERO);
+		}
+		Population pop = new Population(newChromosomes);
+		return pop;
+	}
+	
+	public Population invadersAST(Population p)
+	{
+		HashMap<Chromosome, BigDecimal> newChromosomes = p.getChromosomes();
+		
+		Chromosome tChom;
+		int idNewScript;
+		
+		while (newChromosomes.size()<ConfigurationsGA.SIZE_POPULATION) {
+			
+			iDSL sc_cloned = (iDSL) scrTable.scriptsAST.get(rand.nextInt(scrTable.scriptsAST.size())).clone();
+			iDSL iSc1=BuilderDSLTreeSingleton.changeNeighbourPassively(sc_cloned);
+			String newScript=iSc1.translate();
+			
+			if(scrTable.getScriptTable().containsKey(newScript))
+			{
+				idNewScript=scrTable.getScriptTable().get(newScript).intValue();			
+			}
+			else
+			{
+//				System.out.println("beforeMutateScript "+cromScriptOriginal);
+//				System.out.println("afterMutateScript "+cromScript);
+				int newId=scrTable.getScriptTable().size();
+				//System.out.println("sizes matchs1 "+scrTable.getScriptTable().size()+" "+scrTable.scriptsAST.size());
+				scrTable.getScriptTable().put(newScript, BigDecimal.valueOf(newId));
+				scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
+				addLineFile(newId+" "+newScript);				
+				idNewScript=newId;
+				
+				if(scrTable.scriptsAST.size()!=newId)
+				{
+					System.out.println("Something is broken");
+				}
+				
+				scrTable.scriptsAST.add(iSc1);
+				
+				
+			}
+			//gerar o novo cromossomo com base no tamanho
+			tChom = new Chromosome();
+			tChom.addGene(idNewScript);
+			newChromosomes.put(tChom, BigDecimal.ZERO);
+
 		}
 		Population pop = new Population(newChromosomes);
 		return pop;

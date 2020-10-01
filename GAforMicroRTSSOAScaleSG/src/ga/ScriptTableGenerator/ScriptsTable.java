@@ -20,6 +20,9 @@ import java.util.regex.Pattern;
 import ai.ScriptsGenerator.TableGenerator.FunctionsforGrammar;
 import ai.ScriptsGenerator.TableGenerator.Parameter;
 import ai.ScriptsGenerator.TableGenerator.TableCommandsGenerator;
+import ai.synthesis.grammar.dslTree.builderDSLTree.BuilderDSLTreeSingleton;
+import ai.synthesis.grammar.dslTree.builderDSLTree.BuilderSketchDSLSingleton;
+import ai.synthesis.grammar.dslTree.interfacesDSL.iDSL;
 import ga.config.ConfigurationsGA;
 import ga.model.Chromosome;
 import rts.units.UnitTypeTable;
@@ -41,6 +44,8 @@ public class ScriptsTable {
 	public FunctionsforGrammar functions;
 	public ArrayList<String> allBasicFunctionsRedefined;
 	public ArrayList<String> allBooleansFunctionsRedefined;
+	private BuilderDSLTreeSingleton builder;
+	public ArrayList<iDSL> scriptsAST;
 
 	private String pathTableScripts;
 	
@@ -54,16 +59,18 @@ public class ScriptsTable {
 		this.tcg=TableCommandsGenerator.getInstance(new UnitTypeTable());
 		this.numberOfTypes=tcg.getNumberTypes();
 		functions=new FunctionsforGrammar();
+		scriptsAST=new ArrayList<iDSL>();
 	}
 
 
-	public ScriptsTable(HashMap<String, BigDecimal> scriptsTable,String pathTableScripts) {
+	public ScriptsTable(HashMap<String, BigDecimal> scriptsTable,String pathTableScripts, ArrayList<iDSL> scriptsAST) {
 		super();
 		this.scriptsTable = scriptsTable;
 		this.pathTableScripts=pathTableScripts;
 		this.tcg=TableCommandsGenerator.getInstance(new UnitTypeTable());
 		this.numberOfTypes=tcg.getNumberTypes();
 		functions=new FunctionsforGrammar();
+		this.scriptsAST=scriptsAST;
 	}
 
 
@@ -142,7 +149,7 @@ public class ScriptsTable {
 		for (int i = 0; i < size; i++) {
 
 		}
-		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts);
+		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts,scriptsAST);
 		return st;
 	}
 	
@@ -160,24 +167,32 @@ public class ScriptsTable {
 
 			int i=0;
 			
-			if(!curriculumportfolio.equals("empty"))
-			{
-				tChom=curriculumportfolio;
-				if(!newChromosomes.containsKey(tChom))
-				{
-					newChromosomes.put(tChom, BigDecimal.valueOf(i));
-					f0.println(i+" "+tChom);
-					i++;
-
-				}
-			}
+//			if(!curriculumportfolio.equals("empty"))
+//			{
+//				tChom=curriculumportfolio;
+//				if(!newChromosomes.containsKey(tChom))
+//				{
+//					
+//					newChromosomes.put(tChom, BigDecimal.valueOf(i));
+//					f0.println(i+" "+tChom);
+//					i++;
+//
+//				}
+//			}
 			
 			while(i<size)
 			{
 				//tChom = new ChromosomeScript();				
 				//int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME_SCRIPT)+1;
-				int sizeCh=rand.nextInt(ConfigurationsGA.MAX_QTD_COMPONENTS)+1;
-				tChom=buildScriptGenotypeSketchFromSetCover(porfolioFromSetCover,sk);
+				//int sizeCh=rand.nextInt(ConfigurationsGA.MAX_QTD_COMPONENTS)+1;
+				//tChom=buildScriptGenotypeSketchFromSetCover(porfolioFromSetCover,sk);
+				
+				//This code is for getting cromosome from an ASTFormat
+
+				builder = BuilderDSLTreeSingleton.getInstance();
+		        iDSL iSc1 = builder.buildS1Grammar();
+		        tChom=iSc1.translate();
+		        
 
 				//				for (int j = 0; j < sizeCh; j++) {
 				//					int typeSelected=rand.nextInt(numberOfTypes);
@@ -188,7 +203,13 @@ public class ScriptsTable {
 
 				if(!newChromosomes.containsKey(tChom))
 				{
+					if(scriptsAST.size()!=i)
+					{
+						System.out.println("SOmething is broken!");
+					}
+					scriptsAST.add(iSc1);
 					newChromosomes.put(tChom, BigDecimal.valueOf(i));
+					
 					f0.println(i+" "+tChom);
 					i++;
 
@@ -207,7 +228,7 @@ public class ScriptsTable {
 		allBasicFunctionsRedefined=redefinitionBasicFuncions(sk);
 		allBooleansFunctionsRedefined=redefinitionBooleansFuncions(sk);
 //		functions.printFunctions(functions.getBasicFunctionsForGrammar());
-		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts);
+		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts,scriptsAST);
 		st.allBasicFunctionsRedefined=allBasicFunctionsRedefined;
 		st.allBooleansFunctionsRedefined=allBooleansFunctionsRedefined;
 		st.functions=functions;
@@ -1252,7 +1273,7 @@ public class ScriptsTable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts);
+		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts,scriptsAST);
 		//st.print();
 		return st;
 	}
@@ -1283,7 +1304,7 @@ public class ScriptsTable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts);
+		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts,scriptsAST);
 		//st.print();
 		return st;
 	}

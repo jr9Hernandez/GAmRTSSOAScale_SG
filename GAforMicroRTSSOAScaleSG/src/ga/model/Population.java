@@ -24,6 +24,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import ai.synthesis.grammar.dslTree.builderDSLTree.BuilderDSLTreeSingleton;
+import ai.synthesis.grammar.dslTree.interfacesDSL.iDSL;
 import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
 
@@ -33,7 +35,7 @@ public class Population {
 	private Map<Integer,List<String>> allCommandsperGeneration;
 	private Map<Integer,List<String>> usedCommandsperGeneration;
 	private HashMap<BigDecimal, String> scriptsAlternativeTable;
-	private String pathTableScripts;
+	private static String pathTableScripts;
 	
 	
 	
@@ -108,21 +110,48 @@ public class Population {
 	 * @param size Tamanho limite da população
 	 * @return uma população com Key = Chromosome e Values = 0
 	 */
-	public static Population getInitialPopulation(int size, ScriptsTable scrTable){
+	public static Population getInitialPopulation(int size, ScriptsTable scrTable, String pathTable){
 		HashMap<Chromosome, BigDecimal> newChromosomes = new HashMap<>();
 		
 		Chromosome tChom=new Chromosome();;
 		tChom.addGene(0); //This is for ading the best individual from the last GP iteration
 		newChromosomes.put(tChom, BigDecimal.ZERO);
+		int idNewScript;
 		
 		while (newChromosomes.size()<ConfigurationsGA.SIZE_POPULATION) {
+			
+			iDSL sc_cloned = (iDSL) scrTable.scriptsAST.get(rand.nextInt(scrTable.scriptsAST.size())).clone();
+			iDSL iSc1=BuilderDSLTreeSingleton.changeNeighbourPassively(sc_cloned);
+			String newScript=iSc1.translate();
+			if(scrTable.getScriptTable().containsKey(newScript))
+			{
+				idNewScript=scrTable.getScriptTable().get(newScript).intValue();			
+			}
+			else
+			{
+//				System.out.println("beforeMutateScript "+cromScriptOriginal);
+//				System.out.println("afterMutateScript "+cromScript);
+				int newId=scrTable.getScriptTable().size();
+				scrTable.getScriptTable().put(newScript, BigDecimal.valueOf(newId));
+				scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
+				addLineFile(newId+" "+newScript,pathTable);
+				idNewScript=newId;
+				
+				if(scrTable.scriptsAST.size()!=idNewScript)
+				{
+					System.out.println("SOmething is broken! ");
+				}
+				
+				scrTable.scriptsAST.add(iSc1);
+				
+
+				
+			}
 			//gerar o novo cromossomo com base no tamanho
 			tChom = new Chromosome();
-			int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;
-			for (int j = 0; j < sizeCh; j++) {
-				tChom.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));
-			}
+			tChom.addGene(idNewScript);
 			newChromosomes.put(tChom, BigDecimal.ZERO);
+
 		}
 		Population pop = new Population(newChromosomes);
 		return pop;
@@ -304,7 +333,7 @@ public class Population {
 		readUsedCommands(pathUsedCommands);
 	}
 	
-	public void removeCommands(ScriptsTable scrTable) {
+	public void removeCommands(ScriptsTable scrTable, String pathTable) {
 		// TODO Auto-generated method stub
 		
 	    Iterator it = getUsedCommandsperGeneration().entrySet().iterator();
@@ -324,10 +353,10 @@ public class Population {
 	        	        
 	        //it.remove(); // avoids a ConcurrentModificationException
 	    }
-	    changeGrammars(scrTable);
+	    changeGrammars(scrTable,pathTable);
 	}
 	
-	public void changeGrammars(ScriptsTable scrTable)
+	public void changeGrammars(ScriptsTable scrTable, String pathTable)
 	{
 
 		Comparator<Entry<Chromosome, BigDecimal>> valueComparator = (e1, e2) -> e1.getValue().compareTo(e2.getValue());
@@ -378,7 +407,7 @@ public class Population {
 	        					scrTable.getScriptTable().put(newGrammar, BigDecimal.valueOf(newId));
 	        					scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
 	        					//addLineFile(newId+" old "+scriptsId.get(i)+" "+newGrammar);
-	        					addLineFile(newId+" "+newGrammar);
+	        					addLineFile(newId+" "+newGrammar,pathTable);
 	        					newCh.getGenes().set(i, newId);
 	        					
 	        					System.out.println("After replace Rules "+newGrammar+" "+newId);
@@ -416,9 +445,8 @@ public class Population {
 	    setChromosomes(ChromosomesNew);;
 	}
 	
-	public void addLineFile(String data) {
+	public static void addLineFile(String data, String pathTableScripts) {
 	    try{    
-
 	        File file =new File(pathTableScripts+"ScriptsTable.txt");    
 
 	        //if file doesnt exists, then create it    
@@ -434,7 +462,7 @@ public class Population {
 	            bufferWritter.close();
 	            fileWritter.close();  
 
-	    }catch(Exception e){    
+	    }catch(Exception e){  
 	        e.printStackTrace();    
 	    } 
 		}

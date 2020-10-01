@@ -1,11 +1,17 @@
 package ga.util;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import ai.synthesis.grammar.dslTree.builderDSLTree.BuilderDSLTreeSingleton;
+import ai.synthesis.grammar.dslTree.interfacesDSL.iDSL;
 import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
 import ga.model.Chromosome;
@@ -87,6 +93,75 @@ public class Selection {
 		newPopulation=rp.RemoveCopies(newPopulation);
 		return newPopulation;
 	}
+	
+	public Population applySelectionAST(Population populacaoInicial,ScriptsTable scrTable, String pathTableScripts, String pathTable){
+
+		Reproduction rp=new Reproduction(scrTable,pathTableScripts);
+		
+		PreSelection ps=new PreSelection(populacaoInicial);	
+		HashMap<Chromosome, BigDecimal> newChromosomes = new HashMap<>();
+		//in elite is saved the best guys from the last population
+		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)ps.sortByValue(populacaoInicial.getChromosomes());		
+		eliteIndividuals=elite;
+		List<Chromosome> listElite = new ArrayList<Chromosome>(elite.keySet());
+		System.out.println("printing elite last population (Selection)");
+		printMap(elite);
+		
+//		Chromosome tChom=new Chromosome();
+//		tChom = new Chromosome();
+//		tChom.addGene(listElite.get(0).getGenes().get(0));
+		newChromosomes.put(listElite.get(0), BigDecimal.ZERO);
+		
+		Chromosome tChom = new Chromosome();
+		int idNewScript;
+//		System.out.println("Size asts "+scrTable.scriptsAST.size()+" size table "+scrTable.getScriptTable().size());
+//		System.out.println("idOriginalScript "+listElite.get(0).getGenes().get(0));
+//		System.out.println("OriginalScript "+scrTable.scriptsAST.get(listElite.get(0).getGenes().get(0)).translate() );
+//		System.out.println("looking in the original table "+scrTable.getScriptTable().get(scrTable.scriptsAST.get(listElite.get(0).getGenes().get(0)).translate()));
+		while (newChromosomes.size()<ConfigurationsGA.SIZE_POPULATION-ConfigurationsGA.SIZE_INVADERS) {
+			//System.out.println("sizes matchs2 "+scrTable.getScriptTable().size()+" "+scrTable.scriptsAST.size());
+			
+			iDSL sc_cloned = (iDSL) scrTable.scriptsAST.get(listElite.get(0).getGenes().get(0)).clone();
+			iDSL iSc1=BuilderDSLTreeSingleton.changeNeighbourPassively(sc_cloned);
+			String newScript=iSc1.translate();
+			//System.out.println("mutated "+newScript);
+			if(scrTable.getScriptTable().containsKey(newScript))
+			{
+				idNewScript=scrTable.getScriptTable().get(newScript).intValue();
+			}
+			else
+			{
+//				System.out.println("beforeMutateScript "+cromScriptOriginal);
+//				System.out.println("afterMutateScript "+cromScript);
+				int newId=scrTable.getScriptTable().size();
+				scrTable.getScriptTable().put(newScript, BigDecimal.valueOf(newId));
+				scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
+				addLineFile(newId+" "+newScript,pathTable);
+				idNewScript=newId;
+				
+				if(scrTable.scriptsAST.size()!=newId)
+				{
+					System.out.println("Something is broken");
+				}
+				
+				scrTable.scriptsAST.add(iSc1);
+				
+			}
+			//gerar o novo cromossomo com base no tamanho
+			tChom = new Chromosome();
+			tChom.addGene(idNewScript);
+			newChromosomes.put(tChom, BigDecimal.ZERO);
+//			int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;
+//			for (int j = 0; j < sizeCh; j++) {
+//				tChom.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));
+//			}
+		}
+		Population pop = new Population(newChromosomes);
+		//System.out.println("sizebeforeinvaders "+pop.getChromosomes().size());
+		pop=rp.invadersAST(pop);
+		//System.out.println("sizeafterinvaders "+pop.getChromosomes().size());
+		return pop;
+	}
 
 	public void printMap(HashMap<Chromosome, BigDecimal> m)
 	{
@@ -123,4 +198,25 @@ public class Selection {
 		return p;
 	}
 
+	public static void addLineFile(String data, String pathTableScripts) {
+	    try{    
+	        File file =new File(pathTableScripts+"ScriptsTable.txt");    
+
+	        //if file doesnt exists, then create it    
+	        if(!file.exists()){    
+	            file.createNewFile();      
+	        }    
+
+	        //true = append file    
+	            FileWriter fileWritter = new FileWriter(file,true);        
+	            BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+	            bufferWritter.write(data);
+	            bufferWritter.newLine();
+	            bufferWritter.close();
+	            fileWritter.close();  
+
+	    }catch(Exception e){  
+	        e.printStackTrace();    
+	    } 
+		}
 }

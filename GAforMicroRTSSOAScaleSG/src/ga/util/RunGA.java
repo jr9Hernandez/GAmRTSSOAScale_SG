@@ -85,7 +85,7 @@ public class RunGA {
 			// Fase 1 = gerar a população inicial
 			if(!ConfigurationsGA.curriculum)
 			{
-				population = Population.getInitialPopulation(ConfigurationsGA.SIZE_POPULATION, scrTable);
+				population = Population.getInitialPopulation(ConfigurationsGA.SIZE_POPULATION, scrTable, pathTableScripts);
 			}
 			else
 			{
@@ -94,11 +94,16 @@ public class RunGA {
 			
 
 			// Fase 2 = avalia a população
+			Chromosome tChom=new Chromosome();;
+			tChom.addGene(0);
+			eliteIndividuals.put(tChom, BigDecimal.ZERO);
 			evalFunction.setEliteIndividuals(eliteIndividuals);
 			population = evalFunction.evalPopulation(population, this.generations, scrTable);			
 			
+//			System.out.println("INITIAL POPULATION");
 //			population.printWithValue(f0);
-//			System.out.println("sep");
+			
+			
 			
 			//Get all the used commands
 			if(ConfigurationsGA.removeRules==true)
@@ -124,7 +129,7 @@ public class RunGA {
 			
 			//Remove used commands from all commands
 			if(ConfigurationsGA.removeRules==true)
-				population.removeCommands(scrTable);
+				population.removeCommands(scrTable,pathTableScripts);
 			
 //		    Iterator it2 = population.getAllCommandsperGeneration().entrySet().iterator();
 //		    while (it2.hasNext()) {
@@ -146,7 +151,8 @@ public class RunGA {
 
 			// Fase 4 = Seleção (Aplicar Cruzamento e Mutação)
 			Selection selecao = new Selection();
-			population = selecao.applySelection(population, scrTable, pathTableScripts);
+			System.out.println("newAST");
+			population = selecao.applySelectionAST(population, scrTable, pathTableScripts,pathTableScripts);
 			eliteIndividuals=selecao.eliteIndividuals;
 			// Repete-se Fase 2 = Avaliação da população
 			evalFunction.setEliteIndividuals(eliteIndividuals);
@@ -169,7 +175,7 @@ public class RunGA {
 //		    }
 			//Remove used commands from all commands
 			if(ConfigurationsGA.removeRules==true)
-				population.removeCommands(scrTable);
+				population.removeCommands(scrTable, pathTableScripts);
 
 			// atualiza a geração
 			updateGeneration();

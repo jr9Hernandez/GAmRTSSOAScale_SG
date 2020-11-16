@@ -116,15 +116,15 @@ public class Selection {
 		int idNewScript;
 //		System.out.println("Size asts "+scrTable.scriptsAST.size()+" size table "+scrTable.getScriptTable().size());
 //		System.out.println("idOriginalScript "+listElite.get(0).getGenes().get(0));
-//		System.out.println("OriginalScript "+scrTable.scriptsAST.get(listElite.get(0).getGenes().get(0)).translate() );
+		System.out.println("OriginalScript "+scrTable.scriptsAST.get(listElite.get(0).getGenes().get(0)).translate() );
 //		System.out.println("looking in the original table "+scrTable.getScriptTable().get(scrTable.scriptsAST.get(listElite.get(0).getGenes().get(0)).translate()));
 		while (newChromosomes.size()<ConfigurationsGA.SIZE_POPULATION-ConfigurationsGA.SIZE_INVADERS) {
 			//System.out.println("sizes matchs2 "+scrTable.getScriptTable().size()+" "+scrTable.scriptsAST.size());
 			
 			iDSL sc_cloned = (iDSL) scrTable.scriptsAST.get(listElite.get(0).getGenes().get(0)).clone();
-			iDSL iSc1=BuilderDSLTreeSingleton.changeNeighbourPassively(sc_cloned);
+			iDSL iSc1=BuilderDSLTreeSingleton.changeNeighbourPassively(sc_cloned,scrTable.allBasicFunctionsRedefined,scrTable.allBooleansFunctionsRedefined);
 			String newScript=iSc1.translate();
-			//System.out.println("mutated "+newScript);
+			System.out.println("mutated "+newScript);
 			if(scrTable.getScriptTable().containsKey(newScript))
 			{
 				idNewScript=scrTable.getScriptTable().get(newScript).intValue();

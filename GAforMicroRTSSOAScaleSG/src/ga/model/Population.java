@@ -121,7 +121,8 @@ public class Population {
 		while (newChromosomes.size()<ConfigurationsGA.SIZE_POPULATION) {
 			
 			iDSL sc_cloned = (iDSL) scrTable.scriptsAST.get(rand.nextInt(scrTable.scriptsAST.size())).clone();
-			iDSL iSc1=BuilderDSLTreeSingleton.changeNeighbourPassively(sc_cloned);
+			System.out.println("sc_cloned "+sc_cloned.translate());
+			iDSL iSc1=BuilderDSLTreeSingleton.changeNeighbourPassively(sc_cloned,scrTable.allBasicFunctionsRedefined,scrTable.allBooleansFunctionsRedefined);
 			String newScript=iSc1.translate();
 			if(scrTable.getScriptTable().containsKey(newScript))
 			{

@@ -17,6 +17,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 import ai.ScriptsGenerator.TableGenerator.FunctionsforGrammar;
+import ai.synthesis.dslForScriptGenerator.DSLTableGenerator.FunctionsforDSL;
 import ai.synthesis.grammar.dslTree.builderDSLTree.BuilderDSLTreeSingleton;
 import ai.synthesis.grammar.dslTree.interfacesDSL.iDSL;
 import ga.ScriptTableGenerator.ChromosomeScript;
@@ -33,7 +34,7 @@ public class Reproduction {
 
 	List<Map.Entry<Chromosome, BigDecimal>> parents;
 	ScriptsTable scrTable;
-	FunctionsforGrammar functions;
+	FunctionsforDSL functions;
 	
 	private String pathTableScripts;
 	public Reproduction(List<Map.Entry<Chromosome, BigDecimal>> parents,ScriptsTable scrTable, String pathTableScripts)
@@ -837,8 +838,8 @@ public class Reproduction {
 		
 		while (newChromosomes.size()<ConfigurationsGA.SIZE_POPULATION) {
 			
-			iDSL sc_cloned = (iDSL) scrTable.scriptsAST.get(rand.nextInt(scrTable.scriptsAST.size())).clone();
-			iDSL iSc1=BuilderDSLTreeSingleton.changeNeighbourPassively(sc_cloned);
+			BuilderDSLTreeSingleton builder = BuilderDSLTreeSingleton.getInstance();
+	        iDSL iSc1 = builder.buildS1Grammar(scrTable.allBasicFunctionsRedefined,scrTable.allBooleansFunctionsRedefined);
 			String newScript=iSc1.translate();
 			
 			if(scrTable.getScriptTable().containsKey(newScript))
@@ -878,9 +879,9 @@ public class Reproduction {
 	//This method will return the new id script for mutate the porfolio o fscripts
 	public int mutationScript(Population p, int genidScript)
 	{
-		functions=new FunctionsforGrammar();
-		List<FunctionsforGrammar> basicFunctions=scrTable.functions.getBasicFunctionsForGrammar();
-		List<FunctionsforGrammar> conditionalFunctions=functions.getConditionalsForGrammar();
+		functions=new FunctionsforDSL();
+		List<FunctionsforDSL> basicFunctions=scrTable.functions.getBasicFunctionsForGrammar();
+		List<FunctionsforDSL> conditionalFunctions=functions.getConditionalsForGrammar();
 		
 		
 		String cromScript=cromosomeById(genidScript);
@@ -941,9 +942,9 @@ public class Reproduction {
 	
 	public int mutationScriptMandatory(int genidScript)
 	{
-		functions=new FunctionsforGrammar();
-		List<FunctionsforGrammar> basicFunctions=scrTable.functions.getBasicFunctionsForGrammar();
-		List<FunctionsforGrammar> conditionalFunctions=functions.getConditionalsForGrammar();
+		functions=new FunctionsforDSL();
+		List<FunctionsforDSL> basicFunctions=scrTable.functions.getBasicFunctionsForGrammar();
+		List<FunctionsforDSL> conditionalFunctions=functions.getConditionalsForGrammar();
 		
 		
 		String cromScript=cromosomeById(genidScript);
@@ -1047,7 +1048,7 @@ public class Reproduction {
 		return originalGrammar;
 	}
 	
-	public String[]  chossingFromBag(String[]  candidates,String[] originals, List<FunctionsforGrammar>basicFunctions, List<FunctionsforGrammar>conditionalFunctions)
+	public String[]  chossingFromBag(String[]  candidates,String[] originals, List<FunctionsforDSL>basicFunctions, List<FunctionsforDSL>conditionalFunctions)
 	{
 		ScriptsTable objScriptTable=new ScriptsTable("");
 		objScriptTable.functions.setBasicFunctionsForGrammar(basicFunctions);
@@ -1056,7 +1057,7 @@ public class Reproduction {
 		for (int i=0; i<originals.length;i++)
 		{
 			found=false;
-			for (FunctionsforGrammar function:basicFunctions)
+			for (FunctionsforDSL function:basicFunctions)
 			{
 				
 				if(originals[i].startsWith(function.getNameFunction()))
@@ -1101,7 +1102,7 @@ public class Reproduction {
 			}
 			if(found==false)
 			{
-				for (FunctionsforGrammar function:conditionalFunctions)
+				for (FunctionsforDSL function:conditionalFunctions)
 				{
 					if(originals[i].startsWith(function.getNameFunction()))
 					{

@@ -17,9 +17,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-import ai.ScriptsGenerator.TableGenerator.FunctionsforGrammar;
+//import ai.ScriptsGenerator.TableGenerator.FunctionsforGrammar;
 import ai.ScriptsGenerator.TableGenerator.Parameter;
 import ai.ScriptsGenerator.TableGenerator.TableCommandsGenerator;
+import ai.synthesis.dslForScriptGenerator.DSLTableGenerator.FunctionsforDSL;
+import ai.synthesis.dslForScriptGenerator.DSLTableGenerator.ParameterDSL;
 import ai.synthesis.grammar.dslTree.builderDSLTree.BuilderDSLTreeSingleton;
 import ai.synthesis.grammar.dslTree.builderDSLTree.BuilderSketchDSLSingleton;
 import ai.synthesis.grammar.dslTree.interfacesDSL.iDSL;
@@ -41,7 +43,7 @@ public class ScriptsTable {
 	private HashMap<String, BigDecimal> scriptsTable ;
 	private int numberOfTypes;
 	private TableCommandsGenerator tcg;
-	public FunctionsforGrammar functions;
+	public FunctionsforDSL functions;
 	public ArrayList<String> allBasicFunctionsRedefined;
 	public ArrayList<String> allBooleansFunctionsRedefined;
 	private BuilderDSLTreeSingleton builder;
@@ -50,7 +52,7 @@ public class ScriptsTable {
 	private String pathTableScripts;
 	
 	public ScriptsTable() {
-		functions=new FunctionsforGrammar();
+		functions=new FunctionsforDSL();
 	}	
 
 	public ScriptsTable(String pathTableScripts){
@@ -58,7 +60,7 @@ public class ScriptsTable {
 		this.pathTableScripts=pathTableScripts;
 		this.tcg=TableCommandsGenerator.getInstance(new UnitTypeTable());
 		this.numberOfTypes=tcg.getNumberTypes();
-		functions=new FunctionsforGrammar();
+		functions=new FunctionsforDSL();
 		scriptsAST=new ArrayList<iDSL>();
 	}
 
@@ -69,7 +71,7 @@ public class ScriptsTable {
 		this.pathTableScripts=pathTableScripts;
 		this.tcg=TableCommandsGenerator.getInstance(new UnitTypeTable());
 		this.numberOfTypes=tcg.getNumberTypes();
-		functions=new FunctionsforGrammar();
+		functions=new FunctionsforDSL();
 		this.scriptsAST=scriptsAST;
 	}
 
@@ -158,8 +160,29 @@ public class ScriptsTable {
 		HashMap<String, BigDecimal> newChromosomes = new HashMap<>();
 		String tChom;
 		PrintWriter f0;
-		//Sketch sk=new Sketch();
-		Sketch sk=new Sketch(porfolioFromSetCover,booleansUsed);
+		
+		
+		//This is for redefining the set of commands and booleans
+		Sketch sk;
+		if(ConfigurationsGA.withLasi)
+		{
+			sk=new Sketch(porfolioFromSetCover,booleansUsed);
+		}
+		else
+		{
+			sk=new Sketch();
+		}
+		
+		
+		allBasicFunctionsRedefined=redefinitionBasicFuncions(sk);
+		allBooleansFunctionsRedefined=redefinitionBooleansFuncions(sk);
+//		functions.printFunctions(functions.getBasicFunctionsForGrammar());
+		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts,scriptsAST);
+		st.allBasicFunctionsRedefined=allBasicFunctionsRedefined;
+		st.allBooleansFunctionsRedefined=allBooleansFunctionsRedefined;
+		st.functions=functions;
+		
+		
 //		System.out.println("before");
 //		functions.printFunctions(functions.getBasicFunctionsForGrammar());
 		try {
@@ -190,7 +213,7 @@ public class ScriptsTable {
 				//This code is for getting cromosome from an ASTFormat
 
 				builder = BuilderDSLTreeSingleton.getInstance();
-		        iDSL iSc1 = builder.buildS1Grammar();
+		        iDSL iSc1 = builder.buildS1Grammar(st.allBasicFunctionsRedefined, st.allBooleansFunctionsRedefined);
 		        tChom=iSc1.translate();
 		        
 
@@ -224,14 +247,7 @@ public class ScriptsTable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		allBasicFunctionsRedefined=redefinitionBasicFuncions(sk);
-		allBooleansFunctionsRedefined=redefinitionBooleansFuncions(sk);
-//		functions.printFunctions(functions.getBasicFunctionsForGrammar());
-		ScriptsTable st = new ScriptsTable(newChromosomes,pathTableScripts,scriptsAST);
-		st.allBasicFunctionsRedefined=allBasicFunctionsRedefined;
-		st.allBooleansFunctionsRedefined=allBooleansFunctionsRedefined;
-		st.functions=functions;
+	
 		return st;
 	}
 
@@ -663,7 +679,7 @@ public class ScriptsTable {
 		int limitInferior;
 		int limitSuperior;
 		String discreteValue;
-		FunctionsforGrammar functionChosen;
+		FunctionsforDSL functionChosen;
 		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
 		if(forclausule==false)
 		{
@@ -677,7 +693,7 @@ public class ScriptsTable {
 		}
 
 		basicFunction=basicFunction+functionChosen.getNameFunction()+"(";
-		for(Parameter parameter:functionChosen.getParameters())
+		for(ParameterDSL parameter:functionChosen.getParameters())
 		{
 			if(parameter.getParameterName()=="u")
 			{				
@@ -718,7 +734,7 @@ public class ScriptsTable {
 		int limitSuperior;
 		String discreteValue;
 		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
-		FunctionsforGrammar functionChosen;
+		FunctionsforDSL functionChosen;
 		if(forClausule==false)		
 		{
 			int idconditionalSelected=rand.nextInt(functions.getConditionalsForGrammar().size());
@@ -731,7 +747,7 @@ public class ScriptsTable {
 		}
 
 		conditional=conditional+functionChosen.getNameFunction()+"(";
-		for(Parameter parameter:functionChosen.getParameters())
+		for(ParameterDSL parameter:functionChosen.getParameters())
 		{
 			if(parameter.getParameterName()=="u")
 			{
@@ -771,7 +787,7 @@ public class ScriptsTable {
 		int limitInferior;
 		int limitSuperior;
 		String discreteValue;
-		FunctionsforGrammar functionChosen;
+		FunctionsforDSL functionChosen;
 		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
 		if(forclausule==false)
 		{
@@ -785,7 +801,7 @@ public class ScriptsTable {
 		}
 
 		basicFunction=basicFunction+functionChosen.getNameFunction()+"(";
-		for(Parameter parameter:functionChosen.getParameters())
+		for(ParameterDSL parameter:functionChosen.getParameters())
 		{
 			if(parameter.getParameterName()=="u")
 			{				
@@ -824,7 +840,7 @@ public class ScriptsTable {
 		ArrayList<String> allBasicFunctions=new ArrayList<>();
 		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
 		int counter=0;
-		for(FunctionsforGrammar functionChosen: functions.getBasicFunctionsForGrammar())
+		for(FunctionsforDSL functionChosen: functions.getBasicFunctionsForGrammar())
 		{
 			ArrayList<String> allBasicFunctionsPerFunction=new ArrayList<>();			
 			basicFunction=functionChosen.getNameFunction()+"(";
@@ -841,7 +857,7 @@ public class ScriptsTable {
 		ArrayList<String> allConditionalFunctions=new ArrayList<>();
 		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
 		int counter=0;
-		for(FunctionsforGrammar functionChosen: functions.getConditionalsForGrammar())
+		for(FunctionsforDSL functionChosen: functions.getConditionalsForGrammar())
 		{
 			ArrayList<String> allConditionalFunctionsPerFunction=new ArrayList<>();			
 			conditionalFunction=functionChosen.getNameFunction()+"(";
@@ -858,7 +874,7 @@ public class ScriptsTable {
 		ArrayList<String> allConditionalFunctionsMatchingTypeUnits=new ArrayList<>();
 		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
 		int counter=0;
-		for(FunctionsforGrammar functionChosen: functions.getConditionalsForGrammar())
+		for(FunctionsforDSL functionChosen: functions.getConditionalsForGrammar())
 		{
 			if(functionChosen.getNameFunction().equals("HaveQtdUnitsAttacking") )
 			{
@@ -880,7 +896,7 @@ public class ScriptsTable {
 		return allConditionalFunctionsMatchingTypeUnits;
 	}
 	
-	public ArrayList<String> buildingFunctionMatchingTypesUnits(String partialFunction,int counter, List<Parameter> parameters, int maxSizeParameters,ArrayList<String> allBasicFunctions, HashSet<String> typesUnitsinCommands)
+	public ArrayList<String> buildingFunctionMatchingTypesUnits(String partialFunction,int counter, List<ParameterDSL> parameters, int maxSizeParameters,ArrayList<String> allBasicFunctions, HashSet<String> typesUnitsinCommands)
 	{
 		if(counter<maxSizeParameters)
 		{		
@@ -931,7 +947,7 @@ public class ScriptsTable {
 	     return false;
 	}
 		
-	public ArrayList<String> buildingFunction(String partialFunction,int counter, List<Parameter> parameters, int maxSizeParameters,ArrayList<String> allBasicFunctions)
+	public ArrayList<String> buildingFunction(String partialFunction,int counter, List<ParameterDSL> parameters, int maxSizeParameters,ArrayList<String> allBasicFunctions)
 	{
 		if(counter<maxSizeParameters)
 		{		
@@ -975,7 +991,7 @@ public class ScriptsTable {
 		int limitInferior;
 		int limitSuperior;
 		String discreteValue;
-		FunctionsforGrammar functionChosen=new FunctionsforGrammar();
+		FunctionsforDSL functionChosen=new FunctionsforDSL();
 		String parts[]=oldFunction.split("[\\W]");
 		List<Integer> parametersDiscrete=new ArrayList<Integer>();
 		for(String part: parts)
@@ -990,7 +1006,7 @@ public class ScriptsTable {
 		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
 		if(forclausule==false)
 		{
-			for(FunctionsforGrammar lis: functions.getBasicFunctionsForGrammar())
+			for(FunctionsforDSL lis: functions.getBasicFunctionsForGrammar())
 			{
 				if(oldFunction.startsWith(lis.getNameFunction()))
 				{
@@ -1001,7 +1017,7 @@ public class ScriptsTable {
 		}
 		else
 		{
-			for(FunctionsforGrammar lis: functions.getBasicFunctionsForGrammarUnit())
+			for(FunctionsforDSL lis: functions.getBasicFunctionsForGrammarUnit())
 			{
 				if(oldFunction.startsWith(lis.getNameFunction()))
 				{
@@ -1012,7 +1028,7 @@ public class ScriptsTable {
 		}
 
 		basicFunction=basicFunction+functionChosen.getNameFunction()+"(";
-		for(Parameter parameter:functionChosen.getParameters())
+		for(ParameterDSL parameter:functionChosen.getParameters())
 		{
 			if(parameter.getParameterName()=="u")
 			{				
@@ -1102,7 +1118,7 @@ public class ScriptsTable {
 		int limitSuperior;
 		String discreteValue;
 		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
-		FunctionsforGrammar functionChosen;
+		FunctionsforDSL functionChosen;
 		if(forClausule==false)		
 		{
 			int idconditionalSelected=rand.nextInt(functions.getConditionalsForGrammar().size());
@@ -1115,7 +1131,7 @@ public class ScriptsTable {
 		}
 
 		conditional=conditional+functionChosen.getNameFunction()+"(";
-		for(Parameter parameter:functionChosen.getParameters())
+		for(ParameterDSL parameter:functionChosen.getParameters())
 		{
 			if(parameter.getParameterName()=="u")
 			{
@@ -1148,7 +1164,7 @@ public class ScriptsTable {
 		int limitInferior;
 		int limitSuperior;
 		String discreteValue;
-		FunctionsforGrammar functionChosen=new FunctionsforGrammar();
+		FunctionsforDSL functionChosen=new FunctionsforDSL();
 		String parts[]=oldFunction.split("[\\W]");
 		List<Integer> parametersDiscrete=new ArrayList<Integer>();
 		for(String part: parts)
@@ -1162,7 +1178,7 @@ public class ScriptsTable {
 		//int id=rand.nextInt(ConfigurationsGA.QTD_RULES_BASIC_FUNCTIONS);
 		if(forClausule==false)
 		{
-			for(FunctionsforGrammar lis: functions.getConditionalsForGrammar())
+			for(FunctionsforDSL lis: functions.getConditionalsForGrammar())
 			{
 				if(oldFunction.startsWith(lis.getNameFunction()))
 				{
@@ -1173,7 +1189,7 @@ public class ScriptsTable {
 		}
 		else
 		{
-			for(FunctionsforGrammar lis: functions.getConditionalsForGrammarUnit())
+			for(FunctionsforDSL lis: functions.getConditionalsForGrammarUnit())
 			{
 				if(oldFunction.startsWith(lis.getNameFunction()))
 				{
@@ -1183,7 +1199,7 @@ public class ScriptsTable {
 		}
 
 		conditional=conditional+functionChosen.getNameFunction()+"(";
-		for(Parameter parameter:functionChosen.getParameters())
+		for(ParameterDSL parameter:functionChosen.getParameters())
 		{
 			if(parameter.getParameterName()=="u")
 			{				
@@ -1390,7 +1406,7 @@ public class ScriptsTable {
 
 	private ArrayList<String> redefinitionBasicFuncions(Sketch sk) {
 		// TODO Auto-generated method stub
-		List<FunctionsforGrammar> basicFunctionsForGrammarNew=new ArrayList<>();
+		List<FunctionsforDSL> basicFunctionsForGrammarNew=new ArrayList<>();
 		for(int i=0; i<functions.getBasicFunctionsForGrammar().size();i++)
 		{
 			int counterMatch=0;
@@ -1418,7 +1434,7 @@ public class ScriptsTable {
 	
 	private ArrayList<String> redefinitionBooleansFuncions(Sketch sk) {
 		// TODO Auto-generated method stub
-		List<FunctionsforGrammar> booleansForGrammarNew=new ArrayList<>();
+		List<FunctionsforDSL> booleansForGrammarNew=new ArrayList<>();
 		for(int i=0; i<functions.getConditionalsForGrammar().size();i++)
 		{
 			int counterMatch=0;

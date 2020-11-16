@@ -1,12 +1,16 @@
 package ga.util;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.nio.file.Files;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -16,6 +20,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.security.auth.kerberos.DelegationPermission;
+
+import ai.synthesis.grammar.dslTree.interfacesDSL.iDSL;
 import ga.ScriptTableGenerator.ScriptsTable;
 import ga.config.ConfigurationsGA;
 import ga.model.Chromosome;
@@ -44,6 +51,7 @@ public class RunGA {
 	private final String pathLogs = System.getProperty("user.dir").concat("/Tracking/");
 	private final String pathInitialPopulation = System.getProperty("user.dir").concat("/InitialPopulation/");
 	private final String pathUsedCommands = System.getProperty("user.dir").concat("/commandsUsed/");
+	private final String pathTableScriptsAST = System.getProperty("user.dir").concat("/Table/");
 	
 	static int [] frequencyIdsRulesForUCB= new int[ConfigurationsGA.QTD_RULES];
 	static int numberCallsUCB11=0;
@@ -58,6 +66,10 @@ public class RunGA {
 	public Population run(RoundRobinEliteandSampleEval evalFunction, String scriptsSetCover, HashSet<String> booleansUsed) {
 		// Creating the table of scripts
 		scrTable = new ScriptsTable(pathTableScripts);
+		
+		removeExistentTableAST();
+		
+		
 		//do {
 			if(ConfigurationsGA.portfolioSetCover)
 			{
@@ -97,8 +109,9 @@ public class RunGA {
 			Chromosome tChom=new Chromosome();;
 			tChom.addGene(0);
 			eliteIndividuals.put(tChom, BigDecimal.ZERO);
+			saveListScripts(scrTable.scriptsAST,pathTableScriptsAST);
 			evalFunction.setEliteIndividuals(eliteIndividuals);
-			population = evalFunction.evalPopulation(population, this.generations, scrTable);			
+			//population = evalFunction.evalPopulation(population, this.generations, scrTable);			
 			
 //			System.out.println("INITIAL POPULATION");
 //			population.printWithValue(f0);
@@ -154,9 +167,11 @@ public class RunGA {
 			System.out.println("newAST");
 			population = selecao.applySelectionAST(population, scrTable, pathTableScripts,pathTableScripts);
 			eliteIndividuals=selecao.eliteIndividuals;
+			
+			saveListScripts(scrTable.scriptsAST,pathTableScriptsAST);
 			// Repete-se Fase 2 = Avaliação da população
 			evalFunction.setEliteIndividuals(eliteIndividuals);
-			population = evalFunction.evalPopulation(population, this.generations, scrTable);
+			//population = evalFunction.evalPopulation(population, this.generations, scrTable);
 			
 			//Get all the used commands
 			if(ConfigurationsGA.removeRules==true)
@@ -298,5 +313,42 @@ public class RunGA {
 
         return scriptsTable;
     }
+    
+    public void saveListScripts(ArrayList<iDSL> scripts, String path) {
+    	FileOutputStream fos;
+		try {
+			removeExistentTableAST();
+			fos = new FileOutputStream(path+"ScriptsTableAST.txt");
+	    	ObjectOutputStream oos = new ObjectOutputStream(fos);
+	    	oos.writeObject(scripts);
+	    	oos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+    }
+    
+    public void removeExistentTableAST() {
+    	System.out.println("fullpath tableasts "+pathTableScriptsAST+"ScriptsTableAST.txt");
+		File existentASTtable = new File(pathTableScriptsAST+"ScriptsTableAST.txt");
+		boolean result;
+		
+		try {
+			result = Files.deleteIfExists(existentASTtable.toPath());
+			if(!result)
+			{
+				System.out.println("Smething is wrong deleting the AST trees file");
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    }
+    
+    
 	
 }

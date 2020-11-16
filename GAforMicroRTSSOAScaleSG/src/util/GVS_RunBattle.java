@@ -95,12 +95,12 @@ public class GVS_RunBattle {
 
         List<String> maps = new ArrayList<>(Arrays.asList(
                 //"maps/24x24/basesWorkers24x24A.xml"
-                "maps/DoubleGame24x24.xml"
+                //"maps/DoubleGame24x24.xml"
                 //"maps/battleMaps/Others/RangedHeavyMixed.xml"
                 //"maps/NoWhereToRun9x8.xml"
         //"maps/BroodWar/(4)BloodBath.scmB.xml"
         		//"maps/16x16/basesWorkers16x16A.xml"
-        		//"maps/8x8/basesWorkers8x8A.xml"
+        		"maps/8x8/basesWorkers8x8A.xml"
         ));
 
         UnitTypeTable utt = new UnitTypeTable();
@@ -160,7 +160,7 @@ public class GVS_RunBattle {
         
         List<AI> scriptsRun1=decodeScripts(utt, iScriptsAi1);
         List<AI> scriptsRun2=decodeScriptsAlt(utt, iScriptsAi2);
-        AI ai1=scriptsRun1.get(0);
+        //AI ai1=scriptsRun1.get(0);
         //AI ai2=scriptsRun2.get(0);
 //      AI ai1 = new PGSSCriptChoiceRandom(utt, decodeScripts(utt, iScriptsAi1), "PGSR", 2, 200);
       //AI ai2 = new PGSSCriptChoiceRandom(utt, scriptsRun1, "PGSR", 1, 200);
@@ -173,7 +173,7 @@ public class GVS_RunBattle {
       	//AI ai1 = new LightPGSSCriptChoice(utt, scriptsRun1,200, "PGSR");
       	//AI ai2=new PuppetSearchMCTS(utt);
       	//AI ai2=new BasicExpandedConfigurableScript(utt, new AStarPathFinding(), 18, 0, 0, 1, 2, 2, -1, -1, 6); //RR
-       //AI ai2=new LightRush(utt);
+        AI ai1=new LightRush(utt);
         //AI ai2=new StrategyTactics(utt);
         AI ai2=new WorkerRush(utt);
         //AI ai2=new NaiveMCTS(utt);

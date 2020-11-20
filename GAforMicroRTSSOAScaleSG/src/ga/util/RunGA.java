@@ -46,6 +46,7 @@ public class RunGA {
 	private int generations = 0;
 	private ScriptsTable scrTable;
 	private HashMap<Chromosome, BigDecimal> eliteIndividuals=new HashMap<Chromosome, BigDecimal>();
+	public ArrayList<iDSL> scriptsAST;
 
 	private final String pathTableScripts = System.getProperty("user.dir").concat("/Table/");
 	private final String pathLogs = System.getProperty("user.dir").concat("/Tracking/");
@@ -55,6 +56,8 @@ public class RunGA {
 	
 	static int [] frequencyIdsRulesForUCB= new int[ConfigurationsGA.QTD_RULES];
 	static int numberCallsUCB11=0;
+	
+	
 	//private final String pathTableScripts = "/home/rubens/cluster/TesteNewGASG/Table/";
 
 	/**
@@ -109,12 +112,13 @@ public class RunGA {
 			Chromosome tChom=new Chromosome();;
 			tChom.addGene(0);
 			eliteIndividuals.put(tChom, BigDecimal.ZERO);
-			saveListScripts(scrTable.scriptsAST,pathTableScriptsAST);
+			//saveListScripts(scrTable.scriptsAST,pathTableScriptsAST);
 			evalFunction.setEliteIndividuals(eliteIndividuals);
-			//population = evalFunction.evalPopulation(population, this.generations, scrTable);			
+			evalFunction.setASTlist(scrTable.scriptsAST);
+			population = evalFunction.evalPopulation(population, this.generations, scrTable);			
 			
-//			System.out.println("INITIAL POPULATION");
-//			population.printWithValue(f0);
+			System.out.println("INITIAL POPULATION");
+			population.printWithValue(f0);
 			
 			
 			
@@ -168,10 +172,10 @@ public class RunGA {
 			population = selecao.applySelectionAST(population, scrTable, pathTableScripts,pathTableScripts);
 			eliteIndividuals=selecao.eliteIndividuals;
 			
-			saveListScripts(scrTable.scriptsAST,pathTableScriptsAST);
+			//saveListScripts(scrTable.scriptsAST,pathTableScriptsAST);
 			// Repete-se Fase 2 = Avaliação da população
 			evalFunction.setEliteIndividuals(eliteIndividuals);
-			//population = evalFunction.evalPopulation(population, this.generations, scrTable);
+			population = evalFunction.evalPopulation(population, this.generations, scrTable);
 			
 			//Get all the used commands
 			if(ConfigurationsGA.removeRules==true)
@@ -212,7 +216,7 @@ public class RunGA {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		scriptsAST=scrTable.scriptsAST;
 		return population;
 	}
 

@@ -46,6 +46,7 @@ public class TestSingleMatch extends Thread {
     GameState gs2;
     PhysicalGameState pgs;
     UnitTypeTable utt;
+    String message;
 
     public float getResult() {
         return result;
@@ -55,7 +56,7 @@ public class TestSingleMatch extends Thread {
         return winner;
     }
 
-    public TestSingleMatch(iDSL sIA1, iDSL sIA2, GameState gs, PhysicalGameState pgs, UnitTypeTable utt) {
+    public TestSingleMatch(iDSL sIA1, iDSL sIA2, GameState gs, PhysicalGameState pgs, UnitTypeTable utt, String message) {
         this.sIA1 = sIA1;
         this.sIA2 = sIA2;
         this.allCommandIA1 = new ArrayList<>();
@@ -64,6 +65,7 @@ public class TestSingleMatch extends Thread {
         this.gs2=gs.clone();
         this.pgs=pgs;
         this.utt=utt;
+        this.message=message;
     }
 
     public List<ICommand> getAllCommandIA1() {
@@ -76,7 +78,7 @@ public class TestSingleMatch extends Thread {
     
     
 
-    public int execute() throws Exception {        
+    public int execute() throws Exception {   
         String map = SettingsAlphaDSL.get_map();
 //        UnitTypeTable utt = new UnitTypeTable();
 //        PhysicalGameState pgs = PhysicalGameState.load(map, utt);
@@ -115,6 +117,7 @@ public class TestSingleMatch extends Thread {
 //        JFrame w = PhysicalGameStatePanel.newVisualizer(gs,640,640,false,PhysicalGameStatePanel.COLORSCHEME_WHITE);        
         long nextTimeToUpdate = System.currentTimeMillis() + PERIOD;
         do {
+        	//System.out.println(message);
  //           if (System.currentTimeMillis() >= nextTimeToUpdate) {
                 PlayerAction pa1 = ai1.getAction(0, gs2);
                 PlayerAction pa2 = ai2.getAction(1, gs2);

@@ -33,7 +33,7 @@ public class MatchesinThreads {
 		
 		long startTime=System.currentTimeMillis();
 		
-		for(int i=0;i<50;i++)
+		for(int i=0;i<1;i++)
 		{
 			// TODO Auto-generated method stub
 			builder = BuilderGrammars.getInstance();
@@ -58,12 +58,28 @@ public class MatchesinThreads {
 	}
 
 	private static float evaluate_thread_scripts(iDSL script1, iDSL script2, GameState gs, PhysicalGameState pgs, UnitTypeTable utt) {
-		//System.out.println("Runnable Simulated Annealing Version");
+		System.out.println("Runnable Simulated Annealing Version");
 
-		TestSingleMatch runner1 = new TestSingleMatch(script1, script2, gs, pgs, utt);
-		TestSingleMatch runner2 = new TestSingleMatch(script1, script2, gs, pgs, utt);
-		TestSingleMatch runner3 = new TestSingleMatch(script1, script2, gs, pgs, utt);
-		TestSingleMatch runner4 = new TestSingleMatch(script1, script2, gs, pgs, utt);
+		TestSingleMatch runner1 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner1");
+		TestSingleMatch runner2 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner2" );
+		TestSingleMatch runner3 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner3" );
+		TestSingleMatch runner4 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner4" );
+//		TestSingleMatch runner5 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner5 ");
+//		TestSingleMatch runner6 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner6");
+//		TestSingleMatch runner7 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner7" );
+//		TestSingleMatch runner8 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner8" );
+//		TestSingleMatch runner9 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner9" );
+//		TestSingleMatch runner10 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner10 ");
+//		TestSingleMatch runner11 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner1");
+//		TestSingleMatch runner12 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner2" );
+//		TestSingleMatch runner13 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner3" );
+//		TestSingleMatch runner14 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner4" );
+//		TestSingleMatch runner15 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner5 ");
+//		TestSingleMatch runner16 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner6");
+//		TestSingleMatch runner17 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner7" );
+//		TestSingleMatch runner18 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner8" );
+//		TestSingleMatch runner19 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner9" );
+//		TestSingleMatch runner20 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner10 ");
 
 
 
@@ -79,12 +95,45 @@ public class MatchesinThreads {
 			runner2.start();
 			runner3.start();
 			runner4.start();
+//			runner5.start();
+//			runner6.start();
+//			runner7.start();
+//			runner8.start();
+//			runner9.start();
+//			runner10.start();
+//			runner11.start();
+//			runner12.start();
+//			runner13.start();
+//			runner14.start();
+//			runner15.start();
+//			runner16.start();
+//			runner17.start();
+//			runner18.start();
+//			runner19.start();
+//			runner20.start();
+
 
 			runner1.join();
 			runner2.join();
 			runner3.join();
 			runner4.join();
-
+//			runner5.join();
+//			runner6.join();
+//			runner7.join();
+//			runner8.join();
+//			runner9.join();
+//			runner10.join();
+//			runner11.join();
+//			runner12.join();
+//			runner13.join();
+//			runner14.join();
+//			runner15.join();
+//			runner16.join();
+//			runner17.join();
+//			runner18.join();
+//			runner19.join();
+//			runner20.join();
+			
 			float totalScript2 = 0.0f;
 			if (runner1.getWinner() == 1) {
 				totalScript2 += runner1.getResult();

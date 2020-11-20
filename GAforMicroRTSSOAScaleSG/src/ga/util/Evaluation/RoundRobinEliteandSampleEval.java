@@ -14,6 +14,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
+
+import ai.synthesis.DslLeague.Runner.SettingsAlphaDSL;
+import ai.synthesis.dslForScriptGenerator.DSLCommandInterfaces.ICommand;
+import ai.synthesis.grammar.dslTree.interfacesDSL.iDSL;
+import ai.synthesis.grammar.dslTree.utils.ReduceDSLController;
+
 import java.util.Random;
 
 import ga.ScriptTableGenerator.ScriptsTable;
@@ -22,10 +28,13 @@ import ga.model.Chromosome;
 import ga.model.Population;
 import ga.util.PreSelection;
 import model.EvalResult;
+import rts.GameState;
+import rts.PhysicalGameState;
+import rts.units.UnitTypeTable;
 import util.LeitorLog;
 
 public class RoundRobinEliteandSampleEval implements RatePopulation {
-	// CONSTANTES
+
 	private static final int TOTAL_PARTIDAS_ROUND = 1;
 	private static final int BATCH_SIZE = 2;
 
@@ -34,7 +43,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 
 	//private static final String pathCentral = "/home/rubens/cluster/TesteNewGASG/centralSOA";
 	private static final String pathCentral = System.getProperty("user.dir").concat("/centralSOA");
-	
+
 	/*
 	 * key - name of the file
 	 * value - data of the file
@@ -50,6 +59,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 
 	ArrayList<Chromosome> ChromosomeSample = new ArrayList<>();
 	HashMap<Chromosome, BigDecimal> eliteIndividuals;
+	ArrayList<iDSL> scriptsAST;
 
 	public RoundRobinEliteandSampleEval() {
 		super();
@@ -58,36 +68,36 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 	@Override
 	public Population evalPopulation(Population population, int generation, ScriptsTable scriptsTable) {
 		this.atualGeneration = generation;
-		SOA_Folders.clear();
-		// limpa os valores existentes na population
+		//SOA_Folders.clear();
+		// clean existent values in the population
 		population.clearValueChromosomes();
 
-		// executa os confrontos
-		runBattles(population);
+		//Run the matches
+		population=runBattles(buildBattles(population),population);
 
-		// SÃ³ permite continuar a execuÃ§Ã£o apÃ³s terminar os JOBS.
-		controllExecute();
+		// used to run in cluster.
+		//controllExecute();
 
-		// remove qualquer aquivo que nÃ£o possua um vencedor
-		removeLogsEmpty();
+		// used to run in cluster.
+		//removeLogsEmpty();
 
 		// ler resultados
-		ArrayList<EvalResult> resultados = lerResultados();
-		//check if all files were read
-				while(resultados.size() < this.battleFiles.size()) {
-					//record missing files
-					generatedMissingFiles(resultados);
-					//continue with the iterative controll
-					controllExecute();
-					ArrayList<EvalResult> missResultados = lerResultados();
-					resultados.addAll(missResultados);
-				}
-				
-		System.out.println("Number of matchs necessary "+ this.battleFiles.size());
-		System.out.println("Total of matchs read "+resultados.size());
-		
-		// atualizar valores das populacoes
-		updatePopulationValue(resultados, population);
+//		ArrayList<EvalResult> resultados = lerResultados();
+//		//check if all files were read
+//		while(resultados.size() < this.battleFiles.size()) {
+//			//record missing files
+//			generatedMissingFiles(resultados);
+//			//continue with the iterative controll
+//			controllExecute();
+//			ArrayList<EvalResult> missResultados = lerResultados();
+//			resultados.addAll(missResultados);
+//		}
+//
+//		System.out.println("Number of matchs necessary "+ this.battleFiles.size());
+//		System.out.println("Total of matchs read "+resultados.size());
+//
+//		// atualizar valores das populacoes
+//		updatePopulationValue(resultados, population);
 
 		return population;
 	}
@@ -115,35 +125,35 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 
 	private void updateChomoPopulation(EvalResult evalResult, Population pop) {
 		if (evalResult.getEvaluation() == 0) {
-            //IAWinner = evalResult.getIA1();
-            updateChromo(pop, evalResult.getIA1(), BigDecimal.ONE);
-        } else if (evalResult.getEvaluation() == 1){
-            updateChromo(pop, evalResult.getIA2(), BigDecimal.ONE);
-        }else{
-            updateChromo(pop, evalResult.getIA1(), new BigDecimal(0.5));
-            updateChromo(pop, evalResult.getIA2(), new BigDecimal(0.5));
-        }
-        
-    }
+			//IAWinner = evalResult.getIA1();
+			updateChromo(pop, evalResult.getIA1(), BigDecimal.ONE);
+		} else if (evalResult.getEvaluation() == 1){
+			updateChromo(pop, evalResult.getIA2(), BigDecimal.ONE);
+		}else{
+			updateChromo(pop, evalResult.getIA1(), new BigDecimal(0.5));
+			updateChromo(pop, evalResult.getIA2(), new BigDecimal(0.5));
+		}
 
-    private void updateChromo(Population pop, String IAWinner, BigDecimal value) {
-        // buscar na população a IA compatível.
-                Chromosome chrUpdate = null;
-                for (Chromosome ch : pop.getChromosomes().keySet()) {
-                    if (convertBasicTuple(ch).equals(IAWinner)) {
-                        chrUpdate = ch;
-                    }
-                }
-                
-                if (chrUpdate != null) {
-                    // atualizar valores.
-                    BigDecimal toUpdate = pop.getChromosomes().get(chrUpdate);
-                    if (toUpdate != null) {
-                        toUpdate = toUpdate.add(value);
-                        HashMap<Chromosome, BigDecimal> chrTemp = pop.getChromosomes();
-                        chrTemp.put(chrUpdate, toUpdate);
-                    }
-                }
+	}
+
+	private void updateChromo(Population pop, String IAWinner, BigDecimal value) {
+		// buscar na população a IA compatível.
+		Chromosome chrUpdate = null;
+		for (Chromosome ch : pop.getChromosomes().keySet()) {
+			if (convertBasicTuple(ch).equals(IAWinner)) {
+				chrUpdate = ch;
+			}
+		}
+
+		if (chrUpdate != null) {
+			// atualizar valores.
+			BigDecimal toUpdate = pop.getChromosomes().get(chrUpdate);
+			if (toUpdate != null) {
+				toUpdate = toUpdate.add(value);
+				HashMap<Chromosome, BigDecimal> chrTemp = pop.getChromosomes();
+				chrTemp.put(chrUpdate, toUpdate);
+			}
+		}
 	}
 
 	private ArrayList<EvalResult> removeDraw(ArrayList<EvalResult> results) {
@@ -293,100 +303,184 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 	 * @param population
 	 *            Que contÃ©m as configuracoes para a IA
 	 */
-	private void runBattles(Population population) {
+	private ArrayList<String> buildBattles(Population population) {
+		ArrayList<String> matches =new ArrayList<String>();
 		int numberSOA = 1;
 		this.battleFiles.clear();
 		// montar a lista de batalhas que irÃ£o ocorrer
-		
-		
+
+
 		defineChromosomeSample(population);
 		defineRandomSet(population);
 
 		for (int i = 0; i < TOTAL_PARTIDAS_ROUND; i++) {
 
 			for (Chromosome cIA1 : population.getChromosomes().keySet()) {
-				
+
 
 				for (Chromosome cIA2 : this.ChromosomeSample) {
 
-					//if (!cIA1.equals(cIA2)) {
-						// System.out.println("IA1 = "+ convertTuple(cIA1)+ "
-						// IA2 = "+ convertTuple(cIA2));
-
-						// first position
-						String strConfig = pathCentral + "/" + convertBasicTuple(cIA1) + "#(" + convertBasicTuple(cIA2)
-								+ ")#" + i + "#" + atualGeneration + ".txt";
-						File arqConfig = new File(strConfig);
-						if (!arqConfig.exists()) {
-							try {
-								arqConfig.createNewFile();
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-						// escreve a configuraÃ§Ã£o de teste
-						try {
-							FileWriter arq = new FileWriter(arqConfig, false);
-							PrintWriter gravarArq = new PrintWriter(arq);
-
-							String infFile = convertBasicTuple(cIA1) + "#(" + convertBasicTuple(cIA2) + ")#" + i + "#"
-									+ atualGeneration;
-							gravarArq.println(infFile);
-							this.battleFiles.put(strConfig, infFile);
-
-							gravarArq.flush();
-							gravarArq.close();
-							arq.close();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-						// second position
-						strConfig = pathCentral + "/(" + convertBasicTuple(cIA2) + ")#" + convertBasicTuple(cIA1) + "#"
-								+ i + "#" + atualGeneration + ".txt";
-						arqConfig = new File(strConfig);
-						if (!arqConfig.exists()) {
-							try {
-								arqConfig.createNewFile();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-						try {
-							FileWriter arq = new FileWriter(arqConfig, false);
-							PrintWriter gravarArq = new PrintWriter(arq);
-
-							String infFile = "(" + convertBasicTuple(cIA2) + ")#" + convertBasicTuple(cIA1) + "#" + i
-									+ "#" + atualGeneration;
-							gravarArq.println(infFile);
-							this.battleFiles.put(strConfig, infFile);
-
-							gravarArq.flush();
-							gravarArq.close();
-							arq.close();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-
+					// first position
+					String match1 = convertBasicTuple(cIA1) + "#(" + convertBasicTuple(cIA2) + ")#" + i + "#"
+							+ atualGeneration;
+					matches.add(match1);
+					// second position
+					String match2 = "(" + convertBasicTuple(cIA2) + ")#" + convertBasicTuple(cIA1) + "#" + i
+							+ "#" + atualGeneration;
+					matches.add(match2);
 					//}
-
 				}
 			}
 		}
+		System.out.println("size of matches here "+matches.size());
+		return matches;
+
+	}
+
+	private Population runBattles(ArrayList <String> matches, Population population) 
+	{
+		ArrayList<TestSingleMatch> singleMatches=new ArrayList<TestSingleMatch>();
+		int currentmatchesPerformed=0;
+		int TotalmatchesPerformed=0;
+
+		String map = SettingsAlphaDSL.get_map();
+		UnitTypeTable utt = new UnitTypeTable();
+		PhysicalGameState pgs=new PhysicalGameState(30, 30);
+		try {
+			pgs = PhysicalGameState.load(map, utt);
+
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GameState gs = new GameState(pgs, utt);
+
+		while(currentmatchesPerformed<matches.size())
+		{
+			int limitProcesses;
+			if(matches.size()-currentmatchesPerformed>=ConfigurationsGA.nProcessorsThreads)
+			{
+				limitProcesses=ConfigurationsGA.nProcessorsThreads;
+			}
+			else
+			{
+				limitProcesses=matches.size()-currentmatchesPerformed;
+			}
+			for(int i=TotalmatchesPerformed;i<TotalmatchesPerformed+limitProcesses;i++)
+			{								
+				
+				String[] itens = matches.get(i).split("#");	
+				//System.out.println("match line "+matches.get(i));
+				iDSL sIA1 = convertToDSL(itens[0]);
+				iDSL sIA2 = convertToDSL(itens[1]);
+				//System.out.println("first script "+sIA1.translate());
+				//System.out.println("second script "+sIA2.translate());
+				singleMatches.add(new TestSingleMatch(sIA1, sIA2, gs.clone(), pgs, utt, Integer.toString(i)));
+				
+			}
+
+			
+			for(int i=TotalmatchesPerformed;i<TotalmatchesPerformed+limitProcesses;i++)
+			{
+				singleMatches.get(i).start();
+				currentmatchesPerformed++;
+			}			
+			
+			try {
+				for(int i=TotalmatchesPerformed;i<TotalmatchesPerformed+limitProcesses;i++)
+				{
+					singleMatches.get(i).join();;
+				}
+
+			} catch (Exception e) {
+				System.err.println("ai.synthesis.localsearch.DoubleProgramSynthesis.processMatch() " + e.getMessage());
+
+			}
+		
+
+			TotalmatchesPerformed=currentmatchesPerformed;
+		}
+		for(int i=0;i<matches.size();i++)
+		{				
+			population=updateChromosomes(singleMatches.get(i).getWinner(), matches.get(i), population);
+		}
+
+		return population;
+	}
+
+	private Population updateChromosomes(int winner, String lineMatch, Population population) {
+		String[] itens = lineMatch.split("#");	
+		String player0=itens[0];
+		String player1=itens[1];
+
+		
+		if(winner==0 && !(player0.contains("(")))
+		{
+			population=updatePopulationASTs(population,player0, BigDecimal.ONE);
+		}
+		else if(winner==1 && !(player1.contains("(")))
+		{
+			population=updatePopulationASTs(population,player0, BigDecimal.ONE);
+		}
+		else if(winner==-1)
+		{
+			if(!(player0.contains("(")))
+			{
+				population=updatePopulationASTs(population,player0, new BigDecimal(0.5));
+			}
+			else if(!(player1.contains("(")))
+			{
+				population=updatePopulationASTs(population,player1, new BigDecimal(0.5));
+			}
+		}
+		return population;	
+		
 	}
 	
+	private Population updatePopulationASTs(Population population,String IAWinner, BigDecimal value) {
+		
+		Chromosome chrUpdate = null;
+		for (Chromosome ch : population.getChromosomes().keySet()) {
+			if (convertBasicTuple(ch).equals(IAWinner)) {
+				chrUpdate = ch;
+			}
+		}
+
+		if (chrUpdate != null) {
+			BigDecimal toUpdate = population.getChromosomes().get(chrUpdate);
+			if (toUpdate != null) {
+				toUpdate = toUpdate.add(value);
+				HashMap<Chromosome, BigDecimal> chrTemp = population.getChromosomes();
+				chrTemp.put(chrUpdate, toUpdate);
+			}
+		}
+		
+		return population;
+	}
+
+	private iDSL convertToDSL(String script) {
+
+		ArrayList<Integer> iScriptsAi1 = new ArrayList<>();
+		String[] itens = script.replace("(", "").replace(")", "").split(";");
+
+		for (String element : itens) {
+			iScriptsAi1.add(Integer.decode(element));
+		}
+
+		return scriptsAST.get(iScriptsAi1.get(0));
+	}
+
 	private void defineRandomSet(Population population) {
-		
-		
+
+
 		int totalPop = population.getChromosomes().size();
 		Random rand = new Random();
 		HashSet<Chromosome> samples = new HashSet<>();
 		ArrayList<Chromosome> temp = new ArrayList<>(population.getChromosomes().keySet());
 		System.out.print("Random set ");
 		while (samples.size() < ConfigurationsGA.QTD_ENEMIES_SAMPLE_RANDOM) {
-			
+
 			Chromosome cTemp;
 			do {
 				cTemp = temp.get(rand.nextInt(totalPop));
@@ -400,12 +494,12 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 	}
 
 	private void defineChromosomeSample(Population population) {
-		
+
 		this.ChromosomeSample.clear();
 		PreSelection ps=new PreSelection(population);	
 		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)ps.sortByValue(population.getChromosomes());
 		ArrayList<Entry<Chromosome, BigDecimal>> arrayElite = new ArrayList<>();
-		
+
 		if(getEliteIndividuals().size()>0)
 		{
 			arrayElite.addAll(getEliteIndividuals().entrySet());
@@ -414,7 +508,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		{
 			arrayElite.addAll(elite.entrySet());
 		}
-		
+
 		System.out.println("Elite last generation (Eval function)");
 		HashSet<Chromosome> eliteH = new HashSet<>();
 		for(int i=0;i<arrayElite.size();i++)
@@ -481,7 +575,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		}
 
 	}
-	
+
 	private void generatedMissingFiles(ArrayList<EvalResult> resultados) {
 		HashMap<String, String> intersect = new HashMap<String, String>();
 		//check by data
@@ -491,7 +585,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 			if(!thereIsMatch(itens[0],itens[1], resultados)) {
 				intersect.put(key, fileData);
 			}
-			
+
 		}
 		//record the necessary files
 		int cont = 1;
@@ -504,7 +598,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 			cont++;
 		}
 	}
-	
+
 	private boolean thereIsMatch(String ia1, String ia2, ArrayList<EvalResult> resultados) {
 		for (EvalResult evalResult : resultados) {
 			if(evalResult.getIA1().equals(ia1) && evalResult.getIA2().equals(ia2)) {
@@ -513,7 +607,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		}
 		return false;
 	}
-	
+
 	private void saveNewBattle(String miss, String data) {
 		File arqConfig = new File(miss);
 		if (!arqConfig.exists()) {
@@ -537,13 +631,17 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public HashMap<Chromosome, BigDecimal> getEliteIndividuals() {
 		return eliteIndividuals;
 	}
 
 	public void setEliteIndividuals(HashMap<Chromosome, BigDecimal> eliteIndividuals) {
 		this.eliteIndividuals = eliteIndividuals;
+	}
+
+	public void setASTlist(ArrayList<iDSL> scriptsAST) {
+		this.scriptsAST = scriptsAST;
 	}
 
 }

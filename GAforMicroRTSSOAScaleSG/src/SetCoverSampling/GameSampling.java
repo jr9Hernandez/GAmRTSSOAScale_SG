@@ -20,6 +20,7 @@ import ai.competition.capivara.CmabAssymetricMCTS;
 import ai.core.AI;
 import ai.evaluation.SimpleSqrtEvaluationFunction3;
 import ga.ScriptTableGenerator.ScriptsTable;
+import ga.config.ConfigurationsGA;
 import gui.PhysicalGameStatePanel;
 import ai.configurablescript.BasicExpandedConfigurableScript;
 import ai.configurablescript.ScriptsCreator;
@@ -79,6 +80,7 @@ public class GameSampling {
     //private final String dirPathPlayer = "logs_game/logs_states";
     private final String pathLogsBestPortfolios = System.getProperty("user.dir").concat("/TrackingPortfolios/");
     String pathTableScripts;
+    int totalCyclesforGame=0;
     
     public GameSampling(String pathTableScripts)
     {
@@ -250,6 +252,8 @@ public class GameSampling {
         
         long nextTimeToUpdate = System.currentTimeMillis() + PERIOD;
         int idState=0;
+        if(ConfigurationsGA.withLasi)
+        	totalCyclesforGame=1200000;
         do {
             if (System.currentTimeMillis() >= nextTimeToUpdate) {
             	
@@ -324,7 +328,7 @@ public class GameSampling {
             */
           //avaliacao de tempo
             duracao = Duration.between(timeInicial, Instant.now());
-        } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMillis() < 12000));
+        } while (!gameover && (gs.getTime() < MAXCYCLES) && (duracao.toMillis() < totalCyclesforGame));
         //&& (duracao.toMillis() < 40000)
 
         System.out.println("Game Over");

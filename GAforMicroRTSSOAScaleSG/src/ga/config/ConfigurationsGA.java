@@ -42,5 +42,6 @@ public final class ConfigurationsGA {
      public static final int numberA3Ngames=1;
      public static final boolean withLasi=false;
      public static final int nProcessorsThreads=56;
+     public final static boolean removeRulesAST=false;
 	
 }

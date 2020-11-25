@@ -115,6 +115,7 @@ public class RunGA {
 			//saveListScripts(scrTable.scriptsAST,pathTableScriptsAST);
 			evalFunction.setEliteIndividuals(eliteIndividuals);
 			evalFunction.setASTlist(scrTable.scriptsAST);
+			evalFunction.setScrTable(scrTable);
 			population = evalFunction.evalPopulation(population, this.generations, scrTable);			
 			
 			System.out.println("INITIAL POPULATION");
@@ -175,6 +176,8 @@ public class RunGA {
 			//saveListScripts(scrTable.scriptsAST,pathTableScriptsAST);
 			// Repete-se Fase 2 = Avaliação da população
 			evalFunction.setEliteIndividuals(eliteIndividuals);
+			evalFunction.setASTlist(scrTable.scriptsAST);
+			evalFunction.setScrTable(scrTable);
 			population = evalFunction.evalPopulation(population, this.generations, scrTable);
 			
 			//Get all the used commands

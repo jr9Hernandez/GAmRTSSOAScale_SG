@@ -60,6 +60,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 	ArrayList<Chromosome> ChromosomeSample = new ArrayList<>();
 	HashMap<Chromosome, BigDecimal> eliteIndividuals;
 	ArrayList<iDSL> scriptsAST;
+	ScriptsTable scrTable;
 
 	public RoundRobinEliteandSampleEval() {
 		super();
@@ -67,6 +68,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 
 	@Override
 	public Population evalPopulation(Population population, int generation, ScriptsTable scriptsTable) {
+		System.out.println("Size astTable "+scriptsAST.size());
 		this.atualGeneration = generation;
 		//SOA_Folders.clear();
 		// clean existent values in the population
@@ -340,6 +342,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 	private Population runBattles(ArrayList <String> matches, Population population) 
 	{
 		ArrayList<TestSingleMatch> singleMatches=new ArrayList<TestSingleMatch>();
+		HashMap<Integer, HashSet<ICommand>> uniqueCommandsPopulation=new HashMap<Integer, HashSet<ICommand>>();
 		int currentmatchesPerformed=0;
 		int TotalmatchesPerformed=0;
 
@@ -348,7 +351,6 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		PhysicalGameState pgs=new PhysicalGameState(30, 30);
 		try {
 			pgs = PhysicalGameState.load(map, utt);
-
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -374,9 +376,15 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 				//System.out.println("match line "+matches.get(i));
 				iDSL sIA1 = convertToDSL(itens[0]);
 				iDSL sIA2 = convertToDSL(itens[1]);
+				int idIA1=convertToInt(itens[0]);
+				int idIA2=convertToInt(itens[1]);
+				HashSet<ICommand> uniqueCommandsS1 = new HashSet<>();
+				HashSet<ICommand> uniqueCommandsS2 = new HashSet<>();
+				uniqueCommandsPopulation.put(idIA1, uniqueCommandsS1);
+				uniqueCommandsPopulation.put(idIA2, uniqueCommandsS1);
 				//System.out.println("first script "+sIA1.translate());
 				//System.out.println("second script "+sIA2.translate());
-				singleMatches.add(new TestSingleMatch(sIA1, sIA2, gs.clone(), pgs, utt, Integer.toString(i)));
+				singleMatches.add(new TestSingleMatch(sIA1, sIA2, gs.clone(), pgs, utt, Integer.toString(i), idIA1, idIA2));
 				
 			}
 
@@ -390,7 +398,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 			try {
 				for(int i=TotalmatchesPerformed;i<TotalmatchesPerformed+limitProcesses;i++)
 				{
-					singleMatches.get(i).join();;
+					singleMatches.get(i).join();
 				}
 
 			} catch (Exception e) {
@@ -404,7 +412,14 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		for(int i=0;i<matches.size();i++)
 		{				
 			population=updateChromosomes(singleMatches.get(i).getWinner(), matches.get(i), population);
+			String[] itens = matches.get(i).split("#");	
+			int idIA1=convertToInt(itens[0]);
+			int idIA2=convertToInt(itens[1]);
+			uniqueCommandsPopulation.get(idIA1).addAll(singleMatches.get(i).getAllCommandIA1());
+			uniqueCommandsPopulation.get(idIA2).addAll(singleMatches.get(i).getAllCommandIA2());            		
 		}
+		
+		population=updatePopulationRemotionRules(population,uniqueCommandsPopulation);
 
 		return population;
 	}
@@ -421,7 +436,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		}
 		else if(winner==1 && !(player1.contains("(")))
 		{
-			population=updatePopulationASTs(population,player0, BigDecimal.ONE);
+			population=updatePopulationASTs(population,player1, BigDecimal.ONE);
 		}
 		else if(winner==-1)
 		{
@@ -458,6 +473,30 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		
 		return population;
 	}
+	
+	private Population updatePopulationRemotionRules(Population population, HashMap<Integer, HashSet<ICommand>> uniqueCommandsPopulation)
+	{
+		for (Chromosome ch : population.getChromosomes().keySet()) {
+			int idScript=Integer.parseInt(convertBasicTuple(ch).replace(";", ""));
+			BigDecimal toUpdate = population.getChromosomes().get(ch);
+			iDSL originalScript=(iDSL) scriptsAST.get(idScript);
+			String originalScriptStr=originalScript.translate();
+			ReduceDSLController.removeUnactivatedParts(originalScript, new ArrayList<>(uniqueCommandsPopulation.get(idScript)));
+			updateReferencesforScript(originalScriptStr,originalScript.translate());
+			//population=addToPopulation(newScript,population,toUpdate);
+		}
+		return population;
+		
+	}
+	private void updateReferencesforScript(String originalScript, String reducedString)
+	{
+		if(!originalScript.equals(reducedString))
+		{
+			BigDecimal idScript=scrTable.getScriptTable().get(originalScript);
+			scrTable.getScriptTable().remove(originalScript);
+			scrTable.getScriptTable().put(reducedString, idScript);
+		}
+	}
 
 	private iDSL convertToDSL(String script) {
 
@@ -469,6 +508,18 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		}
 
 		return scriptsAST.get(iScriptsAi1.get(0));
+	}
+	
+	private int convertToInt(String script) {
+
+		ArrayList<Integer> iScriptsAi1 = new ArrayList<>();
+		String[] itens = script.replace("(", "").replace(")", "").split(";");
+
+		for (String element : itens) {
+			iScriptsAi1.add(Integer.decode(element));
+		}
+
+		return iScriptsAi1.get(0);
 	}
 
 	private void defineRandomSet(Population population) {
@@ -642,6 +693,10 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 
 	public void setASTlist(ArrayList<iDSL> scriptsAST) {
 		this.scriptsAST = scriptsAST;
+	}
+	
+	public void setScrTable(ScriptsTable scrTable) {
+		this.scrTable = scrTable;
 	}
 
 }

@@ -409,17 +409,21 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 
 			TotalmatchesPerformed=currentmatchesPerformed;
 		}
-		for(int i=0;i<matches.size();i++)
-		{				
-			population=updateChromosomes(singleMatches.get(i).getWinner(), matches.get(i), population);
-			String[] itens = matches.get(i).split("#");	
-			int idIA1=convertToInt(itens[0]);
-			int idIA2=convertToInt(itens[1]);
-			uniqueCommandsPopulation.get(idIA1).addAll(singleMatches.get(i).getAllCommandIA1());
-			uniqueCommandsPopulation.get(idIA2).addAll(singleMatches.get(i).getAllCommandIA2());            		
+		if(ConfigurationsGA.removeRulesAST)
+		{
+			for(int i=0;i<matches.size();i++)
+			{				
+				population=updateChromosomes(singleMatches.get(i).getWinner(), matches.get(i), population);
+				String[] itens = matches.get(i).split("#");	
+				int idIA1=convertToInt(itens[0]);
+				int idIA2=convertToInt(itens[1]);
+				uniqueCommandsPopulation.get(idIA1).addAll(singleMatches.get(i).getAllCommandIA1());
+				uniqueCommandsPopulation.get(idIA2).addAll(singleMatches.get(i).getAllCommandIA2());            		
+			}
+
+			population=updatePopulationRemotionRules(population,uniqueCommandsPopulation);
 		}
-		
-		population=updatePopulationRemotionRules(population,uniqueCommandsPopulation);
+
 
 		return population;
 	}
@@ -482,21 +486,25 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 			iDSL originalScript=(iDSL) scriptsAST.get(idScript);
 			String originalScriptStr=originalScript.translate();
 			ReduceDSLController.removeUnactivatedParts(originalScript, new ArrayList<>(uniqueCommandsPopulation.get(idScript)));
-			updateReferencesforScript(originalScriptStr,originalScript.translate());
+			//updateReferencesforScript(originalScriptStr,originalScript.translate(),idScript);
 			//population=addToPopulation(newScript,population,toUpdate);
 		}
 		return population;
 		
 	}
-	private void updateReferencesforScript(String originalScript, String reducedString)
-	{
-		if(!originalScript.equals(reducedString))
-		{
-			BigDecimal idScript=scrTable.getScriptTable().get(originalScript);
-			scrTable.getScriptTable().remove(originalScript);
-			scrTable.getScriptTable().put(reducedString, idScript);
-		}
-	}
+//	private void updateReferencesforScript(String originalScript, String reducedString, int idScriptOriginal)
+//	{
+//		
+//		if(!originalScript.equals(reducedString))
+//		{
+//			System.out.println("changing id "+idScriptOriginal+ "current id "+scrTable.getScriptTable().get(originalScript));
+//			System.out.println("orig "+originalScript);
+//			System.out.println("new "+reducedString);
+//			BigDecimal idScript=scrTable.getScriptTable().get(originalScript);
+//			scrTable.getScriptTable().remove(originalScript);
+//			scrTable.getScriptTable().put(reducedString, idScript);
+//		}
+//	}
 
 	private iDSL convertToDSL(String script) {
 

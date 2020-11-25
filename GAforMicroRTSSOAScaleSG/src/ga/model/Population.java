@@ -124,27 +124,28 @@ public class Population {
 			//System.out.println("sc_cloned "+sc_cloned.translate());
 			iDSL iSc1=BuilderDSLTreeSingleton.changeNeighbourPassively(sc_cloned,scrTable.allBasicFunctionsRedefined,scrTable.allBooleansFunctionsRedefined);
 			String newScript=iSc1.translate();
-			if(scrTable.getScriptTable().containsKey(newScript))
+			int idCandidate=verifyIfExistsIndividualInPopulation(scrTable.scriptsAST,newScript);
+			if(idCandidate!=-1)
 			{
-				idNewScript=scrTable.getScriptTable().get(newScript).intValue();			
+				idNewScript=idCandidate;			
 			}
 			else
 			{
 //				System.out.println("beforeMutateScript "+cromScriptOriginal);
 //				System.out.println("afterMutateScript "+cromScript);
-				int newId=scrTable.getScriptTable().size();
-				scrTable.getScriptTable().put(newScript, BigDecimal.valueOf(newId));
-				scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
-				addLineFile(newId+" "+newScript,pathTable);
-				idNewScript=newId;
+//				int newId=scrTable.getScriptTable().size();
+//				scrTable.getScriptTable().put(newScript, BigDecimal.valueOf(newId));
+//				scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
+//				addLineFile(newId+" "+newScript,pathTable);
+//				idNewScript=newId;
 				
-				if(scrTable.scriptsAST.size()!=idNewScript)
-				{
-					System.out.println("SOmething is broken! ");
-				}
+//				if(scrTable.scriptsAST.size()!=idNewScript)
+//				{
+//					System.out.println("SOmething is broken1! ");
+//				}
 				
 				scrTable.scriptsAST.add(iSc1);
-				
+				idNewScript=scrTable.scriptsAST.size()-1;
 
 				
 			}
@@ -156,6 +157,18 @@ public class Population {
 		}
 		Population pop = new Population(newChromosomes);
 		return pop;
+	}
+	
+	public static int verifyIfExistsIndividualInPopulation(ArrayList<iDSL> scriptsAST, String candidate)
+	{
+		for(int i=0;i< scriptsAST.size();i++)
+		{
+			if(scriptsAST.get(i).translate().equals(candidate))
+			{
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 	public static Population getInitialPopulationCurriculum(int size, ScriptsTable scrTable, String pathInitialPopulation){

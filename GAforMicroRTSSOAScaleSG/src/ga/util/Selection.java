@@ -125,26 +125,28 @@ public class Selection {
 			iDSL iSc1=BuilderDSLTreeSingleton.changeNeighbourPassively(sc_cloned,scrTable.allBasicFunctionsRedefined,scrTable.allBooleansFunctionsRedefined);
 			String newScript=iSc1.translate();
 			//System.out.println("mutated "+newScript);
-			if(scrTable.getScriptTable().containsKey(newScript))
+			int idCandidate=Population.verifyIfExistsIndividualInPopulation(scrTable.scriptsAST,newScript);
+			if(idCandidate!=-1)
 			{
-				idNewScript=scrTable.getScriptTable().get(newScript).intValue();
+				idNewScript=idCandidate;			
 			}
 			else
 			{
 //				System.out.println("beforeMutateScript "+cromScriptOriginal);
 //				System.out.println("afterMutateScript "+cromScript);
-				int newId=scrTable.getScriptTable().size();
-				scrTable.getScriptTable().put(newScript, BigDecimal.valueOf(newId));
-				scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
-				addLineFile(newId+" "+newScript,pathTable);
-				idNewScript=newId;
+//				int newId=scrTable.getScriptTable().size();
+//				scrTable.getScriptTable().put(newScript, BigDecimal.valueOf(newId));
+//				scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
+//				addLineFile(newId+" "+newScript,pathTable);
+//				idNewScript=newId;
 				
-				if(scrTable.scriptsAST.size()!=newId)
-				{
-					System.out.println("Something is broken");
-				}
+//				if(scrTable.scriptsAST.size()!=newId)
+//				{
+//					System.out.println("Something is broken4");
+//				}
 				
 				scrTable.scriptsAST.add(iSc1);
+				idNewScript=scrTable.scriptsAST.size()-1;
 				
 			}
 			//gerar o novo cromossomo com base no tamanho

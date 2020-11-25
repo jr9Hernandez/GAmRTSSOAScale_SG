@@ -842,27 +842,29 @@ public class Reproduction {
 	        iDSL iSc1 = builder.buildS1Grammar(scrTable.allBasicFunctionsRedefined,scrTable.allBooleansFunctionsRedefined);
 			String newScript=iSc1.translate();
 			
-			if(scrTable.getScriptTable().containsKey(newScript))
+			int idCandidate=Population.verifyIfExistsIndividualInPopulation(scrTable.scriptsAST,newScript);
+			if(idCandidate!=-1)
 			{
-				idNewScript=scrTable.getScriptTable().get(newScript).intValue();			
+				idNewScript=idCandidate;			
 			}
 			else
 			{
 //				System.out.println("beforeMutateScript "+cromScriptOriginal);
 //				System.out.println("afterMutateScript "+cromScript);
-				int newId=scrTable.getScriptTable().size();
-				//System.out.println("sizes matchs1 "+scrTable.getScriptTable().size()+" "+scrTable.scriptsAST.size());
-				scrTable.getScriptTable().put(newScript, BigDecimal.valueOf(newId));
-				scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
-				addLineFile(newId+" "+newScript);				
-				idNewScript=newId;
+//				int newId=scrTable.getScriptTable().size();
+//				//System.out.println("sizes matchs1 "+scrTable.getScriptTable().size()+" "+scrTable.scriptsAST.size());
+//				scrTable.getScriptTable().put(newScript, BigDecimal.valueOf(newId));
+//				scrTable.setCurrentSizeTable(scrTable.getScriptTable().size());
+//				addLineFile(newId+" "+newScript);				
+//				idNewScript=newId;
 				
-				if(scrTable.scriptsAST.size()!=newId)
-				{
-					System.out.println("Something is broken");
-				}
+//				if(scrTable.scriptsAST.size()!=newId)
+//				{
+//					System.out.println("Something is broken3");
+//				}
 				
 				scrTable.scriptsAST.add(iSc1);
+				idNewScript=scrTable.scriptsAST.size()-1;
 				
 				
 			}

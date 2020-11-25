@@ -224,19 +224,19 @@ public class ScriptsTable {
 				//					tChom.addGene(idRuleSelected);
 				//				}
 
-				if(!newChromosomes.containsKey(tChom))
-				{
-					if(scriptsAST.size()!=i)
-					{
-						System.out.println("SOmething is broken!");
-					}
-					scriptsAST.add(iSc1);
-					newChromosomes.put(tChom, BigDecimal.valueOf(i));
-					
-					f0.println(i+" "+tChom);
-					i++;
+//				if(!newChromosomes.containsKey(tChom))
+//				{
+//					if(scriptsAST.size()!=i)
+//					{
+//						System.out.println("SOmething is broken2!");
+//					}
+		        scriptsAST.add(iSc1);
+		        newChromosomes.put(tChom, BigDecimal.valueOf(i));
+				i++;
+//					f0.println(i+" "+tChom);
+//					i++;
 
-				}
+//				}
 
 			}
 			

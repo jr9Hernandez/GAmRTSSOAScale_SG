@@ -231,7 +231,7 @@ public class ScriptsTable {
 //						System.out.println("SOmething is broken2!");
 //					}
 		        scriptsAST.add(iSc1);
-		        newChromosomes.put(tChom, BigDecimal.valueOf(i));
+//		        newChromosomes.put(tChom, BigDecimal.valueOf(i));
 				i++;
 //					f0.println(i+" "+tChom);
 //					i++;

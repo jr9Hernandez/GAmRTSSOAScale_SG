@@ -95,7 +95,6 @@ public class Selection {
 	}
 	
 	public Population applySelectionAST(Population populacaoInicial,ScriptsTable scrTable, String pathTableScripts, String pathTable){
-
 		Reproduction rp=new Reproduction(scrTable,pathTableScripts);
 		
 		PreSelection ps=new PreSelection(populacaoInicial);	
@@ -125,10 +124,10 @@ public class Selection {
 			iDSL iSc1=BuilderDSLTreeSingleton.changeNeighbourPassively(sc_cloned,scrTable.allBasicFunctionsRedefined,scrTable.allBooleansFunctionsRedefined);
 			String newScript=iSc1.translate();
 			//System.out.println("mutated "+newScript);
-			int idCandidate=Population.verifyIfExistsIndividualInPopulation(scrTable.scriptsAST,newScript);
+			int idCandidate=Population.verifyIfExistsIndividualInTable(scrTable.scriptsAST,newScript);
 			if(idCandidate!=-1)
 			{
-				idNewScript=idCandidate;			
+				idNewScript=idCandidate;		
 			}
 			else
 			{
@@ -150,9 +149,12 @@ public class Selection {
 				
 			}
 			//gerar o novo cromossomo com base no tamanho
-			tChom = new Chromosome();
-			tChom.addGene(idNewScript);
-			newChromosomes.put(tChom, BigDecimal.ZERO);
+			if(!Population.verifyIfExistsIndividualInPopulation(newChromosomes,idNewScript))
+			{
+				tChom = new Chromosome();
+				tChom.addGene(idNewScript);
+				newChromosomes.put(tChom, BigDecimal.ZERO);
+			}
 //			int sizeCh=rand.nextInt(ConfigurationsGA.SIZE_CHROMOSOME)+1;
 //			for (int j = 0; j < sizeCh; j++) {
 //				tChom.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));

@@ -2,8 +2,11 @@ package principal;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,6 +28,7 @@ import ai.abstraction.pathfinding.AStarPathFinding;
 import ai.ahtn.AHTNAI;
 import ai.asymmetric.PGS.LightPGSSCriptChoice;
 import ai.asymmetric.SSS.LightSSSmRTSScriptChoice;
+import ai.competition.dropletGNS.Droplet;
 import ai.configurablescript.BasicExpandedConfigurableScript;
 import ai.configurablescript.ScriptsCreator;
 import ai.core.AI;
@@ -69,14 +73,22 @@ public class RunTests_SetCover_GP {
 	private final static String dirPathPlayer = System.getProperty("user.dir").concat("/logs_game/logs_states/");
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
+		PrintWriter writer = new PrintWriter("Best.txt", "UTF-8");
+		
+		
+		for(int j=0; j<ConfigurationsGA.numbersystematicTests; j++)
+		{
 
 
-		String curriculumportfolio="empty";		
+		String curriculumportfolio="empty";	
+		
 		File logsBestPortfolios=new File(pathLogsBestPortfolios);
 		GameSampling.deleteFolder(logsBestPortfolios);
 		File logsGames=new File(dirPathPlayer);
 		GameSampling.deleteFolder(logsGames);
+		deleteAllSubfolders();
+
 
 		if(!ConfigurationsGA.fixedTrace)
 		{
@@ -185,12 +197,16 @@ public class RunTests_SetCover_GP {
 			System.out.println("Final best individual "+bestFinalIndividual);
 			System.out.println("best script "+ga.scriptsAST.get(bestFinalIndividual).translate());
 
+			float finalAvalation;
 			try {
-				System.out.println("Final Avalation "+finalAvaliation(ga.scriptsAST.get(bestFinalIndividual)));
-			} catch (Exception e) {
+				finalAvalation = finalAvaliation(ga.scriptsAST.get(bestFinalIndividual));
+				System.out.println("Final Avalation "+finalAvalation);
+				writer.println(ga.scriptsAST.get(bestFinalIndividual).translate()+" "+finalAvalation);
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				e1.printStackTrace();
+			}			
+			
 
 			//		//Here we play with a search-based algorithm and save the path
 			//		try {
@@ -205,9 +221,41 @@ public class RunTests_SetCover_GP {
 
 		}
 
+		}
 
+		writer.close();
 
+	}
 
+	private static void deleteAllSubfolders() {
+		// TODO Auto-generated method stub
+		String dir1 = System.getProperty("user.dir").concat("/TrackingPortfolios/");
+		String dir2 = System.getProperty("user.dir").concat("/Tracking/");
+		String dir3 = System.getProperty("user.dir").concat("/TableInitialPortfolio/");
+		String dir4 = System.getProperty("user.dir").concat("/Table/");
+		//String dir5 = System.getProperty("user.dir").concat("/maps/");
+		String dir6 = System.getProperty("user.dir").concat("/LogsGrammars/");
+		String dir7 = System.getProperty("user.dir").concat("/logs_game/");
+		String dir8 = System.getProperty("user.dir").concat("/logs/");
+		//String dir9 = System.getProperty("user.dir").concat("/lib/");
+		String dir10 = System.getProperty("user.dir").concat("/configSOA/");
+		String dir11 = System.getProperty("user.dir").concat("/commandsUsed/");
+		String dir12 = System.getProperty("user.dir").concat("/centralSOA/");
+		
+		GameSampling.deleteSubFolders(new File(dir1));
+		GameSampling.deleteSubFolders(new File(dir2));
+		GameSampling.deleteSubFolders(new File(dir3));
+		GameSampling.deleteSubFolders(new File(dir4));
+		//GameSampling.deleteSubFolders(new File(dir5));
+		GameSampling.deleteSubFolders(new File(dir6));
+		GameSampling.deleteSubFolders(new File(dir7));
+		GameSampling.deleteSubFolders(new File(dir8));
+		//GameSampling.deleteSubFolders(new File(dir9));
+		GameSampling.deleteSubFolders(new File(dir10));
+		GameSampling.deleteSubFolders(new File(dir11));
+		GameSampling.deleteSubFolders(new File(dir12));
+		
+		
 	}
 
 	public static float finalAvaliation(iDSL bestScript) throws Exception
@@ -225,8 +273,8 @@ public class RunTests_SetCover_GP {
 		}
 		GameState gs = new GameState(pgs, utt);
 
-//		TestSingleMatchLeft runner1 = new TestSingleMatchLeft(bestScript, new AHTNAI(utt), gs.clone(), pgs, utt, "");
-//		TestSingleMatchRight runner2 = new TestSingleMatchRight(new AHTNAI(utt), bestScript, gs.clone(), pgs, utt, "");
+		TestSingleMatchLeft runner1 = new TestSingleMatchLeft(bestScript, new Droplet(utt), gs.clone(), pgs, utt, "");
+		TestSingleMatchRight runner2 = new TestSingleMatchRight(new Droplet(utt), bestScript, gs.clone(), pgs, utt, "");
 
 		TestSingleMatchLeft runner3 = new TestSingleMatchLeft(bestScript, new PuppetSearchMCTS(utt), gs.clone(), pgs, utt, "");
 		TestSingleMatchRight runner4 = new TestSingleMatchRight(new PuppetSearchMCTS(utt), bestScript, gs.clone(), pgs, utt, "");
@@ -261,8 +309,8 @@ public class RunTests_SetCover_GP {
 
 
 		try {
-//			runner1.start();
-//			runner2.start();
+			runner1.start();
+			runner2.start();
 			runner3.start();
 			runner4.start();
 			runner5.start();
@@ -282,8 +330,8 @@ public class RunTests_SetCover_GP {
 			runner19.start();
 			runner20.start();
 
-//			runner1.join();
-//			runner2.join();
+			runner1.join();
+			runner2.join();
 			runner3.join();
 			runner4.join();
 			runner5.join();
@@ -304,19 +352,19 @@ public class RunTests_SetCover_GP {
 			runner20.join();
 
 			float totalScript = 0.0f;
-//			if (runner1.getWinner() == 0) {
-//				totalScript += runner1.getResult();
-//			} else if (runner1.getWinner() == -1) {
-//				totalScript += runner1.getResult();
-//			}
-//
-//			if (runner2.getWinner() == 1) {
-//				totalScript += runner2.getResult();
-//			} else if (runner2.getWinner() == -1) {
-//				totalScript += runner2.getResult();
-//			}
+			if (runner1.getWinner() == 0) {
+				totalScript += runner1.getResult();
+			} else if (runner1.getWinner() == -1) {
+				totalScript += runner1.getResult();
+			}
 
-			System.out.println("runner3 "+runner3.getResult());
+			if (runner2.getWinner() == 1) {
+				totalScript += runner2.getResult();
+			} else if (runner2.getWinner() == -1) {
+				totalScript += runner2.getResult();
+			}
+
+			//System.out.println("runner3 "+runner3.getResult());
 			if (runner3.getWinner() == 0) {
 				totalScript += runner3.getResult();
 			} else if (runner3.getWinner() == -1) {

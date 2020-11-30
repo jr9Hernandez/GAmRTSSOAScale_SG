@@ -37,8 +37,16 @@ public class MatchesinThreads {
 		{
 			// TODO Auto-generated method stub
 			builder = BuilderGrammars.getInstance();
-			iDSL iSc1 = builder.buildS1Grammar();
-			iDSL iSc2 = builder.buildS1Grammar();
+//			iDSL iSc1 = builder.buildS1Grammar();
+//			iDSL iSc2 = builder.buildS1Grammar();
+			TradutorDSL td = new TradutorDSL("for(u) (attack(Ranged,closest,u))");
+			iDSL iSc1 =td.getAST();
+			TradutorDSL td2 = new TradutorDSL("for(u) (attack(Ranged,closest,u)) attack(Heavy,weakest)\r\n" + 
+					"");
+			iDSL iSc2 =td2.getAST();
+			
+			System.out.println("firsst script "+iSc2.translate());
+			System.out.println("Second script "+iSc1.translate());
 
 			//Enable this block to run playouts in threads
 			if(typePlayout)
@@ -60,10 +68,10 @@ public class MatchesinThreads {
 	private static float evaluate_thread_scripts(iDSL script1, iDSL script2, GameState gs, PhysicalGameState pgs, UnitTypeTable utt) {
 		System.out.println("Runnable Simulated Annealing Version");
 
-		TestSingleMatch runner1 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner1");
-		TestSingleMatch runner2 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner2" );
-		TestSingleMatch runner3 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner3" );
-		TestSingleMatch runner4 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner4" );
+		TestSingleMatchUnique runner1 = new TestSingleMatchUnique(script1, script2, gs, pgs, utt, "runner1", 2,3);
+//		TestSingleMatch runner2 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner2", 3,2);
+//		TestSingleMatch runner3 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner3" ,3,3);
+//		TestSingleMatch runner4 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner4" ,3,4);
 //		TestSingleMatch runner5 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner5 ");
 //		TestSingleMatch runner6 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner6");
 //		TestSingleMatch runner7 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner7" );
@@ -92,9 +100,9 @@ public class MatchesinThreads {
 
 
 			runner1.start();
-			runner2.start();
-			runner3.start();
-			runner4.start();
+//			runner2.start();
+//			runner3.start();
+//			runner4.start();
 //			runner5.start();
 //			runner6.start();
 //			runner7.start();
@@ -114,9 +122,9 @@ public class MatchesinThreads {
 
 
 			runner1.join();
-			runner2.join();
-			runner3.join();
-			runner4.join();
+//			runner2.join();
+//			runner3.join();
+//			runner4.join();
 //			runner5.join();
 //			runner6.join();
 //			runner7.join();
@@ -140,28 +148,28 @@ public class MatchesinThreads {
 			} else if (runner1.getWinner() == -1) {
 				totalScript2 += runner1.getResult();
 			}
-			if (runner2.getWinner() == 1) {
-				totalScript2 += runner2.getResult();
-			} else if (runner2.getWinner() == -1) {
-				totalScript2 += runner2.getResult();
-			}
-
-			if (runner3.getWinner() == 0) {
-				totalScript2 += runner3.getResult();
-			} else if (runner3.getWinner() == -1) {
-				totalScript2 += runner3.getResult();
-			}
-			if (runner4.getWinner() == 0) {
-				totalScript2 += runner4.getResult();
-			} else if (runner4.getWinner() == -1) {
-				totalScript2 += runner4.getResult();
-			}
+//			if (runner2.getWinner() == 1) {
+//				totalScript2 += runner2.getResult();
+//			} else if (runner2.getWinner() == -1) {
+//				totalScript2 += runner2.getResult();
+//			}
+//
+//			if (runner3.getWinner() == 0) {
+//				totalScript2 += runner3.getResult();
+//			} else if (runner3.getWinner() == -1) {
+//				totalScript2 += runner3.getResult();
+//			}
+//			if (runner4.getWinner() == 0) {
+//				totalScript2 += runner4.getResult();
+//			} else if (runner4.getWinner() == -1) {
+//				totalScript2 += runner4.getResult();
+//			}
 
 			HashSet<ICommand> uniqueCommands = new HashSet<>();
 			uniqueCommands.addAll(runner1.getAllCommandIA2());
-			uniqueCommands.addAll(runner2.getAllCommandIA2());
-			uniqueCommands.addAll(runner3.getAllCommandIA1());
-			uniqueCommands.addAll(runner4.getAllCommandIA1());
+//			uniqueCommands.addAll(runner2.getAllCommandIA2());
+//			uniqueCommands.addAll(runner3.getAllCommandIA1());
+//			uniqueCommands.addAll(runner4.getAllCommandIA1());
 			ReduceDSLController.removeUnactivatedParts(script2, new ArrayList<>(uniqueCommands));
 			System.out.println("score second script "+totalScript2);
 			return totalScript2;

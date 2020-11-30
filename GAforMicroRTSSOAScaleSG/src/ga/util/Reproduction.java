@@ -842,7 +842,7 @@ public class Reproduction {
 	        iDSL iSc1 = builder.buildS1Grammar(scrTable.allBasicFunctionsRedefined,scrTable.allBooleansFunctionsRedefined);
 			String newScript=iSc1.translate();
 			
-			int idCandidate=Population.verifyIfExistsIndividualInPopulation(scrTable.scriptsAST,newScript);
+			int idCandidate=Population.verifyIfExistsIndividualInTable(scrTable.scriptsAST,newScript);
 			if(idCandidate!=-1)
 			{
 				idNewScript=idCandidate;			
@@ -869,9 +869,12 @@ public class Reproduction {
 				
 			}
 			//gerar o novo cromossomo com base no tamanho
-			tChom = new Chromosome();
-			tChom.addGene(idNewScript);
-			newChromosomes.put(tChom, BigDecimal.ZERO);
+			if(!Population.verifyIfExistsIndividualInPopulation(newChromosomes,idNewScript))
+			{
+				tChom = new Chromosome();
+				tChom.addGene(idNewScript);
+				newChromosomes.put(tChom, BigDecimal.ZERO);
+			}
 
 		}
 		Population pop = new Population(newChromosomes);

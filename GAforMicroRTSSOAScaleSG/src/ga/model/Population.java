@@ -124,7 +124,7 @@ public class Population {
 			//System.out.println("sc_cloned "+sc_cloned.translate());
 			iDSL iSc1=BuilderDSLTreeSingleton.changeNeighbourPassively(sc_cloned,scrTable.allBasicFunctionsRedefined,scrTable.allBooleansFunctionsRedefined);
 			String newScript=iSc1.translate();
-			int idCandidate=verifyIfExistsIndividualInPopulation(scrTable.scriptsAST,newScript);
+			int idCandidate=verifyIfExistsIndividualInTable(scrTable.scriptsAST,newScript);
 			if(idCandidate!=-1)
 			{
 				idNewScript=idCandidate;			
@@ -150,16 +150,37 @@ public class Population {
 				
 			}
 			//gerar o novo cromossomo com base no tamanho
-			tChom = new Chromosome();
-			tChom.addGene(idNewScript);
-			newChromosomes.put(tChom, BigDecimal.ZERO);
+			if(!verifyIfExistsIndividualInPopulation(newChromosomes,idNewScript))
+			{
+				tChom = new Chromosome();
+				tChom.addGene(idNewScript);
+				newChromosomes.put(tChom, BigDecimal.ZERO);				
+			}
 
 		}
 		Population pop = new Population(newChromosomes);
 		return pop;
 	}
 	
-	public static int verifyIfExistsIndividualInPopulation(ArrayList<iDSL> scriptsAST, String candidate)
+	public static boolean verifyIfExistsIndividualInPopulation(HashMap<Chromosome, BigDecimal> population, int idNewScript)
+	{
+		
+    	Iterator it = population.entrySet().iterator();
+    	while (it.hasNext()) {
+    		Map.Entry pair = (Map.Entry)it.next();
+    		Chromosome individual=(Chromosome) pair.getKey();
+    		//System.out.println("key "+individual.getGenes());
+    		if(individual.getGenes().contains(idNewScript))
+    		{
+    			return true;
+    			
+    		}
+    		    		
+    	}
+		return false;
+	}
+	
+	public static int verifyIfExistsIndividualInTable(ArrayList<iDSL> scriptsAST, String candidate)
 	{
 		for(int i=0;i< scriptsAST.size();i++)
 		{

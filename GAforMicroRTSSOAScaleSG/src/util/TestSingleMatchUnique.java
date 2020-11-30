@@ -29,7 +29,7 @@ import rts.PhysicalGameState;
 import rts.PlayerAction;
 import rts.units.UnitTypeTable;
 
-public class TestSingleMatch extends Thread {
+public class TestSingleMatchUnique extends Thread {
 
     IDSLCompiler compiler = new MainDSLCompiler();    
     HashSet<String> usedCommands;
@@ -47,6 +47,8 @@ public class TestSingleMatch extends Thread {
     PhysicalGameState pgs;
     UnitTypeTable utt;
     String message;
+    int idIA1;
+    int idIA2;
 
     public float getResult() {
         return result;
@@ -56,7 +58,7 @@ public class TestSingleMatch extends Thread {
         return winner;
     }
 
-    public TestSingleMatch(iDSL sIA1, iDSL sIA2, GameState gs, PhysicalGameState pgs, UnitTypeTable utt, String message) {
+    public TestSingleMatchUnique(iDSL sIA1, iDSL sIA2, GameState gs, PhysicalGameState pgs, UnitTypeTable utt, String message, int idIA1, int idIA2) {
         this.sIA1 = sIA1;
         this.sIA2 = sIA2;
         this.allCommandIA1 = new ArrayList<>();
@@ -66,6 +68,8 @@ public class TestSingleMatch extends Thread {
         this.pgs=pgs;
         this.utt=utt;
         this.message=message;
+        this.idIA1=idIA1;
+        this.idIA2=idIA1;
     }
 
     public List<ICommand> getAllCommandIA1() {
@@ -79,7 +83,8 @@ public class TestSingleMatch extends Thread {
     
 
     public int execute() throws Exception {   
-        String map = SettingsAlphaDSL.get_map();
+    	
+//        String map = SettingsAlphaDSL.get_map();
 //        UnitTypeTable utt = new UnitTypeTable();
 //        PhysicalGameState pgs = PhysicalGameState.load(map, utt);
 
@@ -106,11 +111,11 @@ public class TestSingleMatch extends Thread {
             MAXCYCLES = 12000;
         }
 
-//        AI ai1 = buildCommandsIA(utt, sIA1);
-//        AI ai2 = buildCommandsIA(utt, sIA2);
+        AI ai1 = buildCommandsIA(utt, sIA1);
+        AI ai2 = buildCommandsIA(utt, sIA2);
         
-        AI ai1 = new WorkerRush(utt);
-        AI ai2 = new WorkerRush(utt);
+//        AI ai1 = new WorkerRush(utt);
+//        AI ai2 = new WorkerRush(utt);
 
 
         //JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);
@@ -146,10 +151,10 @@ public class TestSingleMatch extends Thread {
         } while (!gameover && (gs2.getTime() <= MAXCYCLES));     
         //System.out.println("printing current state "+gs);
         winner = gs2.winner();
-//        this.allCommandIA1.clear();
-//        this.allCommandIA1.addAll(((DslAI) ai1).getCommands());
-//        this.allCommandIA2.clear();
-//        this.allCommandIA2.addAll(((DslAI) ai2).getCommands());        
+        this.allCommandIA1.clear();
+        this.allCommandIA1.addAll(((DslAI) ai1).getCommands());
+        this.allCommandIA2.clear();
+        this.allCommandIA2.addAll(((DslAI) ai2).getCommands());        
         if (winner != -1) {
             //w.dispatchEvent(new WindowEvent(w, WindowEvent.WINDOW_CLOSING));
             //System.out.println("\n"+sIA1+"\n "+sIA2+ "\n Winner "+winner);
@@ -185,7 +190,7 @@ public class TestSingleMatch extends Thread {
         try {
             this.winner = execute();
         } catch (Exception ex) {
-            Logger.getLogger(TestSingleMatch.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TestSingleMatchUnique.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

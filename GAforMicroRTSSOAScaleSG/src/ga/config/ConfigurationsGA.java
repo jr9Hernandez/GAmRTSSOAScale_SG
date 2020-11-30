@@ -2,10 +2,10 @@ package ga.config;
 
 public final class ConfigurationsGA {
 	public static final int SIZE_CHROMOSOME = 1;
-	 public static final int SIZE_POPULATION = 10;
+	 public static final int SIZE_POPULATION = 90;
 	 public static final int NUMBER_JOBS = 39;
 	 public static final int SIZE_ELITE = 1;
-	 public static final int SIZE_INVADERS = 5;
+	 public static final int SIZE_INVADERS = 20;
 	 public static final int K_TOURNMENT = 15;
 	 public static final int SIZE_PARENTSFORCROSSOVER = 24;
 	 public static final double MUTATION_RATE = 0.3;
@@ -43,5 +43,6 @@ public final class ConfigurationsGA {
      public static final boolean withLasi=false;
      public static final int nProcessorsThreads=56;
      public final static boolean removeRulesAST=true;
+     public final static int numbersystematicTests=15;
 	
 }

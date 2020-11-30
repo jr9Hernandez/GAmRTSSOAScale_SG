@@ -409,18 +409,19 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 
 			TotalmatchesPerformed=currentmatchesPerformed;
 		}
+
+		for(int i=0;i<matches.size();i++)
+		{				
+			population=updateChromosomes(singleMatches.get(i).getWinner(), matches.get(i), population);
+			String[] itens = matches.get(i).split("#");	
+			int idIA1=convertToInt(itens[0]);
+			int idIA2=convertToInt(itens[1]);
+			uniqueCommandsPopulation.get(idIA1).addAll(singleMatches.get(i).getAllCommandIA1());
+			uniqueCommandsPopulation.get(idIA2).addAll(singleMatches.get(i).getAllCommandIA2());            		
+		}
+
 		if(ConfigurationsGA.removeRulesAST)
 		{
-			for(int i=0;i<matches.size();i++)
-			{				
-				population=updateChromosomes(singleMatches.get(i).getWinner(), matches.get(i), population);
-				String[] itens = matches.get(i).split("#");	
-				int idIA1=convertToInt(itens[0]);
-				int idIA2=convertToInt(itens[1]);
-				uniqueCommandsPopulation.get(idIA1).addAll(singleMatches.get(i).getAllCommandIA1());
-				uniqueCommandsPopulation.get(idIA2).addAll(singleMatches.get(i).getAllCommandIA2());            		
-			}
-
 			population=updatePopulationRemotionRules(population,uniqueCommandsPopulation);
 		}
 

@@ -39,9 +39,9 @@ public class MatchesinThreads {
 			builder = BuilderGrammars.getInstance();
 //			iDSL iSc1 = builder.buildS1Grammar();
 //			iDSL iSc2 = builder.buildS1Grammar();
-			TradutorDSL td = new TradutorDSL("for(u) (attack(Ranged,closest,u))");
+			TradutorDSL td = new TradutorDSL("for(u) (if(HaveUnitsToDistantToEnemy(Worker,4,u)) (attack(Worker,closest,u)) (train(Worker,50,Left,u))) harvest(50)");
 			iDSL iSc1 =td.getAST();
-			TradutorDSL td2 = new TradutorDSL("for(u) (attack(Ranged,closest,u)) attack(Heavy,weakest)\r\n" + 
+			TradutorDSL td2 = new TradutorDSL("for(u) (train(Worker,50,Down,u)) for(u) (if(HaveQtdUnitsHarversting(1,u)) (attack(Worker,closest,u)) (harvest(50,u)))" + 
 					"");
 			iDSL iSc2 =td2.getAST();
 			
@@ -66,7 +66,7 @@ public class MatchesinThreads {
 	}
 
 	private static float evaluate_thread_scripts(iDSL script1, iDSL script2, GameState gs, PhysicalGameState pgs, UnitTypeTable utt) {
-		System.out.println("Runnable Simulated Annealing Version");
+//		System.out.println("Runnable Simulated Annealing Version");
 
 		TestSingleMatchUnique runner1 = new TestSingleMatchUnique(script1, script2, gs, pgs, utt, "runner1", 2,3);
 //		TestSingleMatch runner2 = new TestSingleMatch(script1, script2, gs, pgs, utt, "runner2", 3,2);

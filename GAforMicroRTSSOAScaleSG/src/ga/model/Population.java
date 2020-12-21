@@ -604,7 +604,7 @@ public class Population {
 							closed=true;
 							countOpen--;
 						}
-						else if(Character.isLetter(newGrammar.charAt(j)) && newGrammar.charAt(j) !='?' && newGrammar.charAt(j) !='¿')
+						else if(Character.isLetter(newGrammar.charAt(j)) && newGrammar.charAt(j) !='?' && newGrammar.charAt(j) !='ï¿½')
 						{
 							letter=true;
 						}
@@ -620,7 +620,7 @@ public class Population {
 							StringBuilder builder = new StringBuilder();
 							
 							builder.append(newGrammar.substring(0, start));
-							builder.append("¿");
+							builder.append("ï¿½");
 							builder.append(newGrammar.substring(start + removedExcess.length()));
 							newGrammar=builder.toString();
 							
@@ -892,7 +892,7 @@ public class Population {
 
 		String grammar=str;
 		grammar=grammar.replace("?", "");
-		grammar=grammar.replace("¿", "");
+		grammar=grammar.replace("ï¿½", "");
 
 		boolean atLeastOne=true;
 		while(atLeastOne)

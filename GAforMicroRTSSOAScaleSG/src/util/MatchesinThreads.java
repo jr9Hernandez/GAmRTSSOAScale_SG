@@ -7,6 +7,7 @@ import ai.synthesis.DslLeague.Runner.SettingsAlphaDSL;
 import ai.synthesis.dslForScriptGenerator.DSLCommandInterfaces.ICommand;
 import ai.synthesis.grammar.dslTree.interfacesDSL.iDSL;
 import ai.synthesis.grammar.dslTree.utils.ReduceDSLController;
+import ai.synthesis.twophasessa.TradutorDSL;
 import rts.GameState;
 import rts.PhysicalGameState;
 import rts.units.UnitTypeTable;
@@ -36,17 +37,16 @@ public class MatchesinThreads {
 		for(int i=0;i<1;i++)
 		{
 			// TODO Auto-generated method stub
-			builder = BuilderGrammars.getInstance();
+			builder = BuilderGrammars.getInstance();//Z
 //			iDSL iSc1 = builder.buildS1Grammar();
 //			iDSL iSc2 = builder.buildS1Grammar();
-			TradutorDSL td = new TradutorDSL("for(u) (if(HaveUnitsToDistantToEnemy(Worker,4,u)) (attack(Worker,closest,u)) (train(Worker,50,Left,u))) harvest(50)");
+			TradutorDSL td = new TradutorDSL("if(HaveQtdEnemiesbyType(Worker,2)) then(train(Worker,50,Up)) else(train(Worker,50,Up)) for(u) (if(HaveQtdUnitsHarversting(2,u)) then(attack(Worker,closest,u)) harvest(50,u)) if(HaveQtdUnitsbyType(Worker,6)) then(moveToUnit(Worker,Ally,mostHealthy))");
 			iDSL iSc1 =td.getAST();
-			TradutorDSL td2 = new TradutorDSL("for(u) (train(Worker,50,Down,u)) for(u) (if(HaveQtdUnitsHarversting(1,u)) (attack(Worker,closest,u)) (harvest(50,u)))" + 
-					"");
+			TradutorDSL td2 = new TradutorDSL("if(HaveQtdEnemiesbyType(Worker,2)) then(train(Worker,50,Up)) else(train(Worker,50,Up)) for(u) (if(HaveQtdUnitsHarversting(2,u)) then(attack(Worker,closest,u)) harvest(50,u)) if(HaveQtdUnitsbyType(Worker,6)) then(moveToUnit(Worker,Ally,mostHealthy))");
 			iDSL iSc2 =td2.getAST();
 			
-			System.out.println("firsst script "+iSc2.translate());
-			System.out.println("Second script "+iSc1.translate());
+//			System.out.println("firsst script "+iSc2.translate());
+//			System.out.println("Second script "+iSc1.translate());
 
 			//Enable this block to run playouts in threads
 			if(typePlayout)

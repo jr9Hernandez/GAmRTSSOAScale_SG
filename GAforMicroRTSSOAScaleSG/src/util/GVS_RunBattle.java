@@ -121,7 +121,7 @@ public class GVS_RunBattle {
             MAXCYCLES = 10000;
         }
         if (pgs.getHeight() == 24) {
-            MAXCYCLES = 11000;
+            MAXCYCLES = 9000;
         }
         if (pgs.getHeight() == 32) {
             MAXCYCLES = 12000;
@@ -174,10 +174,11 @@ public class GVS_RunBattle {
       	//AI ai2=new PuppetSearchMCTS(utt);
       	//AI ai2=new BasicExpandedConfigurableScript(utt, new AStarPathFinding(), 18, 0, 0, 1, 2, 2, -1, -1, 6); //RR
         AI ai1=new LightRush(utt);
+        AI ai2=new LightRush(utt);
         //AI ai2=new StrategyTactics(utt);
-        AI ai2=new WorkerRush(utt);
+        //AI ai2=new WorkerRush(utt);
         //AI ai2=new NaiveMCTS(utt);
-//        AI ai2=new A3NWithin(100, -1, 100, 8, 0.3F, 0.0F, 0.4F, 0, new RandomBiasedAI(utt),
+//        AI ai2=new A3NWithin(500, -1, 500, 8, 0.3F, 0.0F, 0.4F, 0, new RandomBiasedAI(utt),
 //                new SimpleSqrtEvaluationFunction3(), true, utt, "ManagerClosestEnemy", 3,
 //                decodeScriptsOld(utt, "0;"), "A3N");
 //        AI ai2=new PassiveAI();

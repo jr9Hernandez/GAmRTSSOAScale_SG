@@ -117,6 +117,7 @@ public class Selection {
 //		System.out.println("idOriginalScript "+listElite.get(0).getGenes().get(0));
 		System.out.println("Elite "+scrTable.scriptsAST.get(listElite.get(0).getGenes().get(0)).translate() );
 //		System.out.println("looking in the original table "+scrTable.getScriptTable().get(scrTable.scriptsAST.get(listElite.get(0).getGenes().get(0)).translate()));
+		System.out.println("Starting genration mutations");
 		while (newChromosomes.size()<ConfigurationsGA.SIZE_POPULATION-ConfigurationsGA.SIZE_INVADERS) {
 			//System.out.println("sizes matchs2 "+scrTable.getScriptTable().size()+" "+scrTable.scriptsAST.size());
 			
@@ -160,6 +161,7 @@ public class Selection {
 //				tChom.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));
 //			}
 		}
+		System.out.println("Ending generation mutations");
 		Population pop = new Population(newChromosomes);
 		//System.out.println("sizebeforeinvaders "+pop.getChromosomes().size());
 		pop=rp.invadersAST(pop);

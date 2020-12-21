@@ -4,8 +4,12 @@
  */
 package util;
 
+import ai.RandomBiasedAI;
+import ai.CMAB.A3NNoWait;
 import ai.abstraction.LightRush;
 import ai.abstraction.WorkerRush;
+import ai.competition.capivara.Capivara;
+import ai.competition.dropletGNS.Droplet;
 import ai.core.AI;
 import ai.evaluation.SimpleSqrtEvaluationFunction3;
 import ai.puppet.PuppetSearchMCTS;
@@ -114,32 +118,43 @@ public class TestSingleMatchUnique extends Thread {
         AI ai1 = buildCommandsIA(utt, sIA1);
         AI ai2 = buildCommandsIA(utt, sIA2);
         
-//        AI ai1 = new WorkerRush(utt);
-//        AI ai2 = new WorkerRush(utt);
+        //AI ai1 = new WorkerRush(utt);
+        //AI ai2 = new Droplet(utt);
 
 
         //JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);
-//        JFrame w = PhysicalGameStatePanel.newVisualizer(gs,640,640,false,PhysicalGameStatePanel.COLORSCHEME_WHITE);        
+        JFrame w = PhysicalGameStatePanel.newVisualizer(gs2,640,640,false,PhysicalGameStatePanel.COLORSCHEME_WHITE);        
         long nextTimeToUpdate = System.currentTimeMillis() + PERIOD;
+        int totalcicles=0;
+        long totalDuration=0;
         do {
         	//System.out.println(message);
  //           if (System.currentTimeMillis() >= nextTimeToUpdate) {
+        	long ssTime=System.currentTimeMillis();
                 PlayerAction pa1 = ai1.getAction(0, gs2);
                 PlayerAction pa2 = ai2.getAction(1, gs2);
+                
                 gs2.issueSafe(pa1);
                 gs2.issueSafe(pa2);
-                if (smartEvaluationForStop(gs2)) {
-                    this.allCommandIA1.clear();
-                    this.allCommandIA1.addAll(((DslAI) ai1).getCommands());
-                    this.allCommandIA2.clear();
-                    this.allCommandIA2.addAll(((DslAI) ai2).getCommands());
-                    result = 0.5f;                    
-                    return -1;
-                }
+
+//                if (smartEvaluationForStop(gs2)) {
+//                    this.allCommandIA1.clear();
+//                    this.allCommandIA1.addAll(((DslAI) ai1).getCommands());
+//                    this.allCommandIA2.clear();
+//                    this.allCommandIA2.addAll(((DslAI) ai2).getCommands());
+//                    result = 0.5f;                    
+//                    return -1;
+//                }
                 // simulate:
+                totalcicles++;
+                
                 gameover = gs2.cycle();
-                //w.repaint();
-                //nextTimeToUpdate += PERIOD;
+                
+                long eeTime=System.currentTimeMillis();
+                long duration =(eeTime - ssTime); 
+                totalDuration=totalDuration+duration;
+                w.repaint();
+                nextTimeToUpdate += PERIOD;
 //            } else {
 //                try {
 //                    Thread.sleep(1);
@@ -149,6 +164,7 @@ public class TestSingleMatchUnique extends Thread {
  //           }
 
         } while (!gameover && (gs2.getTime() <= MAXCYCLES));     
+        System.out.println("meant duration cicle "+totalDuration/totalcicles);
         //System.out.println("printing current state "+gs);
         winner = gs2.winner();
         this.allCommandIA1.clear();

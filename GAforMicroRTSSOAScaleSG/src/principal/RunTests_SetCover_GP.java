@@ -202,6 +202,7 @@ public class RunTests_SetCover_GP {
 				finalAvalation = finalAvaliation(ga.scriptsAST.get(bestFinalIndividual));
 				System.out.println("Final Avalation "+finalAvalation);
 				writer.println(ga.scriptsAST.get(bestFinalIndividual).translate()+" "+finalAvalation);
+				writer.flush();
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

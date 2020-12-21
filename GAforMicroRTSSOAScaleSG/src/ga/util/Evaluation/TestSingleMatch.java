@@ -83,7 +83,7 @@ public class TestSingleMatch extends Thread {
     
 
     public int execute() throws Exception {   
-    	
+    	//System.out.println("start match "+message);
 //        String map = SettingsAlphaDSL.get_map();
 //        UnitTypeTable utt = new UnitTypeTable();
 //        PhysicalGameState pgs = PhysicalGameState.load(map, utt);
@@ -133,7 +133,8 @@ public class TestSingleMatch extends Thread {
                     this.allCommandIA1.addAll(((DslAI) ai1).getCommands());
                     this.allCommandIA2.clear();
                     this.allCommandIA2.addAll(((DslAI) ai2).getCommands());
-                    result = 0.5f;                    
+                    result = 0.5f;    
+                    //System.out.println("end match "+message);
                     return -1;
                 }
                 // simulate:
@@ -154,7 +155,8 @@ public class TestSingleMatch extends Thread {
         this.allCommandIA1.clear();
         this.allCommandIA1.addAll(((DslAI) ai1).getCommands());
         this.allCommandIA2.clear();
-        this.allCommandIA2.addAll(((DslAI) ai2).getCommands());        
+        this.allCommandIA2.addAll(((DslAI) ai2).getCommands());  
+        //System.out.println("end match "+message);
         if (winner != -1) {
             //w.dispatchEvent(new WindowEvent(w, WindowEvent.WINDOW_CLOSING));
             //System.out.println("\n"+sIA1+"\n "+sIA2+ "\n Winner "+winner);

@@ -358,6 +358,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		}
 		GameState gs = new GameState(pgs, utt);
 
+		System.out.println("starting matches");
 		while(currentmatchesPerformed<matches.size())
 		{
 			int limitProcesses;
@@ -409,6 +410,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 
 			TotalmatchesPerformed=currentmatchesPerformed;
 		}
+		System.out.println("ending matches");
 
 		for(int i=0;i<matches.size();i++)
 		{				

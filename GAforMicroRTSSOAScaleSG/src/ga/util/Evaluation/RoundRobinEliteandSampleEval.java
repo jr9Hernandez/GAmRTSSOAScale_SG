@@ -392,20 +392,20 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 			
 			for(int i=TotalmatchesPerformed;i<TotalmatchesPerformed+limitProcesses;i++)
 			{
-				singleMatches.get(i).start();
+				singleMatches.get(i).playGame();
 				currentmatchesPerformed++;
 			}			
 			
-			try {
-				for(int i=TotalmatchesPerformed;i<TotalmatchesPerformed+limitProcesses;i++)
-				{
-					singleMatches.get(i).join();
-				}
-
-			} catch (Exception e) {
-				System.err.println("ai.synthesis.localsearch.DoubleProgramSynthesis.processMatch() " + e.getMessage());
-
-			}
+//			try {
+//				for(int i=TotalmatchesPerformed;i<TotalmatchesPerformed+limitProcesses;i++)
+//				{
+//					singleMatches.get(i).join();
+//				}
+//
+//			} catch (Exception e) {
+//				System.err.println("ai.synthesis.localsearch.DoubleProgramSynthesis.processMatch() " + e.getMessage());
+//
+//			}
 		
 
 			TotalmatchesPerformed=currentmatchesPerformed;
@@ -419,7 +419,7 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 			int idIA1=convertToInt(itens[0]);
 			int idIA2=convertToInt(itens[1]);
 			uniqueCommandsPopulation.get(idIA1).addAll(singleMatches.get(i).getAllCommandIA1());
-			uniqueCommandsPopulation.get(idIA2).addAll(singleMatches.get(i).getAllCommandIA2());            		
+			uniqueCommandsPopulation.get(idIA2).addAll(singleMatches.get(i).getAllCommandIA2()); 
 		}
 
 		if(ConfigurationsGA.removeRulesAST)

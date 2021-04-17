@@ -6,8 +6,11 @@ package util;
 
 import ai.RandomBiasedAI;
 import ai.CMAB.A3NNoWait;
+import ai.abstraction.HeavyRush;
 import ai.abstraction.LightRush;
+import ai.abstraction.RangedRush;
 import ai.abstraction.WorkerRush;
+import ai.ahtn.AHTNAI;
 import ai.competition.capivara.Capivara;
 import ai.competition.dropletGNS.Droplet;
 import ai.core.AI;
@@ -115,21 +118,21 @@ public class TestSingleMatchUnique extends Thread {
             MAXCYCLES = 12000;
         }
 
-        AI ai1 = buildCommandsIA(utt, sIA1);
-        AI ai2 = buildCommandsIA(utt, sIA2);
-        
-        //AI ai1 = new WorkerRush(utt);
-        //AI ai2 = new Droplet(utt);
+        AI ai2 = buildCommandsIA(utt, sIA1);
+        AI ai1 = buildCommandsIA(utt, sIA2);
+        //AI ai1 = new AHTNAI(utt);
+        //AI ai2 = new WorkerRush(utt);
+//        AI ai1 = new WorkerRush(utt);
 
 
-        //JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);
-        JFrame w = PhysicalGameStatePanel.newVisualizer(gs2,640,640,false,PhysicalGameStatePanel.COLORSCHEME_WHITE);        
+        JFrame w = PhysicalGameStatePanel.newVisualizer(gs2, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);
+        //JFrame w = PhysicalGameStatePanel.newVisualizer(gs2,640,640,false,PhysicalGameStatePanel.COLORSCHEME_WHITE);        
         long nextTimeToUpdate = System.currentTimeMillis() + PERIOD;
         int totalcicles=0;
         long totalDuration=0;
         do {
         	//System.out.println(message);
- //           if (System.currentTimeMillis() >= nextTimeToUpdate) {
+            if (System.currentTimeMillis() >= nextTimeToUpdate) {
         	long ssTime=System.currentTimeMillis();
                 PlayerAction pa1 = ai1.getAction(0, gs2);
                 PlayerAction pa2 = ai2.getAction(1, gs2);
@@ -155,15 +158,15 @@ public class TestSingleMatchUnique extends Thread {
                 totalDuration=totalDuration+duration;
                 w.repaint();
                 nextTimeToUpdate += PERIOD;
-//            } else {
-//                try {
-//                    Thread.sleep(1);
-//                } catch (Exception e) {
-//                    System.err.println("ai.synthesis.runners.roundRobinLocal.RoundRobinGrammarAgainstGrammar.run() " + e.getMessage());
-//                }
- //           }
+            } else {
+                try {
+                    Thread.sleep(1);
+                } catch (Exception e) {
+                    System.err.println("ai.synthesis.runners.roundRobinLocal.RoundRobinGrammarAgainstGrammar.run() " + e.getMessage());
+                }
+            }
 
-        } while (!gameover && (gs2.getTime() <= MAXCYCLES));     
+        } while (!gameover && (gs2.getTime() <= 1500));     
         System.out.println("meant duration cicle "+totalDuration/totalcicles);
         //System.out.println("printing current state "+gs);
         winner = gs2.winner();

@@ -136,11 +136,11 @@ public class GameSampling {
             iScriptsAi2.add(Integer.decode(element));
         }
         
-		//pgs = PhysicalGameState.load("maps/8x8/basesWorkers8x8A.xml", utt);
+		pgs = PhysicalGameState.load("maps/8x8/basesWorkers8x8A.xml", utt);
         //pgs = PhysicalGameState.load("maps/16x16/basesWorkers16x16A.xml", utt);        
         //pgs = PhysicalGameState.load("maps/BWDistantResources32x32.xml", utt);
         //pgs = PhysicalGameState.load("maps/32x32/basesWorkers32x32A.xml", utt);
-        pgs = PhysicalGameState.load("maps/DoubleGame24x24.xml", utt);
+        //pgs = PhysicalGameState.load("maps/DoubleGame24x24.xml", utt);
         //pgs = PhysicalGameState.load("maps/BroodWar/(4)BloodBath.scmB.xml", utt);  
         //pgs = PhysicalGameState.load("maps/NoWhereToRun9x8.xml", utt);
 		//pgs = PhysicalGameState.load("maps/battleMaps/Others/RangedHeavyMixed.xml", utt);
@@ -185,6 +185,8 @@ public class GameSampling {
 //                new SimpleSqrtEvaluationFunction3(), true, utt,
 //                "ManagerRandom", 1, scriptsRun2);
         
+        
+        //Use this configuration for de 9x8 map
 //      	AI ai1 = new A3NNoWait(500, -1, 500, 1, 0.3f,
 //                0.0f, 0.4f, 0, new RandomBiasedAI(utt),
 //                new SimpleSqrtEvaluationFunction3(), true, utt,
@@ -205,6 +207,7 @@ public class GameSampling {
 //                new SimpleSqrtEvaluationFunction3(), true, utt,
 //                "ManagerLessLife", 4, scriptsRun1);
       	
+      	//Use this configuration for all maps but 9x8
       	AI ai1 = new A3NNoWait(500, -1, 500, 1, 0.3f,
                 0.0f, 0.4f, 0, new RandomBiasedAI(utt),
                 new SimpleSqrtEvaluationFunction3(), true, utt,

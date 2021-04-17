@@ -40,9 +40,9 @@ public class MatchesinThreads {
 			builder = BuilderGrammars.getInstance();//Z
 //			iDSL iSc1 = builder.buildS1Grammar();
 //			iDSL iSc2 = builder.buildS1Grammar();
-			TradutorDSL td = new TradutorDSL("if(HaveQtdEnemiesbyType(Worker,2)) then(train(Worker,50,Up)) else(train(Worker,50,Up)) for(u) (if(HaveQtdUnitsHarversting(2,u)) then(attack(Worker,closest,u)) harvest(50,u)) if(HaveQtdUnitsbyType(Worker,6)) then(moveToUnit(Worker,Ally,mostHealthy))");
+			TradutorDSL td = new TradutorDSL("train(Ranged,50,Left) build(Barrack,50,Down) attack(Worker,closest) for(u) (if(HaveQtdUnitsAttacking(Worker,12,u)) then(train(Worker,50,Right,u)) else(harvest(1,u) attack(Ranged,closest,u)) if(HaveQtdUnitsbyType(Worker,4,u)) then(build(Barrack,50,Down,u)) else(build(Barrack,50,Down,u) attack(Worker,closest,u) train(Worker,50,Up,u))) if(HaveUnitsToDistantToEnemy(Ranged,5)) then(harvest(1) train(Worker,50,Right) attack(Worker,closest)) else(build(Barrack,50,Down) (Z)) ");
 			iDSL iSc1 =td.getAST();
-			TradutorDSL td2 = new TradutorDSL("if(HaveQtdEnemiesbyType(Worker,2)) then(train(Worker,50,Up)) else(train(Worker,50,Up)) for(u) (if(HaveQtdUnitsHarversting(2,u)) then(attack(Worker,closest,u)) harvest(50,u)) if(HaveQtdUnitsbyType(Worker,6)) then(moveToUnit(Worker,Ally,mostHealthy))");
+			TradutorDSL td2 = new TradutorDSL("build(Barrack,1,Down) harvest(1) train(Worker,1,EnemyDir)  train(Ranged,1,EnemyDir) attack(Ranged,closest)");
 			iDSL iSc2 =td2.getAST();
 			
 //			System.out.println("firsst script "+iSc2.translate());

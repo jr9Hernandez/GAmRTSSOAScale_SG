@@ -170,7 +170,7 @@ public class RunGA {
 			// Fase 4 = Seleção (Aplicar Cruzamento e Mutação)
 			Selection selecao = new Selection();
 			System.out.println("newAST");
-			population = selecao.applySelectionAST(population, scrTable, pathTableScripts,pathTableScripts);
+			population = selecao.applySelectionAST(population, scrTable, pathTableScripts,pathTableScripts,eliteIndividuals);
 			eliteIndividuals=selecao.eliteIndividuals;
 			
 			//saveListScripts(scrTable.scriptsAST,pathTableScriptsAST);

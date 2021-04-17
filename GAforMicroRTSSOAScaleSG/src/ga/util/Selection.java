@@ -94,14 +94,22 @@ public class Selection {
 		return newPopulation;
 	}
 	
-	public Population applySelectionAST(Population populacaoInicial,ScriptsTable scrTable, String pathTableScripts, String pathTable){
+	public Population applySelectionAST(Population populacaoInicial,ScriptsTable scrTable, String pathTableScripts, String pathTable, HashMap<Chromosome, BigDecimal> eliteIndividualsOld){
 		Reproduction rp=new Reproduction(scrTable,pathTableScripts);
 		
 		PreSelection ps=new PreSelection(populacaoInicial);	
 		HashMap<Chromosome, BigDecimal> newChromosomes = new HashMap<>();
 		//in elite is saved the best guys from the last population
-		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)ps.sortByValue(populacaoInicial.getChromosomes());		
-		eliteIndividuals=elite;
+		HashMap<Chromosome, BigDecimal> elite=(HashMap<Chromosome, BigDecimal>)ps.sortByValue(populacaoInicial.getChromosomes());
+		if(validateAllareTies(populacaoInicial.getChromosomes()))
+		{
+			eliteIndividuals=eliteIndividualsOld;
+		}
+		else
+		{
+			eliteIndividuals=elite;
+		}
+		
 		List<Chromosome> listElite = new ArrayList<Chromosome>(elite.keySet());
 		System.out.println("printing elite last population (Selection)");
 		printMap(elite);
@@ -117,7 +125,7 @@ public class Selection {
 //		System.out.println("idOriginalScript "+listElite.get(0).getGenes().get(0));
 		System.out.println("Elite "+scrTable.scriptsAST.get(listElite.get(0).getGenes().get(0)).translate() );
 //		System.out.println("looking in the original table "+scrTable.getScriptTable().get(scrTable.scriptsAST.get(listElite.get(0).getGenes().get(0)).translate()));
-		System.out.println("Starting genration mutations");
+		//System.out.println("Starting genration mutations");
 		while (newChromosomes.size()<ConfigurationsGA.SIZE_POPULATION-ConfigurationsGA.SIZE_INVADERS) {
 			//System.out.println("sizes matchs2 "+scrTable.getScriptTable().size()+" "+scrTable.scriptsAST.size());
 			
@@ -161,12 +169,28 @@ public class Selection {
 //				tChom.addGene(rand.nextInt(scrTable.getCurrentSizeTable()));
 //			}
 		}
-		System.out.println("Ending generation mutations");
+		//System.out.println("Ending generation mutations");
 		Population pop = new Population(newChromosomes);
 		//System.out.println("sizebeforeinvaders "+pop.getChromosomes().size());
 		pop=rp.invadersAST(pop);
 		//System.out.println("sizeafterinvaders "+pop.getChromosomes().size());
 		return pop;
+	}
+
+	private boolean validateAllareTies(HashMap<Chromosome, BigDecimal> population) {
+		 
+		for (Chromosome ch: population.keySet()){
+
+			String key =ch.getGenes().toString();
+			String value = population.get(ch).toString();  
+			Double currentValue=Double.parseDouble(value);
+			//validate if all are ties
+			if(currentValue>1)
+			{	
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public void printMap(HashMap<Chromosome, BigDecimal> m)

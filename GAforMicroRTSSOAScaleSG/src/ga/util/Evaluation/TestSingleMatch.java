@@ -49,6 +49,7 @@ public class TestSingleMatch {
     String message;
     int idIA1;
     int idIA2;
+    HashMap<Integer, AI> iasPopulation;
 
     public float getResult() {
         return result;
@@ -58,7 +59,7 @@ public class TestSingleMatch {
         return winner;
     }
 
-    public TestSingleMatch(iDSL sIA1, iDSL sIA2, GameState gs, PhysicalGameState pgs, UnitTypeTable utt, String message, int idIA1, int idIA2) {
+    public TestSingleMatch(iDSL sIA1, iDSL sIA2, GameState gs, PhysicalGameState pgs, UnitTypeTable utt, String message, int idIA1, int idIA2, HashMap<Integer, AI> iasPopulation) {
         this.sIA1 = sIA1;
         this.sIA2 = sIA2;
         this.allCommandIA1 = new ArrayList<>();
@@ -70,6 +71,7 @@ public class TestSingleMatch {
         this.message=message;
         this.idIA1=idIA1;
         this.idIA2=idIA1;
+        this.iasPopulation=iasPopulation;
     }
 
     public List<ICommand> getAllCommandIA1() {
@@ -111,8 +113,11 @@ public class TestSingleMatch {
             MAXCYCLES = 12000;
         }
 
-        AI ai1 = buildCommandsIA(utt, sIA1);
-        AI ai2 = buildCommandsIA(utt, sIA2);
+      //  AI ai1 = buildCommandsIA(utt, sIA1);
+      //  AI ai2 = buildCommandsIA(utt, sIA2);
+        
+        AI ai1 = iasPopulation.get(idIA1);
+        AI ai2 = iasPopulation.get(idIA2);
         
 //        AI ai1 = new WorkerRush(utt);
 //        AI ai2 = new WorkerRush(utt);

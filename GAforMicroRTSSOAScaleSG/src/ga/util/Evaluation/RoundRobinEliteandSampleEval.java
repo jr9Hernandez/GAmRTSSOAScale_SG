@@ -13,10 +13,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
+import ai.core.AI;
 import ai.synthesis.DslLeague.Runner.SettingsAlphaDSL;
+import ai.synthesis.dslForScriptGenerator.DslAI;
 import ai.synthesis.dslForScriptGenerator.DSLCommandInterfaces.ICommand;
+import ai.synthesis.dslForScriptGenerator.DSLCompiler.IDSLCompiler;
+import ai.synthesis.dslForScriptGenerator.DSLCompiler.MainDSLCompiler;
 import ai.synthesis.grammar.dslTree.interfacesDSL.iDSL;
 import ai.synthesis.grammar.dslTree.utils.ReduceDSLController;
 
@@ -61,6 +66,8 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 	HashMap<Chromosome, BigDecimal> eliteIndividuals;
 	ArrayList<iDSL> scriptsAST;
 	ScriptsTable scrTable;
+	
+	IDSLCompiler compiler = new MainDSLCompiler();  
 
 	public RoundRobinEliteandSampleEval() {
 		super();
@@ -357,7 +364,21 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 			e.printStackTrace();
 		}
 		GameState gs = new GameState(pgs, utt);
-
+		HashMap<Integer, AI> iasPopulation=new HashMap<Integer, AI>();;
+		
+		for(int i=0;i<matches.size();i++)
+		{				
+			String[] itens = matches.get(i).split("#");	
+			int idIA1=convertToInt(itens[0]);
+			int idIA2=convertToInt(itens[1]);
+			iDSL sIA1 = convertToDSL(itens[0]);
+			iDSL sIA2 = convertToDSL(itens[1]);
+			AI ai1 = buildCommandsIA(utt, sIA1);
+	        AI ai2 = buildCommandsIA(utt, sIA2);
+	        iasPopulation.put(idIA1, ai1);
+	        iasPopulation.put(idIA2, ai2);
+		}
+		
 		System.out.println("starting matches");
 		while(currentmatchesPerformed<matches.size())
 		{
@@ -381,11 +402,12 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 				int idIA2=convertToInt(itens[1]);
 				HashSet<ICommand> uniqueCommandsS1 = new HashSet<>();
 				HashSet<ICommand> uniqueCommandsS2 = new HashSet<>();
-				uniqueCommandsPopulation.put(idIA1, uniqueCommandsS1);
-				uniqueCommandsPopulation.put(idIA2, uniqueCommandsS1);
+				//uniqueCommandsPopulation.put(idIA1, uniqueCommandsS1);
+				//uniqueCommandsPopulation.put(idIA2, uniqueCommandsS2);
 				//System.out.println("first script "+sIA1.translate());
 				//System.out.println("second script "+sIA2.translate());
-				singleMatches.add(new TestSingleMatch(sIA1, sIA2, gs.clone(), pgs, utt, Integer.toString(i), idIA1, idIA2));
+		        
+				singleMatches.add(new TestSingleMatch(sIA1, sIA2, gs.clone(), pgs, utt, Integer.toString(i), idIA1, idIA2, iasPopulation));
 				
 			}
 
@@ -418,18 +440,25 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 			String[] itens = matches.get(i).split("#");	
 			int idIA1=convertToInt(itens[0]);
 			int idIA2=convertToInt(itens[1]);
-			uniqueCommandsPopulation.get(idIA1).addAll(singleMatches.get(i).getAllCommandIA1());
-			uniqueCommandsPopulation.get(idIA2).addAll(singleMatches.get(i).getAllCommandIA2()); 
+			//uniqueCommandsPopulation.get(idIA1).addAll(singleMatches.get(i).getAllCommandIA1());
+			//uniqueCommandsPopulation.get(idIA2).addAll(singleMatches.get(i).getAllCommandIA2()); 
 		}
 
 		if(ConfigurationsGA.removeRulesAST)
 		{
-			population=updatePopulationRemotionRules(population,uniqueCommandsPopulation);
+			population=updatePopulationRemotionRules(population,iasPopulation);
 		}
 
 
 		return population;
 	}
+	
+    private AI buildCommandsIA(UnitTypeTable utt, iDSL code) {
+        HashMap<Long, String> counterByFunction = new HashMap<Long, String>();
+        List<ICommand> commandsDSL = compiler.CompilerCode(code, utt);
+        AI aiscript = new DslAI(utt, commandsDSL, "P1", code, counterByFunction);
+        return aiscript;
+    }
 
 	private Population updateChromosomes(int winner, String lineMatch, Population population) {
 		String[] itens = lineMatch.split("#");	
@@ -481,14 +510,16 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 		return population;
 	}
 	
-	private Population updatePopulationRemotionRules(Population population, HashMap<Integer, HashSet<ICommand>> uniqueCommandsPopulation)
+	private Population updatePopulationRemotionRules(Population population, HashMap<Integer, AI> iasPopulation)
 	{
 		for (Chromosome ch : population.getChromosomes().keySet()) {
 			int idScript=Integer.parseInt(convertBasicTuple(ch).replace(";", ""));
 			BigDecimal toUpdate = population.getChromosomes().get(ch);
 			iDSL originalScript=(iDSL) scriptsAST.get(idScript);
 			String originalScriptStr=originalScript.translate();
-			ReduceDSLController.removeUnactivatedParts(originalScript, new ArrayList<>(uniqueCommandsPopulation.get(idScript)));
+			System.out.println("before remotion "+originalScriptStr);
+			ReduceDSLController.removeUnactivatedParts(originalScript, new ArrayList<>(((DslAI) iasPopulation.get(idScript)).getCommands()));
+			System.out.println("after remotion "+originalScript.translate());
 			//updateReferencesforScript(originalScriptStr,originalScript.translate(),idScript);
 			//population=addToPopulation(newScript,population,toUpdate);
 		}

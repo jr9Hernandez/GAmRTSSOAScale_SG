@@ -40,9 +40,9 @@ public final class ConfigurationsGA {
      public static final boolean portfolioSetCover=true;
      public static final boolean fixedTrace=false;
      public static final int numberA3Ngames=1;
-     public static final boolean withLasi=false;
+     public static final boolean withLasi=true;
      public static final int nProcessorsThreads=182;
      public final static boolean removeRulesAST=true;
-     public final static int numbersystematicTests=10;
+     public final static int numbersystematicTests=1;
 	
 }

@@ -238,7 +238,7 @@ public class GameSampling {
         System.out.println("---------AI's---------");
         //System.out.println("AI 1 = "+ai1.toString());
         //System.out.println("AI 2 = "+ai2.toString()+"\n");
-        System.out.println("Starting path-for-lasi game");
+        System.out.println("Playing game for Lasi's path");
         
         
         //JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);;

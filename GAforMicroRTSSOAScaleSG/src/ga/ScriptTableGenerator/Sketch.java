@@ -52,7 +52,7 @@ public class Sketch {
 		{
 			allBooleansFunctionsRedefined=redefiningBooleansForScripts();
 			allBooleansMatchingTypeByCommands=st.allBooleansMatchingTypeBYCommands(typesUnitsinCommands);
-			System.out.println("booleanos from commands "+Arrays.toString(allBooleansMatchingTypeByCommands.toArray()));
+			//System.out.println("booleanos from commands "+Arrays.toString(allBooleansMatchingTypeByCommands.toArray()));
 			allBooleansFunctionsRedefined.addAll(allBooleansMatchingTypeByCommands);
 		}
 		else
@@ -63,16 +63,19 @@ public class Sketch {
 		try {
 			f0 = new PrintWriter(new FileWriter(pathTrackingSC));
 
-			System.out.println(Arrays.toString(allBasicFunctions.toArray()));
-			f0.println(Arrays.toString(allBasicFunctions.toArray()));
-			System.out.println(Arrays.toString(allBasicFunctionsRedefined.toArray()));
-			f0.println(Arrays.toString(allBasicFunctionsRedefined.toArray()));
-			System.out.println("Booleans "+allBooleansFunctions.size()+" "+allBooleansFunctionsRedefined.size());
+			System.out.println("Original DSFs"+Arrays.toString(allBasicFunctions.toArray()));
+			f0.println("Original DSFs"+Arrays.toString(allBasicFunctions.toArray()));
+			
+			System.out.println("Lasi DSFs"+Arrays.toString(allBasicFunctionsRedefined.toArray()));
+			f0.println("Lasi DSBF"+Arrays.toString(allBasicFunctionsRedefined.toArray()));
+			
+			//System.out.println("Booleans "+allBooleansFunctions.size()+" "+allBooleansFunctionsRedefined.size());
 			//f0.println("Booleans "+allBooleansFunctions.size()+" "+allBooleansFunctionsRedefined.size());
-			System.out.println(Arrays.toString(allBooleansFunctions.toArray()));
-			f0.println(Arrays.toString(allBooleansFunctions.toArray()));
-			System.out.println(Arrays.toString(allBooleansFunctionsRedefined.toArray()));
-			f0.println(Arrays.toString(allBooleansFunctionsRedefined.toArray()));
+			System.out.println("Original DSBs"+Arrays.toString(allBooleansFunctions.toArray()));
+			f0.println("Original DSBs"+Arrays.toString(allBooleansFunctions.toArray()));
+			
+			System.out.println("Lasi DSBs"+Arrays.toString(allBooleansFunctionsRedefined.toArray()));
+			f0.println("Lasi DSBs"+Arrays.toString(allBooleansFunctionsRedefined.toArray()));
 			f0.flush();
 			f0.close();
 		

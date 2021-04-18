@@ -120,7 +120,7 @@ public class GameSampling {
 
         ArrayList<Integer> iScriptsAi1 = new ArrayList<>();
         portfolioPlayer1 = portfolioPlayer1.replaceAll("\\s+","");
-        System.out.println("port1 "+portfolioPlayer1);
+        //System.out.println("port1 "+portfolioPlayer1);
         String[] itens = portfolioPlayer1.replace("[", "").replace("]", "").split(",");
 
         for (String element : itens) {
@@ -129,7 +129,7 @@ public class GameSampling {
 
         ArrayList<Integer> iScriptsAi2 = new ArrayList<>();
         portfolioPlayer2 = portfolioPlayer2.replaceAll("\\s+","");
-        System.out.println("port2 "+portfolioPlayer2);
+        //System.out.println("port2 "+portfolioPlayer2);
         itens = portfolioPlayer2.replace("[", "").replace("]", "").split(",");
 
         for (String element : itens) {
@@ -236,8 +236,9 @@ public class GameSampling {
 
         
         System.out.println("---------AI's---------");
-        System.out.println("AI 1 = "+ai1.toString());
-        System.out.println("AI 2 = "+ai2.toString()+"\n");        
+        //System.out.println("AI 1 = "+ai1.toString());
+        //System.out.println("AI 2 = "+ai2.toString()+"\n");
+        System.out.println("Starting path-for-lasi game");
         
         
         //JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_BLACK);;

@@ -123,7 +123,7 @@ public class Selection {
 		int idNewScript;
 //		System.out.println("Size asts "+scrTable.scriptsAST.size()+" size table "+scrTable.getScriptTable().size());
 //		System.out.println("idOriginalScript "+listElite.get(0).getGenes().get(0));
-		System.out.println("Elite "+scrTable.scriptsAST.get(listElite.get(0).getGenes().get(0)).translate() );
+		System.out.println("Elite (Best script last iteration) "+scrTable.scriptsAST.get(listElite.get(0).getGenes().get(0)).translate() );
 //		System.out.println("looking in the original table "+scrTable.getScriptTable().get(scrTable.scriptsAST.get(listElite.get(0).getGenes().get(0)).translate()));
 		//System.out.println("Starting genration mutations");
 		while (newChromosomes.size()<ConfigurationsGA.SIZE_POPULATION-ConfigurationsGA.SIZE_INVADERS) {

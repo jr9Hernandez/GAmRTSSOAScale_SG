@@ -157,8 +157,8 @@ public class RunGA {
 //		        System.out.println("key "+id+" "+scripts);
 //		    }
 			
-			System.out.println("Log - Generation = " + this.generations);
-			f0.println("Log - Generation = " + this.generations);
+			System.out.println("Log - Iteration = " + this.generations);
+			f0.println("Log - Iteration = " + this.generations);
 			population.printWithValue(f0);
 			f0.flush();
 		} while (resetPopulation(population));
@@ -202,8 +202,8 @@ public class RunGA {
 			// atualiza a geração
 			updateGeneration();
 
-			System.out.println("Log - Generation = " + this.generations);
-			f0.println("Log - Generation = " + this.generations);
+			System.out.println("Log - Iteration = " + this.generations);
+			f0.println("Log - Iteration = " + this.generations);
 			population.printWithValue(f0);
 			f0.flush();
 			
@@ -348,7 +348,7 @@ public class RunGA {
 			result = Files.deleteIfExists(existentASTtable.toPath());
 			if(!result)
 			{
-				System.out.println("Smething is wrong deleting the AST trees file");
+				//System.out.println("Smething is wrong deleting the AST trees file");
 			}
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block

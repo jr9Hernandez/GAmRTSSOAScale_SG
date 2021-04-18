@@ -176,9 +176,9 @@ public class RunScriptByState {
 			}
 
 		}	
-		System.out.println("");
-		System.out.println("AllActionsAllStatesT "+totalActionsAllStates);
-		System.out.println("");
+		//System.out.println("");
+		//System.out.println("AllActionsAllStatesT "+totalActionsAllStates);
+		//System.out.println("");
 		//print the objects 
 //		for(IndividualFitness ind:listIndividualFitness)
 //		{

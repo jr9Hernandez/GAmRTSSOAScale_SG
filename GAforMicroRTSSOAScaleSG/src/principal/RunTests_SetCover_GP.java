@@ -173,9 +173,9 @@ public class RunTests_SetCover_GP {
 
 			}
 
-			System.out.println("format final commands: "+scriptsSetCover);
+			System.out.println("Commands from Lasi: "+scriptsSetCover);
 
-			System.out.println("format final booleans: "+booleansUsedRedefined.toString());
+			System.out.println("Booleans from Lasi: "+booleansUsedRedefined.toString());
 
 			//Testing functionsForGrammars
 			//		FunctionsforGrammar fg = new FunctionsforGrammar();

@@ -1426,8 +1426,8 @@ public class ScriptsTable {
 		functions.setBasicFunctionsForGrammar(basicFunctionsForGrammarNew);
 		ArrayList<String> allBasicFunctionsRedefined=sk.allBasicFunctionsRedefined;
 		
-		System.out.println("size allBasicFunctionsRedefined "+allBasicFunctionsRedefined.size());
-		System.out.println("size allBasicFunctionsRedefinedNormal "+functions.getBasicFunctionsForGrammar().size());
+		//System.out.println("size allBasicFunctionsRedefined "+allBasicFunctionsRedefined.size());
+		//System.out.println("size allBasicFunctionsRedefinedNormal "+functions.getBasicFunctionsForGrammar().size());
 		return allBasicFunctionsRedefined;
 		
 	}

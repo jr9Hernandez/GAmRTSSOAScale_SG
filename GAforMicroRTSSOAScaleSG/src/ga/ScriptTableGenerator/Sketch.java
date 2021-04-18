@@ -67,7 +67,7 @@ public class Sketch {
 			f0.println("Original DSFs"+Arrays.toString(allBasicFunctions.toArray()));
 			
 			System.out.println("Lasi DSFs"+Arrays.toString(allBasicFunctionsRedefined.toArray()));
-			f0.println("Lasi DSBF"+Arrays.toString(allBasicFunctionsRedefined.toArray()));
+			f0.println("Lasi DSFs"+Arrays.toString(allBasicFunctionsRedefined.toArray()));
 			
 			//System.out.println("Booleans "+allBooleansFunctions.size()+" "+allBooleansFunctionsRedefined.size());
 			//f0.println("Booleans "+allBooleansFunctions.size()+" "+allBooleansFunctionsRedefined.size());

@@ -414,20 +414,20 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 			
 			for(int i=TotalmatchesPerformed;i<TotalmatchesPerformed+limitProcesses;i++)
 			{
-				singleMatches.get(i).playGame();
+				singleMatches.get(i).start();
 				currentmatchesPerformed++;
 			}			
 			
-//			try {
-//				for(int i=TotalmatchesPerformed;i<TotalmatchesPerformed+limitProcesses;i++)
-//				{
-//					singleMatches.get(i).join();
-//				}
-//
-//			} catch (Exception e) {
-//				System.err.println("ai.synthesis.localsearch.DoubleProgramSynthesis.processMatch() " + e.getMessage());
-//
-//			}
+			try {
+				for(int i=TotalmatchesPerformed;i<TotalmatchesPerformed+limitProcesses;i++)
+				{
+					singleMatches.get(i).join();
+				}
+
+			} catch (Exception e) {
+				System.err.println("ai.synthesis.localsearch.DoubleProgramSynthesis.processMatch() " + e.getMessage());
+
+			}
 		
 
 			TotalmatchesPerformed=currentmatchesPerformed;
@@ -517,9 +517,9 @@ public class RoundRobinEliteandSampleEval implements RatePopulation {
 			BigDecimal toUpdate = population.getChromosomes().get(ch);
 			iDSL originalScript=(iDSL) scriptsAST.get(idScript);
 			String originalScriptStr=originalScript.translate();
-			System.out.println("before remotion "+originalScriptStr);
+			//System.out.println("before remotion "+originalScriptStr);
 			ReduceDSLController.removeUnactivatedParts(originalScript, new ArrayList<>(((DslAI) iasPopulation.get(idScript)).getCommands()));
-			System.out.println("after remotion "+originalScript.translate());
+			//System.out.println("after remotion "+originalScript.translate());
 			//updateReferencesforScript(originalScriptStr,originalScript.translate(),idScript);
 			//population=addToPopulation(newScript,population,toUpdate);
 		}

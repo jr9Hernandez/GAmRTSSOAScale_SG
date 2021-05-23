@@ -29,7 +29,7 @@ import rts.PhysicalGameState;
 import rts.PlayerAction;
 import rts.units.UnitTypeTable;
 
-public class TestSingleMatch {
+public class TestSingleMatch extends Thread  {
 
     IDSLCompiler compiler = new MainDSLCompiler();    
     HashSet<String> usedCommands;
@@ -84,7 +84,7 @@ public class TestSingleMatch {
     
     
 
-    public int play() throws Exception {   
+    public int execute() throws Exception {   
     	//System.out.println("start match "+message);
 //        String map = SettingsAlphaDSL.get_map();
 //        UnitTypeTable utt = new UnitTypeTable();
@@ -192,9 +192,10 @@ public class TestSingleMatch {
         System.out.println("Map = " + map);
     }
 
-    public void playGame() {
+    @Override
+    public void run() {
         try {
-            this.winner = play();
+            this.winner = execute();
         } catch (Exception ex) {
             Logger.getLogger(TestSingleMatch.class.getName()).log(Level.SEVERE, null, ex);
         }

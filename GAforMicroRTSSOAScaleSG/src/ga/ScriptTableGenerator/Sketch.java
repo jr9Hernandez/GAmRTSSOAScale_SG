@@ -51,9 +51,12 @@ public class Sketch {
 		if(ConfigurationsGA.setCoverBooleans)
 		{
 			allBooleansFunctionsRedefined=redefiningBooleansForScripts();
-			allBooleansMatchingTypeByCommands=st.allBooleansMatchingTypeBYCommands(typesUnitsinCommands);
+			
+			//uncomment the next block if we want to add all booleans related with attacking and harvesting 
+			
+			//allBooleansMatchingTypeByCommands=st.allBooleansMatchingTypeBYCommands(typesUnitsinCommands);
 			//System.out.println("booleanos from commands "+Arrays.toString(allBooleansMatchingTypeByCommands.toArray()));
-			allBooleansFunctionsRedefined.addAll(allBooleansMatchingTypeByCommands);
+			//allBooleansFunctionsRedefined.addAll(allBooleansMatchingTypeByCommands);
 		}
 		else
 		{

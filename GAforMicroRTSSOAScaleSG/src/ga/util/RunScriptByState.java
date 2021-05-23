@@ -55,6 +55,7 @@ public class RunScriptByState {
     public HashSet<String> booleansUsed=new HashSet<>();
 	public RunScriptByState()
 	{
+		//System.out.println("starting script by state");
 		dataH=new HashMap<String, List<Integer>>();
 		ScriptsTable st=new ScriptsTable(pathTableScripts);
 		booleansUsed=new HashSet<>();
@@ -172,6 +173,7 @@ public class RunScriptByState {
 //				}
 				}
 				//For player 1
+				//System.out.println("Validate conditionals");
 				validateIfConditionalIsTrue(allConditionals,gsSimulator,1,paOriginal,game.utt, counterByFunction);
 			}
 
@@ -205,6 +207,7 @@ public class RunScriptByState {
 	
 	public void validateIfConditionalIsTrue(ArrayList<String> allConditionals,GameState g, int player,PlayerAction currentPlayerAction, UnitTypeTable utt, HashMap<Long,String> counterByFunction)
 	{
+		//System.out.println("allConditionals "+allConditionals);
 		ConditionalGPCompiler conditionalCompiler = new ConditionalGPCompiler();
 		for(String conditional:allConditionals)
 		{

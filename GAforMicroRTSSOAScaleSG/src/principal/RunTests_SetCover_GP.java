@@ -120,6 +120,7 @@ public class RunTests_SetCover_GP {
 				List<Integer> setCover=scCalculation.getSetCover();
 				scriptsSetCover=setCover.toString();
 				booleansUsedRedefined=sc.booleansUsed;
+				//System.out.println("Booleans redefined "+booleansUsedRedefined);
 			}
 
 			if(Files.exists(Paths.get(pathTable+"ScriptsTable.txt"))) { 

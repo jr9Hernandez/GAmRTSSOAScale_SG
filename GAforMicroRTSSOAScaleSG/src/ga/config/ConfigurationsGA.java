@@ -43,6 +43,6 @@ public final class ConfigurationsGA {
      public static final boolean withLasi=true;
      public static final int nProcessorsThreads=182;
      public final static boolean removeRulesAST=true;
-     public final static int numbersystematicTests=1;
+     public final static int numbersystematicTests=8;
 	
 }

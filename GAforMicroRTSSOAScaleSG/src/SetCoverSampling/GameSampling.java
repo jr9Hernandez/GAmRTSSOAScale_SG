@@ -141,7 +141,7 @@ public class GameSampling {
         //pgs = PhysicalGameState.load("maps/BWDistantResources32x32.xml", utt);
         //pgs = PhysicalGameState.load("maps/32x32/basesWorkers32x32A.xml", utt);
         //pgs = PhysicalGameState.load("maps/DoubleGame24x24.xml", utt);
-        //pgs = PhysicalGameState.load("maps/BroodWar/(4)BloodBath.scmB.xml", utt);  
+        //pgs = PhysicalGameState.load("maps/24x24/basesWorkers24x24A.xml", utt);  
         //pgs = PhysicalGameState.load("maps/NoWhereToRun9x8.xml", utt);
 		//pgs = PhysicalGameState.load("maps/battleMaps/Others/RangedHeavyMixed.xml", utt);
       //"maps/DoubleGame24x24.xml"

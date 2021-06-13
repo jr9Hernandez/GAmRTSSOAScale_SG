@@ -6,8 +6,8 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/mrtsWG/lib/jdom.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Ingeniero Gil/Desktop/cosas/jaxws-rt-2.1.4.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/MicroRTS_WS2"/>
+	<classpathentry kind="lib" path="C:/Users/Ingeniero Gil/Downloads/lib.tar/lib/jdom.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

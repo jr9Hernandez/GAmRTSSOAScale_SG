@@ -4,8 +4,8 @@ public final class ConfigurationsGA {
 	public static final int SIZE_CHROMOSOME = 1;
 	 public static final int SIZE_POPULATION = 60;
 	 public static final int NUMBER_JOBS = 39;
-	 public static final int SIZE_ELITE = 4;
-	 public static final int SIZE_INVADERS = 2;
+	 public static final int SIZE_ELITE = 3;
+	 public static final int SIZE_INVADERS = 6;
 	 public static final int K_TOURNMENT = 15;
 	 public static final int SIZE_PARENTSFORCROSSOVER = 24;
 	 public static final double MUTATION_RATE = 0.3;

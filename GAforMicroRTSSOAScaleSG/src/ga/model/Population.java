@@ -366,13 +366,13 @@ public class Population {
 	        			{
 	        				if(scrTable.getScriptTable().containsKey(newGrammar))
 	        				{
-	        					System.out.println("before replace Rules "+originalcompleteGrammars+" "+i);
-	        					System.out.println("After replace Rules "+newGrammar+" "+i);
+	        					//System.out.println("before replace Rules "+originalcompleteGrammars+" "+i);
+	        					//System.out.println("After replace Rules "+newGrammar+" "+i);
 	        					newCh.getGenes().set(i, scrTable.getScriptTable().get(newGrammar).intValue());
 	        				}
 	        				else
 	        				{   
-	        					System.out.println("before replace Rules "+originalcompleteGrammars+" "+i);
+	        					//System.out.println("before replace Rules "+originalcompleteGrammars+" "+i);
 	               					
 	        					int newId=scrTable.getScriptTable().size();
 	        					scrTable.getScriptTable().put(newGrammar, BigDecimal.valueOf(newId));
@@ -381,7 +381,7 @@ public class Population {
 	        					addLineFile(newId+" "+newGrammar);
 	        					newCh.getGenes().set(i, newId);
 	        					
-	        					System.out.println("After replace Rules "+newGrammar+" "+newId);
+	        					//System.out.println("After replace Rules "+newGrammar+" "+newId);
 	        				}
 	        			}
 	        		}
@@ -541,7 +541,7 @@ public class Population {
 							closed=true;
 							countOpen--;
 						}
-						else if(Character.isLetter(newGrammar.charAt(j)) && newGrammar.charAt(j) !='?' && newGrammar.charAt(j) !='¿')
+						else if(Character.isLetter(newGrammar.charAt(j)) && newGrammar.charAt(j) !='?' && newGrammar.charAt(j) !='ï¿½')
 						{
 							letter=true;
 						}
@@ -557,7 +557,7 @@ public class Population {
 							StringBuilder builder = new StringBuilder();
 							
 							builder.append(newGrammar.substring(0, start));
-							builder.append("¿");
+							builder.append("ï¿½");
 							builder.append(newGrammar.substring(start + removedExcess.length()));
 							newGrammar=builder.toString();
 							
@@ -829,7 +829,7 @@ public class Population {
 
 		String grammar=str;
 		grammar=grammar.replace("?", "");
-		grammar=grammar.replace("¿", "");
+		grammar=grammar.replace("ï¿½", "");
 
 		boolean atLeastOne=true;
 		while(atLeastOne)

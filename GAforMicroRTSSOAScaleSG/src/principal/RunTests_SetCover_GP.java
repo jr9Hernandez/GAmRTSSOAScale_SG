@@ -158,7 +158,7 @@ public class RunTests_SetCover_GP {
 		}
 		
 		curriculumportfolio=ga.recoverScriptGenotype(curriculumportfolio).trim();
-		
+		System.out.println("curriculumportfolio "+curriculumportfolio);
 		
 		}
 		
